@@ -1,2 +1,4 @@
-let i=0
-var contador=()=>{ return i++}
+
+
+
+const contador= 'Rama a romper'
