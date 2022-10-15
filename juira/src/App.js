@@ -9,6 +9,7 @@ function App() {
   return (
     <div className="App">
       <Route exact path={'/'} component={Landing} />
+      <Route path={'/juira'} component={Landing} />
     </div>
   );
 }
