@@ -2,14 +2,16 @@
 import './App.css';
 
 import { Route } from 'react-router-dom';
-import Landing from './components/Landing.jsx';
+import Landing from './components/Landing/Landing.jsx';
+import Detail from './components/DetailProduct/Detail';
 
 
 function App() {
   return (
     <div className="App">
       <Route exact path={'/'} component={Landing} />
-      <Route path={'/juira'} component={Landing} />
+      <Route exact path={'/juira'} component={Landing} />
+      <Route path={'/juira/:id'} component={Detail} />
     </div>
   );
 }

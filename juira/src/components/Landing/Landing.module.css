@@ -29,7 +29,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: #ccc url('./media/pattern_background.png') center/250px;
+    background: #ccc url('../media/pattern_background.png') center/250px;
     background-repeat: repeat;
     opacity: 0.1;
 }
