@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Landing.module.css';
-import logo from './media/juira_white.png';
+import logo from '../media/juira_white.png';
 
 
 export default function Landing() {
