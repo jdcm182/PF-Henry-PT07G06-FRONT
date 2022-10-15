@@ -67,17 +67,17 @@ export default function Detail() {
     >
       <Grid container direction="row" spacing={2}>
         <Grid item>
-          <ButtonBase xs={{ width: 150, height: 150 }}>
+          <ButtonBase xs={12} sx={{boxShadow: 2, mr:1}}>
             <Img alt="complex" src={p.image} />
           </ButtonBase>
         </Grid>
         <Grid item xs={12} sm container>
-          <Grid item xs container direction="column" spacing={2}>
+          <Grid item xs container direction="column" spacing={15} sx={{mr:2}} >
             <Grid item xs>
-              <Typography gutterBottom variant="subtitle1" component="div">
+              <Typography gutterBottom variant="subtitle1" component="div" sx={{ fontWeight: 'bold', fontSize: 24,mb:6 }}>
                 {p.name}
               </Typography>
-              <Typography variant="body2" gutterBottom>
+              <Typography variant="body2" gutterBottom sx={{fontSize: 16,}}>
               {p.description}
               </Typography>
             </Grid>
@@ -90,7 +90,7 @@ export default function Detail() {
             </Grid>
           </Grid>
           <Grid item>
-            <Typography variant="subtitle1" component="div">
+            <Typography variant="subtitle1" component="div" sx={{ fontWeight: 'bold', fontSize: 24, mt: 2, color: 'green' }}>
               ${p.price}
             </Typography>
             
