@@ -1,14 +1,19 @@
-import { ALL_PRODUCTS, PRODUCTS_TO_DISPLAY, PRODUCT_DETAILS } from "../actions/producs.actions";
-
-
+import {
+  ADD_CART,
+  ALL_PRODUCTS,
+  PRODUCTS_TO_DISPLAY,
+  PRODUCT_DETAILS,
+  REMOVE_CART,
+} from "../actions/products.actions";
 
 const initialState = {
   allProducts: "",
   productDetails: "",
-  productsToDisplay : "",
+  productsToDisplay: "",
+  cart: [],
 };
 
-export function productsReducer(state = initialState, action){
+export function productsReducer(state = initialState, action) {
   switch (action.type) {
     case ALL_PRODUCTS: {
       return {
@@ -28,6 +33,16 @@ export function productsReducer(state = initialState, action){
         productsToDisplay: action.payload,
       };
     }
+    case REMOVE_CART:
+      return {
+        ...state,
+        cart: state.cart.filter((product) => product.id !== action.payload),
+      };
+    case ADD_CART:
+      return {
+        ...state,
+        cart: state.cart.concat(action.payload),
+      };
     default:
       return state;
   }
