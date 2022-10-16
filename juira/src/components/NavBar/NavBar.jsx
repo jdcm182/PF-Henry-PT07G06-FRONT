@@ -17,8 +17,8 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@mui/material/Link';
 import Tooltip from '@mui/material/Tooltip';
-
-import { useSelector } from 'react-redux'
+import { useHistory, useLocation } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -61,13 +61,35 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function PrimarySearchAppBar() {
-  const itemsInCart = useSelector((state) => state.cart).length || 2
+  const itemsInCart = useSelector((state) => state.cart).length || 2 //default 2 para probar que las notificaciones del carrito funcionan
+  
+  const products = useSelector(state => state.allProducts) || [{name: 'silla'},{name: 'cocina'},{name: 'celular'},{name: 'televisor'},{name: 'nevera'}]
+  const sugestions = products.map( p => p.name)
+  
+  const [input, setInput] = React.useState('')
+  
+  const history = useHistory();
+  const location = useLocation()
+  const dispatch = useDispatch()
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  const handleOnChange = (event) => {
+    setInput(event.target.value)
+  }
+
+  const handleOnKeyDown = (event) => {
+    if (event.keyCode === 13) {
+      if (location.pathname !== '/home') { 
+        // console.log('redirecting')
+        history.push(`/home`)
+      }
+    }
+  }
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -196,6 +218,10 @@ export default function PrimarySearchAppBar() {
             <StyledInputBase
               placeholder="Buscar un producto..."
               inputProps={{ 'aria-label': 'search' }}
+              onChange={ e => handleOnChange(e)}
+              value={input}
+              autoFocus={true}
+              onKeyDown={ e => handleOnKeyDown(e)}
             />
           </Search>
           <Box sx={{ flexGrow: 1 }} />
