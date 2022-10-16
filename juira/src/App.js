@@ -1,17 +1,27 @@
 //import logo from './logo.svg';
 import './App.css';
 
-import { Route } from 'react-router-dom';
+import {BrowserRouter, Switch, Route,  } from 'react-router-dom';
 import Landing from './components/Landing/Landing.jsx';
 import Detail from './components/DetailProduct/Detail';
+import SellForm from './components/SellorEditProduct/SellForm';
 
 
 function App() {
   return (
     <div className="App">
+    <BrowserRouter >
+    <Switch>
       <Route exact path={'/'} component={Landing} />
       <Route exact path={'/juira'} component={Landing} />
+      <Route path={'/juira/sell'} component={SellForm} />
       <Route path={'/juira/:id'} component={Detail} />
+    </Switch>
+      
+        
+    </BrowserRouter>
+    
+
     </div>
   );
 }
