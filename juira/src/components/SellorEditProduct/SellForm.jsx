@@ -98,11 +98,11 @@ export default function SellForm() {
   
     <Container sx={{background: 'linear-gradient( 90deg, white, #b6deb8 10%, #b6deb8 90%, white )', display:'flex', flexDirection: 'column', width: 1,}}>
     <Box sx={{
-        my:3,
+        my:1,
         p:1,
         width:0.8,
         position: 'relative',
-        top: 40,
+        top: 20,
         left: '10%',
         background: 'linear-gradient(45deg, white, #66bb6a 50%, white)',
         height: 'fit-content',
@@ -118,7 +118,7 @@ export default function SellForm() {
         mb:5,
         p:5,
         position: 'relative',
-        top: 50,
+        top: 20,
         left: '15%',
         width: 0.60,
         height: 'fit-content',
@@ -130,7 +130,12 @@ export default function SellForm() {
       }}
     > 
 
-        <TextField
+<Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
+      Formulario de venta
+      </Typography>
+
+      <Stack direction="row" alignItems="center" spacing={2}>
+      <TextField
           id="filled-multiline-flexible"
           label="Nombre del Producto"
           placeholder="Placeholder"
@@ -140,8 +145,26 @@ export default function SellForm() {
           onChange={handleOnChange}
           variant="filled"
           sx={{my:2,
-          width:1,}}
+          width:0.7,}}
         />
+
+      <TextField
+          id="filled-multiline-flexible"
+          label="Precio"
+          placeholder="Placeholder"
+          multiline
+          maxRows={4}
+          value={data.name}
+          onChange={handleOnChange}
+          variant="filled"
+        />
+
+
+
+      </Stack>
+
+       
+
 
       <Stack direction="row" alignItems="center" spacing={2}>
 
@@ -149,16 +172,15 @@ export default function SellForm() {
           id="filled-multiline-static"
           label="Descripcion"
           multiline
-          rows={4}
+          rows={5}
           onChange={handleOnChange}
           value={data.description}
           variant="filled"
-          sx={{
-            width:0.8}}
+          sx={{width:0.7}}
         />
 
-      <Stack direction="column" alignItems="center" spacing={2}>
-      <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+      <Stack direction="column" alignItems="center" spacing={3}>
+      <FormControl variant="filled" sx={{ my: 1, minWidth: 120 }}>
         <InputLabel id="demo-simple-select-filled-label">Categoría</InputLabel>
         <Select
           labelId="demo-simple-select-filled-label"
@@ -194,37 +216,33 @@ export default function SellForm() {
 
 
       </Stack>
-     
-
+  
       </Stack>
-   
-      <div>
+   <Stack direction="row" alignItems="center" spacing={2}>
+
+   <div>
       {previewSource?(
           <img src={previewSource} alt='chosenOne' style={{height:'250px', margin: '10px', width: '250px', border:'solid black'
         }}/>
-        ):<div style={{height:'250px', margin: '10px', width: '250px', border:'solid black'}}>Preview</div>}
+        ):<div style={{height:'250px', margin: '10px', width: '250px', border:'1px dashed grey'}}>Preview</div>}
       <Stack direction="row" alignItems="center" spacing={2}>
-      <Button /*onClick={handleImage}*/ variant="contained" component="label">
+      <Button /*onClick={handleImage}*/ variant="contained" component="label" color="success">
         Subir Imagen
-        <input hidden accept="image/*" multiple type="file" />
+        <input hidden accept="image/*" multiple type="file" color="success" />
       </Button>
-      <IconButton color="primary" aria-label="upload picture" component="label">
+      <IconButton color="success" aria-label="upload picture" component="label">
         <input hidden accept="image/*" type="file" id="upload_widget" onChange={handleFileInputChange} />
         <AddAPhotoIcon />
       </IconButton>
-     
     </Stack>
       </div>
-      
+      <Button variant="contained" color="primary">
+        PUBLICAR
+      </Button>
 
-        {/* <div>
-        <input  id="upload_widget" onChange={handleFileInputChange} type='file' name='image'/>
-        {previewSource?(
-          <img src={previewSource} alt='chosenOne' style={{height:'250px', margin: '10px', width: '250px', border:'solid black'
-        }}/>
-        ):<div style={{height:'250px', margin: '10px', width: '250px', border:'solid black'}}>Preview</div>}
-        <button onClick={handleImage}>Upload Image</button> 
-      </div> */}
+   </Stack>
+      
+      
   
     </Box>
 
