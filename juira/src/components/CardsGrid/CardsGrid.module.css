@@ -1,0 +1,33 @@
+.cards_grid_container {
+    background-color: var(--UiMediumColor);
+    height: 100%;
+    /* display: flex;
+    flex-direction: row;
+    row-gap: 1rem; */
+    /* display: block; */
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 1rem;
+    align-items: stretch;
+    width: auto;
+    padding-top: 3rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
+}
+
+.container {
+    /* background-color: var(--UiMediumColor); */
+    max-width: 100rem;
+    margin-inline: auto;
+    padding-inline: 2rem;
+}
+
+.product_grid {
+    display: grid;
+    gap: .125rem;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.cardItem {
+    /* margin: 3rem; */
+}
