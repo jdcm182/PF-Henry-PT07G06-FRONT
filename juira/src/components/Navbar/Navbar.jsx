@@ -61,10 +61,7 @@ const Search = styled('div')(({ theme }) => ({
   }));
   
   export default function PrimarySearchAppBar() {
-    const itemsInCart2 = useSelector((state) => state.cart)
-    
-    const itemsInCart= itemsInCart2? itemsInCart2.length : 2
-    //default 2 para probar que las notificaciones del carrito funcionan
+  const itemsInCart = useSelector((state) => state.cart).length || 2 //default 2 para probar que las notificaciones del carrito funcionan
     
     const products = useSelector(state => state.allProducts) || [{name: 'silla'},{name: 'cocina'},{name: 'celular'},{name: 'televisor'},{name: 'nevera'}]
     const sugestions = products.map( p => p.name)
