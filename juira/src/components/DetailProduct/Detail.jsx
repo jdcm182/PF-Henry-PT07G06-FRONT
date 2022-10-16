@@ -8,7 +8,7 @@ import ButtonBase from "@mui/material/ButtonBase";
 import Button from '@mui/material/Button';
 
 import { useSelector } from 'react-redux'
-// import {getProductDetails} from '../../actions';
+// import {getProductDetails, addToCart} from '../../actions';
 import { useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom';
 
@@ -17,6 +17,7 @@ const Img = styled("img")({
     margin: "auto",
     display: "block",
   });
+
 
 
 export default function Detail() {
@@ -29,6 +30,12 @@ export default function Detail() {
     //   },[dispatch, id])
 
     //  const p= useSelector((state)=>state.productDetails)
+
+
+    // function handleAddToCart(p) {
+    //   dispatch(handleAddToCart(p))
+      
+    // }
 
     //  (Object.keys(p).length !== 0)?p:
     const p={
@@ -82,7 +89,7 @@ export default function Detail() {
               </Typography>
             </Grid>
             <Grid item>
-              <Button variant="contained">
+              <Button variant="contained" /* onClick={()=>{handleAddToCart(p)}}*/>
               <Typography sx={{ cursor: "pointer" }} variant="body2">
                 Agregar al Carrito
               </Typography>
