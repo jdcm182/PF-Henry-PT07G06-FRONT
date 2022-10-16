@@ -6,11 +6,19 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
+import Badge from '@mui/material/Badge';
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
-import { Link } from 'react-router-dom'
-import { FiShoppingCart } from 'react-icons/fi';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import MoreIcon from '@mui/icons-material/MoreVert';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { Link as RouterLink } from 'react-router-dom';
+import Link from '@mui/material/Link';
+import Tooltip from '@mui/material/Tooltip';
 
+import { useSelector } from 'react-redux'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -19,10 +27,11 @@ const Search = styled('div')(({ theme }) => ({
   '&:hover': {
     backgroundColor: alpha(theme.palette.common.white, 0.25),
   },
+  marginRight: theme.spacing(2),
   marginLeft: 0,
   width: '100%',
   [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(1),
+    marginLeft: theme.spacing(3),
     width: 'auto',
   },
 }));
@@ -45,34 +54,141 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create('width'),
     width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: '12ch',
-      '&:focus': {
-        width: '20ch',
-      },
+    [theme.breakpoints.up('md')]: {
+      width: '40ch',
     },
   },
 }));
 
-export default function SearchAppBar() {
+export default function PrimarySearchAppBar() {
+  const itemsInCart = useSelector((state) => state.cart).length || 2
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+
+  const isMenuOpen = Boolean(anchorEl);
+  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  const handleProfileMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMobileMenuClose = () => {
+    setMobileMoreAnchorEl(null);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
+  };
+
+  const handleMobileMenuOpen = (event) => {
+    setMobileMoreAnchorEl(event.currentTarget);
+  };
+
+  const menuId = 'primary-search-account-menu';
+  const renderMenu = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    >
+      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+    </Menu>
+  );
+
+  const mobileMenuId = 'primary-search-account-menu-mobile';
+  const renderMobileMenu = (
+    <Menu
+      anchorEl={mobileMoreAnchorEl}
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      id={mobileMenuId}
+      keepMounted
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      open={isMobileMenuOpen}
+      onClose={handleMobileMenuClose}
+    >
+      <Link component={RouterLink} to='/login' underline='none' sx={{ color: ''}}>
+        <MenuItem>
+          <IconButton size="large" color="inherit">
+            <AccountCircle />
+          </IconButton>
+            <p>Iniciar Sesión / Registrarse</p>
+        </MenuItem>
+      </Link>
+      
+      <Link component={RouterLink} to='/shoppingCart' underline='none' sx={{ color: ''}}>
+        <MenuItem>
+          <IconButton
+            size="large"
+            aria-label={`show ${itemsInCart} new notifications`}
+            color="inherit"
+          >
+            <Badge badgeContent={itemsInCart} color="error">
+              <ShoppingCartIcon />
+            </Badge>
+          </IconButton>
+          <p>Carrito de compras</p>
+        </MenuItem>
+      </Link>
+      {/* <MenuItem onClick={handleProfileMenuOpen}>
+        <IconButton
+          size="large"
+          aria-label="account of current user"
+          aria-controls="primary-search-account-menu"
+          aria-haspopup="true"
+          color="inherit"
+        >
+          <AccountCircle />
+        </IconButton>
+        <p>Profile</p>
+      </MenuItem> */}
+    </Menu>
+  );
+  
+  const linkSx = {
+    color: '#ffffff',
+  }
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
+            sx={{ mr: 2 }}
+          >
+            {/* <MenuIcon /> */}
+          </IconButton>
+
           <Typography
             variant="h6"
             noWrap
             component="div"
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+            sx={{ display: { xs: 'none', sm: 'block' } }}
           >
-            Juira
+            JUIRA's Logo
           </Typography>
-          <Link to='/login'>
-            Iniciar Sesión / Registrarse
-          </Link>
-          <Link to='/shoppingCart'>
-            <FiShoppingCart></FiShoppingCart>
-          </Link>
+          
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
@@ -80,11 +196,59 @@ export default function SearchAppBar() {
             <StyledInputBase
               placeholder="Buscar un producto..."
               inputProps={{ 'aria-label': 'search' }}
-              onChange={ e => handleChange(e.target.value)} //Aqui va la funcion que hara el filtrado de los productos
             />
           </Search>
+          <Box sx={{ flexGrow: 1 }} />
+
+          <Box sx={{ display: { xs: 'none', md: 'flex' }}}>
+          <Link component={RouterLink} to='/shoppingCart' underline='none' sx={{ color: '#ffffff'}}>
+            <Tooltip title='Carrito de compras' arrow>
+              <IconButton
+                size="large"
+                aria-label={`show ${itemsInCart} items in shopping cart`}
+                color="inherit"
+                >
+
+                <Badge badgeContent={itemsInCart} color="error">
+                  <ShoppingCartIcon />
+                </Badge>
+              </IconButton>
+            </Tooltip>
+          </Link >
+
+          
+            <Link component={RouterLink} to='/login' underline='none' sx={{ color: '#ffffff'}}>
+            {/* <AccountCircle /> */}
+            <Tooltip title='Iniciar sesión o registrarse' arrow>
+              <IconButton
+                size="large"
+                color="inherit"
+                >
+                  <AccountCircle />
+                {/* <Typography>
+                  Iniciar Sesion / Registrarse
+                </Typography> */}
+                </IconButton>
+            </Tooltip>
+            </Link >
+          </Box>
+
+          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+            <IconButton
+              size="large"
+              aria-label="show more"
+              aria-controls={mobileMenuId}
+              aria-haspopup="true"
+              onClick={handleMobileMenuOpen}
+              color="inherit"
+            >
+              <MoreIcon />
+            </IconButton>
+          </Box>
         </Toolbar>
       </AppBar>
+      {renderMobileMenu}
+      {renderMenu}
     </Box>
   );
 }
