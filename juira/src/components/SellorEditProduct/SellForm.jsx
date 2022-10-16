@@ -41,6 +41,7 @@ function validate(data) {
 export default function SellForm() {
 
   const categories= useSelector(state=>state.categories)
+  const dispatch=useDispatch()
 
   const [error, setError]=useState({})
   const[data, setData]=React.useState({
@@ -71,15 +72,15 @@ export default function SellForm() {
     }
   }
   
-  // let handleImage=async(e)=>{
-  //   e.preventDefault();
-  //   const formData=new FormData()
-  //   formData.append('file', selectedImage)
-  //   formData.append("upload_preset",'DB_PF_JUIRA' )
-  //   await axios.post('https://api.cloudinary.com/v1_1/duq1tcwjw/image/upload', 
-  //   formData).then((response)=>{setData({...data, image: response.data.secure_url})})
+  let handleImage=async(e)=>{
+    e.preventDefault();
+    const formData=new FormData()
+    formData.append('file', selectedImage)
+    formData.append("upload_preset",'DB_PF_JUIRA' )
+    await axios.post('https://api.cloudinary.com/v1_1/duq1tcwjw/image/upload', 
+    formData).then((response)=>{setData({...data, image: response.data.secure_url})})
 
-  // }
+  }
    
 
 
@@ -94,11 +95,33 @@ export default function SellForm() {
       )
   }
 
+
+
+  let handleOnSubmit=(e)=> {
+    // dispatch(publishProd(data))
+    setData({
+      name:'',
+    price: 0,
+    description:'',
+    condition:'',
+    image:'',
+    categories:[],
+    })
+  alert('Tu producto sera Publicado!')
+  }
+
+  function handleOnSubmitButton(e) {
+    e.preventDefault();
+    if (Object.values(error).length > 0 || data.name.length===0)  document.getElementById("myBtn").disabled = true;
+    else document.getElementById("myBtn").disabled = false;
+    
+    }
+
   return (
   
-    <Container sx={{background: 'linear-gradient( 90deg, white, #b6deb8 10%, #b6deb8 90%, white )', display:'flex', flexDirection: 'column', width: 1,}}>
+    <Container sx={{background: 'linear-gradient( 90deg, white, #b6deb8 10%, #b6deb8 90%, white )', display:'flex', flexDirection: 'column', width: 1, my:0}} onChange={handleOnSubmitButton}>
     <Box sx={{
-        my:1,
+        my:0.8,
         p:1,
         width:0.8,
         position: 'relative',
@@ -108,7 +131,7 @@ export default function SellForm() {
         height: 'fit-content',
         boxShadow: 1,
         }}>
-      <Typography sx={{ fontSize: 32 }} color="text.secondary" gutterBottom>
+      <Typography sx={{ fontSize: 32 }} color="black" gutterBottom>
       Un paso mas cerca de sacarlo JUIRA!
       </Typography>
     </Box>
@@ -116,11 +139,10 @@ export default function SellForm() {
       sx={{
         m:3,
         mb:5,
-        p:5,
+        p:3,
         position: 'relative',
         top: 20,
-        left: '15%',
-        width: 0.60,
+        width: 0.90,
         height: 'fit-content',
         backgroundColor: '#66bb6a',
         '&:hover': {
@@ -130,11 +152,15 @@ export default function SellForm() {
       }}
     > 
 
-<Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
-      Formulario de venta
-      </Typography>
+    <Typography sx={{ fontSize: 25, width:1, borderBottom: 'solid green' }} color="text.secondary" gutterBottom>
+      FORMULARIO DE VENTA
+    </Typography>
 
-      <Stack direction="row" alignItems="center" spacing={2}>
+<Stack direction="row" alignItems="center" spacing={1} sx={{width:1, justifyContent:'space-around'}}>
+
+{/*Nombre y descripcion */}
+
+<Stack direction="column" alignItems="center" spacing={2}  sx={{width:0.45}}>
       <TextField
           id="filled-multiline-flexible"
           label="Nombre del Producto"
@@ -144,11 +170,26 @@ export default function SellForm() {
           value={data.name}
           onChange={handleOnChange}
           variant="filled"
-          sx={{my:2,
-          width:0.7,}}
+          sx={{width:1,}}
         />
 
-      <TextField
+  <TextField
+          id="filled-multiline-static"
+          label="Descripcion"
+          multiline
+          rows={5}
+          onChange={handleOnChange}
+          value={data.description}
+          variant="filled"
+          sx={{width:1}}
+        />
+     
+      </Stack>
+
+{/*Precio Categoria y estado */}
+<Stack direction="Column" alignItems="center" spacing={2} sx={{justifyContent:'space-evenly'}}>
+
+<TextField
           id="filled-multiline-flexible"
           label="Precio"
           placeholder="Placeholder"
@@ -157,30 +198,10 @@ export default function SellForm() {
           value={data.name}
           onChange={handleOnChange}
           variant="filled"
+          sx={{width:140, mb:3,}}
         />
-
-
-
-      </Stack>
-
        
-
-
-      <Stack direction="row" alignItems="center" spacing={2}>
-
-      <TextField
-          id="filled-multiline-static"
-          label="Descripcion"
-          multiline
-          rows={5}
-          onChange={handleOnChange}
-          value={data.description}
-          variant="filled"
-          sx={{width:0.7}}
-        />
-
-      <Stack direction="column" alignItems="center" spacing={3}>
-      <FormControl variant="filled" sx={{ my: 1, minWidth: 120 }}>
+      <FormControl variant="filled" sx={{ minWidth: 140, pb:3 }}>
         <InputLabel id="demo-simple-select-filled-label">Categoría</InputLabel>
         <Select
           labelId="demo-simple-select-filled-label"
@@ -197,7 +218,7 @@ export default function SellForm() {
         </Select>
       </FormControl>
 
-      <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+      <FormControl variant="filled" sx={{  minWidth: 140 }}>
         <InputLabel id="demo-simple-select-filled-label">Estado</InputLabel>
         <Select
           labelId="demo-simple-select-filled-label"
@@ -213,21 +234,24 @@ export default function SellForm() {
           <MenuItem value={'Claros signos de uso'}>Claros signos de uso</MenuItem>
         </Select>
       </FormControl>
-
-
       </Stack>
-  
-      </Stack>
+
+{/*Imagen */}
    <Stack direction="row" alignItems="center" spacing={2}>
 
    <div>
       {previewSource?(
-          <img src={previewSource} alt='chosenOne' style={{height:'250px', margin: '10px', width: '250px', border:'solid black'
+          <img src={previewSource} alt='chosenOne' style={{height:'250px', margin: '10px', width: '250px', border:'2px dashed green'
         }}/>
-        ):<div style={{height:'250px', margin: '10px', width: '250px', border:'1px dashed grey'}}>Preview</div>}
-      <Stack direction="row" alignItems="center" spacing={2}>
-      <Button /*onClick={handleImage}*/ variant="contained" component="label" color="success">
-        Subir Imagen
+        ):<div style={{height:'250px', margin: '10px', width: '250px', border:'2px dashed grey'}}></div>}
+      
+      
+      <Stack direction="row" alignItems="center" spacing={2} sx={{justifyContent: 'center'}}>
+      <Button onClick={handleImage} variant="contained" component="label" color="success">
+      <Typography sx={{ fontSize: 14, width:1 }}  color="text.secondary" >
+      Subir Imagen
+      </Typography>
+        
         <input hidden accept="image/*" multiple type="file" color="success" />
       </Button>
       <IconButton color="success" aria-label="upload picture" component="label">
@@ -236,12 +260,17 @@ export default function SellForm() {
       </IconButton>
     </Stack>
       </div>
-      <Button variant="contained" color="primary">
-        PUBLICAR
-      </Button>
+     
 
    </Stack>
-      
+</Stack>
+    
+   <Button variant="contained" color="success" sx={{ mt:5 }}  onClick={handleOnSubmit}>
+   <Typography sx={{ fontSize: 20, width:1 }} color="black" gutterBottom>
+      PUBLICAR JUIRA
+    </Typography>
+        
+  </Button>
       
   
     </Box>
