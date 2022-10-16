@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Home.module.css';
-import Navbar from '../Navbar/Navbar.jsx';
+import Navbar from '../NavBar/Navbar.jsx';
 import Hero from '../Hero/Hero.jsx';
 import Sidebar from '../Sidebar/Sidebar.jsx';
 import CardsGrid from '../CardsGrid/CardsGrid';

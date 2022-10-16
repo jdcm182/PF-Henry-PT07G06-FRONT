@@ -43,7 +43,7 @@ export default function Hero() {
             <div className={styles.box}>
 
                 {categories && categories.map(c => (
-                    <Link to="/juira" className={styles.categoryBtn}>
+                    <Link key={c.name} to="/juira" className={styles.categoryBtn}>
                         {c.name}
                     </Link>
                 ))}
