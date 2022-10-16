@@ -1,0 +1,46 @@
+.homeContainer {
+    /* border: 10px dashed red; */
+    /* background-color: var(--UiDarkestColor); */
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.navWrapper {
+    /* border: 2px dashed green; */
+    height: 3rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.heroWrapper {
+    /* border: 3px dashed blue; */
+    height: 20rem;
+}
+
+.mainContainer {
+    /* border: 1px dashed violet; */
+    background-color: var(--UiMediumColor);
+    display: flex;
+    flex-direction: row;
+    min-height: 15rem;
+}
+
+.sideWrapper {
+    /* border: 4px solid yellow; */
+    max-width: 295px;
+    min-width: 165px;
+    margin-right: 1rem;
+}
+
+.cardsGridContainer {
+    width: 100%;
+    padding: 2rem 0;
+}
+
+.footerWrapper {
+    min-height: 5rem;
+}

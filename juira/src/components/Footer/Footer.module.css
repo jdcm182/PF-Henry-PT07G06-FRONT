@@ -1,0 +1,13 @@
+.footerContainer {
+    height: 100%;
+}
+
+.footerTop {
+    background-color: var(--UiDarkColor);
+    min-height: 8rem;
+}
+
+.footerBottom {
+    background-color: var(--UiDarkerColor);
+    min-height: 4rem;
+}

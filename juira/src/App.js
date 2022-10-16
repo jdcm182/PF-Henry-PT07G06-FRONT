@@ -3,6 +3,7 @@ import './App.css';
 
 import { Route } from 'react-router-dom';
 import Landing from './components/Landing/Landing.jsx';
+import Home from './components/Home/Home.jsx';
 import Detail from './components/DetailProduct/Detail';
 
 
@@ -10,7 +11,7 @@ function App() {
   return (
     <div className="App">
       <Route exact path={'/'} component={Landing} />
-      <Route exact path={'/juira'} component={Landing} />
+      <Route path={'/juira'} component={Home} />
       <Route path={'/juira/:id'} component={Detail} />
     </div>
   );
