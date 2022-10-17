@@ -1,0 +1,32 @@
+.sidebarContainer {
+    width: 100%;
+    height: 100%;
+    background-color: var(--UiLightColor);
+
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+
+    padding-top: .8rem;
+
+}
+
+.categoryBtn {
+    background-color: var(--primaryColor);
+    color: white;
+    padding: .125rem .25rem;
+    margin: .125rem .8rem;
+    border-radius: .25rem;
+}
+
+a.categoryBtn {
+    text-decoration: none;
+}
+
+a.categoryBtn:hover {
+    background-color: var(--btnHoverColor);
+}
+
+a.categoryBtn:active {
+    background-color: var(--btnActiveColor);
+}
