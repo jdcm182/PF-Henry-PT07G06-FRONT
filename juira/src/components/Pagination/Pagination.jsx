@@ -2,14 +2,18 @@ import * as React from 'react';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 
-function handleChange(e) {
-  //Funcion que setea el rango de productos a mostrar -por desarrollar-
-  console.log(e)
-}
-export default function PaginationButtons({ totalPages }) {
+export default function PaginationButtons({ page, setPage, maxPage, products }) {
+  function handleChange(page) {
+    setPage(page)
+  }
+  
+  React.useEffect(() => {
+    setPage(1)
+  },[products])
+
   return (
     <Stack spacing={2}>
-      <Pagination count={totalPages} onChange={(event, page) => handleChange(page)} showFirstButton showLastButton />
+      <Pagination count={maxPage} onChange={(event, page) => handleChange(page)} showFirstButton showLastButton />
     </Stack>
   );
 }
