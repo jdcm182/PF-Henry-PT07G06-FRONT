@@ -11,11 +11,10 @@ import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
-
 import axios from 'axios';
-import { useState } from 'react'
-import { useDispatch,useSelector } from 'react-redux';
-
+import { useState} from 'react'
+import { useSelector, useDispatch,} from 'react-redux';
+import { getCategories, publishProd} from "../../redux/actions/products.actions.jsx";
 
 
 
@@ -40,9 +39,15 @@ function validate(data) {
 
 export default function SellForm() {
 
-  const categories= useSelector(state=>state.categories)
-  const nameCategories=categories?.map((c)=>c.name)
-  const dispatch=useDispatch()
+  const dispatch = useDispatch();
+    //Las cargo para usarlas en ventas
+    React.useEffect(()=>{
+      dispatch(getCategories())
+    },[dispatch])
+
+  const categories= useSelector(state=>state.productsReducer.categories)
+
+
 
   const [error, setError]=useState({})
   const[data, setData]=React.useState({
@@ -53,6 +58,11 @@ export default function SellForm() {
     image:'',
     categories:[],
   })
+
+
+
+
+ 
 
   //Handle Image with Cloudinary
 
@@ -92,13 +102,11 @@ export default function SellForm() {
         [e.target.name]: Number(e.target.value),
       });}
 
+      
     setData({...data,
       [e.target.name]:e.target.value}
       )
-     
-      console.log(data)
-  
-   
+      
       setError(
         validate({...data,
           [e.target.name]:e.target.value})
@@ -110,23 +118,26 @@ export default function SellForm() {
 
   let handleOnSubmit=(e)=> {
     
-    // if (Object.values(error).length > 0 || data.name.length===0)  
-    // {document.getElementById("myBtn").disabled = true;
-    // alert('Complete todos los campos por favor!')
-    // }
-    // else{
-      // dispatch(publishProd(data)) }
-      setData({
-      name:'',
-      price: 0,
-      description:'',
-      condition:'',
-      image:'',
-      categories:[],
-      })
-    setPreviewSource('')
-    alert('Tu producto sera Publicado!')
+    if (Object.values(error).length > 0 || data.name.length===0)  
+    {
+    // document.getElementById("myBtn").disabled = true;
+    alert('Complete todos los campos por favor!')
+    }
+    else{
+      dispatch(publishProd(data))
 
+      setData({
+        name:'',
+        price: 0,
+        description:'',
+        condition:'',
+        image:'',
+        categories:[],
+        })
+      setPreviewSource('')
+      alert('Tu producto sera Publicado!')
+     }
+     
    
     
   }
@@ -234,7 +245,7 @@ export default function SellForm() {
           <MenuItem value="">
             <em>None</em>
           </MenuItem>
-          {nameCategories?.map((nc)=><MenuItem key={nc} value={nc}>{nc}</MenuItem>)}
+          {categories?.map((nc)=><MenuItem key={nc.id} value={nc.id}>{nc.name}</MenuItem>)}
          
         </Select>
       </FormControl>

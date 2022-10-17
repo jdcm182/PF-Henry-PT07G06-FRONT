@@ -1,7 +1,7 @@
 import {
   ADD_CART,
   ALL_PRODUCTS,
-  GET_CATEGORIES_ID,
+  GET_CATEGORIES,
   GET_CATEGORIES_NAMES,
   PRODUCTS_TO_DISPLAY,
   PRODUCT_DETAILS,
@@ -14,7 +14,7 @@ const initialState = {
   productsToDisplay: "",
   cart: [],
   allCategories: [],
-  categoriesId: [],
+  categories: [],
 };
 
 export function productsReducer(state = initialState, action) {
@@ -53,10 +53,10 @@ export function productsReducer(state = initialState, action) {
         ...state,
         allCategories: action.payload,
       };
-    case GET_CATEGORIES_ID:
+    case GET_CATEGORIES:
       return{
         ...state,
-        categoriesId: action.payload
+        categories: action.payload
       }
     default:
       return state;

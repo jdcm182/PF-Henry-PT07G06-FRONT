@@ -7,7 +7,7 @@ import CardsGrid from "../CardsGrid/CardsGrid";
 import Footer from '../Footer/Footer.jsx';
 //import logoColor from '../media/juira_color.png';
 import { /* connect, */ useDispatch, useSelector } from "react-redux";
-import { getAllProducts } from "../../redux/actions/products.actions.jsx";
+import { getAllProducts, getCategories } from "../../redux/actions/products.actions.jsx";
 import FilterBar from "../FilterBar/FilterBar";
 const _ = require("lodash");
 
@@ -23,6 +23,8 @@ export default function Home(/* { prods, getAll } */) {
   useEffect(() => {
     dispatch(getAllProducts());
   }, [dispatch]);
+
+
 
   useEffect(() => {
     filterAndSort();
