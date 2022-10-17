@@ -8,7 +8,7 @@ import ButtonBase from "@mui/material/ButtonBase";
 import Button from '@mui/material/Button';
 
 import { useSelector } from 'react-redux'
-// import {getProductDetails, addToCart} from '../../actions';
+import {getProductDetails} from '../../redux/actions/products.actions';
 import { useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom';
 
@@ -24,21 +24,24 @@ export default function Detail() {
 
     const dispatch=useDispatch()
     const {id}=useParams()
+    console.log(id)
 
-    //   useEffect(()=>{
-    //     dispatch(getProductDetails(id))
-    //   },[dispatch, id])
+     React.useEffect(()=>{
+      dispatch(getProductDetails(id))
+     },[dispatch, id])
 
-    //  const p= useSelector((state)=>state.productDetails)
+   let p= useSelector((state)=>state.productDetails)
 
 
-    // function handleAddToCart(p) {
-    //   dispatch(handleAddToCart(p))
+     function handleAddToCart(e) {
+      alert("Se agrego al carrito")
+    //  dispatch(handleAddToCart(p))
       
-    // }
+     }
 
-    //  (Object.keys(p).length !== 0)?p:
-    const p={
+  (p&&Object.keys(p).length !== 0)?console.log(p):
+  
+     p={
         id:1,
         name:'Sillon Individual Moderno Living 1 Cuerpo Pana',
         description:`
@@ -89,7 +92,7 @@ export default function Detail() {
               </Typography>
             </Grid>
             <Grid item>
-              <Button variant="contained" /* onClick={()=>{handleAddToCart(p)}}*/>
+              <Button variant="contained"  onClick={()=>{handleAddToCart(p)}}>
               <Typography sx={{ cursor: "pointer" }} variant="body2">
                 Agregar al Carrito
               </Typography>

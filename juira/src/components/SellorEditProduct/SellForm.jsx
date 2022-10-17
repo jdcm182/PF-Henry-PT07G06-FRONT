@@ -41,6 +41,7 @@ function validate(data) {
 export default function SellForm() {
 
   const categories= useSelector(state=>state.categories)
+  const nameCategories=categories?.map((c)=>c.name)
   const dispatch=useDispatch()
 
   const [error, setError]=useState({})
@@ -85,8 +86,18 @@ export default function SellForm() {
 
 
   const handleOnChange=(e)=>{
+    if (e.target.name === "precio") {
+      setData({
+        ...data,
+        [e.target.name]: Number(e.target.value),
+      });}
+
     setData({...data,
-      [e.target.name]:e.target.value})
+      [e.target.name]:e.target.value}
+      )
+     
+      console.log(data)
+  
    
       setError(
         validate({...data,
@@ -98,28 +109,33 @@ export default function SellForm() {
 
 
   let handleOnSubmit=(e)=> {
-    // dispatch(publishProd(data))
-    setData({
-      name:'',
-    price: 0,
-    description:'',
-    condition:'',
-    image:'',
-    categories:[],
-    })
-  alert('Tu producto sera Publicado!')
+    
+    // if (Object.values(error).length > 0 || data.name.length===0)  
+    // {document.getElementById("myBtn").disabled = true;
+    // alert('Complete todos los campos por favor!')
+    // }
+    // else{
+      // dispatch(publishProd(data)) }
+      setData({
+        name:'',
+      price: 0,
+      description:'',
+      condition:'',
+      image:'',
+      categories:[],
+      })
+    setPreviewSource('')
+    alert('Tu producto sera Publicado!')
+
+   
+    
   }
 
-  function handleOnSubmitButton(e) {
-    e.preventDefault();
-    if (Object.values(error).length > 0 || data.name.length===0)  document.getElementById("myBtn").disabled = true;
-    else document.getElementById("myBtn").disabled = false;
-    
-    }
+  
 
   return (
   
-    <Container sx={{background: 'linear-gradient( 90deg, white, #b6deb8 10%, #b6deb8 90%, white )', display:'flex', flexDirection: 'column', width: 1, my:0}} onChange={handleOnSubmitButton}>
+    <Container sx={{background: 'linear-gradient( 90deg, white, #b6deb8 10%, #b6deb8 90%, white )', display:'flex', flexDirection: 'column', width: 1, my:0}}>
     <Box sx={{
         my:0.8,
         p:1,
@@ -127,8 +143,9 @@ export default function SellForm() {
         position: 'relative',
         top: 20,
         left: '10%',
-        background: 'linear-gradient(45deg, white, #66bb6a 50%, white)',
+        backgroundColor: '#66bb6a',
         height: 'fit-content',
+        textAlign:'center',
         boxShadow: 1,
         }}>
       <Typography sx={{ fontSize: 32 }} color="black" gutterBottom>
@@ -164,20 +181,23 @@ export default function SellForm() {
       <TextField
           id="filled-multiline-flexible"
           label="Nombre del Producto"
+          name='name'
+          onChange={handleOnChange}
+          value={data.name}
           placeholder="Placeholder"
           multiline
           maxRows={4}
-          value={data.name}
-          onChange={handleOnChange}
           variant="filled"
-          sx={{width:1,}}
-        />
+          sx={{width:1,}}>
+          
+      </TextField>
 
   <TextField
           id="filled-multiline-static"
           label="Descripcion"
           multiline
           rows={5}
+          name='description'
           onChange={handleOnChange}
           value={data.description}
           variant="filled"
@@ -192,10 +212,11 @@ export default function SellForm() {
 <TextField
           id="filled-multiline-flexible"
           label="Precio"
+          name='price'
           placeholder="Placeholder"
           multiline
           maxRows={4}
-          value={data.name}
+          value={data.price}
           onChange={handleOnChange}
           variant="filled"
           sx={{width:140, mb:3,}}
@@ -206,15 +227,15 @@ export default function SellForm() {
         <Select
           labelId="demo-simple-select-filled-label"
           id="demo-simple-select-filled"
+          name='categories'
           value={data.categories}
           onChange={handleOnChange}
         >
           <MenuItem value="">
             <em>None</em>
           </MenuItem>
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+          {nameCategories?.map((nc)=><MenuItem key={nc} value={nc}>{nc}</MenuItem>)}
+         
         </Select>
       </FormControl>
 
@@ -223,6 +244,7 @@ export default function SellForm() {
         <Select
           labelId="demo-simple-select-filled-label"
           id="demo-simple-select-filled"
+          name='condition'
           value={data.condition}
           onChange={handleOnChange}
         >
