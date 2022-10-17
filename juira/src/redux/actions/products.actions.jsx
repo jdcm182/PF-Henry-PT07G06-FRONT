@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getAllProductsApi, API_URL_BACKEND, getCategoriesNameApi } from "../../api/apiRoute";
+import { getAllProductsApi, API_URL_BACKEND, getCategoriesNameApi, getCategoriesIdApi } from "../../api/apiRoute";
 
 
 
@@ -9,6 +9,7 @@ export const PRODUCT_DETAILS = "PRODUCT_DETAILS";
 export const REMOVE_CART = "REMOVE_CART";
 export const ADD_CART = "ADD_CART"
 export const GET_CATEGORIES_NAMES = "GET_CATEGORIES_NAMES"
+export const GET_CATEGORIES_ID = "GET_CATEGORIES_ID"
 
 
 export const updateDisplayed = (query) => async (dispatch) => {
@@ -74,6 +75,20 @@ export const getCategoriesNames = () => async (dispatch) => {
   
     return dispatch({
       type: GET_CATEGORIES_NAMES,
+      payload: data,
+    });
+  } catch (error) {
+    console.log("error api", error);
+  }
+};
+
+export const getCategoriesId = () => async (dispatch) => {
+  const url = `${API_URL_BACKEND}${getCategoriesIdApi}`;
+  try {
+    let {data} = await axios(url);
+  
+    return dispatch({
+      type: GET_CATEGORIES_ID,
       payload: data,
     });
   } catch (error) {
