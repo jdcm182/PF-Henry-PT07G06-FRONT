@@ -1,9 +1,10 @@
 import React from 'react';
 import styles from './Card.module.css';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 
 export default function Card(props) {
+
     return (
         <section className={styles.cardContainer}>
             <div className={[styles.card, styles.stacked].join(' ')}>

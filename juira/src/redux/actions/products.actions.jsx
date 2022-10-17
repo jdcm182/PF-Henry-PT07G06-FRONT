@@ -41,9 +41,9 @@ export const getAllProducts = () => async (dispatch) => {
 export const getProductDetails = (id) => async (dispatch) => {
   const url = `${API_URL_BACKEND}${getAllProductsApi}${id}`;
   try {
-    let data = await axios(url);
+    let {data} = await axios(url);
     return dispatch({
-      type: ALL_PRODUCTS,
+      type: PRODUCT_DETAILS,
       payload: data,
     });
   } catch (error) {
