@@ -16,6 +16,7 @@ import { useParams } from 'react-router-dom';
 const Img = styled("img")({
     margin: "auto",
     display: "block",
+    height: 500
   });
 
 
