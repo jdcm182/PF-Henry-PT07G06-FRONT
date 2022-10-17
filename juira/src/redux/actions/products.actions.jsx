@@ -27,7 +27,7 @@ export const getAllProducts = () => async (dispatch) => {
     let data = await axios(url);
     return dispatch({
       type: ALL_PRODUCTS,
-      payload: data,
+      payload: data.data, //data,
     });
   } catch (error) {
     console.log("error api", error);
