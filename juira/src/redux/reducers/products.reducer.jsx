@@ -1,7 +1,7 @@
 import {
   ADD_CART,
   ALL_PRODUCTS,
-
+  GET_CATEGORIES_NAMES,
   PRODUCTS_TO_DISPLAY,
   PRODUCT_DETAILS,
   REMOVE_CART,
@@ -12,6 +12,7 @@ const initialState = {
   productDetails: "",
   productsToDisplay: "",
   cart: [],
+  allCategories: [],
 };
 
 export function productsReducer(state = initialState, action) {
@@ -44,6 +45,11 @@ export function productsReducer(state = initialState, action) {
       return {
         ...state,
         cart: state.cart.concat(action.payload),
+      };
+    case GET_CATEGORIES_NAMES:
+      return {
+        ...state,
+        allCategories: action.payload,
       };
     default:
       return state;

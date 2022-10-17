@@ -1,10 +1,13 @@
-import { TURN_OFF_SPINNER, TURN_ON_SPINNER, UPDATE_FILTER_STATE } from "../actions/app.actions";
-
+import {
+  TURN_OFF_SPINNER,
+  TURN_ON_SPINNER,
+  UPDATE_FILTER_STATE,
+} from "../actions/app.actions";
 
 const initialState = {
   user: {},
   isSpinner: false,
-  filterState: [],
+  filterState: { categories: "Todos", sort: "A-Z" },
 };
 
 export function appReducer(state = initialState, action) {
@@ -21,11 +24,16 @@ export function appReducer(state = initialState, action) {
         isSpinner: action.payload,
       };
     }
-    case UPDATE_FILTER_STATE:{
-      return{
+    case UPDATE_FILTER_STATE: {
+      return {
         ...state,
-        filterState: action.payload,
-      }
+        filterState: {
+          ...state.filterState,
+          [action.payload.name]: action.payload.value,
+        },
+
+        
+      };
     }
     default:
       return state;
