@@ -4,7 +4,7 @@ import Navbar from '../NavBar/Navbar.jsx';
 import Hero from '../Hero/Hero.jsx';
 import Sidebar from '../Sidebar/Sidebar.jsx';
 import CardsGrid from '../CardsGrid/CardsGrid';
-import Footer from '../Footer/Footer.jsx';
+//import Footer from '../Footer/Footer.jsx';
 
 
 //import logoColor from '../media/juira_color.png';

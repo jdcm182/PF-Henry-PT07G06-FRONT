@@ -8,7 +8,7 @@ export default function Card(props) {
         <section className={styles.cardContainer}>
             <div className={[styles.card, styles.stacked].join(' ')}>
                 {/* <a href="/" className={styles.cardLink}> */}
-                <Link to={`/juira`/* detail/${props.id} `*/}
+                <Link to={`/juira/${props.id}`/* detail/${props.id} `*/}
                     className={styles.cardLink}>
                     <img src={props.image}
                         className={styles.card__img}
