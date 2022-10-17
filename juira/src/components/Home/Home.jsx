@@ -1,7 +1,6 @@
 
 import React, { /* useState, */ useEffect, useState } from "react";
 import styles from "./Home.module.css";
-import Navbar from "../NavBar/Navbar.jsx";
 import Hero from "../Hero/Hero.jsx";
 import Sidebar from "../Sidebar/Sidebar.jsx";
 import CardsGrid from "../CardsGrid/CardsGrid";
@@ -60,7 +59,7 @@ export default function Home(/* { prods, getAll } */) {
         <Hero />
       </div>
       <div className={styles.navWrapper}>
-        <Navbar />
+        {/* <Navbar /> */}
         <FilterBar />
       </div>
       <div className={styles.mainContainer}>
