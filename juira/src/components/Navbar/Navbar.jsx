@@ -14,6 +14,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import AddBusinessIcon from '@mui/icons-material/AddBusiness';
 import { Link as RouterLink } from 'react-router-dom';
 import Link from '@mui/material/Link';
 import Tooltip from '@mui/material/Tooltip';
@@ -230,6 +231,19 @@ const Search = styled('div')(({ theme }) => ({
             <Box sx={{ flexGrow: 1 }} />
   
             <Box sx={{ display: { xs: 'none', md: 'flex' }}}>
+
+            <Link component={RouterLink} to='/juira/sell' underline='none' sx={{ color: '#ffffff'}}>
+              <Tooltip title='Vender un producto' arrow>
+                <IconButton
+                  size="large"
+                  aria-label={`Vender un producto`}
+                  color="inherit"
+                  >
+                    <AddBusinessIcon/>
+                </IconButton>
+              </Tooltip>
+            </Link >
+
             <Link component={RouterLink} to='/juira' underline='none' sx={{ color: '#ffffff'}}>
               <Tooltip title='Carrito de compras' arrow>
                 <IconButton
