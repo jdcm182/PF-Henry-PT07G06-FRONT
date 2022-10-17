@@ -4,7 +4,7 @@ import Navbar from '../NavBar/Navbar.jsx';
 import Hero from '../Hero/Hero.jsx';
 import Sidebar from '../Sidebar/Sidebar.jsx';
 import CardsGrid from '../CardsGrid/CardsGrid';
-//import Footer from '../Footer/Footer.jsx';
+import Footer from '../Footer/Footer.jsx';
 //import logoColor from '../media/juira_color.png';
 import { /* connect, */ useDispatch, useSelector } from 'react-redux';
 import { getAllProducts } from '../../redux/actions/products.actions.jsx';
@@ -30,9 +30,6 @@ export default function Home(/* { prods, getAll } */) {
             <div className={styles.heroWrapper}>
                 <Hero />
             </div>
-            <div className={styles.navWrapper}>
-                <Navbar />
-            </div>
             <div className={styles.mainContainer}>
                 {/*  ..MAIN.. */}
                 <div className={styles.sideWrapper}>
@@ -43,9 +40,6 @@ export default function Home(/* { prods, getAll } */) {
                     <CardsGrid products={productsToDisplay} />
                 </div>
             </div>
-            {/* <div className={styles.footerWrapper}>
-                <Footer />
-            </div> */}
         </section>
     )
 }
