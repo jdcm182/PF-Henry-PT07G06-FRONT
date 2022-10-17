@@ -19,6 +19,7 @@ import Link from '@mui/material/Link';
 import Tooltip from '@mui/material/Tooltip';
 import { useHistory, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux'
+import { updateDisplayed } from '../../redux/actions/products.actions';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -68,7 +69,7 @@ const Search = styled('div')(({ theme }) => ({
     
     const [input, setInput] = React.useState('')
     
-    const history = useHistory();
+    const history = useHistory()
     const location = useLocation()
     const dispatch = useDispatch()
   
@@ -84,10 +85,12 @@ const Search = styled('div')(({ theme }) => ({
   
     const handleOnKeyDown = (event) => {
       if (event.keyCode === 13) {
-        if (location.pathname !== '/home') { 
-          // console.log('redirecting')
-          history.push(`/home`)
-        }
+        // if (location.pathname !== '/juira') { 
+          // console.log(input)
+          setInput('')
+          dispatch(updateDisplayed(input))
+          history.push(`/juira`)
+        // }
       }
     }
   
@@ -227,7 +230,7 @@ const Search = styled('div')(({ theme }) => ({
             <Box sx={{ flexGrow: 1 }} />
   
             <Box sx={{ display: { xs: 'none', md: 'flex' }}}>
-            <Link component={RouterLink} to='/shoppingCart' underline='none' sx={{ color: '#ffffff'}}>
+            <Link component={RouterLink} to='/juira' underline='none' sx={{ color: '#ffffff'}}>
               <Tooltip title='Carrito de compras' arrow>
                 <IconButton
                   size="large"
@@ -243,7 +246,7 @@ const Search = styled('div')(({ theme }) => ({
             </Link >
   
             
-              <Link component={RouterLink} to='/login' underline='none' sx={{ color: '#ffffff'}}>
+              <Link component={RouterLink} to='/juira' underline='none' sx={{ color: '#ffffff'}}>
               {/* <AccountCircle /> */}
               <Tooltip title='Iniciar sesión o registrarse' arrow>
                 <IconButton
