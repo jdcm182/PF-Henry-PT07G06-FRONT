@@ -10,15 +10,18 @@ export const REMOVE_CART = "REMOVE_CART";
 export const ADD_CART = "ADD_CART"
 
 
-
-
-
-
-export const updateDisplayed = (payload) => (dispatch) => {
-  return dispatch({
-    type: PRODUCTS_TO_DISPLAY,
-    payload: payload,
-  });
+export const updateDisplayed = (query) => async (dispatch) => {
+  const url = `${API_URL_BACKEND}products/?name=${query}`;
+  try {
+    let res = await axios(url);
+    console.log(res.data)
+    return dispatch({
+      type: PRODUCTS_TO_DISPLAY,
+      payload: res.data,
+    });
+  } catch (error) {
+    console.log("error api", error);
+  }
 };
 
 export const getAllProducts = () => async (dispatch) => {
