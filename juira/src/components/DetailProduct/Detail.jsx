@@ -24,22 +24,23 @@ export default function Detail() {
 
     const dispatch=useDispatch()
     const {id}=useParams()
+    console.log(id)
 
      React.useEffect(()=>{
       dispatch(getProductDetails(id))
      },[dispatch, id])
 
-   const p= useSelector((state)=>state.productDetails)
+   let p= useSelector((state)=>state.productDetails)
 
 
      function handleAddToCart(e) {
-      e.preventDefault()
       alert("Se agrego al carrito")
     //  dispatch(handleAddToCart(p))
       
      }
 
-  (Object.keys(p).length !== 0)?console.log(p):
+  (p&&Object.keys(p).length !== 0)?console.log(p):
+  
      p={
         id:1,
         name:'Sillon Individual Moderno Living 1 Cuerpo Pana',
