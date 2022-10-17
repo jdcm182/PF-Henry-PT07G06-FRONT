@@ -1,4 +1,4 @@
-import { TURN_OFF_SPINNER, TURN_ON_SPINNER, UPDATE_FILTER_STATE } from "../actions";
+import { TURN_OFF_SPINNER, TURN_ON_SPINNER, UPDATE_FILTER_STATE } from "../actions/app.actions";
 
 
 const initialState = {

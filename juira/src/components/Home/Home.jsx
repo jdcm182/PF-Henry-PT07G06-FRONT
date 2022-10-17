@@ -28,9 +28,9 @@ export default function Home() {
                     <CardsGrid />
                 </div>
             </div>
-            <div className={styles.footerWrapper}>
+            {/* <div className={styles.footerWrapper}>
                 <Footer />
-            </div>
+            </div> */}
         </section>
     )
 }

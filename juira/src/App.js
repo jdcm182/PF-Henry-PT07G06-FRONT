@@ -14,7 +14,7 @@ function App() {
     <BrowserRouter >
     <Switch>
       <Route exact path={'/'} component={Landing} />
-      <Route path={'/juira'} component={Home} />
+      <Route exact path={'/juira'} component={Home} />
       <Route path={'/juira/sell'} component={SellForm} />
       <Route path={'/juira/:id'} component={Detail} />
     </Switch>

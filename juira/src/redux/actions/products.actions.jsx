@@ -1,3 +1,8 @@
+import axios from "axios";
+import { getAllProductsApi, API_URL_BACKEND } from "../../api/apiRoute";
+
+
+
 export const PRODUCTS_TO_DISPLAY = "PRODUCTS_TO_DISPLAY";
 export const ALL_PRODUCTS = "ALL_PRODUCTS";
 export const PRODUCT_DETAILS = "PRODUCT_DETAILS";
@@ -5,9 +10,6 @@ export const REMOVE_CART = "REMOVE_CART";
 export const ADD_CART = "ADD_CART"
 
 
-
-import axios from "axios";
-import { getAllProductsApi } from "../../api/apiRoute";
 
 
 
