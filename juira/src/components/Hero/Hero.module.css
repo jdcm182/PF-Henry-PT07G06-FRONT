@@ -35,6 +35,12 @@
     z-index: 2;
 }
 
+.img {
+    /* height: 2rem; */
+    width: 30%;
+    height: auto;
+}
+
 /* .divContainer {
     background-color: rgba(255, 0, 0, 0.212);
     width: 100%;
@@ -65,23 +71,3 @@
     width: 350px;
     background-color: white;
 } */
-
-.categoryBtn {
-    background-color: var(--primaryColor);
-    color: white;
-    padding: .125rem 1.5rem;
-    margin: .125rem;
-    border-radius: .25rem;
-}
-
-a.categoryBtn {
-    text-decoration: none;
-}
-
-a.categoryBtn:hover {
-    background-color: var(--btnHoverColor);
-}
-
-a.categoryBtn:active {
-    background-color: var(--btnActiveColor);
-}

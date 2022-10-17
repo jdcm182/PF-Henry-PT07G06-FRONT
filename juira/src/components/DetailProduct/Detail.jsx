@@ -24,13 +24,15 @@ export default function Detail() {
 
     const dispatch=useDispatch()
     const {id}=useParams()
-    console.log(id)
+  
 
      React.useEffect(()=>{
       dispatch(getProductDetails(id))
      },[dispatch, id])
 
-   let p= useSelector((state)=>state.productDetails)
+   let p= useSelector((state)=>state.productsReducer.productDetails
+   )
+   console.log("estaderedux",p)
 
 
      function handleAddToCart(e) {
