@@ -21,6 +21,8 @@ import Tooltip from '@mui/material/Tooltip';
 import { useHistory, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux'
 import { updateDisplayed } from '../../redux/actions/products.actions';
+import style from "../Navbar/Navbar.module.css";
+import image from "../media/juira_color.png";
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -212,7 +214,9 @@ const Search = styled('div')(({ theme }) => ({
               component="div"
               sx={{ display: { xs: 'none', sm: 'block' } }}
             >
-              JUIRA's Logo
+              <Link href="/juira">
+                <img className={style.img} src={image} alt="juria"></img>
+              </Link>
             </Typography>
             
             <Search>
