@@ -117,7 +117,7 @@ export default function SellForm() {
     // else{
       // dispatch(publishProd(data)) }
       setData({
-        name:'',
+      name:'',
       price: 0,
       description:'',
       condition:'',
