@@ -12,8 +12,6 @@ export default function PaginationButtons({ page, setPage, maxPage, products }) 
   },[products])
 
   return (
-    <Stack spacing={2}>
       <Pagination count={maxPage} onChange={(event, page) => handleChange(page)} showFirstButton showLastButton />
-    </Stack>
   );
 }

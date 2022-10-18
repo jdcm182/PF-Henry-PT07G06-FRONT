@@ -23,7 +23,7 @@ export function productsReducer(state = initialState, action) {
       return {
         ...state,
         allProducts: action.payload,
-        productsToDisplay: action.payload,
+       /*  productsToDisplay: action.payload, */
       };
     }
     case PRODUCT_DETAILS: {

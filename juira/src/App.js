@@ -8,10 +8,14 @@ import Detail from './components/DetailProduct/Detail';
 import SellForm from './components/SellorEditProduct/SellForm';
 import Footer from './components/Footer/Footer';
 import NavBar from './components/Navbar/Navbar'
+import ShoppingCart from './components/ShoppingCart/ShoppingCart';
+
 
 
 function App() {
+  
   const {pathname} = useLocation()
+  console.log(pathname)
   return (
     <div className="App">
     <BrowserRouter >
@@ -19,6 +23,7 @@ function App() {
     <Switch>
       <Route exact path={'/'} component={Landing} />
       <Route exact path={'/juira'} component={Home} />
+      <Route exact path={'/juira/shoppingCart'} component={ShoppingCart} />
       <Route path={'/juira/sell'} component={SellForm} />
       <Route path={'/juira/:id'} component={Detail} />
     </Switch>

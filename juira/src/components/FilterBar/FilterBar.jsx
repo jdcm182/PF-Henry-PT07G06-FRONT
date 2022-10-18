@@ -25,6 +25,7 @@ const sort = ["Mayor Valor", "Menor Valor", "A-Z", "Z-A"];
 
 const FilterBar = () => {
   const options = useSelector((state) => state.productsReducer.allCategories);
+  const filterState = useSelector((state)=> state.app.filterState.categories)
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getCategoriesNames());
@@ -39,7 +40,7 @@ const FilterBar = () => {
   const handleMenuItemClick = (event, category) => {
     dispatch(updateFilter({ name: "categories", value: category }));
     
-    setSelectedIndex(category);
+    /* setSelectedIndex(category); */
     setAnchorEl(null);
   };
 
@@ -49,9 +50,10 @@ const FilterBar = () => {
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+  
 
   return (
-    <AppBar position="static" style={{ backgroundColor: "#FFF" }}>
+    <AppBar position="relative" style={{ backgroundColor: "#FFF" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters variant="dense">
           <Button
@@ -62,6 +64,7 @@ const FilterBar = () => {
             aria-expanded={open ? "true" : undefined}
             onClick={handleClick}
             startIcon={<DensityMediumIcon />}
+            style={{ color: "var(--primaryColor" }}
           >
             Categorias
           </Button>
@@ -85,7 +88,7 @@ const FilterBar = () => {
               sx={{ fontWeight: "bold" }}
               key={0}
               /* disabled={index === 0} */
-              selected={"Todos" === selectedIndex}
+              selected={"Todos" === filterState}
               onClick={(event) => handleMenuItemClick(event, "Todos")}
             >
               Todos
@@ -95,7 +98,7 @@ const FilterBar = () => {
                 <MenuItem
                   key={index + 1}
                   /* disabled={index === 0} */
-                  selected={category === selectedIndex}
+                  selected={category === filterState}
                   onClick={(event) => handleMenuItemClick(event, category)}
                 >
                   {category}
@@ -103,15 +106,15 @@ const FilterBar = () => {
               ))}
           </Menu>
           <SortButton/>
-          <Typography
+          {/* <Typography
             variant="h6"
             component="div"
             sx={{ flexGrow: 1 }}
             textAlign="center"
-            style={{ color: "#252323" }}
+            style={{ color: "var(--primaryColor", textTransform: "Uppercase" }}
           >
-            {selectedIndex === 0 ? null : selectedIndex}
-          </Typography>
+            {filterState === 0 ? null : filterState}
+          </Typography> */}
         </Toolbar>
       </Container>
     </AppBar>
