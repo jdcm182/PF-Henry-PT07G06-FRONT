@@ -8,6 +8,7 @@ import Detail from './components/DetailProduct/Detail';
 import SellForm from './components/SellorEditProduct/SellForm';
 import Footer from './components/Footer/Footer';
 import NavBar from './components/NavBar/Navbar'
+import ShoppingCart from './components/ShoppingCart/ShoppingCart';
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
     <Switch>
       <Route exact path={'/'} component={Landing} />
       <Route exact path={'/juira'} component={Home} />
+      <Route exact path={'/juira/shoppingCart'} component={ShoppingCart} />
       <Route path={'/juira/sell'} component={SellForm} />
       <Route path={'/juira/:id'} component={Detail} />
     </Switch>
