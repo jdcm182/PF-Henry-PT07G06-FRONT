@@ -106,7 +106,7 @@ const FilterBar = () => {
               ))}
           </Menu>
           <SortButton/>
-          <Typography
+          {/* <Typography
             variant="h6"
             component="div"
             sx={{ flexGrow: 1 }}
@@ -114,7 +114,7 @@ const FilterBar = () => {
             style={{ color: "var(--primaryColor", textTransform: "Uppercase" }}
           >
             {filterState === 0 ? null : filterState}
-          </Typography>
+          </Typography> */}
         </Toolbar>
       </Container>
     </AppBar>
