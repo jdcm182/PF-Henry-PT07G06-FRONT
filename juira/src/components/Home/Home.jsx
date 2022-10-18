@@ -96,9 +96,9 @@ export default function Home(/* { prods, getAll } */) {
       <div className={styles.mainContainer}>
         {/*  ..MAIN.. */}
 
-        <div className={styles.sideWrapper}>
+        {/* <div className={styles.sideWrapper}>
           <Sidebar />
-        </div>
+        </div> */}
         <div className={styles.cardsGridContainer}>
           <CardsGrid products={stateFilterAndSort} />
         </div>
