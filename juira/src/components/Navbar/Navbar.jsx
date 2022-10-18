@@ -23,6 +23,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { updateDisplayed } from '../../redux/actions/products.actions';
 import style from "./Navbar.module.css";
 import image from "../media/juira_color.png";
+import { updateFilter } from "../../redux/actions/app.actions";
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -214,7 +215,11 @@ const Search = styled('div')(({ theme }) => ({
               component="div"
               sx={{ display: { xs: 'none', sm: 'block' } }}
             >
-              <Link component={RouterLink} to='/juira' underline='none'>
+              <Link component={RouterLink} to='/juira' underline='none' onClick={()=>{
+              dispatch(updateFilter({ name: "categories", value: "Todos"}))
+              dispatch(updateFilter({ name: "sort", value: "A-Z"}))
+              
+              }} >
                 <img className={style.img} src={image} alt="juria"></img>
               </Link>
             </Typography>

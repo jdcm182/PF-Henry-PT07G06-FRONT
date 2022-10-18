@@ -33,7 +33,7 @@ export default function Detail() {
 
    let p= useSelector((state)=>state.productsReducer.productDetails
    )
-   console.log("estaderedux",p)
+ 
 
 
      function handleAddToCart(e) {
