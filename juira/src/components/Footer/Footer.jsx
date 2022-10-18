@@ -28,7 +28,7 @@ export default function Footer() {
                         </Box>
                         <Box>
                             <Link href="/" color = "inherit">
-                                Administart mi cuenta
+                                Administrar mi cuenta
                             </Link>
                         </Box>
                         <Box>
