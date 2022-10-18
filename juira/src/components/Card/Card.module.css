@@ -3,13 +3,20 @@
      background-color: var(--UiLightColor); 
     /* height: 320px;
     width: 250px; */
-    /* max-width: 300px; */
-
+     max-width: 300px;
+    border-radius: 5px;
     /* float: left; */
     /* margin-right: 3rem; */
     margin: .5rem;
     border-radius: .5rem;
+    transition: 300ms;
 
+}
+
+.cardContainer:hover {
+    box-shadow: 1px 0px 23px 0px rgba(135,135,135,0.75);
+    -webkit-box-shadow: 1px 0px 23px 0px rgba(135,135,135,0.75);
+    -moz-box-shadow: 1px 0px 23px 0px rgba(135,135,135,0.75);
 }
 
 .card {
@@ -18,9 +25,7 @@
     transition: 0.3s ease-in-out;
 }
 
-.card:hover {
-    transform: scale(1.05);
-}
+
 
 .card__content {
     background-color: var(--UiLightColor);

@@ -6,7 +6,7 @@
     row-gap: 1rem; */
     /* display: block; */
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-gap: 1rem;
     align-items: stretch;
     width: auto;
@@ -25,7 +25,7 @@
 .product_grid {
     display: grid;
     gap: .125rem;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
 .cardItem {
