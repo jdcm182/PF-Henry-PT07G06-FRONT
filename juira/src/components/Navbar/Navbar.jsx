@@ -23,6 +23,7 @@ import { useSelector, useDispatch } from "react-redux";
 /* import { updateDisplayed } from '../../redux/actions/products.actions'; */
 import style from "./Navbar.module.css";
 import image from "../media/juira_white.png";
+import { updateFilter } from "../../redux/actions/app.actions";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -244,24 +245,6 @@ export default function PrimarySearchAppBar() {
     
             </Typography>
             
-            <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Buscar un producto..."
-                inputProps={{ 'aria-label': 'search' }}
-                onChange={ e => handleOnChange(e)}
-                value={input}
-                autoFocus={true}
-                onKeyDown={ e => handleOnKeyDown(e)}
-              />
-            </Search>
-            <Box sx={{ flexGrow: 1 }} />
-  
-            <Box sx={{ display: { xs: 'none', md: 'flex' }}}>
-
-
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
