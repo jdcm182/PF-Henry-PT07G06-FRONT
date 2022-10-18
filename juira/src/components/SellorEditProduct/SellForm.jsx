@@ -124,9 +124,8 @@ export default function SellForm() {
 
   let handleOnSubmit=(e)=> {
     
-    if (Object.values(error).length > 0 || data.name.length===0)  
-    {
-    // document.getElementById("myBtn").disabled = true;
+    if (Object.values(error).length > 0 || data.name.length===0)  {
+   
     alert('Complete todos los campos por favor!')
     }
     else{
@@ -205,7 +204,10 @@ export default function SellForm() {
           multiline
           maxRows={4}
           variant="filled"
-          sx={{width:1,}}>
+          sx={{width:1,}}
+          error={error.name}
+          helperText={error.name}
+          >
           
       </TextField>
 
@@ -219,6 +221,8 @@ export default function SellForm() {
           value={data.description}
           variant="filled"
           sx={{width:1}}
+          error={error.description}
+          helperText={error.description}
         />
      
       </Stack>
@@ -237,6 +241,8 @@ export default function SellForm() {
           onChange={handleOnChange}
           variant="filled"
           sx={{width:140, mb:3,}}
+          error={error.price}
+          helperText={error.price}
         />
        
       <FormControl variant="filled" sx={{ minWidth: 140, pb:3 }}>
@@ -247,6 +253,7 @@ export default function SellForm() {
           name='categories'
           value={data.categories}
           onChange={handleOnChange}
+          error={error.categories}
         >
           <MenuItem value="">
             <em>None</em>
@@ -264,6 +271,7 @@ export default function SellForm() {
           name='condition'
           value={data.condition}
           onChange={handleOnChange}
+          error={error.condition}
         >
           <MenuItem value="">
             <em>None</em>
@@ -282,11 +290,14 @@ export default function SellForm() {
       {previewSource?(
           <img src={previewSource} alt='chosenOne' style={{height:'250px', margin: '10px', width: '250px', border:'2px dashed green'
         }}/>
-        ):<div style={{height:'250px', margin: '10px', width: '250px', border:'2px dashed grey'}}></div>}
+        ):(error.image)?
+        <div style={{height:'250px', margin: '10px', width: '250px', border:'2px dashed red'}}></div>
+        :
+        <div style={{height:'250px', margin: '10px', width: '250px', border:'2px dashed grey'}}></div>}
       
       
       <Stack direction="row" alignItems="center" spacing={2} sx={{justifyContent: 'center'}}>
-      <Button onClick={handleImage} variant="contained" component="label" color="success">
+      <Button onClick={handleImage} variant="contained" component="label" color="success" disabled={!previewSource}>
       <Typography sx={{ fontSize: 14, width:1 }}  color="text.secondary" >
       Subir Imagen
       </Typography>
@@ -304,8 +315,8 @@ export default function SellForm() {
    </Stack>
 </Stack>
     
-   <Button variant="contained" color="success" sx={{ mt:5 }}  onClick={handleOnSubmit}>
-   <Typography sx={{ fontSize: 20, width:1 }} color="black" gutterBottom>
+   <Button variant="contained" color="success" sx={{ mt:5 }}  onClick={handleOnSubmit} disabled={(Object.values(error).length > 0 || data.name.length===0)} >
+   <Typography sx={{ fontSize: 20, width:1 }} color="black" gutterBottom >
       SACAR PA' JUIRA
     </Typography>
         
