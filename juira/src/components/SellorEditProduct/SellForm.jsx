@@ -96,17 +96,23 @@ export default function SellForm() {
 
 
   const handleOnChange=(e)=>{
-    if (e.target.name === "precio") {
+  if (e.target.name === "price") {
       setData({
         ...data,
         [e.target.name]: Number(e.target.value),
       });}
-
-      
+         
+  else if (e.target.name === "categories") {
     setData({...data,
-      [e.target.name]:e.target.value}
+      [e.target.name]:[e.target.value]}
       )
-      
+    }
+    else{
+      setData({...data,
+        [e.target.name]:e.target.value})
+    }
+
+    
       setError(
         validate({...data,
           [e.target.name]:e.target.value})
@@ -300,7 +306,7 @@ export default function SellForm() {
     
    <Button variant="contained" color="success" sx={{ mt:5 }}  onClick={handleOnSubmit}>
    <Typography sx={{ fontSize: 20, width:1 }} color="black" gutterBottom>
-      PUBLICAR JUIRA
+      SACAR PA' JUIRA
     </Typography>
         
   </Button>

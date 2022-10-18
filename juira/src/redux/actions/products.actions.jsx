@@ -96,7 +96,7 @@ export const getCategories = () => async (dispatch) => {
 };
 
 export const publishProd=(data)=> async () => {
-  const url = `${API_URL_BACKEND}`;
+  const url = `${API_URL_BACKEND}${getAllProductsApi}`;
   try {
     let json = await axios.post(url,data);
     return json
