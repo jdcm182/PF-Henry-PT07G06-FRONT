@@ -177,11 +177,8 @@ export default function SellForm() {
         top: 20,
         width: 0.90,
         height: 'fit-content',
-        backgroundColor: '#66bb6a',
-        '&:hover': {
-          backgroundColor: '#81c784',
-          boxShadow: 3,
-        },
+        backgroundColor: '#81c784',
+        
       }}
     > 
 
