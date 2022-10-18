@@ -22,8 +22,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux'
 import { updateDisplayed } from '../../redux/actions/products.actions';
 import style from "./Navbar.module.css";
-import image from "../media/juira_color.png";
-import { updateFilter } from "../../redux/actions/app.actions";
+import image from "../media/juira_white.png";
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -196,8 +195,8 @@ const Search = styled('div')(({ theme }) => ({
       color: '#ffffff',
     }
     return (
-      <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static" color='success'>
+      <Box position="sticky" top="0" left="0" zIndex="5" sx={{ flexGrow: 1 }}>
+        <AppBar position="relative" color='success' style={{ backgroundColor: "var(--primaryColor)" }}>
           <Toolbar>
             <IconButton
               size="large"
@@ -215,11 +214,7 @@ const Search = styled('div')(({ theme }) => ({
               component="div"
               sx={{ display: { xs: 'none', sm: 'block' } }}
             >
-              <Link component={RouterLink} to='/juira' underline='none' onClick={()=>{
-              dispatch(updateFilter({ name: "categories", value: "Todos"}))
-              dispatch(updateFilter({ name: "sort", value: "A-Z"}))
-              
-              }} >
+              <Link component={RouterLink} to='/juira' underline='none'>
                 <img className={style.img} src={image} alt="juria"></img>
               </Link>
             </Typography>

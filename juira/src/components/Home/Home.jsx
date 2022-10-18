@@ -60,22 +60,22 @@ export default function Home(/* { prods, getAll } */) {
       <div className={styles.heroWrapper}>
         <Hero />
       </div>
-      <div className={styles.navWrapper}>
+      <div className={styles.filterBarWrapper}>
         {/* <Navbar /> */}
         <FilterBar />
       </div>
       <div className={styles.mainContainer}>
         {/*  ..MAIN.. */}
-        <div className={styles.sideWrapper}>
+        {/* <div className={styles.sideWrapper}>
           <Sidebar />
-        </div>
+        </div> */}
         <div className={styles.cardsGridContainer}>
           <CardsGrid products={stateFilterAndSort} />
         </div>
       </div>
-      {/* <div className={styles.footerWrapper}>
+      {<div className={styles.footerWrapper}>
                 <Footer />
-            </div> */}
+            </div>}
     </section>
   );
 

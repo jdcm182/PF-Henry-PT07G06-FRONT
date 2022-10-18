@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Hero.module.css';
-import logo from '../media/juira_color.png';
+//import logo from '../media/juira_color.png';
 
 export default function Hero() {
     return (
@@ -10,9 +10,9 @@ export default function Hero() {
                     hero
                 </div>
             </div> */}
-            <div className={styles.box}>
+            {/* <div className={styles.box}>
                 <img className={styles.img} src={logo} alt='Juira logo' />
-            </div>
+            </div> */}
             { /* <div className={styles.imgWrapper}> */}
             <div className={styles.imgPattern}>
             </div>
