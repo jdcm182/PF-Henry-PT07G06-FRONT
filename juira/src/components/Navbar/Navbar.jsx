@@ -21,7 +21,7 @@ import Tooltip from '@mui/material/Tooltip';
 import { useHistory, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux'
 import { updateDisplayed } from '../../redux/actions/products.actions';
-import style from "../Navbar/Navbar.module.css";
+import style from "./Navbar.module.css";
 import image from "../media/juira_color.png";
 
 const Search = styled('div')(({ theme }) => ({
@@ -162,7 +162,7 @@ const Search = styled('div')(({ theme }) => ({
           </MenuItem>
         </Link>
         
-        <Link component={RouterLink} to='/shoppingCart' underline='none' sx={{ color: ''}}>
+        <Link component={RouterLink} to='/juira/shoppingCart' underline='none' sx={{ color: ''}}>
           <MenuItem>
             <IconButton
               size="large"
@@ -214,7 +214,7 @@ const Search = styled('div')(({ theme }) => ({
               component="div"
               sx={{ display: { xs: 'none', sm: 'block' } }}
             >
-              <Link href="/juira">
+              <Link component={RouterLink} to='/juira' underline='none'>
                 <img className={style.img} src={image} alt="juria"></img>
               </Link>
             </Typography>
@@ -248,7 +248,7 @@ const Search = styled('div')(({ theme }) => ({
               </Tooltip>
             </Link >
 
-            <Link component={RouterLink} to='/juira' underline='none' sx={{ color: '#ffffff'}}>
+            <Link component={RouterLink} to='/juira/shoppingCart' underline='none' sx={{ color: '#ffffff'}}>
               <Tooltip title='Carrito de compras' arrow>
                 <IconButton
                   size="large"
