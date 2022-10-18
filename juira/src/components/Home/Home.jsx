@@ -102,9 +102,7 @@ export default function Home(/* { prods, getAll } */) {
           <CardsGrid products={stateFilterAndSort} />
         </div>
       </div>
-      {<div className={styles.footerWrapper}>
-                <Footer />
-            </div>}
+ 
     </section>
   );
 }

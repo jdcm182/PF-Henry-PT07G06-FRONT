@@ -40,7 +40,7 @@ export default function ShoppingCart() {
                 </TableRow>
                 </TableHead>
                 <TableBody>
-                {items.map((row, i) => (
+                {items&&items.slice(0,2).map((row, i) => (
                     <TableRow
                     key={i + 1}
                     // sx={{ '&:last-child td, &:last-child th': { border: 0 }}}

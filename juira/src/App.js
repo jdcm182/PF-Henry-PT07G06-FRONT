@@ -11,8 +11,11 @@ import NavBar from './components/Navbar/Navbar'
 import ShoppingCart from './components/ShoppingCart/ShoppingCart';
 
 
+
 function App() {
+  
   const {pathname} = useLocation()
+  console.log(pathname)
   return (
     <div className="App">
     <BrowserRouter >
