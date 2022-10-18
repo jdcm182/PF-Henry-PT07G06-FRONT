@@ -7,12 +7,10 @@
     flex-direction: column;
 }
 
-.navWrapper {
+.filterBarWrapper {
     /* border: 2px dashed green; */
     height: 3rem;
-    position: absolute;
-    top: 0;
-    left: 0;
+    position: relative;
     width: 100%;
 }
 

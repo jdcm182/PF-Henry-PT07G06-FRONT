@@ -86,7 +86,7 @@ export default function Home(/* { prods, getAll } */) {
       <div className={styles.heroWrapper}>
         <Hero />
       </div>
-      <div className={styles.navWrapper}>
+      <div className={styles.filterBarWrapper}>
         {/* <Navbar /> */}
         <FilterBar />
       </div>
@@ -95,7 +95,6 @@ export default function Home(/* { prods, getAll } */) {
       </Typography>}
       <div className={styles.mainContainer}>
         {/*  ..MAIN.. */}
-
         {/* <div className={styles.sideWrapper}>
           <Sidebar />
         </div> */}
@@ -103,9 +102,9 @@ export default function Home(/* { prods, getAll } */) {
           <CardsGrid products={stateFilterAndSort} />
         </div>
       </div>
-      {/* <div className={styles.footerWrapper}>
+      {<div className={styles.footerWrapper}>
                 <Footer />
-            </div> */}
+            </div>}
     </section>
   );
 }

@@ -22,8 +22,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 /* import { updateDisplayed } from '../../redux/actions/products.actions'; */
 import style from "./Navbar.module.css";
-import image from "../media/juira_color.png";
-import { updateFilter } from "../../redux/actions/app.actions";
+import image from "../media/juira_white.png";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -203,44 +202,65 @@ export default function PrimarySearchAppBar() {
           </IconButton>
           <p>Profile</p>
         </MenuItem> */}
-    </Menu>
-  );
 
-  const linkSx = {
-    color: "#ffffff",
-  };
-  return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" color="success">
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-          >
-            {/* <MenuIcon /> */}
-          </IconButton>
-
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ display: { xs: "none", sm: "block" } }}
-          >
-            <Link
+      </Menu>
+    );
+    
+    const linkSx = {
+      color: '#ffffff',
+    }
+    return (
+      <Box position="sticky" top="0" left="0" zIndex="5" sx={{ flexGrow: 1 }}>
+        <AppBar position="relative" color='success' style={{ backgroundColor: "var(--primaryColor)" }}>
+          <Toolbar>
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="open drawer"
+              sx={{ mr: 2 }}
+            >
+              {/* <MenuIcon /> */}
+            </IconButton>
+  
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ display: { xs: 'none', sm: 'block' } }}
+            >
+            
+               <Link
               component={RouterLink}
               to="/juira"
               underline="none"
               onClick={() => {
                 dispatch(updateFilter({ name: "categories", value: "Todos" }));
                 dispatch(updateFilter({ name: "sort", value: "A-Z" }));
-              }}
-            >
+              }}>
               <img className={style.img} src={image} alt="juria"></img>
             </Link>
-          </Typography>
+            
+    
+            </Typography>
+            
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Buscar un producto..."
+                inputProps={{ 'aria-label': 'search' }}
+                onChange={ e => handleOnChange(e)}
+                value={input}
+                autoFocus={true}
+                onKeyDown={ e => handleOnKeyDown(e)}
+              />
+            </Search>
+            <Box sx={{ flexGrow: 1 }} />
+  
+            <Box sx={{ display: { xs: 'none', md: 'flex' }}}>
+
 
           <Search>
             <SearchIconWrapper>
