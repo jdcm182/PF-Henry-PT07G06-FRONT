@@ -16,6 +16,7 @@ import { useParams } from 'react-router-dom';
 const Img = styled("img")({
     margin: "auto",
     display: "block",
+    height: 500
   });
 
 
@@ -32,7 +33,7 @@ export default function Detail() {
 
    let p= useSelector((state)=>state.productsReducer.productDetails
    )
-   console.log("estaderedux",p)
+ 
 
 
      function handleAddToCart(e) {
