@@ -9,7 +9,7 @@ export const PRODUCT_DETAILS = "PRODUCT_DETAILS";
 export const REMOVE_CART = "REMOVE_CART";
 export const ADD_CART = "ADD_CART"
 export const GET_CATEGORIES_NAMES = "GET_CATEGORIES_NAMES"
-export const GET_CATEGORIES_ID = "GET_CATEGORIES_ID"
+export const GET_CATEGORIES = "GET_CATEGORIES"
 
 
 export const updateDisplayed = (query) => async (dispatch) => {
@@ -82,15 +82,24 @@ export const getCategoriesNames = () => async (dispatch) => {
   }
 };
 
-export const getCategoriesId = () => async (dispatch) => {
+export const getCategories = () => async (dispatch) => {
   const url = `${API_URL_BACKEND}${getCategoriesIdApi}`;
   try {
     let {data} = await axios(url);
-  
     return dispatch({
-      type: GET_CATEGORIES_ID,
+      type: GET_CATEGORIES,
       payload: data,
     });
+  } catch (error) {
+    console.log("error api", error);
+  }
+};
+
+export const publishProd=(data)=> async () => {
+  const url = `${API_URL_BACKEND}${getAllProductsApi}`;
+  try {
+    let json = await axios.post(url,data);
+    return json
   } catch (error) {
     console.log("error api", error);
   }
