@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './CardsGrid.module.css';
 import Card from '../Card/Card.jsx'
 import Pagination from '../Pagination/Pagination'
+import Container from '@mui/material/Container';
 
 export default function CardsGrid({ products }) {
 
@@ -24,13 +25,22 @@ export default function CardsGrid({ products }) {
                 ))}
 
             </div>
-            <Pagination
-                page={page}
-                setPage={setPage}
-                maxPage={maxPage}
-                products={products}
-            >
-            </Pagination>
+            <Container
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    bgcolor: 'background.paper',
+                    borderRadius: 1,
+                    p: 1,
+                }}>
+                <Pagination
+                    page={page}
+                    setPage={setPage}
+                    maxPage={maxPage}
+                    products={products}
+                    >
+                </Pagination>
+            </Container>
         </div >
     )
 }
