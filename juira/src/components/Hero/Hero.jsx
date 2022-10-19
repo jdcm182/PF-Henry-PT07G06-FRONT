@@ -1,7 +1,9 @@
+
 import React from "react";
 import styles from "./Hero.module.css";
 import logo from "../media/juira_color.png";
 import { useSelector } from "react-redux";
+
 
 export default function Hero() {
   const { categories } = useSelector((state) => state.app.filterState);
@@ -12,6 +14,7 @@ export default function Hero() {
                     hero
                 </div>
             </div> */}
+
       <div className={styles.box}>
         {/* <img className={styles.img} src={logo} alt='Juira logo' /> */}
         <div>{categories === "Todos" ? "BIENVENIDO A JUIRA" : categories.toUpperCase()}</div>
@@ -21,4 +24,5 @@ export default function Hero() {
       {/* </div> */}
     </section>
   );
+
 }

@@ -53,7 +53,7 @@ const FilterBar = () => {
   
 
   return (
-    <AppBar position="static" style={{ backgroundColor: "#FFF" }}>
+    <AppBar position="relative" style={{ backgroundColor: "#FFF" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters variant="dense">
           <Button
@@ -64,6 +64,7 @@ const FilterBar = () => {
             aria-expanded={open ? "true" : undefined}
             onClick={handleClick}
             startIcon={<DensityMediumIcon />}
+            style={{ color: "var(--primaryColor" }}
           >
             Categorias
           </Button>
@@ -110,7 +111,7 @@ const FilterBar = () => {
             component="div"
             sx={{ flexGrow: 1 }}
             textAlign="center"
-            style={{ color: "#252323" }}
+            style={{ color: "var(--primaryColor", textTransform: "Uppercase" }}
           >
             {filterState === 0 ? null : filterState}
           </Typography> */}

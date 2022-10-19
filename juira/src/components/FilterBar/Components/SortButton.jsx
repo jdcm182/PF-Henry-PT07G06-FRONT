@@ -44,6 +44,7 @@ const SortButton = () => {
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
+        style={{ color: "var(--primaryColor", marginLeft: "2rem" }}
       >
         Ordenar
       </Button>

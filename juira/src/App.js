@@ -7,12 +7,15 @@ import Home from './components/Home/Home.jsx';
 import Detail from './components/DetailProduct/Detail';
 import SellForm from './components/SellorEditProduct/SellForm';
 import Footer from './components/Footer/Footer';
-import NavBar from './components/NavBar/Navbar'
+import NavBar from './components/Navbar/Navbar'
 import ShoppingCart from './components/ShoppingCart/ShoppingCart';
 
 
+
 function App() {
+  
   const {pathname} = useLocation()
+  console.log(pathname)
   return (
     <div className="App">
     <BrowserRouter >
