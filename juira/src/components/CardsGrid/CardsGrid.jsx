@@ -7,14 +7,13 @@ import Container from '@mui/material/Container';
 export default function CardsGrid({ products }) {
 
     const [page, setPage] = React.useState(1)
-    const [perPage, setPerPage] = React.useState(8)
+    const [perPage, setPerPage] = React.useState(9)
     const maxPage = Math.ceil(products.length / perPage)
 
     return (
         <div className={styles.container/* cards_grid_container */}>
             <div className={styles.product_grid}>
-
-
+            {products.length===0?<div className={styles.divI}>Upa! Todavía no hay productos publicados!</div>:""}
                 {products && products
                 .slice(
                     (page - 1) * perPage,
