@@ -24,6 +24,7 @@ import { useSelector, useDispatch } from "react-redux";
 import style from "./Navbar.module.css";
 import image from "../media/juira_white.png";
 import { updateFilter } from "../../redux/actions/app.actions";
+import { updateCart } from "../../redux/actions/products.actions";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -67,6 +68,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function PrimarySearchAppBar() {
   const itemsInCart = useSelector((state) => state.productsReducer.cart) || 2; //default 2 para probar que las notificaciones del carrito funcionan
+
+  React.useEffect(() => {
+    const items = JSON.parse(localStorage.getItem("itemsInCart"));
+    if (items) {
+      dispatch(updateCart(items));
+    }
+  }, []);
 
   const products = useSelector((state) => state.allProducts) || [
     { name: "silla" },
@@ -203,48 +211,49 @@ export default function PrimarySearchAppBar() {
           </IconButton>
           <p>Profile</p>
         </MenuItem> */}
+    </Menu>
+  );
 
-      </Menu>
-    );
-    
-    const linkSx = {
-      color: '#ffffff',
-    }
-    return (
-      <Box position="sticky" top="0" left="0" zIndex="5" sx={{ flexGrow: 1 }}>
-        <AppBar position="relative" color='success' style={{ backgroundColor: "var(--primaryColor)" }}>
-          <Toolbar>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              sx={{ mr: 2 }}
-            >
-              {/* <MenuIcon /> */}
-            </IconButton>
-  
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ display: { xs: 'none', sm: 'block' } }}
-            >
-            
-               <Link
+  const linkSx = {
+    color: "#ffffff",
+  };
+  return (
+    <Box position="sticky" top="0" left="0" zIndex="5" sx={{ flexGrow: 1 }}>
+      <AppBar
+        position="relative"
+        color="success"
+        style={{ backgroundColor: "var(--primaryColor)" }}
+      >
+        <Toolbar>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
+            sx={{ mr: 2 }}
+          >
+            {/* <MenuIcon /> */}
+          </IconButton>
+
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ display: { xs: "none", sm: "block" } }}
+          >
+            <Link
               component={RouterLink}
               to="/juira"
               underline="none"
               onClick={() => {
                 dispatch(updateFilter({ name: "categories", value: "Todos" }));
                 dispatch(updateFilter({ name: "sort", value: "A-Z" }));
-              }}>
+              }}
+            >
               <img className={style.img} src={image} alt="juria"></img>
             </Link>
-            
-    
-            </Typography>
-            
+          </Typography>
+
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
