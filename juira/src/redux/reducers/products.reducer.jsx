@@ -40,9 +40,13 @@ export function productsReducer(state = initialState, action) {
       };
     }
     case REMOVE_CART:
+      const aux2 = state.cart.filter(
+        (product) => product.id !== action.payload
+      );
+      localStorage.setItem("itemsInCart", JSON.stringify(aux2));
       return {
         ...state,
-        cart: state.cart.filter((product) => product.id !== action.payload),
+        cart: aux2,
       };
 
     case UPDATE_CART:
