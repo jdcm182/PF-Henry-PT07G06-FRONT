@@ -15,8 +15,8 @@ export default function Card(props) {
                         className={styles.card__img}
                         alt="Card" />
                     <div className={styles.card__content}>
+                        <p className={styles.card__price}>{"$ " + props.price.toLocaleString('de-DE')}</p>
                         <h2 className={styles.card__title}>{props.name}</h2>
-                        <p className={styles.card__price}>{"$ " + props.price.toLocaleString()}</p>
                         <p className={styles.card__description}></p>
                     </div>
                 </Link>
