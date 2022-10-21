@@ -103,16 +103,18 @@ export default function SellForm() {
       });}
          
   else if (e.target.name === "categories") {
-    setData({...data,
-      [e.target.name]:[e.target.value]}
-      )
+      setData({...data,
+        [e.target.name]: typeof e.target.value === 'string' ? e.target.value.split(',') : e.target.value}
+        )
+
+    
     }
     else{
       setData({...data,
         [e.target.name]:e.target.value})
     }
 
-    
+    console.log(data)
       setError(
         validate({...data,
           [e.target.name]:e.target.value})
@@ -190,7 +192,7 @@ export default function SellForm() {
 
 {/*Nombre y descripcion */}
 
-<Stack direction="column" alignItems="center" spacing={2}  sx={{width:0.45}}>
+<Stack  alignItems="center" spacing={2}  sx={{width:0.45}}>
       <TextField
           id="filled-multiline-flexible"
           label="Nombre del Producto"
@@ -202,7 +204,7 @@ export default function SellForm() {
           maxRows={4}
           variant="filled"
           sx={{width:1,}}
-          error={error.name}
+          error={Boolean(error.name)}
           helperText={error.name}
           >
           
@@ -218,14 +220,14 @@ export default function SellForm() {
           value={data.description}
           variant="filled"
           sx={{width:1}}
-          error={error.description}
+          error={Boolean(error.description)}
           helperText={error.description}
         />
      
       </Stack>
 
 {/*Precio Categoria y estado */}
-<Stack direction="Column" alignItems="center" spacing={2} sx={{justifyContent:'space-evenly'}}>
+<Stack  alignItems="center" spacing={2} sx={{justifyContent:'space-evenly'}}>
 
 <TextField
           id="filled-multiline-flexible"
@@ -238,19 +240,21 @@ export default function SellForm() {
           onChange={handleOnChange}
           variant="filled"
           sx={{width:140, mb:3,}}
-          error={error.price}
+          error={Boolean(error.price)}
           helperText={error.price}
         />
        
       <FormControl variant="filled" sx={{ minWidth: 140, pb:3 }}>
-        <InputLabel id="demo-simple-select-filled-label">Categoría</InputLabel>
+        <InputLabel id="demo-multiple-name-label">Categoría</InputLabel>
         <Select
-          labelId="demo-simple-select-filled-label"
-          id="demo-simple-select-filled"
+          labelId="demo-multiple-name-label"
+          id="demo-multiple-name"
+          multiple
           name='categories'
           value={data.categories}
           onChange={handleOnChange}
-          error={error.categories}
+          error={Boolean(error.categories)}
+          sx={{maxWidth:140}}
         >
           <MenuItem value="">
             <em>None</em>
@@ -268,7 +272,7 @@ export default function SellForm() {
           name='condition'
           value={data.condition}
           onChange={handleOnChange}
-          error={error.condition}
+          error={Boolean(error.condition)}
         >
           <MenuItem value="">
             <em>None</em>

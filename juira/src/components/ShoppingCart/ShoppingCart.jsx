@@ -13,15 +13,26 @@ import { pink } from '@mui/material/colors';
 import Button from '@mui/material/Button';
 import { IconButton } from '@mui/material';
 import PaidIcon from '@mui/icons-material/Paid';
+import {removeToCart} from '../../redux/actions/products.actions';
+
 
 
 
 export default function ShoppingCart() {
 
     const dispatch = useDispatch()
-    const items = useSelector( state => state.productsReducer.productsToDisplay)
+    const items = useSelector( state => state.productsReducer.cart)
+    console.log(items)
     let amount = 0
     items && items.forEach( p => amount += Number(p.price))
+
+
+    function handleRemoveinCart(p) {
+        console.log(p)
+        dispatch(removeToCart(p))
+      
+       }
+
 
     return (
         <Container>
@@ -46,7 +57,7 @@ export default function ShoppingCart() {
                     // sx={{ '&:last-child td, &:last-child th': { border: 0 }}}
                     size='small'
                 >
-                    <TableCell><IconButton><HighlightOffIcon sx={{ color: pink[500] }}/></IconButton></TableCell>
+                    <TableCell onClick={()=> handleRemoveinCart(row.id)}><IconButton><HighlightOffIcon sx={{ color: pink[500] }}/></IconButton></TableCell>
                     <TableCell component="th" scope="row">
                         {i + 1}
                     </TableCell>
