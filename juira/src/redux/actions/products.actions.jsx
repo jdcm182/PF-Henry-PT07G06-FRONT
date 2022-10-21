@@ -69,8 +69,7 @@ export const getProductDetails = (id) => async (dispatch) => {
 };
 
 export const addToCart = (payload) => (dispatch) => {
-  console.log('entre a add to cart')
-  console.log(payload)
+
   return dispatch({
     type: ADD_CART,
     payload: payload,
