@@ -66,7 +66,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function PrimarySearchAppBar() {
-  const itemsInCart = useSelector((state) => state.cart) || 2; //default 2 para probar que las notificaciones del carrito funcionan
+  const itemsInCart = useSelector((state) => state.productsReducer.cart) || 2; //default 2 para probar que las notificaciones del carrito funcionan
 
   const products = useSelector((state) => state.allProducts) || [
     { name: "silla" },

@@ -46,7 +46,7 @@ export function productsReducer(state = initialState, action) {
     case ADD_CART:
       return {
         ...state,
-        cart: state.cart.concat(action.payload),
+        cart: state.cart.push([action.payload]),
       };
     case GET_CATEGORIES_NAMES:
       return {
@@ -61,4 +61,5 @@ export function productsReducer(state = initialState, action) {
     default:
       return state;
   }
+  console.log(state)
 }

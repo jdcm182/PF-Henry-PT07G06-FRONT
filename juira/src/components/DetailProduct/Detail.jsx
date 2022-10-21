@@ -8,7 +8,7 @@ import ButtonBase from "@mui/material/ButtonBase";
 import Button from '@mui/material/Button';
 
 import { useSelector } from 'react-redux'
-import {getProductDetails} from '../../redux/actions/products.actions';
+import {getProductDetails,addToCart} from '../../redux/actions/products.actions';
 import { useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom';
 
@@ -31,18 +31,17 @@ export default function Detail() {
       dispatch(getProductDetails(id))
      },[dispatch, id])
 
-   let p= useSelector((state)=>state.productsReducer.productDetails
-   )
+   let p= useSelector((state)=>state.productsReducer.productDetails)
  
 
 
-     function handleAddToCart(e) {
-      alert("Se agrego al carrito")
-    //  dispatch(handleAddToCart(p))
-      
+     function handleAddToCart(p) {
+      console.log(p)
+      dispatch(addToCart(p))
+    
      }
 
-  (p&&Object.keys(p).length !== 0)?console.log(p):
+  (p&&Object.keys(p).length !== 0)?<></>:
   
      p={
         id:1,

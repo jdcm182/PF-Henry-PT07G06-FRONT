@@ -19,9 +19,10 @@ import PaidIcon from '@mui/icons-material/Paid';
 export default function ShoppingCart() {
 
     const dispatch = useDispatch()
-    const items = useSelector( state => state.productsReducer.productsToDisplay)
+    const items = useSelector( state => state.productsReducer.cart)
+    console.log(items)
     let amount = 0
-    items && items.forEach( p => amount += Number(p.price))
+    // items && items.forEach( p => amount += Number(p.price))
 
     return (
         <Container>
