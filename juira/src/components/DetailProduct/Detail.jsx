@@ -57,6 +57,7 @@ export default function Detail() {
 
   return (
     <Container
+
       sx={{
         backgroundImage: `url(https://res.cloudinary.com/duq1tcwjw/image/upload/v1666132260/PF-JUIRA/patthern_oplhdn.jpg)`,
         backgroundSize: "cover",

@@ -10,6 +10,7 @@ import Footer from './components/Footer/Footer';
 import NavBar from './components/Navbar/Navbar'
 import ShoppingCart from './components/ShoppingCart/ShoppingCart';
 
+import ScrollToTop from './components/ScrollToTop'
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
     <div className="App">
     <BrowserRouter >
       {pathname !== '/' && <NavBar/>}
+      <ScrollToTop />
     <Switch>
       <Route exact path={'/'} component={Landing} />
       <Route exact path={'/juira'} component={Home} />

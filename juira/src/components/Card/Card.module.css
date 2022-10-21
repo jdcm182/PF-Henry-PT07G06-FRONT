@@ -41,10 +41,26 @@
     line-height: 1.1;
     color: var(--primaryColor);
 }
+@media (max-width: 45em) {
+    .card__title{
+        font-size: 1rem;
+    }
+}
 
 .card__price {
     font-size: 1.75rem;
 }
+@media (max-width: 45em) {
+    .card__price {
+        font-size: 1.3rem;
+    }
+}
+@media (max-width: 35em){
+    .card__price {
+        font-size: 1rem;
+    }
+}
+
 
 .card__img {
     width: 100%;
@@ -68,3 +84,14 @@
 .cardLink {
     text-decoration: none;
 }
+
+a {
+    text-decoration: none;
+    color: gray;
+  }
+  
+  a:visited {
+    text-decoration: none;
+    color: gray;
+  }
+  
