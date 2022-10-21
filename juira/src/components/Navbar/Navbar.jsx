@@ -181,10 +181,10 @@ export default function PrimarySearchAppBar() {
         <MenuItem>
           <IconButton
             size="large"
-            aria-label={`show ${itemsInCart} new notifications`}
+            aria-label={`show ${itemsInCart.length} new notifications`}
             color="inherit"
           >
-            <Badge badgeContent={itemsInCart} color="error">
+            <Badge badgeContent={itemsInCart.length} color="error">
               <ShoppingCartIcon />
             </Badge>
           </IconButton>
@@ -287,10 +287,10 @@ export default function PrimarySearchAppBar() {
               <Tooltip title="Carrito de compras" arrow>
                 <IconButton
                   size="large"
-                  aria-label={`show ${itemsInCart} items in shopping cart`}
+                  aria-label={`show ${itemsInCart.length} items in shopping cart`}
                   color="inherit"
                 >
-                  <Badge badgeContent={itemsInCart} color="error">
+                  <Badge badgeContent={itemsInCart.length} color="error">
                     <ShoppingCartIcon />
                   </Badge>
                 </IconButton>
