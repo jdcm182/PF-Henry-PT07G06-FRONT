@@ -13,6 +13,7 @@ export const REMOVE_CART = "REMOVE_CART";
 export const ADD_CART = "ADD_CART";
 export const GET_CATEGORIES_NAMES = "GET_CATEGORIES_NAMES";
 export const GET_CATEGORIES = "GET_CATEGORIES";
+export const UPDATE_CART = "UPDATE_CART"
 
 export const updateDisplayedByQuery = (query) => async (dispatch) => {
   const url = `${API_URL_BACKEND}products/?name=${query}`;
@@ -69,8 +70,6 @@ export const getProductDetails = (id) => async (dispatch) => {
 };
 
 export const addToCart = (payload) => (dispatch) => {
-  console.log('entre a add to cart')
-  console.log(payload)
   return dispatch({
     type: ADD_CART,
     payload: payload,
@@ -83,6 +82,13 @@ export const removeToCart = (payload) => (dispatch) => {
     payload: payload,
   });
 };
+
+export const updateCart = (payload)=> (dispatch)=>{
+  return dispatch({
+    type: UPDATE_CART,
+    payload: payload
+  })
+}
 
 export const getCategoriesNames = () => async (dispatch) => {
   const url = `${API_URL_BACKEND}${getCategoriesNameApi}`;

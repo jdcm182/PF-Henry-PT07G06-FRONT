@@ -6,6 +6,7 @@ import {
   PRODUCTS_TO_DISPLAY,
   PRODUCT_DETAILS,
   REMOVE_CART,
+  UPDATE_CART,
 } from "../actions/products.actions";
 
 const initialState = {
@@ -23,7 +24,7 @@ export function productsReducer(state = initialState, action) {
       return {
         ...state,
         allProducts: action.payload,
-       /*  productsToDisplay: action.payload, */
+        /*  productsToDisplay: action.payload, */
       };
     }
     case PRODUCT_DETAILS: {
@@ -39,14 +40,28 @@ export function productsReducer(state = initialState, action) {
       };
     }
     case REMOVE_CART:
+      const aux2 = state.cart.filter(
+        (product) => product.id !== action.payload
+      );
+      localStorage.setItem("itemsInCart", JSON.stringify(aux2));
       return {
         ...state,
-        cart: state.cart.filter((product) => product.id !== action.payload),
+        cart: aux2,
+      };
+
+    case UPDATE_CART:
+      return {
+        ...state,
+        cart: action.payload,
       };
     case ADD_CART:
+      const aux = state.cart.find((product) => product.id === action.payload.id)
+        ? state.cart
+        : state.cart.concat(action.payload);
+      localStorage.setItem("itemsInCart", JSON.stringify(aux));
       return {
         ...state,
-        cart: state.cart.concat(action.payload),
+        cart: aux,
       };
     case GET_CATEGORIES_NAMES:
       return {
@@ -54,10 +69,10 @@ export function productsReducer(state = initialState, action) {
         allCategories: action.payload,
       };
     case GET_CATEGORIES:
-      return{
+      return {
         ...state,
-        categories: action.payload
-      }
+        categories: action.payload,
+      };
     default:
       return state;
   }

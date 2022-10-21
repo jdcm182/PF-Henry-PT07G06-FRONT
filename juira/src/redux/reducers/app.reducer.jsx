@@ -7,7 +7,7 @@ import {
 const initialState = {
   user: {},
   isSpinner: false,
-  filterState: { categories: "Todos", sort: "A-Z" },
+  filterState: { categories: "Todos", sort: "A-Z", condition: "Todos" },
 };
 
 export function appReducer(state = initialState, action) {
@@ -31,8 +31,6 @@ export function appReducer(state = initialState, action) {
           ...state.filterState,
           [action.payload.name]: action.payload.value,
         },
-
-        
       };
     }
     default:
