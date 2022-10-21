@@ -68,7 +68,7 @@ export default function Detail() {
     height: 1,
     p: 5,
 }}
-
+    style={{ marginTop: "0" }}
     >
 
     <Paper
