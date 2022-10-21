@@ -5,6 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategoriesNames } from "../../../redux/actions/products.actions";
 import { updateFilter } from "../../../redux/actions/app.actions";
+import SortIcon from '@mui/icons-material/Sort';
 
 
 const sort = ["Mayor Valor", "Menor Valor", "A-Z", "Z-A"];
