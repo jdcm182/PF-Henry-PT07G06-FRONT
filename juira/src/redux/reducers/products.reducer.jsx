@@ -46,9 +46,9 @@ export function productsReducer(state = initialState, action) {
     case ADD_CART:
       return {
         ...state,
-        cart: !state.cart.find((product) => product.id !== action.payload)
-          ? state.cart.concat(action.payload)
-          : state.cart,
+        cart: state.cart.find((product) => product.id === action.payload.id)
+          ? state.cart
+          : state.cart.concat(action.payload),
       };
     case GET_CATEGORIES_NAMES:
       return {
