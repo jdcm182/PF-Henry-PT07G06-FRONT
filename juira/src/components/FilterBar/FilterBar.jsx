@@ -20,6 +20,7 @@ import { getCategoriesNames } from "../../redux/actions/products.actions";
 import DensityMediumIcon from "@mui/icons-material/DensityMedium";
 import { updateFilter } from "../../redux/actions/app.actions";
 import SortButton from "./Components/SortButton";
+import ConditionFilter from "./Components/ConditionFilter";
 
 const sort = ["Mayor Valor", "Menor Valor", "A-Z", "Z-A"];
 
@@ -105,6 +106,7 @@ const FilterBar = () => {
                 </MenuItem>
               ))}
           </Menu>
+          <ConditionFilter/>
           <SortButton/>
           {/* <Typography
             variant="h6"
