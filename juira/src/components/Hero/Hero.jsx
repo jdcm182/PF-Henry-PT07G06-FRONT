@@ -1,8 +1,9 @@
 
 import React from "react";
 import styles from "./Hero.module.css";
-import logo from "../media/juira_color.png";
+//import logo from "../media/juira_color.png";
 import { useSelector } from "react-redux";
+import Carousel from './Carousel.jsx';
 
 
 export default function Hero() {
@@ -17,7 +18,8 @@ export default function Hero() {
 
       <div className={styles.box}>
         {/* <img className={styles.img} src={logo} alt='Juira logo' /> */}
-        <div>{categories === "Todos" ? "BIENVENIDO A JUIRA" : categories.toUpperCase()}</div>
+        {/* <div>{categories === "Todos" ? "BIENVENIDO A JUIRA" : categories.toUpperCase()}</div> */}
+        {<Carousel />}
       </div>
       {/* <div className={styles.imgWrapper}> */}
       <div className={styles.imgPattern}></div>
