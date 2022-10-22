@@ -19,7 +19,7 @@ export default function CardsGrid({ products }) {
                     (page - 1) * perPage,
                     ((page - 1) * perPage) + perPage
                 ).map(p => (
-                    <Card key={'crd' + p.id} className={styles.cardItem}
+                    <Card key={'crd' + p.id} className={styles.cardItem} product={p}
                         id={p.id} price={p.price} name={p.name} image={p.image} />
                 ))}
 
