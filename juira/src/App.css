@@ -7,7 +7,9 @@
   --UiDarkestColor: #292828;
   --btnPrimaryColor: var(--primaryColor);
   --btnHoverColor: #272727;
-  --btnActiveColor: #00ffb3 --btnPrimaryFontColor: white;
+  --btnActiveColor: #00ffb3;
+  --btnPrimaryFontColor: white;
+  --heartColor: #fb7272;
 }
 
 /*CSS Reset*/
