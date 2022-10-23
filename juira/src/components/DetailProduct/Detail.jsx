@@ -6,6 +6,7 @@ import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import ButtonBase from "@mui/material/ButtonBase";
 import Button from "@mui/material/Button";
+import Loading from "../Loading/Loading";
 
 import { useSelector } from "react-redux";
 import {
@@ -35,27 +36,12 @@ export default function Detail() {
     dispatch(addToCart(p));
   }
 
-  p && Object.keys(p).length !== 0 ? (
-    <></>
-  ) : (
-    (p = {
-      id: 1,
-      name: "Sillon Individual Moderno Living 1 Cuerpo Pana",
-      description: `
-        Sillon 1 Cuerpo Individual Moderno Para Living.
-        En tela Pana con proceso anti mancha color Beige clarito, con apliques en Jacquard.
-        Medidas:
-            Ancho: 0,74 mts.
-            Alto: 0,98 mts.
-            Profundidad: 0,72 mts.`,
-      price: 36500.0,
-      condition: "half-used",
-      image:
-        "https://res.cloudinary.com/duq1tcwjw/image/upload/v1665861632/PF-JUIRA/Products/Sillon_usado_vxwb69.jpg",
-    })
-  );
+
 
   return (
+    (!p && Object.keys(p).length === 0) ?<Loading/> 
+      
+    : 
     <Container
 
       sx={{

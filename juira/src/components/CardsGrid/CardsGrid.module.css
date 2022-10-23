@@ -22,6 +22,12 @@
     padding-inline: 2rem;
 }
 
+.divI{
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
 .product_grid {
     display: grid;
     gap: .125rem;
