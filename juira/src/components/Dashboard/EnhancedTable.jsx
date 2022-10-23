@@ -235,14 +235,14 @@ EnhancedTableToolbar.propTypes = {
 
 
 
-export default function EnhancedTable() {
+export default function EnhancedTable( props ) {
 
-
+  //const [products, setProducts] = React.useState(props.products);
 
   let products = null;
   products = useSelector((state) => state.productsReducer.allProducts);
-  console.log('EnhancedTable > products: ', products)
-  console.log('EnhancedTable > products.length: ', products.length)
+  //console.log('EnhancedTable > products: ', products)
+  //console.log('EnhancedTable > products.length: ', products.length)
 
   const dispatch = useDispatch();
   products.length===0 && dispatch(getAllProducts());
@@ -258,6 +258,8 @@ export default function EnhancedTable() {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(30);
+
+  //console.log('selected: ', selected)
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -314,7 +316,7 @@ export default function EnhancedTable() {
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box sx={{ width: '100%', marginTop: '1rem' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
