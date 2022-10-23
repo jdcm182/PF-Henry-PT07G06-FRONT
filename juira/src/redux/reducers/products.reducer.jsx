@@ -7,6 +7,7 @@ import {
   PRODUCT_DETAILS,
   REMOVE_CART,
   UPDATE_CART,
+  REMOVE_ID,
 } from "../actions/products.actions";
 
 const initialState = {
@@ -73,6 +74,13 @@ export function productsReducer(state = initialState, action) {
         ...state,
         categories: action.payload,
       };
+      
+    case REMOVE_ID:
+      return {
+        ...state,
+        productDetails: '',
+      };
+
     default:
       return state;
   }

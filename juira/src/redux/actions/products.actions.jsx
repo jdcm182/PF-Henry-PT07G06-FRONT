@@ -14,6 +14,7 @@ export const ADD_CART = "ADD_CART";
 export const GET_CATEGORIES_NAMES = "GET_CATEGORIES_NAMES";
 export const GET_CATEGORIES = "GET_CATEGORIES";
 export const UPDATE_CART = "UPDATE_CART"
+export const REMOVE_ID="REMOVE_ID"
 
 export const updateDisplayedByQuery = (query) => async (dispatch) => {
   const url = `${API_URL_BACKEND}products/?name=${query}`;
@@ -125,4 +126,10 @@ export const publishProd = (data) => async () => {
   } catch (error) {
     console.log("error api", error);
   }
+};
+
+export const removeDetail = () => (dispatch) => {
+  return dispatch({
+    type: REMOVE_ID,
+  });
 };
