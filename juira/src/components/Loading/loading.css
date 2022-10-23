@@ -1,0 +1,13 @@
+.loadingCard{
+    width: 100%;
+    display: flex;
+    align-items:center;
+    justify-content: center;
+    position: relative;
+    margin: 0;
+}
+
+.loadingDot{
+    align-self: flex-end;
+}
+
