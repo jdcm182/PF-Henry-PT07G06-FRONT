@@ -8,7 +8,10 @@
   --btnPrimaryColor: var(--primaryColor);
   --btnHoverColor: #272727;
   --btnActiveColor: #00ffb3 --btnPrimaryFontColor: white;
+  --navbarHeight: 65px;
 }
+
+*::selection { background: var(--primaryColor); color: white;}
 
 /*CSS Reset*/
 /*https://piccalil.li/blog/a-modern-css-reset/*/
