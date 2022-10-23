@@ -16,7 +16,6 @@ import ScrollToTop from './components/ScrollToTop'
 function App() {
   
   const {pathname} = useLocation()
-  console.log(pathname)
   return (
     <div className="App">
     <BrowserRouter >

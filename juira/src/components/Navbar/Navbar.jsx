@@ -24,7 +24,7 @@ import { useSelector, useDispatch } from "react-redux";
 import style from "./Navbar.module.css";
 import image from "../media/juira_white.png";
 import { updateFilter } from "../../redux/actions/app.actions";
-import { updateCart } from "../../redux/actions/products.actions";
+import { updateCart, updateFavorites } from "../../redux/actions/products.actions";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -68,11 +68,15 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function PrimarySearchAppBar() {
   const itemsInCart = useSelector((state) => state.productsReducer.cart) || 2; //default 2 para probar que las notificaciones del carrito funcionan
-
+  
   React.useEffect(() => {
-    const items = JSON.parse(localStorage.getItem("itemsInCart"));
-    if (items) {
-      dispatch(updateCart(items));
+    const cart = JSON.parse(localStorage.getItem("itemsInCart"));
+    if (cart) {
+      dispatch(updateCart(cart));
+    }
+    const favorites = JSON.parse(localStorage.getItem("itemsInFavorites"));
+    if (favorites) {
+      dispatch(updateFavorites(favorites));
     }
   }, []);
 

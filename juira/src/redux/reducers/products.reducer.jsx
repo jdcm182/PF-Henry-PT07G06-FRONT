@@ -8,6 +8,9 @@ import {
   REMOVE_CART,
   UPDATE_CART,
   REMOVE_ID,
+  UPDATE_FAVORTITES,
+  REMOVE_FAVORTITES,
+  ADD_FAVORITES,
 } from "../actions/products.actions";
 
 const initialState = {
@@ -17,6 +20,7 @@ const initialState = {
   cart: [],
   allCategories: [],
   categories: [],
+  favorites: [],
 };
 
 export function productsReducer(state = initialState, action) {
@@ -49,11 +53,25 @@ export function productsReducer(state = initialState, action) {
         ...state,
         cart: aux2,
       };
+    case REMOVE_FAVORTITES:
+      const aux3 = state.favorites.filter(
+        (product) => product.id !== action.payload
+      );
+      localStorage.setItem("itemsInFavorites", JSON.stringify(aux3));
+      return {
+        ...state,
+        favorites: aux3,
+      };
 
     case UPDATE_CART:
       return {
         ...state,
         cart: action.payload,
+      };
+    case UPDATE_FAVORTITES:
+      return {
+        ...state,
+        favorites: action.payload,
       };
     case ADD_CART:
       const aux = state.cart.find((product) => product.id === action.payload.id)
@@ -64,6 +82,20 @@ export function productsReducer(state = initialState, action) {
         ...state,
         cart: aux,
       };
+
+    case ADD_FAVORITES:
+      const aux4 = state.favorites.find(
+        (product) => product.id === action.payload.id
+      )
+        ? state.favorites
+        : state.favorites.concat(action.payload);
+
+      localStorage.setItem("itemsInFavorites", JSON.stringify(aux4));
+      return {
+        ...state,
+        favorites: aux4,
+      };
+
     case GET_CATEGORIES_NAMES:
       return {
         ...state,
@@ -74,11 +106,11 @@ export function productsReducer(state = initialState, action) {
         ...state,
         categories: action.payload,
       };
-      
+
     case REMOVE_ID:
       return {
         ...state,
-        productDetails: '',
+        productDetails: "",
       };
 
     default:
