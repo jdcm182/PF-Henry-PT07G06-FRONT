@@ -39,9 +39,9 @@ export default function Detail() {
 
 
   return (
-    p && Object.keys(p).length !== 0 ? (
-      <Loading/>
-    ) : 
+    (!p && Object.keys(p).length === 0) ?<Loading/> 
+      
+    : 
     <Container
 
       sx={{
