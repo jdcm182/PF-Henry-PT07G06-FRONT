@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import {
   getProductDetails,
   addToCart,
+  removeDetail
 } from "../../redux/actions/products.actions";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -28,6 +29,7 @@ export default function Detail() {
 
   React.useEffect(() => {
     dispatch(getProductDetails(id));
+    return ()=>{dispatch(removeDetail())}
   }, [dispatch, id]);
 
   let p = useSelector((state) => state.productsReducer.productDetails);
@@ -36,10 +38,15 @@ export default function Detail() {
     dispatch(addToCart(p));
   }
 
+  
+
+
 
 
   return (
-    (!p && Object.keys(p).length === 0) ?<Loading/> 
+    (!p  || Object.keys(p).length === 0) ?
+    
+    <Loading/> 
       
     : 
     <Container
