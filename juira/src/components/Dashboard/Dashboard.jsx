@@ -90,7 +90,8 @@ const useStyles = makeStyles({
         <div className={styles.dashWrapper}>
           
             <Container className={classes.root} 
-            sx={{ width: "85%", height: "100%"/* , backgroundColor:"#444" */ }} >
+            sx={{ width: "85%", height: "100%", /* backgroundColor:"#444", */
+                boxShadow: '0 8px 15px 5px #cccccc55', padding: '2rem', borderRadius: '.8rem' }} >
 
                 <Container sx={{display:"Flex", flexDirection:"row", justifyContent:"space-evenly", flexWrap: "wrap"}}>
 

@@ -39,13 +39,17 @@ export default function DashCard(props) {
                   
       <Box
         sx={{
-          bgcolor: 'background.paper',
+          /* bgcolor: 'background.paper', */
+          bgColor: "rgb(130,114,255)",
+          /* background: "linear-gradient(90deg, rgba(130,114,255,1) 0%, rgba(21,230,210,1) 100%)", */
+          background: "linear-gradient(360deg, rgb(49 255 201) 0%, rgb(212 251 240) 100%)",
           /* boxShadow: 1, */
           borderRadius: 2,
           p: 2,
           minWidth: 300,
-          border: "1px solid #ccc",
-          boxShadow: "0 0 5px 5px #cccccc55",
+          /* border: "1px solid #ccc", */
+          /* boxShadow: "0 0 5px 5px #cccccc55", */
+          boxShadow: "0 2px 10px 2px #cccccc55",
           margin: "1rem",
         }}
       >
