@@ -15,9 +15,9 @@ import axios from 'axios';
 import { useState} from 'react'
 import { useSelector, useDispatch,} from 'react-redux';
 import { getCategories, publishProd} from "../../redux/actions/products.actions.jsx";
-import { themeOptions } from '../../ThemeColors.js'
-import { ThemeProvider } from '@mui/material/styles';
-import { makeStyles, withTheme } from '@mui/styles';
+// import { themeOptions } from '../../ThemeColors.js'
+// import { ThemeProvider } from '@mui/material/styles';
+// import { makeStyles, withTheme } from '@mui/styles';
 
 
 function validate(data) {
