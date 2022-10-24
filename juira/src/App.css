@@ -7,10 +7,13 @@
   --UiDarkestColor: #292828;
   --btnPrimaryColor: var(--primaryColor);
   --btnHoverColor: #272727;
+  --navbarHeight: 65px;
   --btnActiveColor: #00ffb3;
   --btnPrimaryFontColor: white;
   --heartColor: #fb7272;
 }
+
+*::selection { background: var(--primaryColor); color: white;}
 
 /*CSS Reset*/
 /*https://piccalil.li/blog/a-modern-css-reset/*/

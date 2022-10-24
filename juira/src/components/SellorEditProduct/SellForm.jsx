@@ -15,7 +15,9 @@ import axios from 'axios';
 import { useState} from 'react'
 import { useSelector, useDispatch,} from 'react-redux';
 import { getCategories, publishProd} from "../../redux/actions/products.actions.jsx";
-
+// import { themeOptions } from '../../ThemeColors.js'
+// import { ThemeProvider } from '@mui/material/styles';
+// import { makeStyles, withTheme } from '@mui/styles';
 
 
 function validate(data) {
@@ -149,11 +151,12 @@ export default function SellForm() {
     
   }
 
-  
 
   return (
-  
-    <Container sx={{background: 'linear-gradient( 90deg, white, #b6deb8 10%, #b6deb8 90%, white )', display:'flex', flexDirection: 'column', width: 1, my:0}}>
+
+    <Container sx={{background: 'var(--UiLightColor)'/* 'linear-gradient( 90deg, white, #b6deb8 10%, #b6deb8 90%, white )' */, 
+        display:'flex', flexDirection: 'column', width: 1, my:0,
+        boxShadow: '0 0 15px 5px #cccccc55', }}>
     <Box sx={{
         my:0.8,
         p:1,
@@ -161,12 +164,12 @@ export default function SellForm() {
         position: 'relative',
         top: 20,
         left: '10%',
-        backgroundColor: '#66bb6a',
+        backgroundColor: 'var(--UiLightColor)' /* '#66bb6a' */,
         height: 'fit-content',
         textAlign:'center',
-        boxShadow: 1,
+        boxShadow: 0/* 1 */,
         }}>
-      <Typography sx={{ fontSize: 32 }} color="black" gutterBottom>
+      <Typography sx={{ fontSize: '1.5rem', color: 'var(--primaryColor)' }} color="black" gutterBottom>
       Un paso mas cerca de sacarlo JUIRA!
       </Typography>
     </Box>
@@ -179,12 +182,12 @@ export default function SellForm() {
         top: 20,
         width: 0.90,
         height: 'fit-content',
-        backgroundColor: '#81c784',
+        backgroundColor: 'var(--UiLightColor)' /* '#81c784' */,
         
       }}
     > 
 
-    <Typography sx={{ fontSize: 25, width:1, borderBottom: 'solid green' }} color="text.secondary" gutterBottom>
+    <Typography sx={{ fontSize: '1.5rem', width:1, borderBottom: "solid var(--primaryColor)" /* 'solid green' */ }} color="var(--primaryColor)" gutterBottom>
       FORMULARIO DE VENTA
     </Typography>
 
@@ -203,7 +206,7 @@ export default function SellForm() {
           multiline
           maxRows={4}
           variant="filled"
-          sx={{width:1,}}
+          sx={{width:1, color:"var(--primaryColor)"}}
           error={Boolean(error.name)}
           helperText={error.name}
           >
@@ -305,7 +308,7 @@ export default function SellForm() {
         
         <input hidden accept="image/*" multiple type="file" color="success" />
       </Button>
-      <IconButton color="success" aria-label="upload picture" component="label">
+      <IconButton sx={{color:'var(--primaryColor)'}}/* color="success" */ aria-label="upload picture" component="label">
         <input hidden accept="image/*" type="file" id="upload_widget" onChange={handleFileInputChange} />
         <AddAPhotoIcon />
       </IconButton>
@@ -317,7 +320,7 @@ export default function SellForm() {
 </Stack>
     
    <Button variant="contained" color="success" sx={{ mt:5 }}  onClick={handleOnSubmit} disabled={(Object.values(error).length > 0 || data.name.length===0)} >
-   <Typography sx={{ fontSize: 20, width:1 }} color="black" gutterBottom >
+   <Typography sx={{ fontSize: 20, width:1, color:'var(--primaryColor)' }} color="black" gutterBottom >
       SACAR PA' JUIRA
     </Typography>
         
@@ -328,7 +331,7 @@ export default function SellForm() {
 
     </Container>
   
-    
+
   );
 }
 

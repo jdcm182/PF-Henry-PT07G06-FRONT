@@ -47,10 +47,10 @@
     flex-direction: column;
 }
 
-a.btnEntrar {
+.btnEntrar {
     text-transform: uppercase;
     text-decoration: none;
-    color: var(--btnPrimaryFontColor);
+    color: white; /* var(--btnPrimaryFontColor); */
     background-color: var(--btnPrimaryColor);
     /* primary-color*/
     margin-top: 1rem;
@@ -58,12 +58,15 @@ a.btnEntrar {
     border-radius: .3rem;
     transition: background-color .3s;
 }
+a.btnEntrar:visited {
+    color: white;
+}
 
-a.btnEntrar:hover {
+.btnEntrar:hover {
     background-color: var(--btnHoverColor);
 }
 
-a.btnEntrar:active {
+.btnEntrar:active {
     background-color: var(--btnActiveColor);
 }
 
