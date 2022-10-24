@@ -11,6 +11,7 @@ import NavBar from './components/Navbar/Navbar'
 import ShoppingCart from './components/ShoppingCart/ShoppingCart';
 
 import ScrollToTop from './components/ScrollToTop'
+import Favorites from './components/Favorites/Favorites';
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
       <Route exact path={'/'} component={Landing} />
       <Route exact path={'/juira'} component={Home} />
       <Route exact path={'/juira/shoppingCart'} component={ShoppingCart} />
+      <Route exact path={'/juira/favorites'} component={Favorites} />
       <Route path={'/juira/sell'} component={SellForm} />
       <Route path={'/juira/:id'} component={Detail} />
     </Switch>

@@ -14,6 +14,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import AddBusinessIcon from "@mui/icons-material/AddBusiness";
 import { Link as RouterLink } from "react-router-dom";
 import Link from "@mui/material/Link";
@@ -68,7 +69,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function PrimarySearchAppBar() {
   const itemsInCart = useSelector((state) => state.productsReducer.cart) || 2; //default 2 para probar que las notificaciones del carrito funcionan
-  
+  const itemsFavorites= useSelector((state) => state.productsReducer.favorites) || 0
+
   React.useEffect(() => {
     const cart = JSON.parse(localStorage.getItem("itemsInCart"));
     if (cart) {
@@ -287,6 +289,25 @@ export default function PrimarySearchAppBar() {
                   color="inherit"
                 >
                   <AddBusinessIcon />
+                </IconButton>
+              </Tooltip>
+            </Link>
+
+            <Link
+              component={RouterLink}
+              to="/juira/favorites"
+              underline="none"
+              sx={{ color: "#ffffff" }}
+            >
+              <Tooltip title="Favoritos" arrow>
+                <IconButton
+                  size="large"
+                  aria-label={`show ${itemsFavorites.length} items in shopping cart`}
+                  color="inherit"
+                >
+                  <Badge badgeContent={itemsFavorites.length} color="error">
+                    <FavoriteIcon />
+                  </Badge>
                 </IconButton>
               </Tooltip>
             </Link>

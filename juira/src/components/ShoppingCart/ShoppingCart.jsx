@@ -14,7 +14,7 @@ import Button from "@mui/material/Button";
 import { IconButton } from "@mui/material";
 import PaidIcon from "@mui/icons-material/Paid";
 import { removeToCart } from "../../redux/actions/products.actions";
-import { Link, useHistory } from 'react-router-dom';
+import {useHistory } from 'react-router-dom';
 
 export default function ShoppingCart() {
   const dispatch = useDispatch();
