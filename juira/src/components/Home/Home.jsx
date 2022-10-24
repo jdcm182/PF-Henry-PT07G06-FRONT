@@ -45,6 +45,7 @@ export default function Home(/* { prods, getAll } */) {
         dispatch(updateDisplayedByQuery(query.get("search")));
         dispatch(updateFilter({ name: "categories", value: "Todos" }));
         dispatch(updateFilter({ name: "sort", value: "A-Z" }));
+        dispatch(updateFilter({ name: "condition", value: "Todos" }));
         setShowSearch(true);
       } else {
         setShowSearch(false);
@@ -62,11 +63,20 @@ export default function Home(/* { prods, getAll } */) {
     if (productsToDisplay) {
       if (filterSort.categories !== "Todos") {
         aux = productsToDisplay?.filter((ele) => {
-          return ele.categories[0].name === filterSort.categories;
+          return ele.categories.some(
+            (cat) => cat.name === filterSort.categories
+          );
         });
       } else {
         aux = productsToDisplay;
       }
+
+      if (filterSort.condition !== "Todos") {
+        aux = aux?.filter((ele) => {
+          return ele.condition === filterSort.condition;
+        });
+      }
+
       setStateFilterAndSort(
         _.orderBy(
           aux,
@@ -90,9 +100,11 @@ export default function Home(/* { prods, getAll } */) {
         {/* <Navbar /> */}
         <FilterBar />
       </div>
-      {showSearch && <Typography align="center" variant="h6">
-        Resultado de su busqueda: "{query.get("search")}"
-      </Typography>}
+      {showSearch && (
+        <Typography align="center" variant="h6">
+          Resultado de su busqueda: "{query.get("search")}"
+        </Typography>
+      )}
       <div className={styles.mainContainer}>
         {/*  ..MAIN.. */}
         {/* <div className={styles.sideWrapper}>
@@ -102,7 +114,6 @@ export default function Home(/* { prods, getAll } */) {
           <CardsGrid products={stateFilterAndSort} />
         </div>
       </div>
- 
     </section>
   );
 }

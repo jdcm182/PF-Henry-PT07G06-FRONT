@@ -7,8 +7,10 @@
   --UiDarkestColor: #292828;
   --btnPrimaryColor: var(--primaryColor);
   --btnHoverColor: #272727;
-  --btnActiveColor: #00ffb3 --btnPrimaryFontColor: white;
   --navbarHeight: 65px;
+  --btnActiveColor: #00ffb3;
+  --btnPrimaryFontColor: white;
+  --heartColor: #fb7272;
 }
 
 *::selection { background: var(--primaryColor); color: white;}

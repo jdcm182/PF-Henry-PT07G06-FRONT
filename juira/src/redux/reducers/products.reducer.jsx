@@ -6,6 +6,11 @@ import {
   PRODUCTS_TO_DISPLAY,
   PRODUCT_DETAILS,
   REMOVE_CART,
+  UPDATE_CART,
+  REMOVE_ID,
+  UPDATE_FAVORTITES,
+  REMOVE_FAVORTITES,
+  ADD_FAVORITES,
 } from "../actions/products.actions";
 
 const initialState = {
@@ -15,6 +20,7 @@ const initialState = {
   cart: [],
   allCategories: [],
   categories: [],
+  favorites: [],
 };
 
 export function productsReducer(state = initialState, action) {
@@ -23,7 +29,7 @@ export function productsReducer(state = initialState, action) {
       return {
         ...state,
         allProducts: action.payload,
-       /*  productsToDisplay: action.payload, */
+        /*  productsToDisplay: action.payload, */
       };
     }
     case PRODUCT_DETAILS: {
@@ -39,25 +45,74 @@ export function productsReducer(state = initialState, action) {
       };
     }
     case REMOVE_CART:
+      const aux2 = state.cart.filter(
+        (product) => product.id !== action.payload
+      );
+      localStorage.setItem("itemsInCart", JSON.stringify(aux2));
       return {
         ...state,
-        cart: state.cart.filter((product) => product.id !== action.payload),
+        cart: aux2,
+      };
+    case REMOVE_FAVORTITES:
+      const aux3 = state.favorites.filter(
+        (product) => product.id !== action.payload
+      );
+      localStorage.setItem("itemsInFavorites", JSON.stringify(aux3));
+      return {
+        ...state,
+        favorites: aux3,
+      };
+
+    case UPDATE_CART:
+      return {
+        ...state,
+        cart: action.payload,
+      };
+    case UPDATE_FAVORTITES:
+      return {
+        ...state,
+        favorites: action.payload,
       };
     case ADD_CART:
+      const aux = state.cart.find((product) => product.id === action.payload.id)
+        ? state.cart
+        : state.cart.concat(action.payload);
+      localStorage.setItem("itemsInCart", JSON.stringify(aux));
       return {
         ...state,
-        cart: state.cart.concat(action.payload),
+        cart: aux,
       };
+
+    case ADD_FAVORITES:
+      const aux4 = state.favorites.find(
+        (product) => product.id === action.payload.id
+      )
+        ? state.favorites
+        : state.favorites.concat(action.payload);
+
+      localStorage.setItem("itemsInFavorites", JSON.stringify(aux4));
+      return {
+        ...state,
+        favorites: aux4,
+      };
+
     case GET_CATEGORIES_NAMES:
       return {
         ...state,
         allCategories: action.payload,
       };
     case GET_CATEGORIES:
-      return{
+      return {
         ...state,
-        categories: action.payload
-      }
+        categories: action.payload,
+      };
+
+    case REMOVE_ID:
+      return {
+        ...state,
+        productDetails: "",
+      };
+
     default:
       return state;
   }

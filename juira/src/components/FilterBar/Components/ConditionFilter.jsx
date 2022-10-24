@@ -3,28 +3,23 @@ import Menu from "@mui/material/Menu";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import { useDispatch, useSelector } from "react-redux";
-import { getCategoriesNames } from "../../../redux/actions/products.actions";
 import { updateFilter } from "../../../redux/actions/app.actions";
-import SortIcon from '@mui/icons-material/Sort';
+import DensityMediumIcon from "@mui/icons-material/DensityMedium";
 
+const conditionState = ["Como nuevo", "Usado", "Claros signos de uso"];
 
-const sort = ["Mayor Valor", "Menor Valor", "A-Z", "Z-A"];
-
-const SortButton = () => {
-  const options = useSelector((state) => state.productsReducer.allCategories);
+const ConditionFilter = () => {
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getCategoriesNames());
-  }, []);
+
   const [anchorEl, setAnchorEl] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState("A-Z");
   const open = Boolean(anchorEl);
   const handleClickListItem = (event) => {
     setAnchorEl(event.currentTarget);
-  };/*  */
+  }; /*  */
 
   const handleMenuItemClick = (event, by) => {
-    dispatch(updateFilter({ name : "sort", value: by }));
+    dispatch(updateFilter({ name: "condition", value: by }));
     setSelectedIndex(by);
     setAnchorEl(null);
   };
@@ -45,9 +40,10 @@ const SortButton = () => {
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
+        startIcon={<DensityMediumIcon />}
         style={{ color: "var(--primaryColor", marginLeft: "2rem" }}
       >
-        Ordenar
+        Estado
       </Button>
 
       <Menu
@@ -66,13 +62,23 @@ const SortButton = () => {
           },
         }}
       >
-        {sort.map((sort, index) => (
+        {" "}
+        <MenuItem
+          sx={{ fontWeight: "bold" }}
+          key={0}
+          /* disabled={index === 0} */
+          selected={"Todos" === selectedIndex}
+          onClick={(event) => handleMenuItemClick(event, "Todos")}
+        >
+          Todos
+        </MenuItem>
+        {conditionState.map((conditionState, index) => (
           <MenuItem
             key={index}
-            selected={sort === selectedIndex}
-            onClick={(event) => handleMenuItemClick(event, sort)}
+            selected={conditionState === selectedIndex}
+            onClick={(event) => handleMenuItemClick(event, conditionState)}
           >
-            {sort}
+            {conditionState}
           </MenuItem>
         ))}
       </Menu>
@@ -80,4 +86,4 @@ const SortButton = () => {
   );
 };
 
-export default SortButton;
+export default ConditionFilter;

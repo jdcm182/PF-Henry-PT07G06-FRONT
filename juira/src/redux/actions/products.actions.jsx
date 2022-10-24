@@ -13,6 +13,11 @@ export const REMOVE_CART = "REMOVE_CART";
 export const ADD_CART = "ADD_CART";
 export const GET_CATEGORIES_NAMES = "GET_CATEGORIES_NAMES";
 export const GET_CATEGORIES = "GET_CATEGORIES";
+export const UPDATE_CART = "UPDATE_CART"
+export const REMOVE_ID="REMOVE_ID"
+export const ADD_FAVORITES = "ADD_FAVORITES"
+export const REMOVE_FAVORTITES = "REMOVE_FAVORTITES"
+export const UPDATE_FAVORTITES = "UPDATE_FAVORTITES"
 
 export const updateDisplayedByQuery = (query) => async (dispatch) => {
   const url = `${API_URL_BACKEND}products/?name=${query}`;
@@ -75,12 +80,41 @@ export const addToCart = (payload) => (dispatch) => {
   });
 };
 
+export const addToFavorites = (payload) => (dispatch) => {
+  return dispatch({
+    type: ADD_FAVORITES,
+    payload: payload,
+  });
+};
+
+export const removeToFavorites = (payload) => (dispatch) => {
+  return dispatch({
+    type: REMOVE_FAVORTITES,
+    payload: payload,
+  });
+};
+
+
 export const removeToCart = (payload) => (dispatch) => {
   return dispatch({
     type: REMOVE_CART,
     payload: payload,
   });
 };
+
+export const updateFavorites = (payload)=> (dispatch)=>{
+  return dispatch({
+    type: UPDATE_FAVORTITES,
+    payload: payload
+  })
+}
+
+export const updateCart = (payload)=> (dispatch)=>{
+  return dispatch({
+    type: UPDATE_CART,
+    payload: payload
+  })
+}
 
 export const getCategoriesNames = () => async (dispatch) => {
   const url = `${API_URL_BACKEND}${getCategoriesNameApi}`;
@@ -117,4 +151,10 @@ export const publishProd = (data) => async () => {
   } catch (error) {
     console.log("error api", error);
   }
+};
+
+export const removeDetail = () => (dispatch) => {
+  return dispatch({
+    type: REMOVE_ID,
+  });
 };
