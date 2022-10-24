@@ -56,7 +56,7 @@ export default function DashCard(props) {
         
         <Box elevation="12">
           <Box sx={{ color: 'text.secondary' }}> {props.title} </Box>
-          <Box sx={{ color: 'text.primary', fontSize: 34, fontWeight: 'medium' }}>
+          <Box sx={{ color: '#378d3e'/* 'text.primary' */, fontSize: 34, fontWeight: 'medium' }}>
             {props.value}
           </Box>
           <Box

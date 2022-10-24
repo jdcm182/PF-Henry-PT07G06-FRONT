@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import styles from './Dashboard.module.css';
 import EnhancedTable from './EnhancedTable';
-import ProductsTable from './ProductsTable';
+//import ProductsTable from './ProductsTable';
 import Container from '@mui/material/Container';
 
 
-import { ThemeProvider } from '@mui/styles';
-import { themeOptions } from '../../ThemeColors.js'
+// import { ThemeProvider } from '@mui/styles';
+// import { themeOptions } from '../../ThemeColors.js'
 import { makeStyles } from '@mui/styles';
 
 import { useSelector, useDispatch } from 'react-redux';
