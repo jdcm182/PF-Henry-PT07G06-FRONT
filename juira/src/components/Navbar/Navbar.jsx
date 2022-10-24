@@ -16,6 +16,8 @@ import MoreIcon from "@mui/icons-material/MoreVert";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import AddBusinessIcon from "@mui/icons-material/AddBusiness";
+import InsertChartIcon from '@mui/icons-material/InsertChart';
+import DashboardIcon from '@mui/icons-material/Dashboard';
 import { Link as RouterLink } from "react-router-dom";
 import Link from "@mui/material/Link";
 import Tooltip from "@mui/material/Tooltip";
@@ -347,6 +349,22 @@ export default function PrimarySearchAppBar() {
                 </IconButton>
               </Tooltip>
             </Link>
+
+            
+            <Link
+              component={RouterLink}
+              to="/juira/dashboard"
+              underline="none"
+              sx={{ color: "#ffffff" }}
+            >
+              {/* <AccountCircle /> */}
+              <Tooltip title="Dashboard" arrow>
+                <IconButton size="large" color="inherit">
+                   <InsertChartIcon />
+                </IconButton>
+              </Tooltip>
+            </Link>
+
           </Box>
 
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
