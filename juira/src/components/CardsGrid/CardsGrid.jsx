@@ -9,7 +9,7 @@ import Loading from '../Loading/Loading';
 export default function CardsGrid({ products }) {
 
     const [page, setPage] = React.useState(1)
-    const [perPage, setPerPage] = React.useState(9)
+    const [perPage, setPerPage] = React.useState(8)
     const maxPage = Math.ceil(products.length / perPage)
 
     return (
