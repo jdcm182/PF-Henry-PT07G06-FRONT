@@ -13,6 +13,7 @@ import Dashboard from './components/Dashboard/Dashboard';
 
 import ScrollToTop from './components/ScrollToTop'
 import Favorites from './components/Favorites/Favorites';
+import OrdenDeCompra from './components/OrdenDeCompra/OrdenDeCompra';
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
       <Route exact path={'/juira/shoppingCart'} component={ShoppingCart} />
       <Route exact path={'/juira/dashboard'} component={Dashboard} />
       <Route exact path={'/juira/favorites'} component={Favorites} />
+      <Route exact path={'/juira/order'} component={OrdenDeCompra} />
       <Route path={'/juira/sell'} component={SellForm} />
       <Route path={'/juira/:id'} component={Detail} />
     </Switch>
