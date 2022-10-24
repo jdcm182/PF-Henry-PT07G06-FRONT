@@ -14,6 +14,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import AddBusinessIcon from "@mui/icons-material/AddBusiness";
 import { Link as RouterLink } from "react-router-dom";
 import Link from "@mui/material/Link";
@@ -24,7 +25,7 @@ import { useSelector, useDispatch } from "react-redux";
 import style from "./Navbar.module.css";
 import image from "../media/juira_white.png";
 import { updateFilter } from "../../redux/actions/app.actions";
-import { updateCart } from "../../redux/actions/products.actions";
+import { updateCart, updateFavorites } from "../../redux/actions/products.actions";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -68,11 +69,16 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function PrimarySearchAppBar() {
   const itemsInCart = useSelector((state) => state.productsReducer.cart) || 2; //default 2 para probar que las notificaciones del carrito funcionan
+  const itemsFavorites= useSelector((state) => state.productsReducer.favorites) || 0
 
   React.useEffect(() => {
-    const items = JSON.parse(localStorage.getItem("itemsInCart"));
-    if (items) {
-      dispatch(updateCart(items));
+    const cart = JSON.parse(localStorage.getItem("itemsInCart"));
+    if (cart) {
+      dispatch(updateCart(cart));
+    }
+    const favorites = JSON.parse(localStorage.getItem("itemsInFavorites"));
+    if (favorites) {
+      dispatch(updateFavorites(favorites));
     }
   }, []);
 
@@ -283,6 +289,25 @@ export default function PrimarySearchAppBar() {
                   color="inherit"
                 >
                   <AddBusinessIcon />
+                </IconButton>
+              </Tooltip>
+            </Link>
+
+            <Link
+              component={RouterLink}
+              to="/juira/favorites"
+              underline="none"
+              sx={{ color: "#ffffff" }}
+            >
+              <Tooltip title="Favoritos" arrow>
+                <IconButton
+                  size="large"
+                  aria-label={`show ${itemsFavorites.length} items in shopping cart`}
+                  color="inherit"
+                >
+                  <Badge badgeContent={itemsFavorites.length} color="error">
+                    <FavoriteIcon />
+                  </Badge>
                 </IconButton>
               </Tooltip>
             </Link>

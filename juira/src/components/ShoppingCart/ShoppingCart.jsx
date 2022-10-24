@@ -14,18 +14,24 @@ import Button from "@mui/material/Button";
 import { IconButton } from "@mui/material";
 import PaidIcon from "@mui/icons-material/Paid";
 import { removeToCart } from "../../redux/actions/products.actions";
+import {useHistory } from 'react-router-dom';
 
 export default function ShoppingCart() {
   const dispatch = useDispatch();
   const items = useSelector((state) => state.productsReducer.cart);
-  console.log(items);
   let amount = 0;
   items && items.forEach((p) => (amount += Number(p.price)));
 
 
+  let history = useHistory();
+
+  function viewDetail(p) {
+    history.push(`/juira/${p}`);
+  }
+
+
 
   function handleRemoveinCart(p) {
-    console.log(p);
     dispatch(removeToCart(p));
   }
 
@@ -64,13 +70,13 @@ export default function ShoppingCart() {
                     <TableCell component="th" scope="row">
                       {i + 1}
                     </TableCell>
-                    <TableCell align="left">
+                    <TableCell align="left" onClick={()=>{viewDetail(row.id)}}>
                       <img
                         src={`${row.image}`}
                         style={{ maxHeight: "50px" }}
                       ></img>
                     </TableCell>
-                    <TableCell align="left">
+                    <TableCell align="left" onClick={()=>{viewDetail(row.id)}} >
                       <strong>{row.name}</strong>
                       <br></br>
                       <small>{row.description}</small>
