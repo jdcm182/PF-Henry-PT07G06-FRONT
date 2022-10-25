@@ -18,6 +18,7 @@ export const REMOVE_ID="REMOVE_ID"
 export const ADD_FAVORITES = "ADD_FAVORITES"
 export const REMOVE_FAVORTITES = "REMOVE_FAVORTITES"
 export const UPDATE_FAVORTITES = "UPDATE_FAVORTITES"
+export const SEND_SHOPPING_ORDER = "SEND_SHOPPING_ORDER"
 
 export const updateDisplayedByQuery = (query) => async (dispatch) => {
   const url = `${API_URL_BACKEND}products/?name=${query}`;
@@ -145,6 +146,16 @@ export const getCategories = () => async (dispatch) => {
 
 export const publishProd = (data) => async () => {
   const url = `${API_URL_BACKEND}${getAllProductsApi}`;
+  try {
+    let json = await axios.post(url, data);
+    return json;
+  } catch (error) {
+    console.log("error api", error);
+  }
+};
+
+export const sendShopOrder = (data) => async () => {
+  const url = `${API_URL_BACKEND}shoppingorder/response`;
   try {
     let json = await axios.post(url, data);
     return json;
