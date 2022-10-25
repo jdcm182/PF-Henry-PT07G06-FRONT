@@ -27,7 +27,7 @@ export default function OrdenDeCompra() {
 
   React.useEffect(() => {
     dispatch(updateCart([]));
-    datosOrder && dispatch(sendShopOrder(datosOrder));
+    datosOrder.keys(obj).length === 0 && dispatch(sendShopOrder(datosOrder));
   }, []);
 
   return (
