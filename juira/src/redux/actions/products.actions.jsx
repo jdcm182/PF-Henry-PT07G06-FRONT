@@ -34,7 +34,7 @@ export const updateDisplayedByQuery = (query) => async (dispatch) => {
 };
 
 export const updateDisplayed = () => async (dispatch) => {
-  const url = `${API_URL_BACKEND}${getAllProductsApi}`;
+  const url = `${API_URL_BACKEND}${getAllPublicatesProductsApi}`;
   try {
     await axios(url);
     let { data } = await axios(url);
@@ -49,7 +49,7 @@ export const updateDisplayed = () => async (dispatch) => {
 };
 
 export const getAllProducts = () => async (dispatch) => {
-  const url = `${API_URL_BACKEND}${getAllProductsApi}`;
+  const url = `${API_URL_BACKEND}${getAllPublicatesProductsApi}`;
   try {
     let data = await axios(url);
     return dispatch({
@@ -155,9 +155,9 @@ export const publishProd = (data) => async () => {
 };
 
 export const sendShopOrder = (data) => async () => {
-  const url = `${API_URL_BACKEND}shoppingorder/response`;
+  const url = `${API_URL_BACKEND}shoppingOrders/mpresponse`;
   try {
-    let json = await axios.post(url, data);
+    let json = await axios.put(url, data);
     return json;
   } catch (error) {
     console.log("error api", error);
