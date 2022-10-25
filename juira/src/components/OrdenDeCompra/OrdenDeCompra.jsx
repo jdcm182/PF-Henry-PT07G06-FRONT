@@ -6,24 +6,29 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
-import { updateCart } from "../../redux/actions/products.actions";
+import { updateCart, sendShopOrder } from "../../redux/actions/products.actions";
 import {  useDispatch } from "react-redux";
 import { Container } from "@mui/system";
 
 
 export default function OrdenDeCompra() {
   // ?collection_id=50800700904&collection_status=rejected&payment_id=50800700904&status=rejected&external_reference=null&payment_type=credit_card&merchant_order_id=6252221350&preference_id=1223144793-103dc1ee-100d-4af2-9ed5-cf3269e5599d&site_id=MLA&processing_mode=aggregator&merchant_account_id=null
-    //Borrar carrito local una vez que termino el pago-->Use Effect
+    
   const dispatch = useDispatch();
   const { search } = useLocation();
   const searchParams = new URLSearchParams(search)
   const payment_id=searchParams.get('payment_id')
-  const status=searchParams.get('status')  || 'pasada a pendientes'
-    
-  React.useEffect(
-  ()=>{dispatch(updateCart([]))}
-  //dipatch
+  const status=searchParams.get('status')  
+  const preference_id=searchParams.get('preference_id')
+  const merchant_order_id=searchParams.get('merchant_order_id')
 
+  const datosOrder={status, payment_id, merchant_order_id,preference_id}
+
+
+  React.useEffect(
+  ()=>{dispatch(updateCart([]))
+      dispatch(sendShopOrder(datosOrder))
+  }
   ,[])
   
        
