@@ -156,10 +156,10 @@ export const publishProd = (data) => async () => {
 };
 
 export const sendShopOrder = (data) => async () => {
- 
+ console.log('entre aca')
+ const url = `${API_URL_BACKEND}shoppingOrders/mpresponse`;
+ console.log("PUT al Back",url)
   try {
-    const url = `${API_URL_BACKEND}shoppingOrders/mpresponse`;
-    console.log("PUT al Back",url)
     let json = await axios.put(url, data);
     return json;
   } catch (error) {
