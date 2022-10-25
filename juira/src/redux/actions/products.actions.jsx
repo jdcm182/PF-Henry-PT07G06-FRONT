@@ -4,6 +4,7 @@ import {
   API_URL_BACKEND,
   getCategoriesNameApi,
   getCategoriesIdApi,
+  getAllPublicatesProductsApi,
 } from "../../api/apiRoute";
 
 export const PRODUCTS_TO_DISPLAY = "PRODUCTS_TO_DISPLAY";
