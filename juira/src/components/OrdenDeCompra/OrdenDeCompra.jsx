@@ -29,7 +29,7 @@ export default function OrdenDeCompra() {
     console.log('entre en use effect')
     dispatch(updateCart([]));
     /* Object.keys(datosOrder).length !== 0 &&  */dispatch(sendShopOrder(datosOrder));
-  }, []);
+  }, [datosOrder]);
 
   return (
     <Container
