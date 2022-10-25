@@ -3,15 +3,15 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 
 export default function PaginationButtons({ page, setPage, maxPage, products }) {
-  function handleChange(page) {
-    setPage(page)
+  function handleChange(p) {
+    setPage(p)
   }
   
-  React.useEffect(() => {
-    setPage(1)
-  },[products])
+  // React.useEffect(() => {
+  //   setPage(1)
+  // },[products])
 
   return (
-      <Pagination count={maxPage} onChange={(event, page) => handleChange(page)} showFirstButton showLastButton />
+      <Pagination count={maxPage} onChange={(event, p) => handleChange(p)} defaultPage={1} showFirstButton showLastButton />
   );
 }
