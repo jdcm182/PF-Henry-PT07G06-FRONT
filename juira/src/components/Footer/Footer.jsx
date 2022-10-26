@@ -22,8 +22,8 @@ export default function Footer() {
                     <Grid item xs={12} sm={4}>
                         <Box borderBottom={1}>Usuario</Box>
                         <Box>
-                            <Link to="/" style={{color: 'white'}}>
-                                Registrarse
+                            <Link to="/juira/login" style={{color: 'white'}}>
+                                Iniciar Sesión / Registrarse
                             </Link>
                         </Box>
                         <Box>

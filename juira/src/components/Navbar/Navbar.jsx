@@ -176,11 +176,11 @@ export default function PrimarySearchAppBar() {
     >
       <Link
         component={RouterLink}
-        to="/login"
+        to="/juira/login"
         underline="none"
         sx={{ color: "" }}
       >
-        <MenuItem>
+        <MenuItem style={{color: 'var(--primaryColor)'}}>
           <IconButton size="large" color="inherit">
             <AccountCircle />
           </IconButton>
@@ -194,7 +194,7 @@ export default function PrimarySearchAppBar() {
         underline="none"
         sx={{ color: "" }}
       >
-        <MenuItem>
+        <MenuItem style={{color: 'var(--primaryColor)'}}>
           <IconButton
             size="large"
             aria-label={`show ${itemsInCart.length} new notifications`}
@@ -335,7 +335,7 @@ export default function PrimarySearchAppBar() {
 
             <Link
               component={RouterLink}
-              to="/juira"
+              to="/juira/login"
               underline="none"
               sx={{ color: "#ffffff" }}
             >
