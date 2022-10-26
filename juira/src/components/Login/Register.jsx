@@ -16,12 +16,13 @@ export default  function Login() {
             <Paper elevation={10} style={paperStyle} >
                 <Grid align='center' style={{marginBottom:'20px'}}>
                      <Avatar style={avatarStyle}><LockOpenIcon/></Avatar>
-                    <h2>Regístrate</h2>
+                    <h2>Registrarse</h2>
                 </Grid>
                 {<TextField label='Nombre y Apellido' placeholder='Nombre y Apellido' style={txtstyle} fullWidth required/>}
                 {<TextField label='Mail' placeholder='Mail' style={txtstyle} fullWidth required/>}
                 {/* <TextField label='Usuario' placeholder='Usuario' style={txtstyle} fullWidth required/> */}
                 <TextField label='Password' placeholder='Password' style={txtstyle} type='password' fullWidth required/>
+                <TextField label='Repetir Password' placeholder='Repetir Password' style={txtstyle} type='password' fullWidth required/>
                 {/* <FormControlLabel
                     control={
                     <Checkbox style={{ color: 'var(--primaryColor)' }}
