@@ -1,6 +1,6 @@
 // product
 export const getAllProductsApi = 'products/'
-/* export const getAllProductsApi = 'products?status=Publicado' */
+export const getAllPublicatesProductsApi = 'products?status=publicado'
 export const getProductsDetailsApi = '/product-detail/'
 export const getCategoriesNameApi = "categories/names"
 export const getCategoriesIdApi = "categories/"

@@ -1,6 +1,6 @@
 import React from 'react';
-import styles from './Footer.module.css';
-import {Container, Grid, Box, Link} from '@mui/material' 
+import {Container, Grid, Box} from '@mui/material' 
+import {Link} from 'react-router-dom'
 
 
 export default function Footer() {
@@ -22,45 +22,50 @@ export default function Footer() {
                     <Grid item xs={12} sm={4}>
                         <Box borderBottom={1}>Usuario</Box>
                         <Box>
-                            <Link href="/" color = "inherit">
-                                Registrarse
+                            <Link to="/juira/login" style={{color: 'white'}}>
+                                Iniciar Sesión / Registrarse
                             </Link>
                         </Box>
                         <Box>
-                            <Link href="/" color = "inherit">
+                            <Link to="/" style={{color: 'white'}}>
                                 Administrar mi cuenta
                             </Link>
                         </Box>
                         <Box>
-                            <Link href="/juira/sell" color = "inherit">
+                            <Link to="/juira/sell" style={{color: 'white'}}>
                                 Vender un producto
                             </Link>
                         </Box>
                         <Box>
-                            <Link href="/" color = "inherit">
+                            <Link to="/juira/shoppingCart" style={{color: 'white'}}>
                                 Mi carrito
+                            </Link>
+                        </Box>
+                        <Box>
+                            <Link to="/juira/favorites" style={{color: 'white'}}>
+                                Favoritos
                             </Link>
                         </Box>
                     </Grid>
                     <Grid item xs={12} sm={4}>
                         <Box borderBottom={1}>Ayuda</Box>
                         <Box>
-                            <Link href="/" color = "inherit">
+                            <Link to="/" style={{color: 'white'}}>
                                 Contacto: juiraMarket@gmail.com
                             </Link>
                         </Box>
                         <Box>
-                            <Link href="/" color = "inherit">
+                            <Link to="/" style={{color: 'white'}}>
                                 Soporte
                             </Link>
                         </Box>
                         <Box>
-                            <Link href="/" color = "inherit">
+                            <Link to="/" style={{color: 'white'}}>
                                 Terminos y condiciones
                             </Link>
                         </Box>
                         <Box>
-                            <Link href="/" color = "inherit">
+                            <Link to="/" style={{color: 'white'}}>
                                 Politica de privacidad
                             </Link>
                         </Box>

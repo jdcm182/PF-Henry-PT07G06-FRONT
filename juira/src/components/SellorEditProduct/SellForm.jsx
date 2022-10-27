@@ -15,6 +15,8 @@ import axios from 'axios';
 import { useState} from 'react'
 import { useSelector, useDispatch,} from 'react-redux';
 import { getCategories, publishProd} from "../../redux/actions/products.actions.jsx";
+import { useHistory } from "react-router-dom";
+import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 // import { themeOptions } from '../../ThemeColors.js'
 // import { ThemeProvider } from '@mui/material/styles';
 // import { makeStyles, withTheme } from '@mui/styles';
@@ -49,7 +51,7 @@ export default function SellForm() {
 
   const categories= useSelector(state=>state.productsReducer.categories)
 
-
+  const history = useHistory();
 
   const [error, setError]=useState({})
   const[data, setData]=React.useState({
@@ -328,6 +330,18 @@ export default function SellForm() {
       
   
     </Box>
+    <Container sx={{margin: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <Button
+          variant="contained"
+          startIcon={<HomeRoundedIcon />}
+          sx={
+            {backgroundColor: '#23c197', '&:hover': {backgroundColor: '#138f6e'}}
+          }
+          onClick={()=>{history.push('/juira')}}
+          >
+          Inicio
+        </Button>
+    </Container>
 
     </Container>
   

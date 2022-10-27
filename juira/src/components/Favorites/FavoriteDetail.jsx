@@ -1,7 +1,7 @@
 import { Container, maxWidth,Box } from '@mui/system'
 import React from 'react'
-import { removeToFavorites } from "../../redux/actions/products.actions";
-import { useDispatch } from "react-redux";
+import {  addToCart, removeToCart, removeToFavorites } from "../../redux/actions/products.actions";
+import { useDispatch, useSelector } from "react-redux";
 import {useHistory } from 'react-router-dom';
 import { Button } from '@mui/material';
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
@@ -14,10 +14,24 @@ import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import { pink } from "@mui/material/colors";
 import { IconButton } from "@mui/material";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 
 export default function FavoriteDetail(props) {
     // id={p.id} price={p.price} name={p.name} image={p.image}
+
+    const handleCart = (p) => {
+      productIsAddedToCart(p.id)
+      ? dispatch(removeToCart(p.id))
+      : dispatch(addToCart(p))
+    };
+
+    const itemsAddedToCart = useSelector((state) => state.productsReducer.cart);
+
+    const productIsAddedToCart = (id) => {
+      return itemsAddedToCart.find((item) => item.id === id) ? true : false;
+    };
 
     const dispatch = useDispatch();
     let history = useHistory();
@@ -54,8 +68,29 @@ export default function FavoriteDetail(props) {
                 ${props.price}
               </Typography>
           }>
-          
+            
           </ListItemText>
+          <IconButton
+          sx={{
+            color: "var(--primaryColor)",
+            position: "absolute",
+            bottom: ".125rem",
+            right: ".125rem",
+          }}
+          onClick={() => {
+            handleCart(props);
+          }}
+        >
+          {productIsAddedToCart(props.id) ? (
+            <ShoppingCartIcon
+              
+            />
+          ) : (
+            <AddShoppingCartIcon
+           
+            />
+          )}
+        </IconButton>
       </ListItem>
      
     

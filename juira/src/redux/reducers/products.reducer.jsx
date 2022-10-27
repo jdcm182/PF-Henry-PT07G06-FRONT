@@ -64,11 +64,13 @@ export function productsReducer(state = initialState, action) {
       };
 
     case UPDATE_CART:
+      localStorage.setItem("itemsInCart", JSON.stringify(action.payload));
       return {
         ...state,
         cart: action.payload,
       };
     case UPDATE_FAVORTITES:
+      localStorage.setItem("itemsInFavorites", JSON.stringify(action.payload))
       return {
         ...state,
         favorites: action.payload,
