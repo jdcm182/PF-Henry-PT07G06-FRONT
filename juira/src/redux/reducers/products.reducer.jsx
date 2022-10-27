@@ -116,6 +116,8 @@ export function productsReducer(state = initialState, action) {
       };
 
     default:
+      " "
       return state;
   }
+
 }
