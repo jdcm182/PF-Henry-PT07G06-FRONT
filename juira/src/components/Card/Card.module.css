@@ -11,6 +11,7 @@
     border-radius: .5rem;
     transition: 300ms;
 
+    position: relative;
 }
 
 .cardContainer:hover {

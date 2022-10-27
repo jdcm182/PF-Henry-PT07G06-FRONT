@@ -1,14 +1,14 @@
-import * as React from 'react';
-import { useTheme } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import MobileStepper from '@mui/material/MobileStepper';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
-import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
-import SwipeableViews from 'react-swipeable-views';
-import { autoPlay } from 'react-swipeable-views-utils';
+import * as React from "react";
+import { useTheme } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import MobileStepper from "@mui/material/MobileStepper";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
+import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
+import SwipeableViews from "react-swipeable-views";
+import { autoPlay } from "react-swipeable-views-utils";
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -37,32 +37,39 @@ const images = [
       'https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60',
   }, */
   {
-    label: '',
-    imgPath: 'https://res.cloudinary.com/dhxlepnd3/image/upload/v1666307465/juira/categories/01_lmk0yl.jpg',
+    label: "",
+    imgPath:
+      "https://res.cloudinary.com/dhxlepnd3/image/upload/v1666307465/juira/categories/01_lmk0yl.jpg",
   },
   {
-    label: '',
-    imgPath: 'https://res.cloudinary.com/dhxlepnd3/image/upload/v1666307465/juira/categories/02_eaknvw.jpg',
+    label: "",
+    imgPath:
+      "https://res.cloudinary.com/dhxlepnd3/image/upload/v1666307465/juira/categories/02_eaknvw.jpg",
   },
   {
-    label: '',
-    imgPath: 'https://res.cloudinary.com/dhxlepnd3/image/upload/v1666307465/juira/categories/03_e99lu1.jpg',
+    label: "",
+    imgPath:
+      "https://res.cloudinary.com/dhxlepnd3/image/upload/v1666307465/juira/categories/03_e99lu1.jpg",
   },
   {
-    label: '',
-    imgPath: 'https://res.cloudinary.com/dhxlepnd3/image/upload/v1666307465/juira/categories/04_h83qnh.webp',
+    label: "",
+    imgPath:
+      "https://res.cloudinary.com/dhxlepnd3/image/upload/v1666307465/juira/categories/04_h83qnh.webp",
   },
   {
-    label: '',
-    imgPath: 'https://res.cloudinary.com/dhxlepnd3/image/upload/v1666307465/juira/categories/05_odkiph.jpg',
+    label: "",
+    imgPath:
+      "https://res.cloudinary.com/dhxlepnd3/image/upload/v1666307465/juira/categories/05_odkiph.jpg",
   },
   {
-    label: '',
-    imgPath: 'https://res.cloudinary.com/dhxlepnd3/image/upload/v1666307465/juira/categories/06_ko5qf8.jpg',
+    label: "",
+    imgPath:
+      "https://res.cloudinary.com/dhxlepnd3/image/upload/v1666307465/juira/categories/06_ko5qf8.jpg",
   },
   {
-    label: '',
-    imgPath: 'https://res.cloudinary.com/dhxlepnd3/image/upload/v1666307466/juira/categories/07_dd77jy.jpg',
+    label: "",
+    imgPath:
+      "https://res.cloudinary.com/dhxlepnd3/image/upload/v1666307466/juira/categories/07_dd77jy.jpg",
   },
 ];
 
@@ -100,24 +107,24 @@ function SwipeableTextMobileStepper() {
       </Paper> */}
 
       <AutoPlaySwipeableViews
-        axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+        axis={theme.direction === "rtl" ? "x-reverse" : "x"}
         index={activeStep}
         onChangeIndex={handleStepChange}
         enableMouseEvents
       >
         {images.map((step, index) => (
-          <div key={step.label}>
+          <div key={index}>
             {Math.abs(activeStep - index) <= 2 ? (
               <Box
                 component="img"
                 sx={{
                   height: 255,
-                  display: 'block',
-                  maxWidth: width, 
-                  maxHeight: heigth, 
-                  objectFit: 'cover',
-                  overflow: 'hidden',
-                  width: '100%',
+                  display: "block",
+                  maxWidth: width,
+                  maxHeight: heigth,
+                  objectFit: "cover",
+                  overflow: "hidden",
+                  width: "100%",
                 }}
                 src={step.imgPath}
                 alt={step.label}
@@ -131,8 +138,7 @@ function SwipeableTextMobileStepper() {
         steps={maxSteps}
         position="static"
         activeStep={activeStep}
-        style={{ color: "var(--primaryColor", 
-                 backgroundColor: "#ffffff77" }}
+        style={{ color: "var(--primaryColor", backgroundColor: "#ffffff77" }}
         nextButton={
           <Button
             size="small"
@@ -141,7 +147,7 @@ function SwipeableTextMobileStepper() {
             style={{ color: "var(--primaryColor" }}
           >
             Siguiente
-            {theme.direction === 'rtl' ? (
+            {theme.direction === "rtl" ? (
               <KeyboardArrowLeft />
             ) : (
               <KeyboardArrowRight />
@@ -149,9 +155,13 @@ function SwipeableTextMobileStepper() {
           </Button>
         }
         backButton={
-          <Button size="small" onClick={handleBack} disabled={activeStep === 0}
-          style={{ color: "var(--primaryColor" }}>
-            {theme.direction === 'rtl' ? (
+          <Button
+            size="small"
+            onClick={handleBack}
+            disabled={activeStep === 0}
+            style={{ color: "var(--primaryColor" }}
+          >
+            {theme.direction === "rtl" ? (
               <KeyboardArrowRight />
             ) : (
               <KeyboardArrowLeft />
@@ -160,7 +170,6 @@ function SwipeableTextMobileStepper() {
           </Button>
         }
       />
-
     </Box>
   );
 }

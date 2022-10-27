@@ -6,11 +6,17 @@ import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import ButtonBase from "@mui/material/ButtonBase";
 import Button from "@mui/material/Button";
+import Loading from "../Loading/Loading";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import AttachMoneyRoundedIcon from '@mui/icons-material/AttachMoneyRounded';
+import DescriptionRoundedIcon from '@mui/icons-material/DescriptionRounded';
+import MilitaryTechRoundedIcon from '@mui/icons-material/MilitaryTechRounded';
 
 import { useSelector } from "react-redux";
 import {
   getProductDetails,
   addToCart,
+  removeDetail
 } from "../../redux/actions/products.actions";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -27,35 +33,22 @@ export default function Detail() {
 
   React.useEffect(() => {
     dispatch(getProductDetails(id));
+    return ()=>{dispatch(removeDetail())}
   }, [dispatch, id]);
 
   let p = useSelector((state) => state.productsReducer.productDetails);
-
+  console.log(p)
   function handleAddToCart(p) {
     dispatch(addToCart(p));
   }
 
-  p && Object.keys(p).length !== 0 ? (
-    <></>
-  ) : (
-    (p = {
-      id: 1,
-      name: "Sillon Individual Moderno Living 1 Cuerpo Pana",
-      description: `
-        Sillon 1 Cuerpo Individual Moderno Para Living.
-        En tela Pana con proceso anti mancha color Beige clarito, con apliques en Jacquard.
-        Medidas:
-            Ancho: 0,74 mts.
-            Alto: 0,98 mts.
-            Profundidad: 0,72 mts.`,
-      price: 36500.0,
-      condition: "half-used",
-      image:
-        "https://res.cloudinary.com/duq1tcwjw/image/upload/v1665861632/PF-JUIRA/Products/Sillon_usado_vxwb69.jpg",
-    })
-  );
 
   return (
+    (!p  || Object.keys(p).length === 0) ?
+    
+    <Loading/> 
+      
+    : 
     <Container
 
       sx={{
@@ -76,7 +69,7 @@ export default function Detail() {
         }}
       >
         <Grid container direction="row" spacing={2}>
-          <Grid item>
+          <Grid item sx={{ minWidth: '40%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <ButtonBase xs={12} sx={{ boxShadow: 2, mr: 1 }}>
               <Img alt="complex" src={p.image} />
             </ButtonBase>
@@ -87,28 +80,45 @@ export default function Detail() {
               xs
               container
               direction="column"
-              spacing={15}
+              spacing={8}
               sx={{ mr: 2 }}
             >
-              <Grid item xs>
-                <Typography
-                  gutterBottom
-                  variant="subtitle1"
-                  component="div"
-                  sx={{ fontWeight: "bold", fontSize: 24, mb: 6 }}
-                >
-                  {p.name}
-                </Typography>
-                <Typography variant="body2" gutterBottom sx={{ fontSize: 16 }}>
-                  {p.description}
-                </Typography>
-              </Grid>
+                <Grid item xs>
+                  <Typography
+                    gutterBottom
+                    component="div"
+                    sx={{ fontWeight: "bold", mb: 6, padding: 2 }}
+                    variant="h3"
+                  >
+                    {p.name}
+                  </Typography>
+                  <Typography
+                    variant="subtitle1"
+                    component="div"
+                    sx={{ fontWeight: "bold", fontSize: 50, mt: 2, color: "green", display:'flex', alignItems:'center', justifyContent:'flex-end' }}
+                  >
+                    <AttachMoneyRoundedIcon sx={{fontSize:60}}/>{p.price}
+                  </Typography>
+                  <Typography variant="subtitle1" gutterBottom sx={{ fontSize: 20, display:'flex', alignItems:'flex-start', padding: 1 }}>
+                    <DescriptionRoundedIcon/>
+                    {`Descripción: ${p.description}`}
+                  </Typography>
+                  <Typography variant="subtitle1" gutterBottom sx={{ fontSize: 20, display:'flex', alignItems:'flex-start' }}>
+                  <MilitaryTechRoundedIcon/>
+                  {`Condición: ${p.condition}`}
+                  </Typography>
+                </Grid>
               <Grid item>
-                <Button
+              <Button
                   variant="contained"
+                  startIcon={<AddShoppingCartIcon/>}
+                  size='large'
                   onClick={() => {
                     handleAddToCart(p);
                   }}
+                  sx={
+                    {backgroundColor: '#23c197', '&:hover': {backgroundColor: '#138f6e'}}
+                  }
                 >
                   <Typography sx={{ cursor: "pointer" }} variant="body2">
                     Agregar al Carrito
@@ -116,15 +126,7 @@ export default function Detail() {
                 </Button>
               </Grid>
             </Grid>
-            <Grid item>
-              <Typography
-                variant="subtitle1"
-                component="div"
-                sx={{ fontWeight: "bold", fontSize: 24, mt: 2, color: "green" }}
-              >
-                ${p.price}
-              </Typography>
-            </Grid>
+            
           </Grid>
         </Grid>
       </Paper>
