@@ -1,4 +1,6 @@
 import {
+  SIGN_IN,
+  SIGN_OUT,
   TURN_OFF_SPINNER,
   TURN_ON_SPINNER,
   UPDATE_FILTER_STATE,
@@ -12,6 +14,24 @@ const initialState = {
 
 export function appReducer(state = initialState, action) {
   switch (action.type) {
+
+    case SIGN_IN: {
+      return {
+        ...state,
+        token: action.payload,
+      };
+    }
+    case SIGN_OUT: {
+      return {
+        ...state,
+        token: "",
+      };
+    }
+
+
+
+
+
     case TURN_ON_SPINNER: {
       return {
         ...state,
