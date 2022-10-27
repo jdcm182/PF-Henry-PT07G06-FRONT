@@ -167,10 +167,12 @@ EnhancedTableHead.propTypes = {
 };
 
 function EnhancedTableToolbar(props) {
-  const { numSelected } = props;
+  const { numSelected, selected } = props;
 
   const handlePublish = () => {
-    //alert('handlePublish');
+    console.log(props)
+    alert('Los productos seleccionados serán publicados.');
+
     // const selectedProds = getProductsArrayFromIds();
     // console.log('handlePublish > selectedProducts: ', selectedProds);
     // //selectedProds.forEach(p => p.status = 'Publicado' )
@@ -304,9 +306,6 @@ export default function EnhancedTable( props ) {
   products.length===0 && dispatch(getAllProducts());
 
   products && rows.length===0 && products.forEach( p => rows.push(createData(p.name, p.id, p.status, p.price, p.ownerId) ) )
-
-
-  
   
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('pid');
@@ -374,7 +373,7 @@ export default function EnhancedTable( props ) {
   return (
     <Box sx={{ width: '100%', marginTop: '1rem' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar numSelected={selected.length} selected={selected}/>
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
