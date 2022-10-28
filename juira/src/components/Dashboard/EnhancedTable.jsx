@@ -178,36 +178,44 @@ function EnhancedTableToolbar(props) {
   }, [selected])
 
   const handlePublish = async () => {
-    try {
-      setSelected([])
-      // alert('Los productos seleccionados serán publicados.');
-      toast('Here is your toast.')
-      await selected.map( p => axios.put(`${API_URL_BACKEND}products/${p}`, { id: p, status: 'Publicado'}))
-      dispatch(getAllProducts());
-    } catch (error) {
-      alert('Error');
-    }
+    // try {
+    //   setSelected([])
+    //   // alert('Los productos seleccionados serán publicados.');
+    //   toast('Here is your toast.')
+    //   await selected.map( p => axios.put(`${API_URL_BACKEND}products/${p}`, { id: p, status: 'Publicado'}))
+    //   dispatch(getAllProducts());
+    // } catch (error) {
+    //   alert('Error');
+    // }
+    setSelected([])
+    let reqs = selected.map( p => axios.put(`${API_URL_BACKEND}products/${p}`, { id: p, status: 'Publicado'}))
+    let promise = Promise.all(reqs).then(res => dispatch(getAllProducts()))
+    toast.promise(promise, {
+      loading: 'Cargando',
+      success: 'Actualizado con éxito',
+      error: 'Ocurrió un error',
+    });
   }
   
   const handlePause = async () => {
-    try {
-      setSelected([])
-      alert('Los productos seleccionados serán pausados.');
-      await selected.map( p => axios.put(`${API_URL_BACKEND}products/${p}`, { id: p, status: 'En pausa'}))
-      dispatch(getAllProducts());
-    } catch (error) {
-      alert('Error');
-    }
+     setSelected([])
+    let reqs = selected.map( p => axios.put(`${API_URL_BACKEND}products/${p}`, { id: p, status: 'En pausa'}))
+    let promise = Promise.all(reqs).then(res => dispatch(getAllProducts()))
+    toast.promise(promise, {
+      loading: 'Cargando',
+      success: 'Actualizado con éxito',
+      error: 'Ocurrió un error',
+    });
   }
   const handleDelete = async () => {
-    try {
-      setSelected([])
-      alert('Los productos seleccionados serán eliminados.');
-      await selected.map( p => axios.put(`${API_URL_BACKEND}products/${p}`, { id: p, status: 'Eliminado'}))
-      dispatch(getAllProducts());
-    } catch (error) {
-      alert('Error');
-    }
+    setSelected([])
+    let reqs = selected.map( p => axios.put(`${API_URL_BACKEND}products/${p}`, { id: p, status: 'Eliminado'}))
+    let promise = Promise.all(reqs).then(res => dispatch(getAllProducts()))
+    toast.promise(promise, {
+      loading: 'Cargando',
+      success: 'Actualizado con éxito',
+      error: 'Ocurrió un error',
+    });
   }
   
   const getProductsArrayFromIds = (/* selectedIdsGlobal, productsGlobal */) =>  {
