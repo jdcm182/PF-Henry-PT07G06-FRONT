@@ -18,10 +18,13 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
+import DeleteIcon from '@mui/icons-material/Delete';
+import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
-
+import toast, { Toaster } from 'react-hot-toast';
 import { useSelector, useDispatch } from 'react-redux';
 import { getAllProducts } from '../../redux/actions/products.actions.jsx';
+//import { updateProdsTemp } from '../../redux/actions/products.actions.jsx';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'; // set Published
 import PauseCircleFilledIcon from '@mui/icons-material/PauseCircleFilled'; // set Paused
@@ -167,11 +170,18 @@ function EnhancedTableToolbar(props) {
   const { numSelected, selected, products, setSelected} = props;
   const [data, setData] = React.useState('')
   const dispatch = useDispatch();
+  const allProducts = useSelector((state) => state.productsReducer.allProducts);
+  
+  React.useEffect(() => {
+    // dispatch(getAllProducts());
+    setData('')
+  }, [selected])
 
   const handlePublish = async () => {
     try {
-      alert('Los productos seleccionados serán publicados.');
       setSelected([])
+      // alert('Los productos seleccionados serán publicados.');
+      toast('Here is your toast.')
       await selected.map( p => axios.put(`${API_URL_BACKEND}products/${p}`, { id: p, status: 'Publicado'}))
       dispatch(getAllProducts());
     } catch (error) {
@@ -181,8 +191,8 @@ function EnhancedTableToolbar(props) {
   
   const handlePause = async () => {
     try {
-      alert('Los productos seleccionados serán publicados.');
       setSelected([])
+      alert('Los productos seleccionados serán pausados.');
       await selected.map( p => axios.put(`${API_URL_BACKEND}products/${p}`, { id: p, status: 'En pausa'}))
       dispatch(getAllProducts());
     } catch (error) {
@@ -191,8 +201,8 @@ function EnhancedTableToolbar(props) {
   }
   const handleDelete = async () => {
     try {
-      alert('Los productos seleccionados serán publicados.');
       setSelected([])
+      alert('Los productos seleccionados serán eliminados.');
       await selected.map( p => axios.put(`${API_URL_BACKEND}products/${p}`, { id: p, status: 'Eliminado'}))
       dispatch(getAllProducts());
     } catch (error) {
@@ -201,9 +211,7 @@ function EnhancedTableToolbar(props) {
   }
   
   const getProductsArrayFromIds = (/* selectedIdsGlobal, productsGlobal */) =>  {
-
   }
-
   
   return (
     <Toolbar
@@ -269,9 +277,17 @@ EnhancedTableToolbar.propTypes = {
 
 export default function EnhancedTable( props ) {
 
+  //const [products, setProducts] = React.useState(props.products);
+
   let products = null;
   products = useSelector((state) => state.productsReducer.allProducts);
-  
+
+  const dispatch = useDispatch();
+  // products.length===0 && dispatch(getAllProducts());
+
+  // products && rows.length===0 && products.forEach( p => rows.push(createData(p.name, p.id, p.status, p.price, p.ownerId) ) )
+  // let products = productsA.map( p => createData(p.name, p.id, p.status, p.price, p.ownerId))
+// console.log(products)
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('id');
   const [selected, setSelected] = React.useState([]);
@@ -335,6 +351,7 @@ export default function EnhancedTable( props ) {
 
   return (
     <Box sx={{ width: '100%', marginTop: '1rem' }}>
+      <Toaster />
       <Paper sx={{ width: '100%', mb: 2 }}>
         <EnhancedTableToolbar numSelected={selected.length} selected={selected} products={products} setSelected={setSelected}/>
         <TableContainer>
@@ -383,6 +400,7 @@ export default function EnhancedTable( props ) {
                     tabIndex={-1}
                     key={row.name}
                     selected={isItemSelected}
+                    
                     >
                       <TableCell padding="checkbox">
                         <Checkbox 
