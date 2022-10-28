@@ -29,8 +29,6 @@ import DangerousIcon from '@mui/icons-material/Dangerous'; // set Deleted
 import axios from 'axios';
 import { API_URL_BACKEND } from "../../api/apiRoute";
 
-
-
 const title = 'Productos'
 
 function createData(name, pid, status, price, ownerId) {
