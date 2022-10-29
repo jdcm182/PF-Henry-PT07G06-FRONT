@@ -11,8 +11,11 @@ import {
 import LockIcon from "@mui/icons-material/Lock";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import { loginAction } from "../../redux/actions/app.actions";
+import { useDispatch } from "react-redux";
 
 export default function Login() {
+  const dispatch = useDispatch();
   const paperStyle = {
     padding: 20,
     height: "70vh",
@@ -87,28 +90,25 @@ export default function Login() {
         </Typography>
       </Paper>
       <Button
-        onClick={async () => {
-          await localStorage.setItem("token", "tokenUser");
-          await localStorage.setItem("role", "user");
+        onClick={() => {
+          dispatch(loginAction("user"));
         }}
       >
         Usuario
       </Button>
       <Button
-        onClick={async () => {
-          await localStorage.setItem("token", "tokenAdmin");
-          await localStorage.setItem("role", "admin");
-        }}
-      >
-        Admin
-      </Button>
-      <Button
-        onClick={async () => {
-          await localStorage.setItem("token", "");
-          await localStorage.setItem("role", "");
+        onClick={() => {
+          dispatch(loginAction(""));
         }}
       >
         Guest
+      </Button>
+      <Button
+        onClick={() => {
+          dispatch(loginAction("admin"));
+        }}
+      >
+        Admin
       </Button>
     </Grid>
   );

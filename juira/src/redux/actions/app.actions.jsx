@@ -32,7 +32,8 @@ export const updateFilter = (payload) => (dispatch) => {
 export const loginAction = (user) => {
   return async (dispatch) => {
     /* const { token, msg, role } = await postLogin(user); */
-
+    // aca estaba bien, el user es lo q se le manda al back para q el devuelva el token, role o msg de error
+    //Yo lo comente para poder hacer las pruebas
     if (user === "admin") {
       await localStorage.setItem("token", "tokenAdmin");
       await localStorage.setItem("role", "admin");
@@ -45,17 +46,18 @@ export const loginAction = (user) => {
         console.log("Error Storage", e)
       } */
 
-      dispatch(signInSuccess("tokenAdmin"));
-      toast.success(user, "Bienvenido a la plataforma");
-    } else if (user === "JuiraUser") {
+      
+      toast.success(user+" Bienvenido a la plataforma");
+    } else if (user === "user") {
       await localStorage.setItem("token", "tokenUser");
       await localStorage.setItem("role", "user");
       dispatch(signInSuccess({ token: "tokenUser", role: "user" }));
+      toast.success(user+" Bienvenido a la plataforma");
     } else {
       await localStorage.setItem("token", "");
       await localStorage.setItem("role", "");
       dispatch(logoOutSuccess());
-      toast.error(undefined, "Eres un guest");
+      toast.error("Eres un guest");
     }
   };
 };
