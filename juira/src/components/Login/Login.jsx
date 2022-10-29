@@ -24,11 +24,11 @@ export default function Login() {
 
     const [user, setUser]=React.useState(null)
 
-    React.useEffect(()=>{
-        auth.onAuthStateChanged(auth,(user)=>{
-            setUser(user)
-        })
-    },[])
+    // React.useEffect(()=>{
+    //     auth.onAuthStateChanged(auth,(user)=>{
+    //         setUser(user)
+    //     })
+    // },[])
 
     const handleGoogleSignIn=()=>{
         const provider= new auth.GoogleAeuthProvider()
