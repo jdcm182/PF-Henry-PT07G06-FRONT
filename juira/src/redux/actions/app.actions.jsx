@@ -1,17 +1,17 @@
-import toast from 'react-hot-toast';
+import toast from "react-hot-toast";
 export const TURN_ON_SPINNER = "TURN_ON_SPINNER";
 export const TURN_OFF_SPINNER = "TURN_OFF_SPINNER";
 export const UPDATE_FILTER_STATE = "UPDATE_FILTER_STATE";
 export const SIGN_IN = "SIGN_IN";
 export const SIGN_OUT = "SIGN_OUT";
-
+export const REFRESH_DATA = "REFRESH_DATA"
 
 const signInSuccess = (token) => {
   return { type: SIGN_IN, payload: token };
 };
 
 const logoOutSuccess = () => {
-  return { type: SIGN_OUT};
+  return { type: SIGN_OUT };
 };
 
 export const setSpinnerLoading = (flag) => {
@@ -36,7 +36,7 @@ export const loginAction = (user) => {
     if (user === "admin") {
       await localStorage.setItem("token", "tokenAdmin");
       await localStorage.setItem("role", "admin");
-      dispatch(signInSuccess({token: "token", role: "admin"}))
+      dispatch(signInSuccess({ token: "token", role: "admin" }));
       /* try {
         const jsonValue = JSON.stringify(user)
   
@@ -50,7 +50,7 @@ export const loginAction = (user) => {
     } else if (user === "JuiraUser") {
       await localStorage.setItem("token", "tokenUser");
       await localStorage.setItem("role", "user");
-      dispatch(signInSuccess({token: "tokenUser", role: "user"}))
+      dispatch(signInSuccess({ token: "tokenUser", role: "user" }));
     } else {
       await localStorage.setItem("token", "");
       await localStorage.setItem("role", "");
@@ -66,3 +66,10 @@ export const logoOutAction = () => {
     dispatch(logoOutSuccess());
   };
 };
+
+export function refreshData() {
+  return {
+    type: REFRESH_DATA,
+  };
+}
+
