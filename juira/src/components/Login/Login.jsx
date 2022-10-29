@@ -5,7 +5,7 @@ import LockIcon from '@mui/icons-material/Lock';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 // import firebase from 'firebase';
-import {getAuth} from 'firebase/auth'
+import {getAuth, onAuthStateChanged} from 'firebase/auth'
 
 export default  function Login() {
     const auth=getAuth()
@@ -13,7 +13,7 @@ export default  function Login() {
     const [user, setUser]=React.useState(null)
 
     React.useEffect(()=>{
-        auth().onAuthStateChanged(user=>{
+        auth.onAuthStateChanged(auth,(user)=>{
             setUser(user)
         })
     },[])
@@ -21,7 +21,7 @@ export default  function Login() {
     const handleGoogleSignIn=()=>{
         const provider= new auth.GoogleAeuthProvider()
 
-        auth().signInWithPopup(provider)
+        auth.signInWithPopup(provider)
         .then(result=>console.log(`${result.user.email} ha iniciado sesion`))
         .catch(error=> console.log(`Error ${error.code}: ${error.message}`))
     }
