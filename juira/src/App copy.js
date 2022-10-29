@@ -18,10 +18,7 @@ import Favorites from "./components/Favorites/Favorites";
 import OrdenDeCompra from "./components/OrdenDeCompra/OrdenDeCompra";
 import { refreshData } from "./redux/actions/app.actions";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import GuestNavigator from "./Navigator/GuestNavigator";
-import UserNavigator from "./Navigator/UserNavigator";
-import AdminNavigator from "./Navigator/AdminNavigator";
+import { useDispatch } from "react-redux";
 
 function App() {
   const { pathname } = useLocation();
@@ -30,16 +27,24 @@ function App() {
   useEffect(() => {
     reloadSesion(refreshData());
   }, [reloadSesion]);
-
-  const role = useSelector((state) => state.app.token.role);
-  
   return (
     <div className="App">
       <BrowserRouter>
-      {console.log("role1", role, !role)}
-        {!role && <GuestNavigator />}
-        {role === "user" && <UserNavigator />}
-        {role === "admin" && <AdminNavigator />}
+        {pathname !== "/" && <NavBar />}
+        <ScrollToTop />
+        <Switch>
+          <Route exact path={"/"} component={Landing} />
+          <Route exact path={"/juira"} component={Home} />
+          <Route exact path={"/juira/shoppingCart"} component={ShoppingCart} />
+          <Route exact path={"/juira/dashboard"} component={Dashboard} />
+          <Route exact path={"/juira/favorites"} component={Favorites} />
+          <Route exact path={"/juira/order"} component={OrdenDeCompra} />
+          <Route exact path={"/juira/login"} component={Login} />
+          <Route exact path={"/juira/register"} component={Register} />
+          <Route path={"/juira/sell"} component={SellForm} />
+          <Route path={"/juira/:id"} component={Detail} />
+        </Switch>
+        {pathname !== "/" && <Footer />}
       </BrowserRouter>
     </div>
   );

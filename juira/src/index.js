@@ -7,6 +7,7 @@ import {initializeApp} from 'firebase/app'
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './redux/store'
+import { Toaster } from 'react-hot-toast';
 
 initializeApp({
 apiKey: "AIzaSyCkITagWMZ-q6tJCbyNu53nUxqD1cVJ-aY",
@@ -24,6 +25,7 @@ root.render(
   <Provider store={store}>
     <React.StrictMode>
       <BrowserRouter>
+        <Toaster/>
         <App />
       </BrowserRouter>
     </React.StrictMode>
