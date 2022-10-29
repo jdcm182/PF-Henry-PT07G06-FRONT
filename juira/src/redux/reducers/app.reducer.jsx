@@ -11,6 +11,10 @@ const initialState = {
   user: {},
   isSpinner: false,
   filterState: { categories: "Todos", sort: "A-Z", condition: "Todos" },
+  token: {
+    token : "",
+    role: "",
+  }
 };
 
 export function appReducer(state = initialState, action) {
