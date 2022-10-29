@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Link } from "react-router-dom";
 import {
@@ -13,9 +14,38 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { loginAction } from "../../redux/actions/app.actions";
 import { useDispatch } from "react-redux";
+import {getAuth, onAuthStateChanged} from 'firebase/auth'
+
 
 export default function Login() {
   const dispatch = useDispatch();
+  
+    const auth=getAuth()
+
+    const [user, setUser]=React.useState(null)
+
+    React.useEffect(()=>{
+        auth.onAuthStateChanged(auth,(user)=>{
+            setUser(user)
+        })
+    },[])
+
+    const handleGoogleSignIn=()=>{
+        const provider= new auth.GoogleAeuthProvider()
+
+        auth.signInWithPopup(provider)
+        .then(result=>console.log(`${result.user.email} ha iniciado sesion`))
+        .catch(error=> console.log(`Error ${error.code}: ${error.message}`))
+    }
+
+    const handleLogOut=()=>{
+        auth().signOut()
+        .then(result=>console.log(`${result.user.email} ha salido`))
+        .catch(error=> console.log(`Error ${error.code}: ${error.message}`))
+
+    }
+  
+  
   const paperStyle = {
     padding: 20,
     height: "70vh",
@@ -30,6 +60,12 @@ export default function Login() {
     color: "var(--primaryColor)",
   };
   return (
+  
+    user?
+        <div>
+            PERFIL DEL USUARIO
+            <Button onClick={handleLogOut}>Salir </Button>
+        </div>:
     <Grid>
       <Paper elevation={10} style={paperStyle}>
         <Grid align="center" style={{ marginBottom: "20px" }}>
@@ -79,10 +115,14 @@ export default function Login() {
           Iniciar Sesión
         </Button>
         {/* <Typography >
+
+
                      <Link to="#" >
                         Olvidaste tu contraseña?
                 </Link>
                 </Typography> */}
+
+<Button onClick={handleGoogleSignIn}>Login con Google</Button>
         <Typography>
           {" "}
           Todavía no estás registrado?
@@ -112,4 +152,5 @@ export default function Login() {
       </Button>
     </Grid>
   );
+
 }
