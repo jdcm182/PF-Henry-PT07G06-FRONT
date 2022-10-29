@@ -13,11 +13,11 @@ let ordersQty = 0
 let totalAmountPending = 0
 let ordersPendingQty = 0
 let totalAmountCompleted = 0
-let odersCompletedQty = 0
+let ordersCompletedQty = 0
 
 orders.forEach( order => {totalAmount += order.total; ordersQty += 1} )
-orders.forEach( order => {if (order.state === 'pending') totalAmountPending += order.total} )
-orders.forEach( order => {if (order.state === 'completed') totalAmountCompleted += order.total} )
+orders.forEach( order => {if (order.state === 'pending') totalAmountPending += order.total; ordersPendingQty += 1} )
+orders.forEach( order => {if (order.state === 'completed') totalAmountCompleted += order.total; ordersCompletedQty += 1} )
 
 const theme = createTheme();
 
@@ -58,7 +58,7 @@ export default function ShoppingOrder() {
                   
                   <DashCard title="Órdenes pendientes" value={`$ ${totalAmountPending.toLocaleString('de-DE')}`} info1={ordersPendingQty} info2={`de ${ordersQty}`} />
 
-                  <DashCard title="Órdenes completadas" value={`$ ${totalAmountCompleted.toLocaleString('de-DE')}`} info1={odersCompletedQty} info2={`de ${ordersQty}`} />
+                  <DashCard title="Órdenes completadas" value={`$ ${totalAmountCompleted.toLocaleString('de-DE')}`} info1={ordersCompletedQty} info2={`de ${ordersQty}`} />
 
                 </Container>
 
