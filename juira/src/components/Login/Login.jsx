@@ -14,13 +14,14 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { loginAction } from "../../redux/actions/app.actions";
 import { useDispatch } from "react-redux";
-import {getAuth, onAuthStateChanged} from 'firebase/auth'
+import {useFireBaseApp} from 'firebase'
 
 
 export default function Login() {
   const dispatch = useDispatch();
-  
-    const auth=getAuth()
+
+    const firebase=useFireBaseApp()
+
 
     const [user, setUser]=React.useState(null)
 
@@ -30,16 +31,20 @@ export default function Login() {
     //     })
     // },[])
 
-    const handleGoogleSignIn=()=>{
-        const provider= new auth.GoogleAeuthProvider()
+    const login= async()=>{
+        await firebase.auth().signInWithEmailAndPassword(email, password)
+    }
 
-        auth.signInWithPopup(provider)
+    const handleGoogleSignIn=async()=>{
+        const provider= new firebase.auth().GoogleAeuthProvider()
+
+        await firebase.auth().signInWithPopup(provider)
         .then(result=>console.log(`${result.user.email} ha iniciado sesion`))
         .catch(error=> console.log(`Error ${error.code}: ${error.message}`))
     }
 
-    const handleLogOut=()=>{
-        auth().signOut()
+    const handleLogOut=async()=>{
+        await firebase.auth().signOut()
         .then(result=>console.log(`${result.user.email} ha salido`))
         .catch(error=> console.log(`Error ${error.code}: ${error.message}`))
 
@@ -72,7 +77,7 @@ export default function Login() {
           <Avatar style={avatarStyle}>
             <LockIcon />
           </Avatar>
-          <h2>Iniciar Sesión</h2>
+          <h2 onClick={login}>Iniciar Sesión</h2>
         </Grid>
         {/* <TextField label='Nombre y Apellido' placeholder='Nombre y Apellido' style={txtstyle} fullWidth required/> */}
         {/* <TextField label='Mail' placeholder='Mail' style={txtstyle} fullWidth required/> */}
