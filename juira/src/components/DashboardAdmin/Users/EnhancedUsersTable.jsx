@@ -31,19 +31,9 @@ import PauseCircleFilledIcon from '@mui/icons-material/PauseCircleFilled'; // se
 import DangerousIcon from '@mui/icons-material/Dangerous'; // set Deleted
 import axios from 'axios';
 import { API_URL_BACKEND } from "../../../api/apiRoute";
-const products = require('./orders.json')
+const users = require('./users.json')
 
 const title = 'Usuarios registrados'
-
-function createData(name, pid, status, price, ownerId) {
-  return {
-    name,
-    pid,
-    status,
-    price,
-    ownerId,
-  };
-}
 
 let rows = [];
 
@@ -82,7 +72,7 @@ const headCells = [
     id: 'id',
     numeric: false,
     disablePadding: true,
-    label: 'No. de Orden',
+    label: 'ID',
   },
   {
     id: 'name',
@@ -100,7 +90,7 @@ const headCells = [
     id: 'phone',
     numeric: false,
     disablePadding: true,
-    label: 'Telefono',
+    label: 'Teléfono',
   },
   {
     id: 'status',
@@ -112,7 +102,7 @@ const headCells = [
     id: 'buyer',
     numeric: false,
     disablePadding: true,
-    label: 'Id. Comprador',
+    label: 'Fecha de registro',
   },
   // {
   //   id: 'products',
@@ -359,13 +349,13 @@ export default function EnhancedTable( props ) {
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - products.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - users.length) : 0;
 
   return (
     <Box sx={{ width: '100%', marginTop: '1rem' }}>
       <Toaster />
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} selected={selected} products={products} setSelected={setSelected}/>
+        <EnhancedTableToolbar numSelected={selected.length} selected={selected} users={users} setSelected={setSelected}/>
         <TableContainer>
           <Table
             sx={{ minWidth: 650 }}
@@ -383,7 +373,7 @@ export default function EnhancedTable( props ) {
             <TableBody>
               {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
-              {stableSort(products, getComparator(order, orderBy))
+              {stableSort(users, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.id);
@@ -434,11 +424,11 @@ export default function EnhancedTable( props ) {
                       >
                         {row.id}
                       </TableCell>
-                      <TableCell align="center">{row.createdAt.slice(0, 10) + ' ' + row.createdAt.slice(11,16)}</TableCell>
-                      <TableCell align="center">{row.state}</TableCell>
-                      <TableCell align="center">{row.total.toLocaleString('de-DE')}</TableCell>
-                      <TableCell align="center">{row.paymentReceived ? 'Si' : 'No' }</TableCell>
-                      <TableCell align="center">{row.transactionList[0].buyerId}</TableCell>
+                      <TableCell align="center">{row.name}</TableCell>
+                      <TableCell align="center">{row.emailAddress}</TableCell>
+                      <TableCell align="center">{row.phoneNumber}</TableCell>
+                      <TableCell align="center">{row.status}</TableCell>
+                      <TableCell align="center">{row.id}</TableCell>
                       {/* <TableCell align="right">{row.transactionList.map( e => `${e.productId}, `)}</TableCell> */}
 
                     </TableRow>
@@ -459,7 +449,7 @@ export default function EnhancedTable( props ) {
         <TablePagination
           rowsPerPageOptions={[10, 20, 30]}
           component="div"
-          count={products.length}
+          count={users.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
