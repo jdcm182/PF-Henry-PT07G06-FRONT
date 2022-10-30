@@ -44,7 +44,8 @@ onAuthStateChanged(auth,(user)=>{
                 console.log('el usuaio esta loguado')
                 //aca va el dispathc al back y al redux con la rta
                 postLogin(user.email)
-                .then(res=>loginAction(res))
+                .then(res=>console.log(res))
+                // .then(res=>loginAction(res))
                 .catch(error=>console.log(error))
 
                 
