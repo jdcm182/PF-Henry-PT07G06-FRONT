@@ -17,9 +17,11 @@ import { getAuth, signInWithEmailAndPassword,onAuthStateChanged, signOut } from 
 import { GoogleAuthProvider,signInWithPopup } from "firebase/auth";
 import {postLogin} from '../../redux/actions/app.actions'
 import PerfilUser from "../PerfilUser/PerfilUser";
+import { useHistory } from "react-router-dom";
 
 export default function Login() {
   const dispatch = useDispatch();
+  const history = useHistory();
 
 
 
@@ -43,9 +45,9 @@ const handleChange=(e)=>{
 onAuthStateChanged(auth,async (user)=>{
             if(user){
               const token=await user.getIdToken()
-                console.log('el usuaio esta loguado')
-                console.log( {token})
-                loginAction({token})
+              console.log(token)
+               await loginAction({token})
+              //  history.push(`/juira/home`);
                
 
                 

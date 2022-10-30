@@ -36,10 +36,12 @@ export const updateFilter = (payload) => (dispatch) => {
 
 export const loginAction = (user) => {
   return async (dispatch) => {
+    axios.defaults.headers.common['Authorization'] = user.token;
      const { msg, role } = await postLogin(user); 
     // aca estaba bien, el user es lo q se le manda al back para q el devuelva el token, role o msg de error
     //Yo lo comente para poder hacer las pruebas
     if (role) {
+      
       await localStorage.setItem("token",  user.token);
       await localStorage.setItem("role", role);
       dispatch(signInSuccess({ token: user.token, role: role }));
@@ -60,6 +62,7 @@ export const loginAction = (user) => {
 
 export const logoOutAction = () => {
   return async (dispatch) => {
+    delete axios.defaults.headers.common['Authorization'];
     await localStorage.setItem("token", "");
     await localStorage.setItem("role", "");
     dispatch(logoOutSuccess());
@@ -76,7 +79,7 @@ export function refreshData() {
 export const postLogin=(data) => async () => {
     const url = `${API_URL_BACKEND}${postUser}`;
     try {
-      let json = await axios.post(url, data);
+      let json = await axios.post(url,data);
       return json;
     } catch (error) {
       console.log("error api", error);
