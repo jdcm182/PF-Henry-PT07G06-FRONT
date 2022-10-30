@@ -54,7 +54,7 @@ onAuthStateChanged(auth,(user)=>{
     }
 
     const handleGoogleSignIn=async()=>{
-        const provider= new auth().GoogleAeuthProvider()
+        const provider= new GoogleAeuthProvider()
 
         await auth().signInWithPopup(provider)
         .then(result=>console.log(`${result.user.email} ha iniciado sesion`))
