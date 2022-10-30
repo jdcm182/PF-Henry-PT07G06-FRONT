@@ -15,9 +15,12 @@ import { loginAction } from "../../redux/actions/app.actions";
 import { useDispatch } from "react-redux";
 import { getAuth, signInWithEmailAndPassword,onAuthStateChanged, signOut } from "firebase/auth";
 import { GoogleAuthProvider,signInWithPopup } from "firebase/auth";
+import {postLogin} from '../../redux/actions/app.actions'
 
 export default function Login() {
   const dispatch = useDispatch();
+
+  const [token, setToken]= React.useState(null)
 
   const [userLog, setUserLog]=React.useState({
     email: ' ',
@@ -39,8 +42,12 @@ const handleChange=(e)=>{
 onAuthStateChanged(auth,(user)=>{
             if(user){
                 console.log('el usuaio esta loguado')
-                console.log(user)
                 //aca va el dispathc al back y al redux con la rta
+                postLogin(user.email)
+                .then(res=>setToken(res))
+                .catch(error=>console.log(error))
+
+                
             /* 
             PROPERTIES USER CREADO CON MAIL:
 
@@ -114,12 +121,12 @@ uid: "rz9pFLryLGhQljwpjTW5Siwl3Tp2"
     color: "var(--primaryColor)",
   };
   return (
-  
-    user?
-        <div>
+  <div>
+    {user&&<div>
             PERFIL DEL USUARIO
             <Button onClick={handleLogOut}>Salir </Button>
-        </div>:
+            </div>}
+     {!user &&
     <Grid>
       <Paper elevation={10} style={paperStyle}>
         <Grid align="center" style={{ marginBottom: "20px" }}>
@@ -208,7 +215,11 @@ uid: "rz9pFLryLGhQljwpjTW5Siwl3Tp2"
       >
         Admin
       </Button>
-    </Grid>
+    </Grid>}
+
+
+  </div>
+   
   );
 
 }

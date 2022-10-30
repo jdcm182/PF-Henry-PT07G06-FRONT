@@ -1,4 +1,8 @@
 import toast from "react-hot-toast";
+import {
+  API_URL_BACKEND,
+  postUser
+} from "../../api/apiRoute";
 export const TURN_ON_SPINNER = "TURN_ON_SPINNER";
 export const TURN_OFF_SPINNER = "TURN_OFF_SPINNER";
 export const UPDATE_FILTER_STATE = "UPDATE_FILTER_STATE";
@@ -74,4 +78,15 @@ export function refreshData() {
     type: REFRESH_DATA,
   };
 }
+
+export const postLogin=(data) => async () => {
+    const url = `${API_URL_BACKEND}${postUser}`;
+    try {
+      let json = await axios.post(url, data);
+      return json;
+    } catch (error) {
+      console.log("error api", error);
+    }
+  };
+
 
