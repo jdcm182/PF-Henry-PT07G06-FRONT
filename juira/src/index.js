@@ -11,7 +11,7 @@ import { Toaster } from 'react-hot-toast';
 
 initializeApp({
 apiKey: "AIzaSyCkITagWMZ-q6tJCbyNu53nUxqD1cVJ-aY",
-authDomain: "juiraauth.firebaseapp.com",
+authDomain: "juira-market-git-production-elehmann92.vercel.app/juira",
 projectId: "juiraauth",
 storageBucket: "juiraauth.appspot.com",
 messagingSenderId: "449866263758",

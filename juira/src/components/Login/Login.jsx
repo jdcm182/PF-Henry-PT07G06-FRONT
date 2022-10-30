@@ -34,6 +34,7 @@ const handleChange=(e)=>{
     const auth = getAuth();
     const user = auth.currentUser;
 
+ 
 
 onAuthStateChanged(auth,(user)=>{
             if(user){
@@ -93,7 +94,7 @@ uid: "rz9pFLryLGhQljwpjTW5Siwl3Tp2"
 
     const handleLogOut=async()=>{
         await signOut(auth)
-        .then(result=>console.log(`${result.user.email} ha salido`))
+        .then(result=>console.log('has salido'))
         .catch(error=> console.log(`Error ${error.code}: ${error.message}`))
 
     }
