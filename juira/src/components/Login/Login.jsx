@@ -14,11 +14,22 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { loginAction } from "../../redux/actions/app.actions";
 import { useDispatch } from "react-redux";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword,onAuthStateChanged } from "firebase/auth";
 
 
 export default function Login() {
   const dispatch = useDispatch();
+
+  const [userLog, setUserLog]=React.useState({
+    email: ' ',
+    password: ' '
+
+})
+
+const handleChange=(e)=>{
+    setUserLog({...userLog,
+        [e.target.name]:e.target.value})
+}
 
 
     const auth = getAuth();
@@ -39,19 +50,19 @@ onAuthStateChanged(auth,(user)=>{
     
 
     const login= async()=>{
-        await signInWithEmailAndPassword(auth,email, password)
+        await signInWithEmailAndPassword(auth,userLog.email, userLog.password)
     }
 
     const handleGoogleSignIn=async()=>{
-        const provider= new firebase.auth().GoogleAeuthProvider()
+        const provider= new auth().GoogleAeuthProvider()
 
-        await firebase.auth().signInWithPopup(provider)
+        await auth().signInWithPopup(provider)
         .then(result=>console.log(`${result.user.email} ha iniciado sesion`))
         .catch(error=> console.log(`Error ${error.code}: ${error.message}`))
     }
 
     const handleLogOut=async()=>{
-        await firebase.auth().signOut()
+        await auth().signOut()
         .then(result=>console.log(`${result.user.email} ha salido`))
         .catch(error=> console.log(`Error ${error.code}: ${error.message}`))
 
@@ -92,6 +103,7 @@ onAuthStateChanged(auth,(user)=>{
           label="Usuario"
           name="email"
           placeholder="Usuario"
+          onClick={handleChange}
           style={txtstyle}
           fullWidth
           required
@@ -99,6 +111,7 @@ onAuthStateChanged(auth,(user)=>{
         <TextField
           label="Password"
           name="password"
+          onClick={handleChange}
           placeholder="Password"
           style={txtstyle}
           type="password"

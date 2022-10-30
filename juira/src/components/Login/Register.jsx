@@ -17,7 +17,7 @@ export default  function Register() {
 
     })
 
-    const handleChange=()=>{
+    const handleChange=(e)=>{
         setUser({...user,
             [e.target.name]:e.target.value})
     }
