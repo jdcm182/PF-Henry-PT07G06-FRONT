@@ -55,8 +55,15 @@ onAuthStateChanged(auth,(user)=>{
     const handleGoogleSignIn=async()=>{
         const provider= new GoogleAuthProvider()
 
-        await signInWithPopup(provider)
-        .then(result=>console.log(`${result.user.email} ha iniciado sesion`))
+        await signInWithPopup(auth, provider)
+        .then(result=>{
+            // This gives you a Google Access Token. You can use it to access the Google API.
+            const credential = GoogleAuthProvider.credentialFromResult(result);
+            const token = credential.accessToken;
+            // The signed-in user info.
+            const user = result.user;
+            // ...
+          console.log(`${result.user.email} ha iniciado sesion`)})
         .catch(error=> console.log(`Error ${error.code}: ${error.message}`))
     }
 
