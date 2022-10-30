@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import {
@@ -15,7 +14,7 @@ import Checkbox from "@mui/material/Checkbox";
 import { loginAction } from "../../redux/actions/app.actions";
 import { useDispatch } from "react-redux";
 import { getAuth, signInWithEmailAndPassword,onAuthStateChanged } from "firebase/auth";
-
+import { GoogleAuthProvider } from "firebase/auth";
 
 export default function Login() {
   const dispatch = useDispatch();
