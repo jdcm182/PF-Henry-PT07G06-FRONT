@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import styles from './Users.module.css';
-// import EnhancedTable from './EnhancedShoppingOrderTable';
+import EnhancedTable from './EnhancedUsersTable';
 import Container from '@mui/material/Container';
 import { makeStyles } from '@mui/styles';
 import { useSelector, useDispatch } from 'react-redux';
@@ -58,9 +58,7 @@ export default function Users() {
 
                 </Container>
 
-                {/* <ProductsTable/> */}
-
-                {/* <EnhancedTable items={products} className={classes.palette} /> */}
+                <EnhancedTable items={users} className={classes.palette} />
                 
             </Container>
           
