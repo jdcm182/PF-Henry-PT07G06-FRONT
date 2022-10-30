@@ -35,7 +35,7 @@ export default function Dashboard() {
     return (
         <Container sx={{ boxShadow: '0 0 15px 5px #cccccc55', padding: 5, width: '100' }}>
 
-            <Typography sx={{ marginTop: '0', fontSize: '1.5rem', width: 1, borderBottom: "solid var(--primaryColor)" }} color="var(--primaryColor)" gutterBottom>
+            <Typography sx={{ marginTop: '0', fontSize: '1.5rem', width: 1, borderBottom: "solid var(--primaryColor)" }} color="primary" gutterBottom>
                 DASHBOARD DE USUARIO
             </Typography>
 
