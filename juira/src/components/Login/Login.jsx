@@ -32,9 +32,11 @@ const handleChange=(e)=>{
 
 
     const auth = getAuth();
-    const user = auth.currentUser;
+    
 
- 
+ React.useEffect(()=>{
+    const user = auth.currentUser;
+ },[auth.currentUser])
 
 onAuthStateChanged(auth,(user)=>{
             if(user){
