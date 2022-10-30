@@ -73,7 +73,7 @@ export default  function Register() {
                  /> */}
                 <Button type='submit' color='primary' variant="contained" style={btnstyle} fullWidth sx={
             {backgroundColor: '#23c197', '&:hover': {backgroundColor: '#138f6e'}}
-          }>Registrarse</Button>
+          } onClick={handleOnSubmit}>Registrarse</Button>
                 {/* <Typography >
                      <Link to="#" >
                         Olvidaste tu contraseña?
