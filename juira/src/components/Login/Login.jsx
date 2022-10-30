@@ -13,7 +13,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { loginAction } from "../../redux/actions/app.actions";
 import { useDispatch } from "react-redux";
-import { getAuth, signInWithEmailAndPassword,onAuthStateChanged } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword,onAuthStateChanged, signOut } from "firebase/auth";
 import { GoogleAuthProvider,signInWithPopup } from "firebase/auth";
 
 export default function Login() {
@@ -40,6 +40,30 @@ onAuthStateChanged(auth,(user)=>{
                 console.log('el usuaio esta loguado')
                 console.log(user)
                 //aca va el dispathc al back y al redux con la rta
+            /* 
+            PROPERTIES USER CREADO CON MAIL:
+
+            accessToken
+: 
+"eyJhbGciOiJSUzI1NiIsImtpZCI6IjNmNjcyNDYxOTk4YjJiMzMyYWQ4MTY0ZTFiM2JlN2VkYTY4NDZiMzciLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vanVpcmFhdXRoIiwiYXVkIjoianVpcmFhdXRoIiwiYXV0aF90aW1lIjoxNjY3MDkxMTE4LCJ1c2VyX2lkIjoicno5cEZMcnlMR2hRbGp3cGpUVzVTaXdsM1RwMiIsInN1YiI6InJ6OXBGTHJ5TEdoUWxqd3BqVFc1U2l3bDNUcDIiLCJpYXQiOjE2NjcwOTExMTgsImV4cCI6MTY2NzA5NDcxOCwiZW1haWwiOiJtYXJpYW5wcnVlYmExQHlhaG9vLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJtYXJpYW5wcnVlYmExQHlhaG9vLmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.WotcrxxYkdb2opRCLxvIfA8SD3FhTWQeZKiwOo81V7vumtfGIRt2NgxGfUa5liHOA1Bo9SzIMOlJbcfpgTV0EpLXoxnpm_qnJvXLLcSGD7IVqNFH-uUtGn48bMPmtTcQK9Csh_nfX764qRTmqaX4HQOCZAd88HCLAbb8TAoLPWv8ANc0zDNezGKY2PsavrWUf1gwJrxaYhZS06ldPoICER_f-rFSMTjykWNm52sYPJT7ee0O8LogYp0oJUzWQL0d_hlLbjen7gZ0B3g3o5-kSt3xafHqf9oT-E_4yNG2aZHM_Krg7Hc_L6Qm_EFg229MAuiVZryBABtweoCR_Ruo3w"
+auth: e {app: e, heartbeatServiceProvider: e, config: {…}, currentUser: e, emulatorConfig: null, …}
+displayName: null
+email: "marianprueba1@yahoo.com"
+emailVerified: false
+isAnonymous: false
+metadata: e {createdAt: '1667091118757', lastLoginAt: '1667091118757', lastSignInTime: 'Sun, 30 Oct 2022 00:51:58 GMT', creationTime: 'Sun, 30 Oct 2022 00:51:58 GMT'}
+phoneNumber: null
+photoURL:null
+proactiveRefresh:e {user: e, isRunning: false, timerId: null, errorBackoff: 30000}
+providerData: [{…}]
+providerId: "firebase"
+reloadListener: null
+reloadUserInfo: {localId: 'rz9pFLryLGhQljwpjTW5Siwl3Tp2', email: 'marianprueba1@yahoo.com', passwordHash: 'UkVEQUNURUQ=', emailVerified: false, passwordUpdatedAt: 1667091118757, …}
+stsTokenManager: e {refreshToken: 'AOEOulYQC99CO7v652oFzlthC4UW17y1ksC1NPjkKiE17R9f9_…bLSHH1cJ8YMujljWYJMW-XKpwlSwFm5Z6a_mLIdlTHkPbrfB3', accessToken: 'eyJhbGciOiJSUzI1NiIsImtpZCI6IjNmNjcyNDYxOTk4YjJiMz…NG2aZHM_Krg7Hc_L6Qm_EFg229MAuiVZryBABtweoCR_Ruo3w', expirationTime: 1667094719496}
+tenantId:null
+uid: "rz9pFLryLGhQljwpjTW5Siwl3Tp2"
+            */
+            
             }
             else{
 
@@ -68,7 +92,7 @@ onAuthStateChanged(auth,(user)=>{
     }
 
     const handleLogOut=async()=>{
-        await auth().signOut()
+        await signOut(auth)
         .then(result=>console.log(`${result.user.email} ha salido`))
         .catch(error=> console.log(`Error ${error.code}: ${error.message}`))
 
