@@ -5,10 +5,11 @@ import { Grid,Paper, Avatar, TextField, Button, Typography } from '@mui/material
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import {createUserWithEmailAndPassword} from 'firebase/auth'
+import {getAuth, createUserWithEmailAndPassword} from 'firebase/auth'
 
 export default  function Register() {
 
+    const auth = getAuth();
     const [user, setUser]=React.useState({
         name: '',
         emailAddress: ' ',
@@ -28,7 +29,16 @@ export default  function Register() {
         }
         else{
             //aca a la accion de dispatch a session login
-          await createUserWithEmailAndPassword(user.emailAddress, user.password)
+          await createUserWithEmailAndPassword(auth, user.emailAddress, user.password)
+          .then((res)=>{
+            const currentUser=res.user
+            console.log(currentUser)
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorMessage)
+          });
          }
          
        

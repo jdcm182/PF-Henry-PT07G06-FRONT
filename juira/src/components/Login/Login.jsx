@@ -14,25 +14,32 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { loginAction } from "../../redux/actions/app.actions";
 import { useDispatch } from "react-redux";
-import {useFireBaseApp} from 'firebase'
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 
 export default function Login() {
   const dispatch = useDispatch();
 
-    const firebase=useFireBaseApp()
+
+    const auth = getAuth();
+    const user = auth.currentUser;
 
 
-    const [user, setUser]=React.useState(null)
+onAuthStateChanged(auth,(user)=>{
+            if(user){
+                console.log('el usuaio esta loguado')
+                console.log(user)
+                //aca va el dispathc al back y al redux con la rta
+            }
+            else{
 
-    // React.useEffect(()=>{
-    //     auth.onAuthStateChanged(auth,(user)=>{
-    //         setUser(user)
-    //     })
-    // },[])
+             console.log('el usuaio esta desloguado')
+            }
+        })
+    
 
     const login= async()=>{
-        await firebase.auth().signInWithEmailAndPassword(email, password)
+        await signInWithEmailAndPassword(auth,email, password)
     }
 
     const handleGoogleSignIn=async()=>{
@@ -83,6 +90,7 @@ export default function Login() {
         {/* <TextField label='Mail' placeholder='Mail' style={txtstyle} fullWidth required/> */}
         <TextField
           label="Usuario"
+          name="email"
           placeholder="Usuario"
           style={txtstyle}
           fullWidth
@@ -90,6 +98,7 @@ export default function Login() {
         />
         <TextField
           label="Password"
+          name="password"
           placeholder="Password"
           style={txtstyle}
           type="password"
