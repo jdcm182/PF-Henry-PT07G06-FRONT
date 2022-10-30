@@ -14,7 +14,7 @@ import Checkbox from "@mui/material/Checkbox";
 import { loginAction } from "../../redux/actions/app.actions";
 import { useDispatch } from "react-redux";
 import { getAuth, signInWithEmailAndPassword,onAuthStateChanged } from "firebase/auth";
-import { GoogleAuthProvider } from "firebase/auth";
+import { GoogleAuthProvider,signInWithPopup } from "firebase/auth";
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -55,7 +55,7 @@ onAuthStateChanged(auth,(user)=>{
     const handleGoogleSignIn=async()=>{
         const provider= new GoogleAuthProvider()
 
-        await auth().signInWithPopup(provider)
+        await signInWithPopup(provider)
         .then(result=>console.log(`${result.user.email} ha iniciado sesion`))
         .catch(error=> console.log(`Error ${error.code}: ${error.message}`))
     }
