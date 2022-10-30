@@ -15,7 +15,7 @@ import { loginAction } from "../../redux/actions/app.actions";
 import { useDispatch } from "react-redux";
 import { getAuth, signInWithEmailAndPassword,onAuthStateChanged, signOut } from "firebase/auth";
 import { GoogleAuthProvider,signInWithPopup } from "firebase/auth";
-import {postLogin,loginAction} from '../../redux/actions/app.actions'
+import {postLogin} from '../../redux/actions/app.actions'
 
 export default function Login() {
   const dispatch = useDispatch();
