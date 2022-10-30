@@ -16,11 +16,12 @@ import { useDispatch } from "react-redux";
 import { getAuth, signInWithEmailAndPassword,onAuthStateChanged, signOut } from "firebase/auth";
 import { GoogleAuthProvider,signInWithPopup } from "firebase/auth";
 import {postLogin} from '../../redux/actions/app.actions'
+import PerfilUser from "../PerfilUser/PerfilUser";
 
 export default function Login() {
   const dispatch = useDispatch();
 
-  const [token, setToken]= React.useState(null)
+
 
   const [userLog, setUserLog]=React.useState({
     email: ' ',
@@ -39,16 +40,13 @@ const handleChange=(e)=>{
 
 
 
-onAuthStateChanged(auth,(user)=>{
+onAuthStateChanged(auth,async (user)=>{
             if(user){
+              const token=await user.getIdToken()
                 console.log('el usuaio esta loguado')
-                //aca va el dispathc al back y al redux con la rta
-                postLogin(user.email)
-
-                //!!!!!!!VER COMO TRAIGO RTA
-                // .then(res=>console.log(res))
-                // // .then(res=>loginAction(res))
-                // .catch(error=>console.log(error))
+                console.log( {token})
+                loginAction({token})
+               
 
                 
             /* 
@@ -98,16 +96,12 @@ uid: "rz9pFLryLGhQljwpjTW5Siwl3Tp2"
             // The signed-in user info.
             const user = result.user;
             // ...
+        
           console.log(`${result.user.email} ha iniciado sesion`)})
         .catch(error=> console.log(`Error ${error.code}: ${error.message}`))
     }
 
-    const handleLogOut=async()=>{
-        await signOut(auth)
-        .then(result=>console.log('has salido'))
-        .catch(error=> console.log(`Error ${error.code}: ${error.message}`))
 
-    }
   
   
   const paperStyle = {
@@ -126,9 +120,9 @@ uid: "rz9pFLryLGhQljwpjTW5Siwl3Tp2"
   return (
   <div>
     {user&&<div>
-            PERFIL DEL USUARIO
-            <Button onClick={handleLogOut}>Salir </Button>
-            </div>}
+      <PerfilUser/>
+            
+      </div>}
      {!user &&
     <Grid>
       <Paper elevation={10} style={paperStyle}>

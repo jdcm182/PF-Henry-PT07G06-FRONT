@@ -36,13 +36,13 @@ export const updateFilter = (payload) => (dispatch) => {
 
 export const loginAction = (user) => {
   return async (dispatch) => {
-    /* const { token, msg, role } = await postLogin(user); */
+     const { msg, role } = await postLogin(user); 
     // aca estaba bien, el user es lo q se le manda al back para q el devuelva el token, role o msg de error
     //Yo lo comente para poder hacer las pruebas
-    if (user === "admin") {
-      await localStorage.setItem("token", "tokenAdmin");
-      await localStorage.setItem("role", "admin");
-      dispatch(signInSuccess({ token: "token", role: "admin" }));
+    if (role) {
+      await localStorage.setItem("token",  user.token);
+      await localStorage.setItem("role", role);
+      dispatch(signInSuccess({ token: user.token, role: role }));
       /* try {
         const jsonValue = JSON.stringify(user)
   
@@ -53,24 +53,17 @@ export const loginAction = (user) => {
 
       
       toast.success(user+" Bienvenido a la plataforma");
-    } else if (user === "user") {
-      await localStorage.setItem("token", "tokenUser");
-      await localStorage.setItem("role", "user");
-      dispatch(signInSuccess({ token: "tokenUser", role: "user" }));
-      toast.success(user+" Bienvenido a la plataforma");
-    } else {
-      await localStorage.setItem("token", "");
-      await localStorage.setItem("role", "");
-      dispatch(logoOutSuccess());
-      toast.error("Eres un guest");
-    }
+    // 
+  } 
   };
 };
 
 export const logoOutAction = () => {
   return async (dispatch) => {
-    await localStorage.removeItem("token");
+    await localStorage.setItem("token", "");
+    await localStorage.setItem("role", "");
     dispatch(logoOutSuccess());
+    toast.error("Eres un guest");
   };
 };
 
@@ -89,5 +82,7 @@ export const postLogin=(data) => async () => {
       console.log("error api", error);
     }
   };
+
+  
 
 

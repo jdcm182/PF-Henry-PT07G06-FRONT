@@ -28,7 +28,10 @@ export function appReducer(state = initialState, action) {
     case SIGN_OUT: {
       return {
         ...state,
-        token: "",
+        token: {
+          token : "",
+          role: "",
+        },
       };
     }
 
