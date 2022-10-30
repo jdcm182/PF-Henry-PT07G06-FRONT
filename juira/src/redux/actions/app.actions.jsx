@@ -1,4 +1,5 @@
 import toast from "react-hot-toast";
+import axios from "axios";
 import {
   API_URL_BACKEND,
   postUser
