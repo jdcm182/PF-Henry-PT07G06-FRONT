@@ -44,9 +44,7 @@ const handleChange=(e)=>{
 
 onAuthStateChanged(auth,async (user)=>{
             if(user){
-              const token=await user.getIdToken()
-              console.log(token)
-               await loginAction({token})
+              console.log('el usuaio esta loguado')
               //  history.push(`/juira/home`);
                
 
@@ -85,7 +83,13 @@ uid: "rz9pFLryLGhQljwpjTW5Siwl3Tp2"
 
     const login= async()=>{
         await signInWithEmailAndPassword(auth,userLog.email, userLog.password)
-    }
+        const token=await user.getIdToken()
+        console.log(token)
+        await loginAction({token})
+        
+        history.push(`/juira/home`);
+    
+      }
 
     const handleGoogleSignIn=async()=>{
         const provider= new GoogleAuthProvider()
@@ -98,8 +102,21 @@ uid: "rz9pFLryLGhQljwpjTW5Siwl3Tp2"
             // The signed-in user info.
             const user = result.user;
             // ...
-        
-          console.log(`${result.user.email} ha iniciado sesion`)})
+           
+            console.log(token)
+            return token
+           
+            
+           
+          .then(res=>{
+            console.log('se inicio sesion con google')
+            loginAction({res})})
+          .then( history.push(`/juira/home`))
+          }
+          
+          
+          
+          )
         .catch(error=> console.log(`Error ${error.code}: ${error.message}`))
     }
 
