@@ -31,7 +31,7 @@ import PauseCircleFilledIcon from '@mui/icons-material/PauseCircleFilled'; // se
 import DangerousIcon from '@mui/icons-material/Dangerous'; // set Deleted
 import axios from 'axios';
 import { API_URL_BACKEND } from "../../../api/apiRoute";
-const products = require('./orders.json')
+const orders = require('./orders.json')
 
 const title = 'Órdenes de compra'
 
@@ -115,7 +115,7 @@ const headCells = [
     label: 'Id. Comprador',
   },
   // {
-  //   id: 'products',
+  //   id: 'orders',
   //   numeric: false,
   //   disablePadding: false,
   //   label: 'Productos',
@@ -181,7 +181,7 @@ EnhancedTableHead.propTypes = {
 };
 
 function EnhancedTableToolbar(props) {
-  const { numSelected, selected, products, setSelected} = props;
+  const { numSelected, selected, orders, setSelected} = props;
   const [data, setData] = React.useState('')
   const dispatch = useDispatch();
   const allProducts = useSelector((state) => state.productsReducer.allProducts);
@@ -359,13 +359,13 @@ export default function EnhancedTable( props ) {
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - products.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - orders.length) : 0;
 
   return (
     <Box sx={{ width: '100%', marginTop: '1rem' }}>
       <Toaster />
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} selected={selected} products={products} setSelected={setSelected}/>
+        <EnhancedTableToolbar numSelected={selected.length} selected={selected} orders={orders} setSelected={setSelected}/>
         <TableContainer>
           <Table
             sx={{ minWidth: 650 }}
@@ -383,7 +383,7 @@ export default function EnhancedTable( props ) {
             <TableBody>
               {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
-              {stableSort(products, getComparator(order, orderBy))
+              {stableSort(orders, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.id);
@@ -459,7 +459,7 @@ export default function EnhancedTable( props ) {
         <TablePagination
           rowsPerPageOptions={[10, 20, 30]}
           component="div"
-          count={products.length}
+          count={orders.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
