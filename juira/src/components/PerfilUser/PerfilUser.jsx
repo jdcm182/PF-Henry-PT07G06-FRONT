@@ -113,6 +113,7 @@ export default function PerfilUser() {
           </Typography>
         </CardContent>
       </Collapse>
+      <Button onClick={ handleLogOut}>Salir</Button>
     </Card>
      
     </div>
