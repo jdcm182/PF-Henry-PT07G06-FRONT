@@ -87,11 +87,9 @@ uid: "rz9pFLryLGhQljwpjTW5Siwl3Tp2"
       .then(res=>{return(res.user.accessToken)}
         )
       .catch(error=> console.log(`Error ${error.code}: ${error.message}`))
-     
         console.log('se inicio sesion con email')
-        
         await loginAction({token: signIn})
-        history.push(`/juira`)
+        history.push(`/juira/login`)
       
       }
 
@@ -116,7 +114,7 @@ uid: "rz9pFLryLGhQljwpjTW5Siwl3Tp2"
           console.log('se inicio sesion con google')
           
           await loginAction({token: tokenGoogle})
-          history.push(`/juira`)
+          history.push(`/juira/login`)
     }
 
 
