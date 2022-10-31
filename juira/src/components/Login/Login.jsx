@@ -83,22 +83,18 @@ uid: "rz9pFLryLGhQljwpjTW5Siwl3Tp2"
 
     const login= async()=>{
       if(userLog.email !==''&&userLog.password!==''){
-        const userLocal= await signInWithEmailAndPassword(auth,userLog.email, userLog.password)
-        console.log(userLocal)
-        // if(userLocal){
-        //   console.log('entre a user')
-        //   const token=await user.getIdToken()
-        // console.log(token)
-        // await loginAction({token})
-        // }
+        const signIn= await signInWithEmailAndPassword(auth,userLog.email, userLog.password)
+      .then(res=>{return(res.user.accessToken)}
+        )
+      .catch(error=> console.log(`Error ${error.code}: ${error.message}`))
+     
+        console.log('se inicio sesion con email')
+        
+        await loginAction({token: signIn})
+        history.push(`/juira`)
       
       }
-    
-       
-        
-        
-        history.push(`/juira/home`);
-    
+
       }
 
     const handleGoogleSignIn=async()=>{
