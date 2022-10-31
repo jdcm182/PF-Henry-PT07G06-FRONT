@@ -35,6 +35,8 @@ export const updateFilter = (payload) => (dispatch) => {
 };
 
 export const loginAction = (user) => {
+  console.log('entre a login action')
+  console.log(user)
   return async (dispatch) => {
     axios.defaults.headers.common['Authorization'] = user.token;
      const { msg, role } = await postLogin(user); 

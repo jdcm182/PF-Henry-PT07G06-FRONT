@@ -82,10 +82,20 @@ uid: "rz9pFLryLGhQljwpjTW5Siwl3Tp2"
     
 
     const login= async()=>{
-        await signInWithEmailAndPassword(auth,userLog.email, userLog.password)
-        const token=await user.getIdToken()
-        console.log(token)
-        await loginAction({token})
+      if(userLog.email !==''&&userLog.password!==''){
+        const userLocal= await signInWithEmailAndPassword(auth,userLog.email, userLog.password)
+        console.log(userLocal)
+        // if(userLocal){
+        //   console.log('entre a user')
+        //   const token=await user.getIdToken()
+        // console.log(token)
+        // await loginAction({token})
+        // }
+      
+      }
+    
+       
+        
         
         history.push(`/juira/home`);
     
@@ -94,7 +104,7 @@ uid: "rz9pFLryLGhQljwpjTW5Siwl3Tp2"
     const handleGoogleSignIn=async()=>{
         const provider= new GoogleAuthProvider()
 
-        await signInWithPopup(auth, provider)
+       const tokenGoogle= await signInWithPopup(auth, provider)
         .then(result=>{
             // This gives you a Google Access Token. You can use it to access the Google API.
             const credential = GoogleAuthProvider.credentialFromResult(result);
@@ -104,20 +114,13 @@ uid: "rz9pFLryLGhQljwpjTW5Siwl3Tp2"
             // ...
            
             console.log(token)
-            return token
-           
-            
-           
-          .then(res=>{
-            console.log('se inicio sesion con google')
-            loginAction({res})})
-          .then( history.push(`/juira/home`))
-          }
-          
-          
-          
-          )
+            return token})
         .catch(error=> console.log(`Error ${error.code}: ${error.message}`))
+     
+          console.log('se inicio sesion con google')
+          
+          await loginAction({token: tokenGoogle})
+          history.push(`/juira`)
     }
 
 
@@ -149,7 +152,7 @@ uid: "rz9pFLryLGhQljwpjTW5Siwl3Tp2"
           <Avatar style={avatarStyle}>
             <LockIcon />
           </Avatar>
-          <h2 onClick={login}>Iniciar Sesión</h2>
+          <h2 >Iniciar Sesión</h2>
         </Grid>
         {/* <TextField label='Nombre y Apellido' placeholder='Nombre y Apellido' style={txtstyle} fullWidth required/> */}
         {/* <TextField label='Mail' placeholder='Mail' style={txtstyle} fullWidth required/> */}
@@ -192,6 +195,7 @@ uid: "rz9pFLryLGhQljwpjTW5Siwl3Tp2"
             backgroundColor: "#23c197",
             "&:hover": { backgroundColor: "#138f6e" },
           }}
+          onClick={login}
         >
           Iniciar Sesión
         </Button>
