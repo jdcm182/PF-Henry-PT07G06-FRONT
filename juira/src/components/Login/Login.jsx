@@ -102,10 +102,11 @@ uid: "rz9pFLryLGhQljwpjTW5Siwl3Tp2"
         .then(result=>{
             // This gives you a Google Access Token. You can use it to access the Google API.
             const credential = GoogleAuthProvider.credentialFromResult(result);
-            const token = credential.accessToken;
+            ;
             // The signed-in user info.
             const user = result.user;
             // ...
+            const token = user.getIdToken()
            
             console.log(token)
             return token})
@@ -154,7 +155,7 @@ uid: "rz9pFLryLGhQljwpjTW5Siwl3Tp2"
           label="Usuario"
           name="email"
           placeholder="Usuario"
-          onClick={handleChange}
+          onChange={handleChange}
           style={txtstyle}
           fullWidth
           required
@@ -162,7 +163,7 @@ uid: "rz9pFLryLGhQljwpjTW5Siwl3Tp2"
         <TextField
           label="Password"
           name="password"
-          onClick={handleChange}
+          onChange={handleChange}
           placeholder="Password"
           style={txtstyle}
           type="password"

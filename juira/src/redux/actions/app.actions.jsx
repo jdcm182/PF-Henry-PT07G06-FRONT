@@ -11,8 +11,8 @@ export const SIGN_IN = "SIGN_IN";
 export const SIGN_OUT = "SIGN_OUT";
 export const REFRESH_DATA = "REFRESH_DATA"
 
-const signInSuccess = (token) => {
-  return { type: SIGN_IN, payload: token };
+const signInSuccess = (token) => (dispatch) => {
+  return dispatch({ type: SIGN_IN, payload: token });
 };
 
 const logoOutSuccess = () => {
@@ -34,19 +34,25 @@ export const updateFilter = (payload) => (dispatch) => {
   });
 };
 
-export const loginAction = (user) => {
+export const loginAction = async (user) => {
   console.log('entre a login action')
   console.log(user)
-  return async (dispatch) => {
-    axios.defaults.headers.common['Authorization'] = user.token;
-     const { msg, role } = await postLogin(user); 
+  const {role} = await postLogin(user)
+  console.log(role)
+  
+
+
+  
+    //axios.defaults.headers.common['Authorization'] = user.token;
+     //const { msg, role } = await postLogin(user); 
     // aca estaba bien, el user es lo q se le manda al back para q el devuelva el token, role o msg de error
     //Yo lo comente para poder hacer las pruebas
+    
     if (role) {
       
-      await localStorage.setItem("token",  user.token);
-      await localStorage.setItem("role", role);
-      dispatch(signInSuccess({ token: user.token, role: role }));
+      localStorage.setItem("token",  user.token);
+      localStorage.setItem("role", role);
+      signInSuccess({ token: user.token, role: role });
       /* try {
         const jsonValue = JSON.stringify(user)
   
@@ -59,7 +65,6 @@ export const loginAction = (user) => {
       toast.success(user+" Bienvenido a la plataforma");
     // 
   } 
-  };
 };
 
 export const logoOutAction = () => {
@@ -78,11 +83,13 @@ export function refreshData() {
   };
 }
 
-export const postLogin=(data) => async () => {
+export const postLogin = async (data) => {
     const url = `${API_URL_BACKEND}${postUser}`;
+    console.log(url)
     try {
       let json = await axios.post(url,data);
-      return json;
+      console.log(json.data)
+      return json.data;
     } catch (error) {
       console.log("error api", error);
     }
