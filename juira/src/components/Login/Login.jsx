@@ -13,9 +13,14 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { loginAction } from "../../redux/actions/app.actions";
 import { useDispatch } from "react-redux";
-import { getAuth, signInWithEmailAndPassword,onAuthStateChanged, signOut } from "firebase/auth";
-import { GoogleAuthProvider,signInWithPopup } from "firebase/auth";
-import {postLogin} from '../../redux/actions/app.actions'
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut,
+} from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { postLogin } from "../../redux/actions/app.actions";
 import PerfilUser from "../PerfilUser/PerfilUser";
 import { useHistory } from "react-router-dom";
 
@@ -23,33 +28,24 @@ export default function Login() {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  const [userLog, setUserLog] = React.useState({
+    email: " ",
+    password: " ",
+  });
 
+  const handleChange = (e) => {
+    setUserLog({ ...userLog, [e.target.name]: e.target.value });
+  };
 
-  const [userLog, setUserLog]=React.useState({
-    email: ' ',
-    password: ' '
+  const auth = getAuth();
+  const user = auth.currentUser;
 
-})
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      console.log("el usuaio esta loguado");
+      //  history.push(`/juira/home`);
 
-const handleChange=(e)=>{
-    setUserLog({...userLog,
-        [e.target.name]:e.target.value})
-}
-
-
-    const auth = getAuth();
-    const user = auth.currentUser;
-
-
-
-onAuthStateChanged(auth,async (user)=>{
-            if(user){
-              console.log('el usuaio esta loguado')
-              //  history.push(`/juira/home`);
-               
-
-                
-            /* 
+      /* 
             PROPERTIES USER CREADO CON MAIL:
 
             accessToken
@@ -72,55 +68,51 @@ stsTokenManager: e {refreshToken: 'AOEOulYQC99CO7v652oFzlthC4UW17y1ksC1NPjkKiE17
 tenantId:null
 uid: "rz9pFLryLGhQljwpjTW5Siwl3Tp2"
             */
-            
-            }
-            else{
-
-             console.log('el usuaio esta desloguado')
-            }
-        })
-    
-
-    const login= async()=>{
-      if(userLog.email !==''&&userLog.password!==''){
-        const signIn= await signInWithEmailAndPassword(auth,userLog.email, userLog.password)
-      .then(res=>{return(res.user.accessToken)}
-        )
-      .catch(error=> console.log(`Error ${error.code}: ${error.message}`))
-        console.log('se inicio sesion con email')
-        await loginAction({token: signIn})
-        history.push(`/juira/login`)
-      
-      }
-
-      }
-
-    const handleGoogleSignIn=async()=>{
-        const provider= new GoogleAuthProvider()
-
-       const tokenGoogle= await signInWithPopup(auth, provider)
-        .then(result=>{
-            // This gives you a Google Access Token. You can use it to access the Google API.
-            const credential = GoogleAuthProvider.credentialFromResult(result);
-            ;
-            // The signed-in user info.
-            const user = result.user;
-            // ...
-            const token = user.getIdToken()
-           
-            console.log(token)
-            return token})
-        .catch(error=> console.log(`Error ${error.code}: ${error.message}`))
-     
-          console.log('se inicio sesion con google')
-          
-          await loginAction({token: tokenGoogle})
-          history.push(`/juira/login`)
+    } else {
+      console.log("el usuaio esta desloguado");
     }
+  });
 
+  const login = async () => {
+    if (userLog.email !== "" && userLog.password !== "") {
+      const signIn = await signInWithEmailAndPassword(
+        auth,
+        userLog.email,
+        userLog.password
+      )
+        .then((res) => {
+          return res.user.accessToken;
+        })
+        .catch((error) => console.log(`Error ${error.code}: ${error.message}`));
+      console.log("se inicio sesion con email");
+      dispatch(loginAction({ token: signIn }));
+      history.push(`/juira/login`);
+    }
+  };
 
-  
-  
+  const handleGoogleSignIn = async () => {
+    const provider = new GoogleAuthProvider();
+
+    const tokenGoogle = await signInWithPopup(auth, provider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        // The signed-in user info.
+        const user = result.user;
+        // ...
+        const token = user.getIdToken();
+
+        console.log(token);
+        return token;
+      })
+      .catch((error) => console.log(`Error ${error.code}: ${error.message}`));
+
+    console.log("se inicio sesion con google");
+
+    dispatch(loginAction({ token: tokenGoogle }));
+    history.push(`/juira/login`);
+  };
+
   const paperStyle = {
     padding: 20,
     height: "70vh",
@@ -135,66 +127,67 @@ uid: "rz9pFLryLGhQljwpjTW5Siwl3Tp2"
     color: "var(--primaryColor)",
   };
   return (
-  <div>
-    {user&&<div>
-      <PerfilUser/>
-            
-      </div>}
-     {!user &&
-    <Grid>
-      <Paper elevation={10} style={paperStyle}>
-        <Grid align="center" style={{ marginBottom: "20px" }}>
-          <Avatar style={avatarStyle}>
-            <LockIcon />
-          </Avatar>
-          <h2 >Iniciar Sesión</h2>
-        </Grid>
-        {/* <TextField label='Nombre y Apellido' placeholder='Nombre y Apellido' style={txtstyle} fullWidth required/> */}
-        {/* <TextField label='Mail' placeholder='Mail' style={txtstyle} fullWidth required/> */}
-        <TextField
-          label="Usuario"
-          name="email"
-          placeholder="Usuario"
-          onChange={handleChange}
-          style={txtstyle}
-          fullWidth
-          required
-        />
-        <TextField
-          label="Password"
-          name="password"
-          onChange={handleChange}
-          placeholder="Password"
-          style={txtstyle}
-          type="password"
-          fullWidth
-          required
-        />
-        <FormControlLabel
-          control={
-            <Checkbox
-              style={{ color: "var(--primaryColor)" }}
-              name="checkedB"
-              color="primary"
+    <div>
+      {user && (
+        <div>
+          <PerfilUser />
+        </div>
+      )}
+      {!user && (
+        <Grid>
+          <Paper elevation={10} style={paperStyle}>
+            <Grid align="center" style={{ marginBottom: "20px" }}>
+              <Avatar style={avatarStyle}>
+                <LockIcon />
+              </Avatar>
+              <h2>Iniciar Sesión</h2>
+            </Grid>
+            {/* <TextField label='Nombre y Apellido' placeholder='Nombre y Apellido' style={txtstyle} fullWidth required/> */}
+            {/* <TextField label='Mail' placeholder='Mail' style={txtstyle} fullWidth required/> */}
+            <TextField
+              label="Usuario"
+              name="email"
+              placeholder="Usuario"
+              onChange={handleChange}
+              style={txtstyle}
+              fullWidth
+              required
             />
-          }
-          label="Recuérdame"
-        />
-        <Button
-          type="submit"
-          color="primary"
-          variant="contained"
-          style={btnstyle}
-          fullWidth
-          sx={{
-            backgroundColor: "#23c197",
-            "&:hover": { backgroundColor: "#138f6e" },
-          }}
-          onClick={login}
-        >
-          Iniciar Sesión
-        </Button>
-        {/* <Typography >
+            <TextField
+              label="Password"
+              name="password"
+              onChange={handleChange}
+              placeholder="Password"
+              style={txtstyle}
+              type="password"
+              fullWidth
+              required
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  style={{ color: "var(--primaryColor)" }}
+                  name="checkedB"
+                  color="primary"
+                />
+              }
+              label="Recuérdame"
+            />
+            <Button
+              type="submit"
+              color="primary"
+              variant="contained"
+              style={btnstyle}
+              fullWidth
+              sx={{
+                backgroundColor: "#23c197",
+                "&:hover": { backgroundColor: "#138f6e" },
+              }}
+              onClick={login}
+            >
+              Iniciar Sesión
+            </Button>
+            {/* <Typography >
 
 
                      <Link to="#" >
@@ -202,39 +195,36 @@ uid: "rz9pFLryLGhQljwpjTW5Siwl3Tp2"
                 </Link>
                 </Typography> */}
 
-<Button onClick={handleGoogleSignIn}>Login con Google</Button>
-        <Typography>
-          {" "}
-          Todavía no estás registrado?
-          <Link to="/juira/register">Regístrate</Link>
-        </Typography>
-      </Paper>
-      <Button
-        onClick={() => {
-          dispatch(loginAction("user"));
-        }}
-      >
-        Usuario
-      </Button>
-      <Button
-        onClick={() => {
-          dispatch(loginAction(""));
-        }}
-      >
-        Guest
-      </Button>
-      <Button
-        onClick={() => {
-          dispatch(loginAction("admin"));
-        }}
-      >
-        Admin
-      </Button>
-    </Grid>}
-
-
-  </div>
-   
+            <Button onClick={handleGoogleSignIn}>Login con Google</Button>
+            <Typography>
+              {" "}
+              Todavía no estás registrado?
+              <Link to="/juira/register">Regístrate</Link>
+            </Typography>
+          </Paper>
+          <Button
+            onClick={() => {
+              dispatch(loginAction("user"));
+            }}
+          >
+            Usuario
+          </Button>
+          <Button
+            onClick={() => {
+              dispatch(loginAction(""));
+            }}
+          >
+            Guest
+          </Button>
+          <Button
+            onClick={() => {
+              dispatch(loginAction("admin"));
+            }}
+          >
+            Admin
+          </Button>
+        </Grid>
+      )}
+    </div>
   );
-
 }
