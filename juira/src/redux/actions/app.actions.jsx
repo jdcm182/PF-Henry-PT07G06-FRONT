@@ -31,60 +31,26 @@ export const updateFilter = (payload) => (dispatch) => {
   });
 };
 
-export const loginAction = (user) => {
+export const loginAction = (usuario) => {
   return async (dispatch) => {
-    const { role } = await postLogin(user);
-    // aca estaba bien, el user es lo q se le manda al back para q el devuelva el token, role o msg de error
-    //Yo lo comente para poder hacer las pruebas
-    console.log("role", role);
+    const {role, user} = await postLogin(usuario);
+   
     if (role) {
-      localStorage.setItem("token", user.token);
+      localStorage.setItem("token", usuario.token);
       localStorage.setItem("role", role);
-      dispatch(signInSuccess({ token: user.token, role: role }));
-      try {
-        const jsonValue = JSON.stringify(user);
-        localStorage.setItem("@storage_user", jsonValue);
-      } catch (e) {
-        console.log("Error Storage", e);
-      }
+      dispatch(signInSuccess({ token: usuario.token, role: role }));
+      toast.success("Bienvenido a la plataforma "+user.emailAddress)
+      
     }
   };
 };
 
-// export const loginAction = async (user) => {
-//   console.log('entre a login action')
-//   console.log(user)
-//   const {role} = await postLogin(user)
-//   console.log(role)
-
-//     //axios.defaults.headers.common['Authorization'] = user.token;
-//      //const { msg, role } = await postLogin(user);
-//     // aca estaba bien, el user es lo q se le manda al back para q el devuelva el token, role o msg de error
-//     //Yo lo comente para poder hacer las pruebas
-
-//     if (role) {
-
-//       localStorage.setItem("token",  user.token);
-//       localStorage.setItem("role", role);
-//       signInSuccess({ token: user.token, role: role });
-//       /* try {
-//         const jsonValue = JSON.stringify(user)
-
-//         await localStorage.setItem('@storage_user', jsonValue)
-//       } catch (e) {
-//         console.log("Error Storage", e)
-//       } */
-
-//       toast.success(user+" Bienvenido a la plataforma");
-//     //
-//   }
-// };
 
 export const logoOutAction = () => {
-  return async (dispatch) => {
+  return (dispatch) => {
     delete axios.defaults.headers.common["Authorization"];
-    await localStorage.setItem("token", "");
-    await localStorage.setItem("role", "");
+    localStorage.setItem("token", "");
+    localStorage.setItem("role", "");
     dispatch(logoOutSuccess());
     toast.error("Eres un guest");
   };

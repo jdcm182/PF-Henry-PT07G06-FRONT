@@ -36,7 +36,6 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-      {console.log("role1", role, !role)}
         {!role && <GuestNavigator />}
         {role === "usuario" && <UserNavigator />}
         {role === "admin" && <AdminNavigator />}
