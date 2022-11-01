@@ -170,8 +170,11 @@ function EnhancedTableToolbar(props) {
 
   const handlePublish = async () => {
     setSelected([])
-    let reqs = selected.map( p => axios.put(`${API_URL_BACKEND}products/${p}`, { id: p, status: 'Publicado'}))
-    let promise = Promise.all(reqs).finally(async () => setProducts((await axios.get(`${API_URL_BACKEND}products`)).data)) 
+    let reqs = selected.map( p => axios.put(`${API_URL_BACKEND}products/${p}`, {status: 'Publicado'}))
+    let promise = Promise.all(reqs)
+    .then(() => axios.get(`${API_URL_BACKEND}products`))
+    .then((response) => setProducts(response.data))
+    .catch(error => error)
     toast.promise(promise, {
       loading: 'Cargando',
       success: 'Actualizado con éxito',
@@ -181,8 +184,11 @@ function EnhancedTableToolbar(props) {
   
   const handlePause = async () => {
      setSelected([])
-    let reqs = selected.map( p => axios.put(`${API_URL_BACKEND}products/${p}`, { id: p, status: 'En pausa'}))
-    let promise = Promise.all(reqs).finally(async () => setProducts((await axios.get(`${API_URL_BACKEND}products`)).data)) 
+    let reqs = selected.map( p => axios.put(`${API_URL_BACKEND}products/${p}`, {status: 'En pausa'}))
+    let promise = Promise.all(reqs)
+    .then(() => axios.get(`${API_URL_BACKEND}products`))
+    .then((response) => setProducts(response.data))
+    .catch(error => error)
     toast.promise(promise, {
       loading: 'Cargando',
       success: 'Actualizado con éxito',
@@ -191,8 +197,11 @@ function EnhancedTableToolbar(props) {
   }
   const handleDelete = async () => {
     setSelected([])
-    let reqs = selected.map( p => axios.put(`${API_URL_BACKEND}products/${p}`, { id: p, status: 'Eliminado'}))
-    let promise = Promise.all(reqs).finally(async () => setProducts((await axios.get(`${API_URL_BACKEND}products`)).data)) 
+    let reqs = selected.map( p => axios.put(`${API_URL_BACKEND}products/${p}`, {status: 'Eliminado'}))
+    let promise = Promise.all(reqs)
+    .then(() => axios.get(`${API_URL_BACKEND}products`))
+    .then((response) => setProducts(response.data))
+    .catch(error => error)
     toast.promise(promise, {
       loading: 'Cargando',
       success: 'Actualizado con éxito',
