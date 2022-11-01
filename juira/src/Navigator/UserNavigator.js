@@ -19,6 +19,7 @@ import OrdenDeCompra from "../components/OrdenDeCompra/OrdenDeCompra";
 import { refreshData } from "../redux/actions/app.actions";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import NotFound from '../components/NotFound/NotFound';
 
 
 function UserNavigator() {
@@ -42,9 +43,9 @@ function UserNavigator() {
           <Route exact path={"/juira/favorites"} component={Favorites} />
           <Route exact path={"/juira/order"} component={OrdenDeCompra} />
           <Route exact path={"/juira/login"} component={Login} />
-          <Route exact path={"/juira/register"} component={Register} />
-          <Route path={"/juira/sell"} component={SellForm} />
-          <Route path={"/juira/:id"} component={Detail} />
+          <Route exact path={"/juira/sell"} component={SellForm} />
+          <Route exact path={"/juira/:id"} component={Detail} />
+          <Route path={"/"} component={NotFound} />
         </Switch>
         {pathname !== "/" && <Footer />}
       </BrowserRouter>

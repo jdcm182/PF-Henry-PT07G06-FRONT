@@ -82,7 +82,7 @@ export default function PerfilUser() {
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-         Bienvenido {user.displayName}!
+         Bienvenido !
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
