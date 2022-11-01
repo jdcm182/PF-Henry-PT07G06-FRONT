@@ -3,17 +3,13 @@ import styles from './Products.module.css';
 import EnhancedTable from './EnhancedTable';
 //import ProductsTable from './ProductsTable';
 import Container from '@mui/material/Container';
-
-
 // import { ThemeProvider } from '@mui/styles';
 // import { themeOptions } from '../../ThemeColors.js'
 import { makeStyles } from '@mui/styles';
-
-import { useSelector, useDispatch } from 'react-redux';
-import { getAllProducts } from '../../../redux/actions/products.actions'
-
 import DashCard from './DashCard.jsx';
 import { createTheme } from '@mui/material/styles';
+import { API_URL_BACKEND } from '../../../api/apiRoute';
+import axios from 'axios';
 const theme = createTheme();
 
 
@@ -47,19 +43,16 @@ const useStyles = makeStyles({
 
   });
 
+  let resp = []
+  axios.get(`${API_URL_BACKEND}products`)
+  .then(response => resp = response.data)
 
  export default function Dashboard() {
+
+  const [products, setProducts] = React.useState([])
+
+  !products.length && setProducts(resp)
   
-    let products = useSelector((state) => state.productsReducer.allProducts);
-    // console.log('Dashboard > products: ', products)
-    // console.log('Dashboard > products.length: ', products.length)
-
-    const dispatch = useDispatch();
-    products.length===0 && dispatch(getAllProducts());
-
-    //products && rows.length===0 && products.forEach( p => rows.push(createData(p.name, p.id, p.status, p.price, p.ownerId) ) )
-
-
     const classes = useStyles();
 
     try {
