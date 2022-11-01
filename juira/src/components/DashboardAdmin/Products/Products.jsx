@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import styles from './Products.module.css';
-import EnhancedTable from './EnhancedTable';
+import EnhancedTable from './EnhancedProductsTable';
 //import ProductsTable from './ProductsTable';
 import Container from '@mui/material/Container';
 // import { ThemeProvider } from '@mui/styles';
