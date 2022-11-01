@@ -23,7 +23,6 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import toast, { Toaster } from 'react-hot-toast';
 import { useSelector, useDispatch } from 'react-redux';
-import { getAllProducts } from '../../../redux/actions/products.actions.jsx';
 //import { updateProdsTemp } from '../../redux/actions/products.actions.jsx';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'; // set Published
@@ -167,29 +166,12 @@ EnhancedTableHead.propTypes = {
 };
 
 function EnhancedTableToolbar(props) {
-  const { numSelected, selected, products, setSelected} = props;
-  const [data, setData] = React.useState('')
-  const dispatch = useDispatch();
-  const allProducts = useSelector((state) => state.productsReducer.allProducts);
-  
-  React.useEffect(() => {
-    // dispatch(getAllProducts());
-    setData('')
-  }, [selected])
+  const { numSelected, selected, products, setSelected, setProducts} = props;
 
   const handlePublish = async () => {
-    // try {
-    //   setSelected([])
-    //   // alert('Los productos seleccionados serán publicados.');
-    //   toast('Here is your toast.')
-    //   await selected.map( p => axios.put(`${API_URL_BACKEND}products/${p}`, { id: p, status: 'Publicado'}))
-    //   dispatch(getAllProducts());
-    // } catch (error) {
-    //   alert('Error');
-    // }
     setSelected([])
     let reqs = selected.map( p => axios.put(`${API_URL_BACKEND}products/${p}`, { id: p, status: 'Publicado'}))
-    let promise = Promise.all(reqs).then(res => dispatch(getAllProducts()))
+    let promise = Promise.all(reqs).finally(async () => setProducts((await axios.get(`${API_URL_BACKEND}products`)).data)) 
     toast.promise(promise, {
       loading: 'Cargando',
       success: 'Actualizado con éxito',
@@ -200,7 +182,7 @@ function EnhancedTableToolbar(props) {
   const handlePause = async () => {
      setSelected([])
     let reqs = selected.map( p => axios.put(`${API_URL_BACKEND}products/${p}`, { id: p, status: 'En pausa'}))
-    let promise = Promise.all(reqs).then(res => dispatch(getAllProducts()))
+    let promise = Promise.all(reqs).finally(async () => setProducts((await axios.get(`${API_URL_BACKEND}products`)).data)) 
     toast.promise(promise, {
       loading: 'Cargando',
       success: 'Actualizado con éxito',
@@ -210,7 +192,7 @@ function EnhancedTableToolbar(props) {
   const handleDelete = async () => {
     setSelected([])
     let reqs = selected.map( p => axios.put(`${API_URL_BACKEND}products/${p}`, { id: p, status: 'Eliminado'}))
-    let promise = Promise.all(reqs).then(res => dispatch(getAllProducts()))
+    let promise = Promise.all(reqs).finally(async () => setProducts((await axios.get(`${API_URL_BACKEND}products`)).data)) 
     toast.promise(promise, {
       loading: 'Cargando',
       success: 'Actualizado con éxito',
@@ -284,18 +266,7 @@ EnhancedTableToolbar.propTypes = {
 };
 
 export default function EnhancedTable( props ) {
-
-  //const [products, setProducts] = React.useState(props.products);
-
-  let products = null;
-  products = useSelector((state) => state.productsReducer.allProducts);
-
-  const dispatch = useDispatch();
-  // products.length===0 && dispatch(getAllProducts());
-
-  // products && rows.length===0 && products.forEach( p => rows.push(createData(p.name, p.id, p.status, p.price, p.ownerId) ) )
-  // let products = productsA.map( p => createData(p.name, p.id, p.status, p.price, p.ownerId))
-// console.log(products)
+  const { products, setProducts } = props;
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('id');
   const [selected, setSelected] = React.useState([]);
@@ -361,7 +332,7 @@ export default function EnhancedTable( props ) {
     <Box sx={{ width: '100%', marginTop: '1rem' }}>
       <Toaster />
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} selected={selected} products={products} setSelected={setSelected}/>
+        <EnhancedTableToolbar numSelected={selected.length} selected={selected} products={products} setSelected={setSelected} setProducts={setProducts}/>
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
