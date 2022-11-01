@@ -171,7 +171,7 @@ export default function ShoppingCart() {
           variant="contained"
           startIcon={<HomeRoundedIcon />}
           sx={
-            {backgroundColor: '#23c197', '&:hover': {backgroundColor: '#138f6e'}}
+            {/* backgroundColor: '#23c197', '&:hover': {backgroundColor: '#138f6e'} */}
           }
           onClick={()=>{history.push('/juira')}}
           >

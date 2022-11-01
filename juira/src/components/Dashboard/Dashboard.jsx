@@ -5,48 +5,11 @@ import EnhancedTable from './EnhancedTable';
 import Container from '@mui/material/Container';
 import { Typography } from "@mui/material";
 
-
-// import { ThemeProvider } from '@mui/styles';
-// import { themeOptions } from '../../ThemeColors.js'
-import { makeStyles } from '@mui/styles';
-
 import { useSelector, useDispatch } from 'react-redux';
 import { getAllProducts } from '../../redux/actions/products.actions.jsx';
 
 import DashCard from './DashCard.jsx';
-import { createTheme } from '@mui/material/styles';
-const theme = createTheme();
 
-
-const useStyles = makeStyles({
-    root: {
-    color: theme.palette.primary.main,
-  }
-,
-    /* btn: {
-      background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-      border: 0,
-      borderRadius: 3,
-      boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-      color: 'white',
-      height: 48,
-      padding: '0 30px',
-    }, */
-    
-    palette: {
-    type: 'light',
-    primary: {
-      main: '#23c197',
-    },
-    secondary: {
-      main: '#19d6c6',
-    },
-    text: {
-      primary: 'rgba(179,0,0,0.87)',
-    },
-  },
-
-  });
 
 
  export default function Dashboard() {
@@ -61,7 +24,6 @@ const useStyles = makeStyles({
     //products && rows.length===0 && products.forEach( p => rows.push(createData(p.name, p.id, p.status, p.price, p.ownerId) ) )
 
 
-    const classes = useStyles();
 
     try {
 
@@ -88,13 +50,11 @@ const useStyles = makeStyles({
       },[]) */
 
       return (
-        <Container sx={ {boxShadow: '0 0 15px 5px #cccccc55', padding: 5}}>
 
-          <Typography sx={{ marginTop: '0', fontSize: '1.5rem', width:1, borderBottom: "solid var(--primaryColor)" /* 'solid green' */ }} color="var(--primaryColor)" gutterBottom>
-            DASHBOARD
-          </Typography>
+        <div className={styles.dashWrapper}>
+          
+            <Container 
 
-            <Container className={classes.root} 
             sx={{ width: "85%", height: "100%", /* backgroundColor:"#444", */
                 boxShadow: '0 8px 15px 5px #cccccc55', padding: '2rem', borderRadius: '.8rem' }} >
 
@@ -112,11 +72,11 @@ const useStyles = makeStyles({
 
                 {/* <ProductsTable/> */}
 
-                {<EnhancedTable items={products} className={classes.palette} />}
+                {<EnhancedTable items={products} />}
                 
             </Container>
           
-          </Container>
+          </div>
         
       );
   }
@@ -125,5 +85,4 @@ const useStyles = makeStyles({
   }
 }
 
-{/* <ThemeProvider theme={themeOptions}> */}
-{/* </div> */}
+

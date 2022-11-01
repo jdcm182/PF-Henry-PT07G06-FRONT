@@ -36,7 +36,7 @@ export default  function Login() {
                     label="Recuérdame"
                  />
                 <Button type='submit' color='primary' variant="contained" style={btnstyle} fullWidth sx={
-            {backgroundColor: '#23c197', '&:hover': {backgroundColor: '#138f6e'}}
+            {/* backgroundColor: '#23c197', '&:hover': {backgroundColor: '#138f6e'} */}
           }>Iniciar Sesión</Button>
                 {/* <Typography >
                      <Link to="#" >
