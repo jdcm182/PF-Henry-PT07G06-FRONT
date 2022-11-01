@@ -45,7 +45,7 @@ function createData(name, pid, status, price, ownerId) {
   };
 }
 
-let rows = [];
+let rows = orders
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -294,7 +294,7 @@ export default function EnhancedTable( props ) {
 
   // let products = null;
   // products = useSelector((state) => state.productsReducer);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   // products.length===0 && dispatch(getAllProducts());
 
   // products && rows.length===0 && products.forEach( p => rows.push(createData(p.name, p.id, p.status, p.price, p.ownerId) ) )
