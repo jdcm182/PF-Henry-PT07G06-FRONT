@@ -76,7 +76,7 @@ import DashCard from './DashCard.jsx';
                 
             </Container>
           
-          </Container>
+          </div>
         
       );
   }
