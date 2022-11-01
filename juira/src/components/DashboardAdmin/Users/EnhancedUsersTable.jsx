@@ -33,7 +33,7 @@ import { API_URL_BACKEND } from "../../../api/apiRoute";
 
 const title = 'Usuarios registrados'
 
-let rows = [];
+// let rows = [];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -314,7 +314,7 @@ export default function EnhancedTable( props ) {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelected = rows.map((n) => n.id);
+      const newSelected = users.map((n) => n.id);
       setSelected(newSelected);
       return;
     }
@@ -377,7 +377,7 @@ export default function EnhancedTable( props ) {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              rowCount={users.length}
             />
             <TableBody>
               {/* if you don't need to support IE11, you can replace the `stableSort` call with:
