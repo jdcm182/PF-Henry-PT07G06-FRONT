@@ -3,6 +3,7 @@ import styles from './Dashboard.module.css';
 import EnhancedTable from './EnhancedTable';
 //import ProductsTable from './ProductsTable';
 import Container from '@mui/material/Container';
+import { Typography } from "@mui/material";
 
 import { useSelector, useDispatch } from 'react-redux';
 import { getAllProducts } from '../../redux/actions/products.actions.jsx';
@@ -49,9 +50,11 @@ import DashCard from './DashCard.jsx';
       },[]) */
 
       return (
+
         <div className={styles.dashWrapper}>
           
             <Container 
+
             sx={{ width: "85%", height: "100%", /* backgroundColor:"#444", */
                 boxShadow: '0 8px 15px 5px #cccccc55', padding: '2rem', borderRadius: '.8rem' }} >
 
@@ -65,17 +68,21 @@ import DashCard from './DashCard.jsx';
 
                 </Container>
 
+                
+
                 {/* <ProductsTable/> */}
 
                 {<EnhancedTable items={products} />}
                 
             </Container>
           
-        </div>
+          </Container>
+        
       );
   }
   catch(e) {
     return (null)
   }
 }
+
 
