@@ -8,6 +8,10 @@ import Products from './Products/Products'
 import ShoppinOrders from './ShoppingOrder/ShoppingOrders'
 import Users from './Users/Users.jsx'
 import { Container } from '@mui/system';
+import FeedRoundedIcon from '@mui/icons-material/FeedRounded';
+import CategoryRoundedIcon from '@mui/icons-material/CategoryRounded';
+import PeopleAltRoundedIcon from '@mui/icons-material/PeopleAltRounded';
+import ShoppingBagRoundedIcon from '@mui/icons-material/ShoppingBagRounded';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -54,10 +58,10 @@ export default function BasicTabs() {
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="Resumen" {...a11yProps(0)} />
-          <Tab label="Productos" {...a11yProps(1)} />
-          <Tab label="Usuarios" {...a11yProps(2)} />
-          <Tab label="Ódernes de compra" {...a11yProps(3)} />
+          <Tab label="Resumen" {...a11yProps(0)} icon={<FeedRoundedIcon/>} iconPosition='start'/>
+          <Tab label="Productos" {...a11yProps(1)} icon={<CategoryRoundedIcon/>} iconPosition='start'/>
+          <Tab label="Usuarios" {...a11yProps(2)} icon={<PeopleAltRoundedIcon/>} iconPosition='start'/>
+          <Tab label="Ódernes de compra" {...a11yProps(3)} icon={<ShoppingBagRoundedIcon/>} iconPosition='start'/>
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
