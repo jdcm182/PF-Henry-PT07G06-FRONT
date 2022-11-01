@@ -3,6 +3,7 @@ import styles from './Dashboard.module.css';
 import EnhancedTable from './EnhancedTable';
 //import ProductsTable from './ProductsTable';
 import Container from '@mui/material/Container';
+import { Typography } from "@mui/material";
 
 
 // import { ThemeProvider } from '@mui/styles';
@@ -87,8 +88,12 @@ const useStyles = makeStyles({
       },[]) */
 
       return (
-        <div className={styles.dashWrapper}>
-          
+        <Container sx={ {boxShadow: '0 0 15px 5px #cccccc55', padding: 5}}>
+
+          <Typography sx={{ marginTop: '0', fontSize: '1.5rem', width:1, borderBottom: "solid var(--primaryColor)" /* 'solid green' */ }} color="var(--primaryColor)" gutterBottom>
+            DASHBOARD
+          </Typography>
+
             <Container className={classes.root} 
             sx={{ width: "85%", height: "100%", /* backgroundColor:"#444", */
                 boxShadow: '0 8px 15px 5px #cccccc55', padding: '2rem', borderRadius: '.8rem' }} >
@@ -103,13 +108,16 @@ const useStyles = makeStyles({
 
                 </Container>
 
+                
+
                 {/* <ProductsTable/> */}
 
                 {<EnhancedTable items={products} className={classes.palette} />}
                 
             </Container>
           
-        </div>
+          </Container>
+        
       );
   }
   catch(e) {
@@ -118,3 +126,4 @@ const useStyles = makeStyles({
 }
 
 {/* <ThemeProvider theme={themeOptions}> */}
+{/* </div> */}
