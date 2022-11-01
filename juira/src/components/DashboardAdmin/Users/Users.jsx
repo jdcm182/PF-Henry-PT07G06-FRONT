@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './Users.module.css';
 import EnhancedTable from './EnhancedUsersTable';
 import Container from '@mui/material/Container';
@@ -6,13 +6,10 @@ import { makeStyles } from '@mui/styles';
 import { useSelector, useDispatch } from 'react-redux';
 import { createTheme } from '@mui/material/styles';
 import DashCard from './DashCard'
-const users = require('./users.json')
+import axios from 'axios';
+import { API_URL_BACKEND } from '../../../api/apiRoute';
+// const users = require('./users.json')
 
-let totalUsers = users.length
-let activeUsers = 0
-let inactiveUsers = 0
-
-users.forEach( user => user.state === 'activo' ? activeUsers += 1 : inactiveUsers += 1)
 
 
 const theme = createTheme();
@@ -36,11 +33,31 @@ const useStyles = makeStyles({
   },
 
   });
-
-export default function Users() {
+  
+  
+  let resp = []
+  axios.get(`${API_URL_BACKEND}users`)
+  .then(response => resp = response.data)
+  
+  export default function Users() {
     const classes = useStyles();
     // let products = useSelector((state) => state.productsReducer.allProducts);
+    const [users, setUsers] = useState([])
+    // let users = []
+    // users = resp
     
+    // axios.get(`${API_URL_BACKEND}users`)
+    // .then(response => users = response.data)
+
+    !users.length && setUsers(resp)
+    // console.log(users)
+
+    let totalUsers = users.length
+    let activeUsers = 0
+    let inactiveUsers = 0
+    
+    users.forEach( user => user.status === 'active' ? activeUsers += 1 : inactiveUsers += 1)
+
     return (
         <div className={styles.dashWrapper}>
           
@@ -58,7 +75,7 @@ export default function Users() {
 
                 </Container>
 
-                <EnhancedTable items={users} className={classes.palette} />
+                <EnhancedTable users={users} className={classes.palette} setUsers={setUsers}/>
                 
             </Container>
           

@@ -20,18 +20,16 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
+import RemoveCircleRoundedIcon from '@mui/icons-material/RemoveCircleRounded';
 import { visuallyHidden } from '@mui/utils';
 import toast, { Toaster } from 'react-hot-toast';
 import { useSelector, useDispatch } from 'react-redux';
-import { getAllProducts } from '../../../redux/actions/products.actions';
-//import { updateProdsTemp } from '../../redux/actions/products.actions.jsx';
-
+import WorkspacePremiumRoundedIcon from '@mui/icons-material/WorkspacePremiumRounded';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'; // set Published
-import PauseCircleFilledIcon from '@mui/icons-material/PauseCircleFilled'; // set Paused
 import DangerousIcon from '@mui/icons-material/Dangerous'; // set Deleted
 import axios from 'axios';
 import { API_URL_BACKEND } from "../../../api/apiRoute";
-const users = require('./users.json')
+
 
 const title = 'Usuarios registrados'
 
@@ -99,7 +97,13 @@ const headCells = [
     label: 'Estado',
   },
   {
-    id: 'buyer',
+    id: 'type',
+    numeric: false,
+    disablePadding: true,
+    label: 'Tipo',
+  },,
+  {
+    id: 'date',
     numeric: false,
     disablePadding: true,
     label: 'Fecha de registro',
@@ -113,8 +117,9 @@ const headCells = [
 ];
 
 function EnhancedTableHead(props) {
-  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
-    props;
+
+  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
+
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -171,20 +176,12 @@ EnhancedTableHead.propTypes = {
 };
 
 function EnhancedTableToolbar(props) {
-  const { numSelected, selected, products, setSelected} = props;
-  const [data, setData] = React.useState('')
-  const dispatch = useDispatch();
-  const allProducts = useSelector((state) => state.productsReducer.allProducts);
-  
-  React.useEffect(() => {
-    // dispatch(getAllProducts());
-    setData('')
-  }, [selected])
+  const { numSelected, selected, users, setSelected, setUsers} = props;
 
-  const handlePublish = async () => {
+  const handleActivate = async () => {
     setSelected([])
-    let reqs = selected.map( p => axios.put(`${API_URL_BACKEND}products/${p}`, { id: p, status: 'Publicado'}))
-    let promise = Promise.all(reqs).then(res => dispatch(getAllProducts()))
+    let reqs = selected.map( p => axios.put(`${API_URL_BACKEND}users/${p}`, {status: 'active'}))
+    let promise = Promise.all(reqs).finally(async () => setUsers((await axios.get(`${API_URL_BACKEND}users`)).data)) 
     toast.promise(promise, {
       loading: 'Cargando',
       success: 'Actualizado con éxito',
@@ -192,10 +189,10 @@ function EnhancedTableToolbar(props) {
     });
   }
   
-  const handlePause = async () => {
-     setSelected([])
-    let reqs = selected.map( p => axios.put(`${API_URL_BACKEND}products/${p}`, { id: p, status: 'En pausa'}))
-    let promise = Promise.all(reqs).then(res => dispatch(getAllProducts()))
+  const handleBan = async () => {
+    setSelected([])
+    let reqs = selected.map( p => axios.put(`${API_URL_BACKEND}users/${p}`, {status: 'banned'}))
+    let promise = Promise.all(reqs).finally(async () => setUsers((await axios.get(`${API_URL_BACKEND}users`)).data)) 
     toast.promise(promise, {
       loading: 'Cargando',
       success: 'Actualizado con éxito',
@@ -204,8 +201,19 @@ function EnhancedTableToolbar(props) {
   }
   const handleDelete = async () => {
     setSelected([])
-    let reqs = selected.map( p => axios.put(`${API_URL_BACKEND}products/${p}`, { id: p, status: 'Eliminado'}))
-    let promise = Promise.all(reqs).then(res => dispatch(getAllProducts()))
+    let reqs = selected.map( p => axios.put(`${API_URL_BACKEND}users/${p}`, {status: 'deleted'}))
+    let promise = Promise.all(reqs).finally(async () => setUsers((await axios.get(`${API_URL_BACKEND}users`)).data)) 
+    toast.promise(promise, {
+      loading: 'Cargando',
+      success: 'Actualizado con éxito',
+      error: 'Ocurrió un error',
+    });
+  }
+
+  const handleTypeChange = async () => {
+    setSelected([])
+    let reqs = selected.map( p => axios.put(`${API_URL_BACKEND}users/${p}`, {isAdmin: true}))
+    let promise = Promise.all(reqs).finally(async () => setUsers((await axios.get(`${API_URL_BACKEND}users`)).data)) 
     toast.promise(promise, {
       loading: 'Cargando',
       success: 'Actualizado con éxito',
@@ -236,7 +244,7 @@ function EnhancedTableToolbar(props) {
           variant="subtitle1"
           component="div"
         >
-          {numSelected} Orden(es) seleccionada(s)
+          {numSelected} Usuario(s) seleccionado(s)
         </Typography>
       ) : (
         <Typography
@@ -250,22 +258,28 @@ function EnhancedTableToolbar(props) {
       )}
 
       {numSelected > 0 ? (
-        <Box sx={{width:'10rem'}}>
-        <Tooltip title="Publicar">
-          <IconButton onClick={() => handlePublish() }>
+        <Box sx={{width:'15rem'}}>
+        <Tooltip title="Activar">
+          <IconButton onClick={() => handleActivate() }>
             <CheckCircleIcon /> {/* Published */}
           </IconButton>
         </Tooltip>
 
-        <Tooltip title="Pausar">
-          <IconButton onClick={() => handlePause() }>
-            <PauseCircleFilledIcon /> {/* Paused */}
+        <Tooltip title="Banear">
+          <IconButton onClick={() => handleBan() }>
+            <RemoveCircleRoundedIcon /> {/* Paused */}
+          </IconButton>
+        </Tooltip>
+
+        <Tooltip title="Convertir en Administrador" onClick={() => handleTypeChange() }>
+          <IconButton>
+            <WorkspacePremiumRoundedIcon /> {/* Deleted */}
           </IconButton>
         </Tooltip>
 
         <Tooltip title="Eliminar" onClick={() => handleDelete() }>
           <IconButton>
-            <DangerousIcon /> {/* Deleted */}
+            <DangerousIcon color='error'/> {/* Deleted */}
           </IconButton>
         </Tooltip>
         </Box>
@@ -279,13 +293,7 @@ EnhancedTableToolbar.propTypes = {
 };
 
 export default function EnhancedTable( props ) {
-
-  //const [products, setProducts] = React.useState(props.products);
-
-  // let products = null;
-  // products = useSelector((state) => state.productsReducer);
-  const dispatch = useDispatch();
-  // products.length===0 && dispatch(getAllProducts());
+  const { users, setUsers } = props
 
   // products && rows.length===0 && products.forEach( p => rows.push(createData(p.name, p.id, p.status, p.price, p.ownerId) ) )
   // let products = productsA.map( p => createData(p.name, p.id, p.status, p.price, p.ownerId))
@@ -296,6 +304,7 @@ export default function EnhancedTable( props ) {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(30);
+  const [update, setUpdate] = React.useState([])
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -355,7 +364,7 @@ export default function EnhancedTable( props ) {
     <Box sx={{ width: '100%', marginTop: '1rem' }}>
       <Toaster />
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} selected={selected} users={users} setSelected={setSelected}/>
+        <EnhancedTableToolbar numSelected={selected.length} selected={selected} users={users} setSelected={setSelected} setUsers={setUsers}/>
         <TableContainer>
           <Table
             sx={{ minWidth: 650 }}
@@ -428,6 +437,7 @@ export default function EnhancedTable( props ) {
                       <TableCell align="center">{row.emailAddress}</TableCell>
                       <TableCell align="center">{row.phoneNumber}</TableCell>
                       <TableCell align="center">{row.status}</TableCell>
+                      <TableCell align="center">{row.isAdmin ? 'Admin' : 'Regular'}</TableCell>
                       <TableCell align="center">{row.id}</TableCell>
                       {/* <TableCell align="right">{row.transactionList.map( e => `${e.productId}, `)}</TableCell> */}
 
