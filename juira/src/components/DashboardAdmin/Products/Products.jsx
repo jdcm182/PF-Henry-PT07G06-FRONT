@@ -98,7 +98,7 @@ const useStyles = makeStyles({
 
                 {/* <ProductsTable/> */}
 
-                <EnhancedTable items={products} className={classes.palette} />
+                <EnhancedTable products={products} className={classes.palette} setProducts={setProducts} />
                 
             </Container>
           
