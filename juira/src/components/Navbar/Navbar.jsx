@@ -28,6 +28,8 @@ import style from "./Navbar.module.css";
 import image from "../media/juira_white.png";
 import { updateFilter } from "../../redux/actions/app.actions";
 import { updateCart, updateFavorites } from "../../redux/actions/products.actions";
+import FolderSharedIcon from '@mui/icons-material/FolderShared';
+
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -413,7 +415,24 @@ export default function PrimarySearchAppBar() {
                 </IconButton>
               </Tooltip>
             </Link>
+
              }
+
+             {role=== "usuario"&&
+            <Link
+              component={RouterLink}
+              to="/juira/userDash"
+              underline="none"
+              sx={{ color: "#ffffff" }}
+            >
+              <Tooltip title="User Dashboard" arrow>
+                <IconButton size="large" color="inherit">
+                   <FolderSharedIcon />
+                </IconButton>
+              </Tooltip>
+            </Link>
+            }
+
           </Box>
 
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
