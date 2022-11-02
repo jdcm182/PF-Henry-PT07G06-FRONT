@@ -14,7 +14,11 @@ export default function Favorites() {
 
   return (
     <Container  sx={ {boxShadow: '0 0 15px 5px #cccccc55', padding: 5, width:'100'}}>
-      <Typography variant="h4"> Favoritos </Typography>
+      {/* <Typography variant="h4"> Favoritos </Typography> */}
+      <Typography sx={{ marginTop: '0', fontSize: '1.5rem', width:1, borderBottom: "solid var(--primaryColor)" /* 'solid green' */ }} color="var(--primaryColor)" gutterBottom>
+        FAVORITOS
+      </Typography>
+
       {!items.length ? (
         <Container sx={{ minHeight: 350, margin: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <Typography variant="h5"> No tienes favoritos aún. </Typography>
@@ -34,7 +38,7 @@ export default function Favorites() {
           variant="contained"
           startIcon={<HomeRoundedIcon />}
           sx={
-            {backgroundColor: '#23c197', '&:hover': {backgroundColor: '#138f6e'}}
+            {/* backgroundColor: '#23c197', '&:hover': {backgroundColor: '#138f6e'} */}
           }
           onClick={()=>{history.push('/juira')}}
           >
