@@ -109,7 +109,7 @@ uid: "rz9pFLryLGhQljwpjTW5Siwl3Tp2"
 
     console.log("se inicio sesion con google");
 
-    dispatch(loginAction({ token: tokenGoogle }));
+    await dispatch(loginAction({ token: tokenGoogle }));
     history.push(`/juira/login`);
   };
 
