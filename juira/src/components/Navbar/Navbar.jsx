@@ -401,7 +401,7 @@ export default function PrimarySearchAppBar() {
               </Tooltip>
             </Link>
 
-            {role&&
+            {role==='admin' &&
             <Link
               component={RouterLink}
               to="/juira/dashboard"

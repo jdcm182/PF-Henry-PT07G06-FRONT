@@ -37,7 +37,7 @@ function AdminNavigator() {
         <div>ADMIN NAVIGATOR</div>
         <Switch>
           <Route exact path={"/"} component={Landing} />
-          <Route exact path={"/juira"} component={Home} />
+          <Route exact path={"/juira"} component={DashboardAdmin} />
           <Route exact path={"/juira/dashboard"} component={DashboardAdmin} />
           <Route exact path={"/juira/login"} component={Login} />
           <Route path={"/"} component={NotFound} />
