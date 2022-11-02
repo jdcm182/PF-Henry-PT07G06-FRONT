@@ -12,7 +12,6 @@ import NavBar from './components/Navbar/Navbar'
 import ShoppingCart from './components/ShoppingCart/ShoppingCart';
 import DashboardAdmin from './components/DashboardAdmin/DashboardAdmin';
 import Dashboard from "./components/DashboardUser/Dashboard";
-import UserDashboard from './components/Dashboard/UserDash';
 import Login from './components/Login/Login';
 import Register from './components/Login/Register';
 import ScrollToTop from './components/ScrollToTop'
