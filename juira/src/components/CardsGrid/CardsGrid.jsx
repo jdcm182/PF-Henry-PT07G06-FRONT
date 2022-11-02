@@ -4,6 +4,7 @@ import Card from '../Card/Card.jsx'
 import Pagination from '../Pagination/Pagination'
 import Container from '@mui/material/Container';
 import Loading from '../Loading/Loading';
+import NotFound from '../NotFound/NotFound';
 
 
 export default function CardsGrid({ products }) {
@@ -14,7 +15,7 @@ export default function CardsGrid({ products }) {
 
     return (
         (products.length===0)?<div>
-            <Loading/>
+            <NotFound/>
              </div>:
         <div className={styles.container/* cards_grid_container */}>
             <div className={styles.product_grid}>

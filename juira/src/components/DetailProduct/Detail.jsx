@@ -20,6 +20,7 @@ import {
 } from "../../redux/actions/products.actions";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import NotFound from "../NotFound/NotFound";
 
 const Img = styled("img")({
   margin: "auto",
@@ -46,7 +47,7 @@ export default function Detail() {
   return (
     (!p  || Object.keys(p).length === 0) ?
     
-    <Loading/> 
+    <NotFound/> 
       
     : 
     <Container
