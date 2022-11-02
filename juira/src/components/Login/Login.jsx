@@ -1,4 +1,5 @@
 
+
 import React from "react";
 import { Link } from "react-router-dom";
 import {
@@ -8,6 +9,7 @@ import {
   TextField,
   Button,
   Typography,
+  Container
 } from "@mui/material";
 import LockIcon from "@mui/icons-material/Lock";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -122,6 +124,7 @@ export default function Login() {
                 </Link>
                 </Typography> */}
 
+
 <Button onClick={handleGoogleSignIn}>Login con Google</Button>
         <Typography>
           {" "}
@@ -152,5 +155,6 @@ export default function Login() {
       </Button>
     </Grid>
   );
+
 
 }
