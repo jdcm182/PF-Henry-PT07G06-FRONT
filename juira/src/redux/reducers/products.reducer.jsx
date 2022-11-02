@@ -12,6 +12,7 @@ import {
   REMOVE_FAVORTITES,
   ADD_FAVORITES,
 } from "../actions/products.actions";
+import axios from "axios";
 
 const initialState = {
   allProducts: "",

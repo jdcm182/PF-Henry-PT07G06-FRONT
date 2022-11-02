@@ -6,6 +6,7 @@ import {
   TURN_ON_SPINNER,
   UPDATE_FILTER_STATE,
 } from "../actions/app.actions";
+import axios from "axios";
 
 const initialState = {
   user: {},
@@ -38,7 +39,9 @@ export function appReducer(state = initialState, action) {
     case REFRESH_DATA:
       const localStorageToken = localStorage.getItem("token");
       const localStorageRole = localStorage.getItem("role");
+
       if (!localStorageToken && !localStorageRole) return state;
+      axios.defaults.headers.common["Authorization"] = localStorageToken
       return {
         ...state,
         token: { token: localStorageToken, role: localStorageRole },

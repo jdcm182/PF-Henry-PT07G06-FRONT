@@ -46,7 +46,7 @@ function App() {
   }, [reloadSesion]);
 
   const role = useSelector((state) => state.app.token.role);
-  
+
   return (
     <div className="App">
 

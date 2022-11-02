@@ -33,18 +33,34 @@ export const updateFilter = (payload) => (dispatch) => {
 
 export const loginAction = (usuario) => {
   return async (dispatch) => {
-    const {role, user} = await postLogin(usuario);
-   
+    axios.defaults.headers.common["Authorization"] = usuario.token
+    const { role, user } = await postLogin(usuario);
     if (role) {
       localStorage.setItem("token", usuario.token);
       localStorage.setItem("role", role);
       dispatch(signInSuccess({ token: usuario.token, role: role }));
-      toast.success("Bienvenido a la plataforma "+user.emailAddress)
-      
+      toast.success("Bienvenido a la plataforma " + user.emailAddress);
+      if (role === "usuario") {
+        const cart = JSON.parse(localStorage.getItem("itemsInCart"));
+        localStorage.setItem("itemsInCart", "")
+        
+        const serverPut = cart.map((element) =>
+          axios.put(
+            `${API_URL_BACKEND}cart/addProductToCart/byToken/${element.id}`
+          )
+        );
+        await Promise.all(serverPut).then((response) => {
+          console.log("response", response);
+          return response;
+        });
+        const responsess = await axios(
+          `${API_URL_BACKEND}cart/byToken`
+        )
+        console.log("aca muesta lo q respoonde",responsess)
+      }
     }
   };
 };
-
 
 export const logoOutAction = () => {
   return (dispatch) => {
@@ -57,6 +73,7 @@ export const logoOutAction = () => {
 };
 
 export function refreshData() {
+
   return {
     type: REFRESH_DATA,
   };

@@ -18,23 +18,38 @@ import { useHistory } from "react-router-dom";
 import { API_URL_BACKEND } from "../../api/apiRoute";
 import axios from "axios";
 import { useState } from "react";
-import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
-import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
+import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
+import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 
 export default function ShoppingCart() {
   const dispatch = useDispatch();
-  const items = useSelector((state) => state.productsReducer.cart);
+  const role = useSelector((state) => state.app.token.role);
+  const localCart = useSelector((state) => state.productsReducer.cart);
+
   const [redirect, setRedirect] = useState("");
+  const [items, setItems] = useState([]);
   let history = useHistory();
 
   useEffect(() => {
-    if (redirect !== "") window.open(redirect,"_blank","popup=true");
+    if (redirect !== "") window.open(redirect, "_blank", "popup=true");
   }, [redirect]);
+
+  const fetchData = async () => {
+    if (role) {
+      const response = await axios(`${API_URL_BACKEND}cart/byToken`);
+      console.log("aca muesta lo q respoonde", response);
+      setItems(response.data.products);
+    } else {
+      setItems(localCart);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, [role]);
 
   let amount = 0;
   items && items.forEach((p) => (amount += Number(p.price)));
   const cartId = 1;
-  
 
   const handlePayment = async () => {
     try {
@@ -81,92 +96,124 @@ export default function ShoppingCart() {
       </Typography>
 
       {!items.length ? (
-        <Container sx={{ minHeight: 350, margin: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <Typography variant="h5"> Tu carrito está vacío. 
-          </Typography>
-          <SentimentDissatisfiedIcon color='action' sx={{fontSize:'200px'}}/>
+        <Container
+          sx={{
+            minHeight: 350,
+            margin: 2,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Typography variant="h5"> Tu carrito está vacío.</Typography>
+          <SentimentDissatisfiedIcon
+            color="action"
+            sx={{ fontSize: "200px" }}
+          />
         </Container>
       ) : (
         <Container>
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell> </TableCell>
-                <TableCell> # </TableCell>
-                <TableCell align="center"></TableCell>
-                <TableCell align="center">Descripción</TableCell>
-                <TableCell align="center">Precio</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {items &&
-                items.map((row, i) => (
-                  <TableRow
-                    key={i + 1}
-                    // sx={{ '&:last-child td, &:last-child th': { border: 0 }}}
-                    size="small"
-                  >
-                    <TableCell onClick={() => handleRemoveinCart(row.id)}>
-                      <IconButton>
-                        <HighlightOffIcon sx={{ color: pink[500] }} />
-                      </IconButton>
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      {i + 1}
-                    </TableCell>
-                    <TableCell
-                      align="left"
-                      onClick={() => {
-                        viewDetail(row.id);
-                      }}
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell> </TableCell>
+                  <TableCell> # </TableCell>
+                  <TableCell align="center"></TableCell>
+                  <TableCell align="center">Descripción</TableCell>
+                  <TableCell align="center">Precio</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {items &&
+                  items.map((row, i) => (
+                    <TableRow
+                      key={i + 1}
+                      // sx={{ '&:last-child td, &:last-child th': { border: 0 }}}
+                      size="small"
                     >
-                      <img
-                        src={`${row.image}`}
-                        style={{ maxHeight: "50px" }}
-                      ></img>
-                    </TableCell>
-                    <TableCell
-                      align="left"
-                      onClick={() => {
-                        viewDetail(row.id);
-                      }}
-                    >
-                      <strong>{row.name}</strong>
-                      <br></br>
-                      <small>{row.description}</small>
-                    </TableCell>
-                    <TableCell align="right">{row.price}</TableCell>
-                  </TableRow>
-                ))}
-              <TableRow>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
-                <TableCell></TableCell>
-                <TableCell align="right">
-                  <strong>Total</strong>
-                </TableCell>
-                <TableCell align="right">
-                  <strong>{amount}</strong>
-                </TableCell>
-              </TableRow>
-              <TableRow></TableRow>
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <Container sx={{margin: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <Button
-            variant="contained"
-            endIcon={<PaidIcon />}
-            onClick={handlePayment}
-            color='secondary'
+                      <TableCell
+                        onClick={async () =>
+                          role
+                            ? await axios.delete(
+                              `${API_URL_BACKEND}cart/removeProductFromCart/byToken/${row.id}`
+                              )
+                            : handleRemoveinCart(row.id)
+                        }
+                      >
+                        <IconButton>
+                          <HighlightOffIcon sx={{ color: pink[500] }} />
+                        </IconButton>
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        {i + 1}
+                      </TableCell>
+                      <TableCell
+                        align="left"
+                        onClick={() => {
+                          viewDetail(row.id);
+                        }}
+                      >
+                        <img
+                          src={`${row.image}`}
+                          style={{ maxHeight: "50px" }}
+                        ></img>
+                      </TableCell>
+                      <TableCell
+                        align="left"
+                        onClick={() => {
+                          viewDetail(row.id);
+                        }}
+                      >
+                        <strong>{row.name}</strong>
+                        <br></br>
+                        <small>{row.description}</small>
+                      </TableCell>
+                      <TableCell align="right">{row.price}</TableCell>
+                    </TableRow>
+                  ))}
+                <TableRow>
+                  <TableCell></TableCell>
+                  <TableCell></TableCell>
+                  <TableCell></TableCell>
+                  <TableCell align="right">
+                    <strong>Total</strong>
+                  </TableCell>
+                  <TableCell align="right">
+                    <strong>{amount}</strong>
+                  </TableCell>
+                </TableRow>
+                <TableRow></TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <Container
+            sx={{
+              margin: 2,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
           >
-            Pagar
-          </Button>
+            <Button
+              variant="contained"
+              endIcon={<PaidIcon />}
+              onClick={handlePayment}
+              color="secondary"
+            >
+              Pagar
+            </Button>
+          </Container>
         </Container>
-      </Container>
       )}
-      <Container sx={{margin: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <Container
+        sx={{
+          margin: 2,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
         <Button
           variant="contained"
           startIcon={<HomeRoundedIcon />}
