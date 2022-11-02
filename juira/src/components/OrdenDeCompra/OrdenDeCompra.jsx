@@ -13,7 +13,7 @@ import { useDispatch } from "react-redux";
 import { Container } from "@mui/system";
 
 export default function OrdenDeCompra() {
-  // ?collection_id=50800700904&collection_status=rejected&payment_id=50800700904&status=rejected&external_reference=null&payment_type=credit_card&merchant_order_id=6252221350&preference_id=1223144793-103dc1ee-100d-4af2-9ed5-cf3269e5599d&site_id=MLA&processing_mode=aggregator&merchant_account_id=null
+ 
 
   const dispatch = useDispatch();
   const { search } = useLocation();

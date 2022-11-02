@@ -1,10 +1,12 @@
 import toast from "react-hot-toast";
+import axios from "axios";
+import { API_URL_BACKEND, postUser } from "../../api/apiRoute";
 export const TURN_ON_SPINNER = "TURN_ON_SPINNER";
 export const TURN_OFF_SPINNER = "TURN_OFF_SPINNER";
 export const UPDATE_FILTER_STATE = "UPDATE_FILTER_STATE";
 export const SIGN_IN = "SIGN_IN";
 export const SIGN_OUT = "SIGN_OUT";
-export const REFRESH_DATA = "REFRESH_DATA"
+export const REFRESH_DATA = "REFRESH_DATA";
 
 const signInSuccess = (token) => {
   return { type: SIGN_IN, payload: token };
@@ -29,43 +31,28 @@ export const updateFilter = (payload) => (dispatch) => {
   });
 };
 
-export const loginAction = (user) => {
+export const loginAction = (usuario) => {
   return async (dispatch) => {
-    /* const { token, msg, role } = await postLogin(user); */
-    // aca estaba bien, el user es lo q se le manda al back para q el devuelva el token, role o msg de error
-    //Yo lo comente para poder hacer las pruebas
-    if (user === "admin") {
-      await localStorage.setItem("token", "tokenAdmin");
-      await localStorage.setItem("role", "admin");
-      dispatch(signInSuccess({ token: "token", role: "admin" }));
-      /* try {
-        const jsonValue = JSON.stringify(user)
-  
-        await localStorage.setItem('@storage_user', jsonValue)
-      } catch (e) {
-        console.log("Error Storage", e)
-      } */
-
+    const {role, user} = await postLogin(usuario);
+   
+    if (role) {
+      localStorage.setItem("token", usuario.token);
+      localStorage.setItem("role", role);
+      dispatch(signInSuccess({ token: usuario.token, role: role }));
+      toast.success("Bienvenido a la plataforma "+user.emailAddress)
       
-      toast.success(user+" Bienvenido a la plataforma");
-    } else if (user === "user") {
-      await localStorage.setItem("token", "tokenUser");
-      await localStorage.setItem("role", "user");
-      dispatch(signInSuccess({ token: "tokenUser", role: "user" }));
-      toast.success(user+" Bienvenido a la plataforma");
-    } else {
-      await localStorage.setItem("token", "");
-      await localStorage.setItem("role", "");
-      dispatch(logoOutSuccess());
-      toast.error("Eres un guest");
     }
   };
 };
 
+
 export const logoOutAction = () => {
-  return async (dispatch) => {
-    await localStorage.removeItem("token");
+  return (dispatch) => {
+    delete axios.defaults.headers.common["Authorization"];
+    localStorage.setItem("token", "");
+    localStorage.setItem("role", "");
     dispatch(logoOutSuccess());
+    toast.error("Eres un guest");
   };
 };
 
@@ -75,3 +62,14 @@ export function refreshData() {
   };
 }
 
+export const postLogin = async (data) => {
+  const url = `${API_URL_BACKEND}${postUser}`;
+  console.log(url);
+  try {
+    let json = await axios.post(url, data);
+    console.log(json.data);
+    return json.data;
+  } catch (error) {
+    console.log("error api", error);
+  }
+};

@@ -14,6 +14,7 @@ import Footer from "../components/Footer/Footer";
 import NavBar from "../components/Navbar/Navbar";
 import ScrollToTop from "../components/ScrollToTop";
 import { useSelector } from "react-redux";
+import NotFound from '../components/NotFound/NotFound';
 
 function GuestNavigator() {
 
@@ -31,13 +32,11 @@ function GuestNavigator() {
           <Route exact path={"/"} component={Landing} />
           <Route exact path={"/juira"} component={Home} />
           <Route exact path={"/juira/shoppingCart"} component={ShoppingCart} />
-          <Route exact path={"/juira/dashboard"} component={Dashboard} />
           <Route exact path={"/juira/favorites"} component={Favorites} />
-          <Route exact path={"/juira/order"} component={OrdenDeCompra} />
           <Route exact path={"/juira/login"} component={Login} />
           <Route exact path={"/juira/register"} component={Register} />
-          <Route path={"/juira/sell"} component={SellForm} />
           <Route path={"/juira/:id"} component={Detail} />
+          <Route path={"/"} component={NotFound} />
         </Switch>
         {pathname !== "/" && <Footer />}
       </BrowserRouter>

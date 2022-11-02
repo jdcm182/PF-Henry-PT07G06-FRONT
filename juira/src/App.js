@@ -52,10 +52,12 @@ function App() {
 
  <ThemeProvider theme={theme}>
       <BrowserRouter>
+
        <ScrollToTop />
       {console.log("role1", role, !role)}
+
         {!role && <GuestNavigator />}
-        {role === "user" && <UserNavigator />}
+        {role === "usuario" && <UserNavigator />}
         {role === "admin" && <AdminNavigator />}
       </BrowserRouter>
    </ThemeProvider>
