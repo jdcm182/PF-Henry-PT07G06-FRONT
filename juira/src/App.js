@@ -54,7 +54,7 @@ function App() {
       <BrowserRouter>
 
        <ScrollToTop />
-      {console.log("role1", role, !role)}
+
 
         {!role && <GuestNavigator />}
         {role === "usuario" && <UserNavigator />}
