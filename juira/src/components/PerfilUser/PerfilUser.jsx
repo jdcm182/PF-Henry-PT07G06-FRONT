@@ -25,6 +25,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import AddAPhoto from "@mui/icons-material/AddAPhoto";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -36,10 +37,6 @@ const ExpandMore = styled((props) => {
     duration: theme.transitions.duration.shortest,
   }),
 }));
-
-
-
-
 
 
 export default function PerfilUser() {
@@ -69,7 +66,7 @@ export default function PerfilUser() {
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-            U
+            {user.displayName[0]}
           </Avatar>
         }
         action={
@@ -80,9 +77,21 @@ export default function PerfilUser() {
         title="Shrimp and Chorizo Paella"
         subheader="September 14, 2016"
       />
+
+
+      <Button></Button>
+<IconButton>
+      <AddAPhoto></AddAPhoto>
+</IconButton>
+
+
+
+
+
+
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-         Bienvenido !
+         Bienvenido {user.displayName}!
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -98,12 +107,16 @@ export default function PerfilUser() {
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>Mis Datos:</Typography>
           <Typography paragraph>
-           Direccion
+          Mis Datos Personales:
+            {user?<div>{user.displayName} {user.email}</div>:""}
           </Typography>
           <Typography paragraph>
-           Telefono
+           Dirección:
+           {user?<div><CardMedia/></div>:""}
+          </Typography>
+          <Typography paragraph>
+           Teléfono:
           </Typography>
           <Typography paragraph>
            
