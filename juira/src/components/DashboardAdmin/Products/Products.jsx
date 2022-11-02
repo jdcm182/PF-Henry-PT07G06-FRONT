@@ -47,7 +47,7 @@ const useStyles = makeStyles({
   axios.get(`${API_URL_BACKEND}products`)
   .then(response => resp = response.data)
 
- export default function Dashboard() {
+ export default function Products() {
 
   const [products, setProducts] = React.useState([])
 
