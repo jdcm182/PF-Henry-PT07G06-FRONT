@@ -79,4 +79,6 @@ export default function DashboardAdmin() {
     </Box>
     </Container>
   );
+
 }
+
