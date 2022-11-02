@@ -113,7 +113,6 @@ export default function PerfilUser() {
           </Typography>
           <Typography paragraph>
            Dirección:
-           {user?<div><CardMedia/></div>:""}
           </Typography>
           <Typography paragraph>
            Teléfono:
