@@ -10,8 +10,8 @@ import SellForm from "./components/SellorEditProduct/SellForm";
 import Footer from "./components/Footer/Footer";
 import NavBar from "./components/Navbar/Navbar";
 import ShoppingCart from "./components/ShoppingCart/ShoppingCart";
-import Dashboard from "./components/Dashboard/Dashboard";
-import UserDashboard from './components/Dashboard/UserDash';
+import Dashboard from "./components/DashboardUser/Dashboard";
+import UserDashboard from './components/DashboardUser/UserDash';
 import Login from "./components/Login/Login";
 import Register from "./components/Login/Register";
 

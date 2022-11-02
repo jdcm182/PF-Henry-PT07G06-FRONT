@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Switch, Route, useLocation } from "react-router-dom";
-import Dashboard from "../components/Dashboard/Dashboard";
+import Dashboard from "../components/DashboardUser/Dashboard";
 import Detail from "../components/DetailProduct/Detail";
 import Favorites from "../components/Favorites/Favorites";
 import Home from "../components/Home/Home";
