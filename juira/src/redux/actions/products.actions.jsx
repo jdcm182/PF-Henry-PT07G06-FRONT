@@ -50,7 +50,7 @@ export const updateDisplayed = () => async (dispatch) => {
 };
 
 export const getAllProducts = () => async (dispatch) => {
-  const url = `${API_URL_BACKEND}${getAllPublicatesProductsApi}`;
+  const url = `${API_URL_BACKEND}${getAllProductsApi}`;
   try {
     let data = await axios(url);
     return dispatch({

@@ -158,18 +158,25 @@ export default function SellForm() {
 
     <Container sx={{background: 'var(--UiLightColor)'/* 'linear-gradient( 90deg, white, #b6deb8 10%, #b6deb8 90%, white )' */, 
         display:'flex', flexDirection: 'column', width: 1, my:0,
-        boxShadow: '0 0 15px 5px #cccccc55', }}>
+        boxShadow: '0 0 15px 5px #cccccc55', padding: 5}}>
+
+      <Typography sx={{ /* marginTop: '30px', */ fontSize: '1.5rem', width:1, borderBottom: "solid var(--primaryColor)" /* 'solid green' */ }} color="var(--primaryColor)" gutterBottom>
+        FORMULARIO DE VENTA
+      </Typography>
+
+
     <Box sx={{
         my:0.8,
         p:1,
         width:0.8,
         position: 'relative',
-        top: 20,
+        /* top: 20, */
         left: '10%',
         backgroundColor: 'var(--UiLightColor)' /* '#66bb6a' */,
         height: 'fit-content',
         textAlign:'center',
         boxShadow: 0/* 1 */,
+        opacity: '50%',
         }}>
       <Typography sx={{ fontSize: '1.5rem', color: 'var(--primaryColor)' }} color="black" gutterBottom>
       Un paso mas cerca de sacarlo JUIRA!
@@ -189,9 +196,6 @@ export default function SellForm() {
       }}
     > 
 
-    <Typography sx={{ fontSize: '1.5rem', width:1, borderBottom: "solid var(--primaryColor)" /* 'solid green' */ }} color="var(--primaryColor)" gutterBottom>
-      FORMULARIO DE VENTA
-    </Typography>
 
 <Stack direction="row" alignItems="center" spacing={1} sx={{width:1, justifyContent:'space-around'}}>
 
