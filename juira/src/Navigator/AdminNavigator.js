@@ -19,7 +19,7 @@ import OrdenDeCompra from "../components/OrdenDeCompra/OrdenDeCompra";
 import { refreshData } from "../redux/actions/app.actions";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-
+import NotFound from '../components/NotFound/NotFound';
 
 function AdminNavigator() {
     const { pathname } = useLocation();
@@ -37,14 +37,9 @@ function AdminNavigator() {
         <Switch>
           <Route exact path={"/"} component={Landing} />
           <Route exact path={"/juira"} component={Home} />
-          <Route exact path={"/juira/shoppingCart"} component={ShoppingCart} />
           <Route exact path={"/juira/dashboard"} component={Dashboard} />
-          <Route exact path={"/juira/favorites"} component={Favorites} />
-          <Route exact path={"/juira/order"} component={OrdenDeCompra} />
           <Route exact path={"/juira/login"} component={Login} />
-          {/* <Route exact path={"/juira/register"} component={Register} /> */}
-          {/* <Route path={"/juira/sell"} component={SellForm} /> */}
-          <Route path={"/juira/:id"} component={Detail} />
+          <Route path={"/"} component={NotFound} />
         </Switch>
         {pathname !== "/" && <Footer />}
       </BrowserRouter>

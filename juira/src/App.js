@@ -1,6 +1,7 @@
 //import logo from './logo.svg';
 import "./App.css";
 
+
 import { BrowserRouter, Switch, Route, useLocation } from "react-router-dom";
 import Landing from "./components/Landing/Landing.jsx";
 import Home from "./components/Home/Home.jsx";
@@ -10,6 +11,7 @@ import Footer from "./components/Footer/Footer";
 import NavBar from "./components/Navbar/Navbar";
 import ShoppingCart from "./components/ShoppingCart/ShoppingCart";
 import Dashboard from "./components/Dashboard/Dashboard";
+import UserDashboard from './components/Dashboard/UserDash';
 import Login from "./components/Login/Login";
 import Register from "./components/Login/Register";
 
@@ -23,6 +25,18 @@ import GuestNavigator from "./Navigator/GuestNavigator";
 import UserNavigator from "./Navigator/UserNavigator";
 import AdminNavigator from "./Navigator/AdminNavigator";
 
+
+import { createTheme, ThemeProvider } from '@mui/material/styles';//'@material-ui/core';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#23c197'
+    }
+  }
+})
+
+
 function App() {
   const { pathname } = useLocation();
   const reloadSesion = useDispatch(refreshData);
@@ -35,11 +49,19 @@ function App() {
 
   return (
     <div className="App">
+
+ <ThemeProvider theme={theme}>
       <BrowserRouter>
+
+       <ScrollToTop />
+      {console.log("role1", role, !role)}
+
         {!role && <GuestNavigator />}
         {role === "usuario" && <UserNavigator />}
         {role === "admin" && <AdminNavigator />}
       </BrowserRouter>
+   </ThemeProvider>
+
     </div>
   );
 }

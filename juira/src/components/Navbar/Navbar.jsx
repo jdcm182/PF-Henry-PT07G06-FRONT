@@ -28,6 +28,8 @@ import style from "./Navbar.module.css";
 import image from "../media/juira_white.png";
 import { updateFilter } from "../../redux/actions/app.actions";
 import { updateCart, updateFavorites } from "../../redux/actions/products.actions";
+import FolderSharedIcon from '@mui/icons-material/FolderShared';
+
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -70,8 +72,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function PrimarySearchAppBar() {
-  const itemsInCart = useSelector((state) => state.productsReducer.cart) || 2; //default 2 para probar que las notificaciones del carrito funcionan
+  const itemsInCart = useSelector((state) => state.productsReducer.cart) || 0; //default 2 para probar que las notificaciones del carrito funcionan
   const itemsFavorites= useSelector((state) => state.productsReducer.favorites) || 0
+
+  const role = useSelector((state) => state.app.token.role);
 
   React.useEffect(() => {
     const cart = JSON.parse(localStorage.getItem("itemsInCart"));
@@ -84,14 +88,9 @@ export default function PrimarySearchAppBar() {
     }
   }, []);
 
-  const products = useSelector((state) => state.allProducts) || [
-    { name: "silla" },
-    { name: "cocina" },
-    { name: "celular" },
-    { name: "televisor" },
-    { name: "nevera" },
-  ];
-  const sugestions = products.map((p) => p.name);
+  const products = useSelector((state) => state.allProducts) 
+  
+  const sugestions = products&&products.map((p) => p.name);
 
   const [input, setInput] = React.useState("");
 
@@ -174,7 +173,7 @@ export default function PrimarySearchAppBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >    
-
+    {(role=== "usuario")&&
       <Link
         component={RouterLink}
         to="/juira/sell"
@@ -194,7 +193,8 @@ export default function PrimarySearchAppBar() {
           <p>Vender un producto</p>
         </MenuItem>
       </Link>
-      
+      }
+      {(!role || role=== "usuario" )&&
       <Link
         component={RouterLink}
         to="/juira/favorites"
@@ -214,7 +214,8 @@ export default function PrimarySearchAppBar() {
           <p>Favoritos</p>
         </MenuItem>
       </Link>
-      
+}
+{(!role || role=== "usuario" )&&
       <Link
         component={RouterLink}
         to="/juira/shoppingCart"
@@ -234,6 +235,8 @@ export default function PrimarySearchAppBar() {
           <p>Carrito de compras</p>
         </MenuItem>
       </Link>
+
+}
       
       <Link
         component={RouterLink}
@@ -248,7 +251,7 @@ export default function PrimarySearchAppBar() {
           <p>Iniciar Sesión / Registrarse</p>
         </MenuItem>
       </Link>
-      
+      {role&&
       <Link
         component={RouterLink}
         to="/juira/dashboard"
@@ -262,19 +265,7 @@ export default function PrimarySearchAppBar() {
           <p>Dashboard</p>
         </MenuItem>
       </Link>
-
-      {/* <MenuItem onClick={handleProfileMenuOpen}>
-          <IconButton
-            size="large"
-            aria-label="account of current user"
-            aria-controls="primary-search-account-menu"
-            aria-haspopup="true"
-            color="inherit"
-          >
-            <AccountCircle />
-          </IconButton>
-          <p>Profile</p>
-        </MenuItem> */}
+}
     </Menu>
   );
 
@@ -334,6 +325,8 @@ export default function PrimarySearchAppBar() {
           <Box sx={{ flexGrow: 1 }} />
 
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
+
+          {(role=== "usuario")&&
             <Link
               component={RouterLink}
               to="/juira/sell"
@@ -350,7 +343,8 @@ export default function PrimarySearchAppBar() {
                 </IconButton>
               </Tooltip>
             </Link>
-
+            }
+              {(!role || role=== "usuario" )&&
             <Link
               component={RouterLink}
               to="/juira/favorites"
@@ -369,7 +363,8 @@ export default function PrimarySearchAppBar() {
                 </IconButton>
               </Tooltip>
             </Link>
-
+          }
+           {(!role || role=== "usuario" )&&
             <Link
               component={RouterLink}
               to="/juira/shoppingCart"
@@ -388,7 +383,7 @@ export default function PrimarySearchAppBar() {
                 </IconButton>
               </Tooltip>
             </Link>
-
+            }
             <Link
               component={RouterLink}
               to="/juira/login"
@@ -406,7 +401,7 @@ export default function PrimarySearchAppBar() {
               </Tooltip>
             </Link>
 
-            
+            {role&&
             <Link
               component={RouterLink}
               to="/juira/dashboard"
@@ -420,6 +415,23 @@ export default function PrimarySearchAppBar() {
                 </IconButton>
               </Tooltip>
             </Link>
+
+             }
+
+             {role=== "usuario"&&
+            <Link
+              component={RouterLink}
+              to="/juira/userDash"
+              underline="none"
+              sx={{ color: "#ffffff" }}
+            >
+              <Tooltip title="User Dashboard" arrow>
+                <IconButton size="large" color="inherit">
+                   <FolderSharedIcon />
+                </IconButton>
+              </Tooltip>
+            </Link>
+            }
 
           </Box>
 

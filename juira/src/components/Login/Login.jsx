@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Link } from "react-router-dom";
 import {
@@ -7,12 +8,13 @@ import {
   TextField,
   Button,
   Typography,
+  Container
 } from "@mui/material";
 import LockIcon from "@mui/icons-material/Lock";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { loginAction } from "../../redux/actions/app.actions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -27,6 +29,7 @@ import { useHistory } from "react-router-dom";
 export default function Login() {
   const dispatch = useDispatch();
   const history = useHistory();
+  const role = useSelector((state) => state.app.token.role);
 
   const [userLog, setUserLog] = React.useState({
     email: " ",
@@ -128,12 +131,12 @@ uid: "rz9pFLryLGhQljwpjTW5Siwl3Tp2"
   };
   return (
     <div>
-      {user && (
+      {role && (
         <div>
           <PerfilUser />
         </div>
       )}
-      {!user && (
+      {!role && (
         <Grid>
           <Paper elevation={10} style={paperStyle}>
             <Grid align="center" style={{ marginBottom: "20px" }}>
@@ -195,6 +198,7 @@ uid: "rz9pFLryLGhQljwpjTW5Siwl3Tp2"
                 </Link>
                 </Typography> */}
 
+
             <Button onClick={handleGoogleSignIn}>Login con Google</Button>
             <Typography>
               {" "}
@@ -225,6 +229,9 @@ uid: "rz9pFLryLGhQljwpjTW5Siwl3Tp2"
           </Button>
         </Grid>
       )}
-    </div>
+   </div>
   );
+
+
+
 }

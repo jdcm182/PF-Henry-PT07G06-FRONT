@@ -89,8 +89,12 @@ export default function ShoppingCart() {
   }
 
   return (
-    <Container sx={{ boxShadow: "0 0 15px 5px #cccccc55", padding: 5 }}>
-      <Typography variant="h4"> Carrito de compras </Typography>
+    <Container sx={ {boxShadow: '0 0 15px 5px #cccccc55', padding: 5}}>
+      {/* <Typography variant="h4"> Carrito de compras </Typography> */}
+      <Typography sx={{ marginTop: '0', fontSize: '1.5rem', width:1, borderBottom: "solid var(--primaryColor)" /* 'solid green' */ }} color="var(--primaryColor)" gutterBottom>
+        CARRITO DE COMPRAS
+      </Typography>
+
       {!items.length ? (
         <Container
           sx={{
@@ -213,14 +217,11 @@ export default function ShoppingCart() {
         <Button
           variant="contained"
           startIcon={<HomeRoundedIcon />}
-          sx={{
-            backgroundColor: "#23c197",
-            "&:hover": { backgroundColor: "#138f6e" },
-          }}
-          onClick={() => {
-            history.push("/juira");
-          }}
-        >
+          sx={
+            {/* backgroundColor: '#23c197', '&:hover': {backgroundColor: '#138f6e'} */}
+          }
+          onClick={()=>{history.push('/juira')}}
+          >
           Inicio
         </Button>
       </Container>
