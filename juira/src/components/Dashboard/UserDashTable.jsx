@@ -32,7 +32,7 @@ import DangerousIcon from '@mui/icons-material/Dangerous'; // set Deleted
 import axios from 'axios';
 import { API_URL_BACKEND } from "../../api/apiRoute";
 
-const title = 'Productos'
+//const title = 'Productos'
 
 function createData(name, pid, status, price, ownerId) {
   return {
@@ -276,7 +276,7 @@ function EnhancedTableToolbar(props) {
           id="tableTitle"
           component="div"
         >
-          {title}
+          {props.title}
         </Typography>
       )}
 
@@ -389,7 +389,7 @@ export default function UserDashTable(props) {
     <Box sx={{ width: '100%', marginTop: '1rem' }}>
       <Toaster />
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} selected={selected} products={props.list} setSelected={setSelected} />
+        <EnhancedTableToolbar title={props.title} numSelected={selected.length} selected={selected} products={props.list} setSelected={setSelected} />
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
@@ -482,6 +482,7 @@ export default function UserDashTable(props) {
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
+        //labelDisplayedRows="Filas"
         />
       </Paper>
       <FormControlLabel

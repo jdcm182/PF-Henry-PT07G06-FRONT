@@ -7,15 +7,11 @@ import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 
-import DashCard from './DashCard.jsx';
+import UserDashCard from './UserDashCard.jsx';
 import UserDashSales from './UserDashSales'
 import UserDashPurchases from './UserDashPurchases'
+import UserChart from './UserDashChart'
 
-//import ChartDemo from './ChartDemo';
-
-// import { PieChart } from 'react-minimal-pie-chart';
-
-// import * as echarts from 'echarts';
 
 
 
@@ -28,25 +24,45 @@ export default function Dashboard() {
         setValue(newValue);
     };
 
-    const totalAmount = 0;
-    const productsTotalQuantity = 0;
-
-    const totalAmountPublished = 0;
-    const productsPublishedQuantity = 0;
-
-
 
     const myPurchases = [
         { id: 1, Producto: 'Biblioteca', Precio: 11000, Estado: 'Usado', Contraparte: 'jdcm' },
         { id: 2, Producto: 'Cafetera', Precio: 15000, Estado: 'Usado', Contraparte: 'jdcm' },
         { id: 3, Producto: 'Cartuchera', Precio: 1400, Estado: 'Usado', Contraparte: 'jdcm' },
+        { id: 7, Producto: 'Lampara', Precio: 4000, Estado: 'Usado', Contraparte: 'jdcm' },
     ]
     const mySales = [
-        { id: 4, Producto: 'Biblioteca', Precio: 11000, Estado: 'Usado', Contraparte: 'jdcm' },
-        { id: 5, Producto: 'Cafetera', Precio: 15000, Estado: 'Usado', Contraparte: 'jdcm' },
-        { id: 6, Producto: 'Cartuchera', Precio: 1400, Estado: 'Usado', Contraparte: 'jdcm' },
+        { id: 4, Producto: 'Balde', Precio: 2500, Estado: 'Usado', Contraparte: 'jdcm' },
+        { id: 5, Producto: 'Cemento', Precio: 1000, Estado: 'Usado', Contraparte: 'jdcm' },
+        { id: 6, Producto: 'Cartas', Precio: 3000, Estado: 'Usado', Contraparte: 'jdcm' },
     ]
     console.log(myPurchases, '\n', mySales)
+
+
+
+    const totalAmountPurchases = myPurchases.reduce((prev, actual) => prev + actual.Precio, 0);
+    const productsQuantityPurchases = myPurchases.length;
+
+    const totalAmountSales = mySales.reduce((prev, actual) => prev + actual.Precio, 0);
+    const productsQuantitySales = mySales.length;
+
+    const totalOperations = productsQuantityPurchases + productsQuantitySales;
+
+
+    const chartData = [
+        { name: 'Compras', value: totalAmountPurchases },
+        { name: 'Ventas', value: totalAmountSales },
+    ];
+
+    //const colorPurchases = 'rgb(255,105,162)' //'255,105,162'; // PinkishRed //"#69c3ff"
+    const colorPurchases = getComputedStyle(document.documentElement).getPropertyValue('--colorDashPurchases');
+
+    //const colorSales = 'rgb(105,195,255)' //'105,195,255'; // LightBlue //
+    const colorSales = getComputedStyle(document.documentElement).getPropertyValue('--colorDashSales');
+
+    const textColorDash = '#FFFFFF'; // White
+
+
 
     /* const css = `
     #main {
@@ -54,17 +70,17 @@ export default function Dashboard() {
         height:200px;
         background-color: #333;
     }
-` */
+` 
 
-    /* return (
+     return (
         <div class="my-element">
             <style>{css}</style>
             some content
         </div>
-    ) */
+    ) 
 
     // Initialize the echarts instance based on the prepared dom
-    /* var myChart = echarts.init(document.getElementById('main'));
+    var myChart = echarts.init(document.getElementById('main'));
  
     // Specify the configuration items and data for the chart
     var option = {
@@ -101,7 +117,8 @@ export default function Dashboard() {
 
             <Container sx={{ display: "Flex", flexDirection: "row", justifyContent: "space-evenly", flexWrap: "wrap" }}>
 
-                <DashCard title="Mis Compras" value={totalAmount} info1={productsTotalQuantity} info2={`de ${productsTotalQuantity}`} />
+                <UserDashCard title="Mis Compras" value={totalAmountPurchases} info1={productsQuantityPurchases}
+                    info2={`de ${totalOperations} operaciones`} bkColor={colorPurchases} textColor={textColorDash} />
 
                 {/* <PieChart
                   data={[
@@ -120,7 +137,13 @@ export default function Dashboard() {
                 {/* <Chart /> */}
                 {/* <ChartDemo /> */}
 
-                <DashCard title="Mis Ventas" value={totalAmountPublished} info1={productsPublishedQuantity} info2={`de ${productsTotalQuantity}`} />
+
+                {/* <PieChart /> */}
+                <UserChart data={chartData} colors={[colorPurchases, colorSales]} />
+
+                <UserDashCard title="Mis Ventas" value={totalAmountSales} info1={productsQuantitySales}
+                    info2={`de ${totalOperations} operaciones`} bkColor={colorSales} textColor={textColorDash} />
+                {/* "rgb(255,105,162)",//"#69c3ff",//bkColor, */}
 
             </Container>
 
@@ -140,7 +163,7 @@ export default function Dashboard() {
                     {<UserDashPurchases list={myPurchases} />}
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                    Mis Ventas
+                    {/* Mis Ventas */}
                     <UserDashSales list={mySales} />
                 </TabPanel>
             </Box>
