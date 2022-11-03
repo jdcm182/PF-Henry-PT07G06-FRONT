@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./Card.module.css";
 import { Link, useParams } from "react-router-dom";
+import axios from "axios";
 
 import { IconButton } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
