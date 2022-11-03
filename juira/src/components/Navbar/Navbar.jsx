@@ -78,7 +78,9 @@ export default function PrimarySearchAppBar() {
   const role = useSelector((state) => state.app.token.role);
 
   React.useEffect(() => {
-    const cart = JSON.parse(localStorage.getItem("itemsInCart"));
+    const cartlocal = localStorage.getItem("itemsInCart")
+    let cart = []
+    if(cartlocal) cart = JSON.parse(localStorage.getItem("itemsInCart"))
     if (cart) {
       dispatch(updateCart(cart));
     }
