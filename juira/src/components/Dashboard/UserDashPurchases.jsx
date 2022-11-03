@@ -1,42 +1,15 @@
 import React from 'react';
 import Container from '@mui/material/Container';
-import DashCard from './DashCard.jsx';
+//import DashCard from './DashCard.jsx';
 import EnhancedTable from './EnhancedTable';
-import { makeStyles } from '@mui/styles';
-import { createTheme } from '@mui/material/styles';
 
-const theme = createTheme();
-const useStyles = makeStyles({
-    root: {
-        color: theme.palette.primary.main,
-    }
-    ,
-    /* btn: {
-      background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-      border: 0,
-      borderRadius: 3,
-      boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-      color: 'white',
-      height: 48,
-      padding: '0 30px',
-    }, */
 
-    palette: {
-        type: 'light',
-        primary: {
-            main: '#23c197',
-        },
-        secondary: {
-            main: '#19d6c6',
-        },
-        text: {
-            primary: 'rgba(179,0,0,0.87)',
-        },
-    },
+// import DashCard from './DashCard.jsx';
+import UserDashTable from './UserDashTable';
 
-});
 
-export default function UserDashSales() {
+
+export default function UserDashPurchases(props) {
 
     // let products = useSelector((state) => state.productsReducer.allProducts);
 
@@ -61,20 +34,16 @@ export default function UserDashSales() {
     //let productsSold = 0;
     //let productsDeleted = 0;
 
-
-
-    const classes = useStyles();
+    console.log('UserDashPurchases > props: ', props)
 
     return (
-        <Container className={classes.root}
+        <Container component={'span'}
             sx={{
                 width: "85%", height: "100%", /* backgroundColor:"#444", */
                 boxShadow: '0 8px 15px 5px #cccccc55', padding: '2rem', borderRadius: '.8rem'
             }} >
 
-            INSERTAR TABLA DE COMPRAS
-
-            {/* <ProductsTable/> */}
+            <UserDashTable list={props.list} />
             {/* <EnhancedTable items={products} className={classes.palette} /> */}
 
         </Container>

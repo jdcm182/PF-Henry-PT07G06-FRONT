@@ -11,8 +11,11 @@ import DashCard from './DashCard.jsx';
 import UserDashSales from './UserDashSales'
 import UserDashPurchases from './UserDashPurchases'
 
+//import ChartDemo from './ChartDemo';
 
+// import { PieChart } from 'react-minimal-pie-chart';
 
+// import * as echarts from 'echarts';
 
 
 
@@ -32,6 +35,62 @@ export default function Dashboard() {
     const productsPublishedQuantity = 0;
 
 
+
+    const myPurchases = [
+        { id: 1, Producto: 'Biblioteca', Precio: 11000, Estado: 'Usado', Contraparte: 'jdcm' },
+        { id: 2, Producto: 'Cafetera', Precio: 15000, Estado: 'Usado', Contraparte: 'jdcm' },
+        { id: 3, Producto: 'Cartuchera', Precio: 1400, Estado: 'Usado', Contraparte: 'jdcm' },
+    ]
+    const mySales = [
+        { id: 4, Producto: 'Biblioteca', Precio: 11000, Estado: 'Usado', Contraparte: 'jdcm' },
+        { id: 5, Producto: 'Cafetera', Precio: 15000, Estado: 'Usado', Contraparte: 'jdcm' },
+        { id: 6, Producto: 'Cartuchera', Precio: 1400, Estado: 'Usado', Contraparte: 'jdcm' },
+    ]
+    console.log(myPurchases, '\n', mySales)
+
+    /* const css = `
+    #main {
+        width: 300px;
+        height:200px;
+        background-color: #333;
+    }
+` */
+
+    /* return (
+        <div class="my-element">
+            <style>{css}</style>
+            some content
+        </div>
+    ) */
+
+    // Initialize the echarts instance based on the prepared dom
+    /* var myChart = echarts.init(document.getElementById('main'));
+ 
+    // Specify the configuration items and data for the chart
+    var option = {
+        title: {
+            text: 'ECharts Getting Started Example'
+        },
+        tooltip: {},
+        legend: {
+            data: ['sales']
+        },
+        xAxis: {
+            data: ['Shirts', 'Cardigans', 'Chiffons', 'Pants', 'Heels', 'Socks']
+        },
+        yAxis: {},
+        series: [
+            {
+                name: 'sales',
+                type: 'bar',
+                data: [5, 20, 36, 10, 10, 20]
+            }
+        ]
+    }; */
+
+    // Display the chart using the configuration items and data just specified.
+    // myChart.setOption(option);
+
     return (
         <Container sx={{ boxShadow: '0 0 15px 5px #cccccc55', padding: 5, width: '100' }}>
 
@@ -44,6 +103,23 @@ export default function Dashboard() {
 
                 <DashCard title="Mis Compras" value={totalAmount} info1={productsTotalQuantity} info2={`de ${productsTotalQuantity}`} />
 
+                {/* <PieChart
+                  data={[
+                    { title: 'One', value: 10, color: '#E38627' },
+                    { title: 'Two', value: 15, color: '#C13C37' },
+                    { title: 'Three', value: 20, color: '#6A2135' },
+                  ]}
+                  viewBoxSize={['100','100']}
+                */}
+
+                {/* <script src="echarts.js"></script>
+                <div id="main">
+                    <style>{css}</style>
+                </div> */}
+
+                {/* <Chart /> */}
+                {/* <ChartDemo /> */}
+
                 <DashCard title="Mis Ventas" value={totalAmountPublished} info1={productsPublishedQuantity} info2={`de ${productsTotalQuantity}`} />
 
             </Container>
@@ -52,7 +128,7 @@ export default function Dashboard() {
             <Box sx={{ width: '100%' }}>
                 <Box sx={{ borderBottom: 1, borderColor: 'var(--primaryColor)' }}>
                     <Tabs value={value}
-                        textColor="var(--primaryColor)"
+                        textColor="primary"
                         indicatorColor="primary"//"#23c197"
                         onChange={handleChange} aria-label="basic tabs example">
                         <Tab label="Mis Compras" {...a11yProps(0)} sx={{ color: 'var(--primaryColor)' }} />
@@ -60,15 +136,14 @@ export default function Dashboard() {
                     </Tabs>
                 </Box>
                 <TabPanel value={value} index={0}>
-                    Mis Compras
-                    <UserDashPurchases />
+                    {/* Mis Compras */}
+                    {<UserDashPurchases list={myPurchases} />}
                 </TabPanel>
                 <TabPanel value={value} index={1}>
                     Mis Ventas
-                    <UserDashSales />
+                    <UserDashSales list={mySales} />
                 </TabPanel>
             </Box>
-
 
         </Container>
     );
@@ -95,7 +170,7 @@ function TabPanel(props) {
         >
             {value === index && (
                 <Box sx={{ p: 3 }}>
-                    <Typography>{children}</Typography>
+                    <Container>{children}</Container>
                 </Box>
             )}
         </div>
@@ -118,11 +193,11 @@ function a11yProps(index) {
 export function BasicTabs() {
     /* 
     const [value, setValue] = React.useState(0);
-
+ 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
-
+ 
     return (
         <Box sx={{ width: '100%' }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>

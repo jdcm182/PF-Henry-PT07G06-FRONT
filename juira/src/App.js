@@ -18,12 +18,23 @@ import ScrollToTop from './components/ScrollToTop'
 import Favorites from './components/Favorites/Favorites';
 import OrdenDeCompra from './components/OrdenDeCompra/OrdenDeCompra';
 
+import { createTheme, ThemeProvider } from '@mui/material/styles';//'@material-ui/core';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#23c197'
+    }
+  }
+})
+
 
 function App() {
   
   const {pathname} = useLocation()
   return (
     <div className="App">
+    <ThemeProvider theme={theme}>
     <BrowserRouter >
       {pathname !== '/' && <NavBar/>}
       <ScrollToTop />
@@ -42,7 +53,7 @@ function App() {
     </Switch>
       {pathname !== '/' && <Footer/>}
     </BrowserRouter>
-    
+    </ThemeProvider>
 
     </div>
   );
