@@ -10,12 +10,20 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addToCart, addToFavorites, removeToCart, removeToFavorites } from "../../redux/actions/products.actions";
+import {
+  addToCart,
+  addToFavorites,
+  removeToCart,
+  removeToFavorites,
+} from "../../redux/actions/products.actions";
 
 export default function Card(props) {
   const dispatch = useDispatch();
   const itemsAddedToCart = useSelector((state) => state.productsReducer.cart);
-  const itemsAddedToFavorites = useSelector((state) => state.productsReducer.favorites)
+  const itemsAddedToFavorites = useSelector(
+    (state) => state.productsReducer.favorites
+  );
+  const role = useSelector((state) => state.app.token.role);
 
   const productIsAddedToCart = (id) => {
     return itemsAddedToCart.find((item) => item.id === id) ? true : false;
@@ -23,19 +31,23 @@ export default function Card(props) {
   const productIsAddedToFavorites = (id) => {
     return itemsAddedToFavorites.find((item) => item.id === id) ? true : false;
   };
- 
-  const handleCart = (p) => {
+
+  const handleCart = async (p) => {
     productIsAddedToCart(p.id)
-    ? dispatch(removeToCart(p.id))
-    : dispatch(addToCart(p))
+      ? role === "usuario"
+        ? await axios.delete(
+            `${API_URL_BACKEND}cart/removeProductFromCart/byToken/${p.id}`
+          )
+        : dispatch(removeToCart(p.id))
+      : role === "usuario"
+      ? axios.put(`${API_URL_BACKEND}cart/addProductToCart/byToken/${p.id}`)
+      : dispatch(addToCart(p));
   };
   const handleFavorites = (p) => {
     productIsAddedToFavorites(p.id)
-    ? dispatch(removeToFavorites(p.id))
-    : dispatch(addToFavorites(p))
+      ? dispatch(removeToFavorites(p.id))
+      : dispatch(addToFavorites(p));
   };
-
- 
 
   const [fav, setFav] = useState(false);
   const toggleFav = () => {
@@ -55,7 +67,11 @@ export default function Card(props) {
         }}
         onClick={() => handleFavorites(props.product)}
       >
-        {productIsAddedToFavorites(props.product.id) ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+        {productIsAddedToFavorites(props.product.id) ? (
+          <FavoriteIcon />
+        ) : (
+          <FavoriteBorderIcon />
+        )}
       </IconButton>
 
       <div className={[styles.card, styles.stacked].join(" ")}>
@@ -86,13 +102,9 @@ export default function Card(props) {
           }}
         >
           {productIsAddedToCart(props.product.id) ? (
-            <ShoppingCartIcon
-              
-            />
+            <ShoppingCartIcon />
           ) : (
-            <AddShoppingCartIcon
-           
-            />
+            <AddShoppingCartIcon />
           )}
         </IconButton>
       </div>
