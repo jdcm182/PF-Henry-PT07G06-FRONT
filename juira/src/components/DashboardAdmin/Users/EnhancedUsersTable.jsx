@@ -178,10 +178,13 @@ EnhancedTableHead.propTypes = {
 function EnhancedTableToolbar(props) {
   const { numSelected, selected, users, setSelected, setUsers} = props;
 
-  const handleActivate = async () => {
+  const handleActivate = () => {
     setSelected([])
     let reqs = selected.map( p => axios.put(`${API_URL_BACKEND}users/${p}`, {status: 'active'}))
-    let promise = Promise.all(reqs).finally(async () => setUsers((await axios.get(`${API_URL_BACKEND}users`)).data)) 
+    let promise = Promise.all(reqs)
+    .then(() => axios.get(`${API_URL_BACKEND}users`))
+    .then((response) => setUsers(response.data))
+    .catch(error => error)
     toast.promise(promise, {
       loading: 'Cargando',
       success: 'Actualizado con éxito',
@@ -189,20 +192,26 @@ function EnhancedTableToolbar(props) {
     });
   }
   
-  const handleBan = async () => {
+  const handleBan = () => {
     setSelected([])
     let reqs = selected.map( p => axios.put(`${API_URL_BACKEND}users/${p}`, {status: 'banned'}))
-    let promise = Promise.all(reqs).finally(async () => setUsers((await axios.get(`${API_URL_BACKEND}users`)).data)) 
+    let promise = Promise.all(reqs)
+    .then(() => axios.get(`${API_URL_BACKEND}users`))
+    .then((response) => setUsers(response.data))
+    .catch(error => error)
     toast.promise(promise, {
       loading: 'Cargando',
       success: 'Actualizado con éxito',
       error: 'Ocurrió un error',
     });
   }
-  const handleDelete = async () => {
+  const handleDelete = () => {
     setSelected([])
     let reqs = selected.map( p => axios.put(`${API_URL_BACKEND}users/${p}`, {status: 'deleted'}))
-    let promise = Promise.all(reqs).finally(async () => setUsers((await axios.get(`${API_URL_BACKEND}users`)).data)) 
+    let promise = Promise.all(reqs)
+    .then(() => axios.get(`${API_URL_BACKEND}users`))
+    .then((response) => setUsers(response.data))
+    .catch(error => error)
     toast.promise(promise, {
       loading: 'Cargando',
       success: 'Actualizado con éxito',
@@ -210,10 +219,13 @@ function EnhancedTableToolbar(props) {
     });
   }
 
-  const handleTypeChange = async () => {
+  const handleTypeChange = () => {
     setSelected([])
     let reqs = selected.map( p => axios.put(`${API_URL_BACKEND}users/${p}`, {isAdmin: true}))
-    let promise = Promise.all(reqs).finally(async () => setUsers((await axios.get(`${API_URL_BACKEND}users`)).data)) 
+    let promise = Promise.all(reqs)
+    .then(() => axios.get(`${API_URL_BACKEND}users`))
+    .then((response) => setUsers(response.data))
+    .catch(error => error)
     toast.promise(promise, {
       loading: 'Cargando',
       success: 'Actualizado con éxito',

@@ -34,23 +34,26 @@ const useStyles = makeStyles({
 
   });
   
-  
-  let resp = []
-  axios.get(`${API_URL_BACKEND}users`)
-  .then(response => resp = response.data)
+  // console.log(resp)
   
   export default function Users() {
     const classes = useStyles();
     // let products = useSelector((state) => state.productsReducer.allProducts);
     const [users, setUsers] = useState([])
+    let resp = []
+    axios.get(`${API_URL_BACKEND}users`)
+    .then(response => resp = response.data)
+    .then(() => !users.length && setUsers(resp))
+    // .catch(error => console.log(error))
     // let users = []
     // users = resp
+    
     
     // axios.get(`${API_URL_BACKEND}users`)
     // .then(response => users = response.data)
 
-    !users.length && setUsers(resp)
-    // console.log(users)
+    // !users.length && setUsers(resp)
+    // console.log('dentr',resp)
 
     let totalUsers = users.length
     let activeUsers = 0

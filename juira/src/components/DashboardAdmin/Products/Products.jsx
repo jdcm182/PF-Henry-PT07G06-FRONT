@@ -43,19 +43,23 @@ const useStyles = makeStyles({
 
   });
 
-  let resp = []
-  axios.get(`${API_URL_BACKEND}products`)
-  .then(response => resp = response.data)
+  // let resp = []
+  // axios.get(`${API_URL_BACKEND}products`)
+  // .then(response => resp = response.data)
 
  export default function Products() {
 
   const [products, setProducts] = React.useState([])
+  let resp = []
+  axios.get(`${API_URL_BACKEND}products`)
+    .then(response => resp = response.data)
+    .then(() => !products.length && setProducts(resp))
 
-  !products.length && setProducts(resp)
+  // !products.length && setProducts(resp)
   
     const classes = useStyles();
 
-    try {
+    // try {
 
       // Card 1
       let productsTotalQuantity = products.length;
@@ -104,10 +108,10 @@ const useStyles = makeStyles({
           
         </div>
       );
-  }
-  catch(e) {
-    return (null)
-  }
+  // }
+  // catch(e) {
+  //   return (null)
+  // }
 }
 
 {/* <ThemeProvider theme={themeOptions}> */}
