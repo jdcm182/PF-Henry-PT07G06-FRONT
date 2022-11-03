@@ -189,9 +189,7 @@ export default function PrimarySearchAppBar() {
             aria-label={`show ${itemsInCart.length} new notifications`}
             color="inherit"
           >
-            <Badge badgeContent={itemsInCart.length} color="error">
               <AddBusinessIcon />
-            </Badge>
           </IconButton>
           <p>Vender un producto</p>
         </MenuItem>
@@ -209,9 +207,7 @@ export default function PrimarySearchAppBar() {
             aria-label={`show ${itemsInCart.length} new notifications`}
             color="inherit"
           >
-            <Badge badgeContent={itemsInCart.length} color="error">
               <FavoriteIcon />
-            </Badge>
           </IconButton>
           <p>Favoritos</p>
         </MenuItem>
