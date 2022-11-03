@@ -53,10 +53,7 @@ export const loginAction = (usuario) => {
           console.log("response", response);
           return response;
         });
-        const responsess = await axios(
-          `${API_URL_BACKEND}cart/byToken`
-        )
-        console.log("aca muesta lo q respoonde",responsess)
+
       }
     }
   };

@@ -13,7 +13,7 @@ import { pink } from "@mui/material/colors";
 import Button from "@mui/material/Button";
 import { IconButton } from "@mui/material";
 import PaidIcon from "@mui/icons-material/Paid";
-import { removeToCart } from "../../redux/actions/products.actions";
+import { removeToCart, removeToCartApi } from "../../redux/actions/products.actions";
 import { useHistory } from "react-router-dom";
 import { API_URL_BACKEND } from "../../api/apiRoute";
 import axios from "axios";
@@ -24,28 +24,16 @@ import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 export default function ShoppingCart() {
   const dispatch = useDispatch();
   const role = useSelector((state) => state.app.token.role);
-  const localCart = useSelector((state) => state.productsReducer.cart);
+  const items = useSelector((state) => state.productsReducer.cart);
 
   const [redirect, setRedirect] = useState("");
-  const [items, setItems] = useState([]);
   let history = useHistory();
 
   useEffect(() => {
     if (redirect !== "") window.open(redirect, "_blank", "popup=true");
   }, [redirect]);
 
-  const fetchData = async () => {
-    if (role) {
-      const response = await axios(`${API_URL_BACKEND}cart/byToken`);
-      console.log("aca muesta lo q respoonde", response);
-      setItems(response.data.products);
-    } else {
-      setItems(localCart);
-    }
-  };
-  useEffect(() => {
-    fetchData();
-  }, [role]);
+
 
   let amount = 0;
   items && items.forEach((p) => (amount += Number(p.price)));
@@ -135,9 +123,7 @@ export default function ShoppingCart() {
                       <TableCell
                         onClick={async () =>
                           role
-                            ? await axios.delete(
-                              `${API_URL_BACKEND}cart/removeProductFromCart/byToken/${row.id}`
-                              )
+                            ? dispatch(removeToCartApi(row.id))
                             : handleRemoveinCart(row.id)
                         }
                       >

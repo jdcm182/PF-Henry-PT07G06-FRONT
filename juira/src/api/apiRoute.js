@@ -5,6 +5,9 @@ export const getProductsDetailsApi = '/product-detail/'
 export const getCategoriesNameApi = "categories/names"
 export const getCategoriesIdApi = "categories/"
 export const postUser= 'sessionLogin'
+export const putCartApi = "cart/addProductToCart/byToken/"
+export const deleteCartApi = "cart/removeProductFromCart/byToken/"
+export const cartApi = "cart/byToken"
 
 
 

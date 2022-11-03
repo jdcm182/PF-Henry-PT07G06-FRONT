@@ -27,6 +27,7 @@ import AdminNavigator from "./Navigator/AdminNavigator";
 
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';//'@material-ui/core';
+import { updateCartApi } from "./redux/actions/products.actions";
 
 const theme = createTheme({
   palette: {
@@ -40,12 +41,14 @@ const theme = createTheme({
 function App() {
   const { pathname } = useLocation();
   const reloadSesion = useDispatch(refreshData);
+  const dispatch = useDispatch()
+  const role = useSelector((state) => state.app.token.role);
 
   useEffect(() => {
     reloadSesion(refreshData());
-  }, [reloadSesion]);
+    if(role === "usuario") dispatch(updateCartApi())
+  }, [reloadSesion, role]);
 
-  const role = useSelector((state) => state.app.token.role);
 
   return (
     <div className="App">

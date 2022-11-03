@@ -11,6 +11,8 @@ import {
   UPDATE_FAVORTITES,
   REMOVE_FAVORTITES,
   ADD_FAVORITES,
+  ADD_CART_API,
+  UPDATE_CART_API,
 } from "../actions/products.actions";
 import axios from "axios";
 
@@ -85,6 +87,13 @@ export function productsReducer(state = initialState, action) {
         ...state,
         cart: aux,
       };
+
+    case UPDATE_CART_API:
+      return{
+        ...state,
+        cart: action.payload
+      }
+
 
     case ADD_FAVORITES:
       const aux4 = state.favorites.find(

@@ -16,6 +16,8 @@ import {
   addToFavorites,
   removeToCart,
   removeToFavorites,
+  removeToCartApi,
+  addToCartApi,
 } from "../../redux/actions/products.actions";
 import { API_URL_BACKEND } from "../../api/apiRoute";
 
@@ -37,12 +39,10 @@ export default function Card(props) {
   const handleCart = async (p) => {
     productIsAddedToCart(p.id)
       ? role === "usuario"
-        ? await axios.delete(
-            `${API_URL_BACKEND}cart/removeProductFromCart/byToken/${p.id}`
-          )
+        ? dispatch(removeToCartApi(p.id))
         : dispatch(removeToCart(p.id))
       : role === "usuario"
-      ? await axios.put(`${API_URL_BACKEND}cart/addProductToCart/byToken/${p.id}`)
+      ? dispatch(addToCartApi(p.id))
       : dispatch(addToCart(p));
   };
   const handleFavorites = (p) => {

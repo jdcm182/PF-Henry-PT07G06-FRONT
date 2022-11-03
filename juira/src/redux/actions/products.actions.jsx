@@ -1,10 +1,14 @@
 import axios from "axios";
+import toast from "react-hot-toast";
 import {
   getAllProductsApi,
   API_URL_BACKEND,
   getCategoriesNameApi,
   getCategoriesIdApi,
   getAllPublicatesProductsApi,
+  cartApi,
+  deleteCartApi,
+  putCartApi,
 } from "../../api/apiRoute";
 
 export const PRODUCTS_TO_DISPLAY = "PRODUCTS_TO_DISPLAY";
@@ -20,6 +24,9 @@ export const ADD_FAVORITES = "ADD_FAVORITES"
 export const REMOVE_FAVORTITES = "REMOVE_FAVORTITES"
 export const UPDATE_FAVORTITES = "UPDATE_FAVORTITES"
 export const SEND_SHOPPING_ORDER = "SEND_SHOPPING_ORDER"
+export const UPDATE_CART_API = "UPDATE_CART_API"
+export const REMOVE_CART_API = "REMOVE_CART_API"
+export const ADD_CART_API = "ADD_CART_API"
 
 export const updateDisplayedByQuery = (query) => async (dispatch) => {
   const url = `${API_URL_BACKEND}products/?name=${query}`;
@@ -81,6 +88,47 @@ export const addToCart = (payload) => (dispatch) => {
     payload: payload,
   });
 };
+
+export const updateCartApi = () => async (dispatch) =>{
+  try {
+    const {data} = await axios(
+      `${API_URL_BACKEND}${cartApi}`
+    )
+    return dispatch({
+      type: UPDATE_CART_API,
+      payload: data.products,
+    })
+
+  }catch (error){
+    toast.error(error)
+  }
+  
+}
+
+export const addToCartApi = (payload) => async (dispatch) => {
+  const url = `${API_URL_BACKEND}${putCartApi}${payload}`;
+  try {
+    let { data } = await axios.put(url)
+    toast.success(data);
+    dispatch(updateCartApi())
+  } catch (error) {
+    toast.error(error.response.data)
+    console.log("error api", error.response.data);
+  }
+};
+
+export const removeToCartApi = (payload) => async (dispatch) => {
+  const url = `${API_URL_BACKEND}${deleteCartApi}${payload}`;
+  try {
+    let { data } = await axios.delete(url)
+    toast.success(data);
+    dispatch(updateCartApi())
+  } catch (error) {
+    toast.error(error)
+    console.log("error api", error);
+  }
+};
+
 
 export const addToFavorites = (payload) => (dispatch) => {
   return dispatch({
