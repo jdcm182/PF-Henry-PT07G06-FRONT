@@ -42,7 +42,7 @@ export const loginAction = (usuario) => {
       toast.success("Bienvenido a la plataforma " + user.emailAddress);
       if (role === "usuario") {
         const cart = JSON.parse(localStorage.getItem("itemsInCart"));
-        localStorage.setItem("itemsInCart", "")
+        localStorage.removeItem("itemsInCart")
         
         const serverPut = cart.map((element) =>
           axios.put(
