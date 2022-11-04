@@ -11,6 +11,7 @@ export const cartApi = "cart/byToken"
 export const putFavApi = "favorites/addProductToFavList/byToken/"
 export const deleteFavApi = "favorites/removeProductFromFavList/byToken/"
 export const favApi = "favorites/byToken"
+export const getUserData= 'users/'
 
 
 
