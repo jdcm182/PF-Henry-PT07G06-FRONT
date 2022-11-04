@@ -6,6 +6,7 @@ import {
   removeToCart,
   removeToCartApi,
   removeToFavorites,
+  removeToFavApi,
 } from "../../redux/actions/products.actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -50,7 +51,9 @@ export default function FavoriteDetail(props) {
   }
 
   function handleRemoveFavorite(p) {
-    dispatch(removeToFavorites(p));
+    role === "usuario"
+      ? dispatch(removeToFavApi(p))
+      : dispatch(removeToFavorites(p));
   }
 
   return (

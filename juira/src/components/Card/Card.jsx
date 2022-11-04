@@ -18,6 +18,8 @@ import {
   removeToFavorites,
   removeToCartApi,
   addToCartApi,
+  removeToFavApi,
+  addToFavApi,
 } from "../../redux/actions/products.actions";
 import { API_URL_BACKEND } from "../../api/apiRoute";
 
@@ -47,7 +49,11 @@ export default function Card(props) {
   };
   const handleFavorites = (p) => {
     productIsAddedToFavorites(p.id)
-      ? dispatch(removeToFavorites(p.id))
+      ? role === "usuario"
+        ? dispatch(removeToFavApi(p.id))
+        : dispatch(removeToFavorites(p.id))
+      : role === "usuario"
+      ? dispatch(addToFavApi(p.id))
       : dispatch(addToFavorites(p));
   };
 
