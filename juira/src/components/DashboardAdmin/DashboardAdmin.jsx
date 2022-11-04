@@ -12,8 +12,9 @@ import FeedRoundedIcon from '@mui/icons-material/FeedRounded';
 import CategoryRoundedIcon from '@mui/icons-material/CategoryRounded';
 import PeopleAltRoundedIcon from '@mui/icons-material/PeopleAltRounded';
 import ShoppingBagRoundedIcon from '@mui/icons-material/ShoppingBagRounded';
-import Charts from './Charts/Charts'
-import { RadialBarChart, RadialBar, Legend, ResponsiveContainer } from 'recharts';
+import ChartsGrid from './Charts/ChartsGrid';
+
+
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -67,7 +68,7 @@ export default function DashboardAdmin() {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <Charts/>
+        <ChartsGrid/>
       </TabPanel>
       <TabPanel value={value} index={1}>
         <Products/>

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { RadialBarChart, RadialBar, Legend } from "recharts";
+import { RadialBarChart, RadialBar, Legend, Tooltip } from "recharts";
 import axios from "axios";
 import { API_URL_BACKEND } from "../../../api/apiRoute";
+
 
 
 const style = {
@@ -10,14 +11,13 @@ const style = {
   lineHeight: "24px"
 };
 
-export default function App() {
+export default function UsersChart() {
   const [users, setUsers] = useState([])
 
   let resp = []
     axios.get(`${API_URL_BACKEND}users`)
     .then(response => resp = response.data)
     .then(() => !users.length && setUsers(resp))
-
 
     let totalUsers = users.length
     let activeUsers = 0
@@ -34,21 +34,27 @@ export default function App() {
     const data = [
       {
         name: "Baneados",
-        uv: bannedUsers,
+        Cantidad: bannedUsers,
         // pv: 2400,
         fill: "#8884d8"
       },
       {
         name: "Eliminados",
-        uv: deletedUsers,
+        Cantidad: deletedUsers,
         // pv: 3908,
         fill: "#ffc658"
       },
       {
         name: "Activos",
-        uv: activeUsers,
+        Cantidad: activeUsers,
         // pv: 9800,
         fill: "#82ca9d"
+      },
+      {
+        name: "Total",
+        Cantidad: totalUsers,
+        // pv: 9800,
+        fill: "#8dd1e1"
       },
     ];
     
@@ -65,12 +71,13 @@ export default function App() {
       barSize={45}
       data={data}
     >
+      <Tooltip/>
       <RadialBar
         minAngle={15}
         label={{ position: "insideStart", fill: "#fff" }}
         background
         clockWise
-        dataKey="uv"
+        dataKey="Cantidad"
       />
       <Legend
         iconSize={15}
