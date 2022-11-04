@@ -1,10 +1,17 @@
 import axios from "axios";
+import toast from "react-hot-toast";
 import {
   getAllProductsApi,
   API_URL_BACKEND,
   getCategoriesNameApi,
   getCategoriesIdApi,
   getAllPublicatesProductsApi,
+  cartApi,
+  deleteCartApi,
+  putCartApi,
+  favApi,
+  deleteFavApi,
+  putFavApi,
 } from "../../api/apiRoute";
 
 export const PRODUCTS_TO_DISPLAY = "PRODUCTS_TO_DISPLAY";
@@ -14,12 +21,18 @@ export const REMOVE_CART = "REMOVE_CART";
 export const ADD_CART = "ADD_CART";
 export const GET_CATEGORIES_NAMES = "GET_CATEGORIES_NAMES";
 export const GET_CATEGORIES = "GET_CATEGORIES";
-export const UPDATE_CART = "UPDATE_CART"
-export const REMOVE_ID="REMOVE_ID"
-export const ADD_FAVORITES = "ADD_FAVORITES"
-export const REMOVE_FAVORTITES = "REMOVE_FAVORTITES"
-export const UPDATE_FAVORTITES = "UPDATE_FAVORTITES"
-export const SEND_SHOPPING_ORDER = "SEND_SHOPPING_ORDER"
+export const UPDATE_CART = "UPDATE_CART";
+export const REMOVE_ID = "REMOVE_ID";
+export const ADD_FAVORITES = "ADD_FAVORITES";
+export const REMOVE_FAVORTITES = "REMOVE_FAVORTITES";
+export const UPDATE_FAVORTITES = "UPDATE_FAVORTITES";
+export const SEND_SHOPPING_ORDER = "SEND_SHOPPING_ORDER";
+export const UPDATE_CART_API = "UPDATE_CART_API";
+export const REMOVE_CART_API = "REMOVE_CART_API";
+export const ADD_CART_API = "ADD_CART_API";
+export const UPDATE_FAV_API = "UPDATE_FAV_API";
+export const REMOVE_FAV_API = "REMOVE_FAV_API";
+export const ADD_FAV_API = "ADD_FAV_API";
 
 export const updateDisplayedByQuery = (query) => async (dispatch) => {
   const url = `${API_URL_BACKEND}products/?name=${query}`;
@@ -82,6 +95,77 @@ export const addToCart = (payload) => (dispatch) => {
   });
 };
 
+export const updateCartApi = () => async (dispatch) => {
+  try {
+    const { data } = await axios(`${API_URL_BACKEND}${cartApi}`);
+    return dispatch({
+      type: UPDATE_CART_API,
+      payload: data.products,
+    });
+  } catch (error) {
+    toast.error(error);
+  }
+};
+
+export const updateFavApi = () => async (dispatch) => {
+  try {
+    const { data } = await axios(`${API_URL_BACKEND}${favApi}`);
+    return dispatch({
+      type: UPDATE_FAV_API,
+      payload: data.products,
+    });
+  } catch (error) {
+    toast.error(error);
+  }
+};
+
+export const addToCartApi = (payload) => async (dispatch) => {
+  const url = `${API_URL_BACKEND}${putCartApi}${payload}`;
+  try {
+    let { data } = await axios.put(url);
+    toast.success(data);
+    dispatch(updateCartApi());
+  } catch (error) {
+    toast.error(error.response.data);
+    console.log("error api", error.response.data);
+  }
+};
+export const addToFavApi = (payload) => async (dispatch) => {
+  const url = `${API_URL_BACKEND}${putFavApi}${payload}`;
+  try {
+    let { data } = await axios.put(url);
+    toast.success(data);
+    dispatch(updateFavApi());
+  } catch (error) {
+    toast.error(error.response.data);
+    console.log("error api", error.response.data);
+  }
+};
+
+export const removeToCartApi = (payload) => async (dispatch) => {
+  const url = `${API_URL_BACKEND}${deleteCartApi}${payload}`;
+  try {
+    let { data } = await axios.delete(url);
+    toast.success(data);
+    dispatch(updateCartApi());
+  } catch (error) {
+    toast.error(error);
+    console.log("error api", error);
+  }
+};
+
+export const removeToFavApi = (payload) => async (dispatch) => {
+  const url = `${API_URL_BACKEND}${deleteFavApi}${payload}`;
+  try {
+    let { data } = await axios.delete(url);
+    toast.success(data);
+    dispatch(updateFavApi());
+  } catch (error) {
+    toast.error(error);
+    console.log("error api", error);
+  }
+};
+
 export const addToFavorites = (payload) => (dispatch) => {
   return dispatch({
     type: ADD_FAVORITES,
@@ -96,7 +180,6 @@ export const removeToFavorites = (payload) => (dispatch) => {
   });
 };
 
-
 export const removeToCart = (payload) => (dispatch) => {
   return dispatch({
     type: REMOVE_CART,
@@ -104,19 +187,19 @@ export const removeToCart = (payload) => (dispatch) => {
   });
 };
 
-export const updateFavorites = (payload)=> (dispatch)=>{
+export const updateFavorites = (payload) => (dispatch) => {
   return dispatch({
     type: UPDATE_FAVORTITES,
-    payload: payload
-  })
-}
+    payload: payload,
+  });
+};
 
-export const updateCart = (payload)=> (dispatch)=>{
+export const updateCart = (payload) => (dispatch) => {
   return dispatch({
     type: UPDATE_CART,
-    payload: payload
-  })
-}
+    payload: payload,
+  });
+};
 
 export const getCategoriesNames = () => async (dispatch) => {
   const url = `${API_URL_BACKEND}${getCategoriesNameApi}`;
@@ -156,9 +239,9 @@ export const publishProd = (data) => async () => {
 };
 
 export const sendShopOrder = (data) => async () => {
- console.log('entre aca')
- const url = `${API_URL_BACKEND}shoppingOrders/mpresponse`;
- console.log("PUT al Back",url)
+  console.log("entre aca");
+  const url = `${API_URL_BACKEND}shoppingOrders/mpresponse`;
+  console.log("PUT al Back", url);
   try {
     let json = await axios.put(url, data);
     return json;

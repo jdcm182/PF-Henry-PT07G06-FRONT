@@ -33,18 +33,43 @@ export const updateFilter = (payload) => (dispatch) => {
 
 export const loginAction = (usuario) => {
   return async (dispatch) => {
-    const {role, user} = await postLogin(usuario);
-   
+    axios.defaults.headers.common["Authorization"] = usuario.token;
+    const { role, user } = await postLogin(usuario);
     if (role) {
       localStorage.setItem("token", usuario.token);
       localStorage.setItem("role", role);
       dispatch(signInSuccess({ token: usuario.token, role: role }));
-      toast.success("Bienvenido a la plataforma "+user.emailAddress)
-      
+      toast.success("Bienvenido a la plataforma " + user.emailAddress);
+      if (role === "usuario") {
+        try {
+          const cart = JSON.parse(localStorage.getItem("itemsInCart"));
+          const fav = JSON.parse(localStorage.getItem("itemsInFavorites"));
+          localStorage.removeItem("itemsInFavorites");
+          localStorage.removeItem("itemsInCart");
+
+          let serverPut = cart.map((element) =>
+            axios.put(
+              `${API_URL_BACKEND}cart/addProductToCart/byToken/${element.id}`
+            )
+          );
+          await Promise.all(serverPut).then((response) => {
+            return response;
+          });
+          serverPut = fav.map((element) =>
+            axios.put(
+              `${API_URL_BACKEND}favorites/addProductToFavList/byToken/${element.id}`
+            )
+          );
+          await Promise.all(serverPut).then((response) => {
+            return response;
+          });
+        } catch (error) {
+          console.log("error en inicio de sesion", error);
+        }
+      }
     }
   };
 };
-
 
 export const logoOutAction = () => {
   return (dispatch) => {
@@ -64,7 +89,7 @@ export function refreshData() {
 
 export const postLogin = async (data) => {
   const url = `${API_URL_BACKEND}${postUser}`;
-  console.log(url);
+
   try {
     let json = await axios.post(url, data);
     console.log(json.data);
