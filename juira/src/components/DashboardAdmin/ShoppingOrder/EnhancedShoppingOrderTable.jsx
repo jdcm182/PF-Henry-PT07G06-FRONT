@@ -31,7 +31,7 @@ import PauseCircleFilledIcon from '@mui/icons-material/PauseCircleFilled'; // se
 import DangerousIcon from '@mui/icons-material/Dangerous'; // set Deleted
 import axios from 'axios';
 import { API_URL_BACKEND } from "../../../api/apiRoute";
-const orders = require('./orders.json')
+// const orders = require('./orders.json')
 
 const title = 'Órdenes de compra'
 
@@ -45,7 +45,7 @@ function createData(name, pid, status, price, ownerId) {
   };
 }
 
-let rows = orders
+// let rows = orders
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -87,31 +87,31 @@ const headCells = [
   {
     id: 'date',
     numeric: false,
-    disablePadding: true,
+    disablePadding: false,
     label: 'Fecha',
   },
   {
     id: 'status',
     numeric: false,
-    disablePadding: true,
+    disablePadding: false,
     label: 'Estado de la orden',
   },
   {
     id: 'amount',
     numeric: false,
-    disablePadding: true,
+    disablePadding: false,
     label: 'Monto',
   },
   {
     id: 'payment',
     numeric: false,
-    disablePadding: true,
+    disablePadding: false,
     label: 'Pago recibido',
   },
   {
     id: 'buyer',
     numeric: false,
-    disablePadding: true,
+    disablePadding: false,
     label: 'Id. Comprador',
   },
   // {
@@ -192,35 +192,35 @@ function EnhancedTableToolbar(props) {
   }, [selected])
 
   const handlePublish = async () => {
-    setSelected([])
-    let reqs = selected.map( p => axios.put(`${API_URL_BACKEND}products/${p}`, { id: p, status: 'Publicado'}))
-    let promise = Promise.all(reqs).then(res => dispatch(getAllProducts()))
-    toast.promise(promise, {
-      loading: 'Cargando',
-      success: 'Actualizado con éxito',
-      error: 'Ocurrió un error',
-    });
+    // setSelected([])
+    // let reqs = selected.map( p => axios.put(`${API_URL_BACKEND}products/${p}`, { id: p, status: 'Publicado'}))
+    // let promise = Promise.all(reqs).then(res => dispatch(getAllProducts()))
+    // toast.promise(promise, {
+    //   loading: 'Cargando',
+    //   success: 'Actualizado con éxito',
+    //   error: 'Ocurrió un error',
+    // });
   }
   
   const handlePause = async () => {
-     setSelected([])
-    let reqs = selected.map( p => axios.put(`${API_URL_BACKEND}products/${p}`, { id: p, status: 'En pausa'}))
-    let promise = Promise.all(reqs).then(res => dispatch(getAllProducts()))
-    toast.promise(promise, {
-      loading: 'Cargando',
-      success: 'Actualizado con éxito',
-      error: 'Ocurrió un error',
-    });
+    //  setSelected([])
+    // let reqs = selected.map( p => axios.put(`${API_URL_BACKEND}products/${p}`, { id: p, status: 'En pausa'}))
+    // let promise = Promise.all(reqs).then(res => dispatch(getAllProducts()))
+    // toast.promise(promise, {
+    //   loading: 'Cargando',
+    //   success: 'Actualizado con éxito',
+    //   error: 'Ocurrió un error',
+    // });
   }
   const handleDelete = async () => {
-    setSelected([])
-    let reqs = selected.map( p => axios.put(`${API_URL_BACKEND}products/${p}`, { id: p, status: 'Eliminado'}))
-    let promise = Promise.all(reqs).then(res => dispatch(getAllProducts()))
-    toast.promise(promise, {
-      loading: 'Cargando',
-      success: 'Actualizado con éxito',
-      error: 'Ocurrió un error',
-    });
+    // setSelected([])
+    // let reqs = selected.map( p => axios.put(`${API_URL_BACKEND}products/${p}`, { id: p, status: 'Eliminado'}))
+    // let promise = Promise.all(reqs).then(res => dispatch(getAllProducts()))
+    // toast.promise(promise, {
+    //   loading: 'Cargando',
+    //   success: 'Actualizado con éxito',
+    //   error: 'Ocurrió un error',
+    // });
   }
   
   const getProductsArrayFromIds = (/* selectedIdsGlobal, productsGlobal */) =>  {
@@ -289,7 +289,9 @@ EnhancedTableToolbar.propTypes = {
 };
 
 export default function EnhancedTable( props ) {
-
+  const { orders, setOrders } = props
+  const rows = props.orders
+  // console.log(rows)
   //const [products, setProducts] = React.useState(props.products);
 
   // let products = null;
