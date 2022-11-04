@@ -9,7 +9,7 @@ import SellForm from "../components/SellorEditProduct/SellForm";
 import Footer from "../components/Footer/Footer";
 import NavBar from "../components/Navbar/Navbar";
 import ShoppingCart from "../components/ShoppingCart/ShoppingCart";
-import Dashboard from "../components/Dashboard/Dashboard";
+import Dashboard from "../components/DashboardUser/Dashboard";
 import Login from "../components/Login/Login";
 import Register from "../components/Login/Register";
 
@@ -20,6 +20,7 @@ import { refreshData } from "../redux/actions/app.actions";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import NotFound from '../components/NotFound/NotFound';
+import DashboardAdmin from '../components/DashboardAdmin/DashboardAdmin';
 
 function AdminNavigator() {
     const { pathname } = useLocation();
@@ -36,8 +37,8 @@ function AdminNavigator() {
         <div>ADMIN NAVIGATOR</div>
         <Switch>
           <Route exact path={"/"} component={Landing} />
-          <Route exact path={"/juira"} component={Home} />
-          <Route exact path={"/juira/dashboard"} component={Dashboard} />
+          <Route exact path={"/juira"} component={DashboardAdmin} />
+          <Route exact path={"/juira/dashboard"} component={DashboardAdmin} />
           <Route exact path={"/juira/login"} component={Login} />
           <Route path={"/"} component={NotFound} />
         </Switch>

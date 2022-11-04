@@ -14,10 +14,10 @@ import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import AddBusinessIcon from "@mui/icons-material/AddBusiness";
-import InsertChartIcon from '@mui/icons-material/InsertChart';
-import DashboardIcon from '@mui/icons-material/Dashboard';
+import InsertChartIcon from "@mui/icons-material/InsertChart";
+import DashboardIcon from "@mui/icons-material/Dashboard";
 import { Link as RouterLink } from "react-router-dom";
 import Link from "@mui/material/Link";
 import Tooltip from "@mui/material/Tooltip";
@@ -27,9 +27,11 @@ import { useSelector, useDispatch } from "react-redux";
 import style from "./Navbar.module.css";
 import image from "../media/juira_white.png";
 import { updateFilter } from "../../redux/actions/app.actions";
-import { updateCart, updateFavorites } from "../../redux/actions/products.actions";
-import FolderSharedIcon from '@mui/icons-material/FolderShared';
-
+import {
+  updateCart,
+  updateFavorites,
+} from "../../redux/actions/products.actions";
+import FolderSharedIcon from "@mui/icons-material/FolderShared";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -73,24 +75,29 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 export default function PrimarySearchAppBar() {
   const itemsInCart = useSelector((state) => state.productsReducer.cart) || 0; //default 2 para probar que las notificaciones del carrito funcionan
-  const itemsFavorites= useSelector((state) => state.productsReducer.favorites) || 0
+  const itemsFavorites =
+    useSelector((state) => state.productsReducer.favorites) || 0;
 
   const role = useSelector((state) => state.app.token.role);
 
   React.useEffect(() => {
-    const cart = JSON.parse(localStorage.getItem("itemsInCart"));
+    const cartlocal = localStorage.getItem("itemsInCart");
+    let cart = [];
+    if (cartlocal) cart = JSON.parse(localStorage.getItem("itemsInCart"));
     if (cart) {
       dispatch(updateCart(cart));
     }
-    const favorites = JSON.parse(localStorage.getItem("itemsInFavorites"));
+    const favoritesLocal = localStorage.getItem("itemsInFavorites");
+    let favorites = [];
+    if (favoritesLocal) favorites = JSON.parse(localStorage.getItem("itemsInFavorites"));
     if (favorites) {
       dispatch(updateFavorites(favorites));
     }
   }, []);
 
-  const products = useSelector((state) => state.allProducts) 
-  
-  const sugestions = products&&products.map((p) => p.name);
+  const products = useSelector((state) => state.allProducts);
+
+  const sugestions = products && products.map((p) => p.name);
 
   const [input, setInput] = React.useState("");
 
@@ -172,100 +179,99 @@ export default function PrimarySearchAppBar() {
       }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
-    >    
-    {(role=== "usuario")&&
-      <Link
-        component={RouterLink}
-        to="/juira/sell"
-        underline="none"
-        sx={{ color: "" }}
-      >
-        <MenuItem style={{color: 'var(--primaryColor)'}}>
-          <IconButton
-            size="large"
-            aria-label={`show ${itemsInCart.length} new notifications`}
-            color="inherit"
-          >
-            <Badge badgeContent={itemsInCart.length} color="error">
-              <AddBusinessIcon />
-            </Badge>
-          </IconButton>
-          <p>Vender un producto</p>
-        </MenuItem>
-      </Link>
-      }
-      {(!role || role=== "usuario" )&&
-      <Link
-        component={RouterLink}
-        to="/juira/favorites"
-        underline="none"
-        sx={{ color: "" }}
-      >
-        <MenuItem style={{color: 'var(--primaryColor)'}}>
-          <IconButton
-            size="large"
-            aria-label={`show ${itemsInCart.length} new notifications`}
-            color="inherit"
-          >
-            <Badge badgeContent={itemsInCart.length} color="error">
-              <FavoriteIcon />
-            </Badge>
-          </IconButton>
-          <p>Favoritos</p>
-        </MenuItem>
-      </Link>
-}
-{(!role || role=== "usuario" )&&
-      <Link
-        component={RouterLink}
-        to="/juira/shoppingCart"
-        underline="none"
-        sx={{ color: "" }}
-      >
-        <MenuItem style={{color: 'var(--primaryColor)'}}>
-          <IconButton
-            size="large"
-            aria-label={`show ${itemsInCart.length} new notifications`}
-            color="inherit"
-          >
-            <Badge badgeContent={itemsInCart.length} color="error">
-              <ShoppingCartIcon />
-            </Badge>
-          </IconButton>
-          <p>Carrito de compras</p>
-        </MenuItem>
-      </Link>
+    >
+      {role === "usuario" && (
+        <Link
+          component={RouterLink}
+          to="/juira/sell"
+          underline="none"
+          sx={{ color: "" }}
+        >
+          <MenuItem style={{ color: "var(--primaryColor)" }}>
+            <IconButton
+              size="large"
+              aria-label={`show ${itemsInCart.length} new notifications`}
+              color="inherit"
+            >
+              <Badge badgeContent={itemsInCart.length} color="error">
+                <AddBusinessIcon />
+              </Badge>
+            </IconButton>
+            <p>Vender un producto</p>
+          </MenuItem>
+        </Link>
+      )}
+      {(!role || role === "usuario") && (
+        <Link
+          component={RouterLink}
+          to="/juira/favorites"
+          underline="none"
+          sx={{ color: "" }}
+        >
+          <MenuItem style={{ color: "var(--primaryColor)" }}>
+            <IconButton
+              size="large"
+              aria-label={`show ${itemsInCart.length} new notifications`}
+              color="inherit"
+            >
+              <Badge badgeContent={itemsInCart.length} color="error">
+                <FavoriteIcon />
+              </Badge>
+            </IconButton>
+            <p>Favoritos</p>
+          </MenuItem>
+        </Link>
+      )}
+      {(!role || role === "usuario") && (
+        <Link
+          component={RouterLink}
+          to="/juira/shoppingCart"
+          underline="none"
+          sx={{ color: "" }}
+        >
+          <MenuItem style={{ color: "var(--primaryColor)" }}>
+            <IconButton
+              size="large"
+              aria-label={`show ${itemsInCart.length} new notifications`}
+              color="inherit"
+            >
+              <Badge badgeContent={itemsInCart.length} color="error">
+                <ShoppingCartIcon />
+              </Badge>
+            </IconButton>
+            <p>Carrito de compras</p>
+          </MenuItem>
+        </Link>
+      )}
 
-}
-      
       <Link
         component={RouterLink}
         to="/juira/login"
         underline="none"
         sx={{ color: "" }}
       >
-        <MenuItem style={{color: 'var(--primaryColor)'}}>
+        <MenuItem style={{ color: "var(--primaryColor)" }}>
           <IconButton size="large" color="inherit">
             <AccountCircle />
           </IconButton>
           <p>Iniciar Sesión / Registrarse</p>
         </MenuItem>
       </Link>
-      {role&&
-      <Link
-        component={RouterLink}
-        to="/juira/dashboard"
-        underline="none"
-        sx={{ color: "" }}
-      >
-        <MenuItem style={{color: 'var(--primaryColor)'}}>
-          <IconButton size="large" color="inherit">
-            <InsertChartIcon />
-          </IconButton>
-          <p>Dashboard</p>
-        </MenuItem>
-      </Link>
-}
+      {role && (
+        <Link
+          component={RouterLink}
+          to="/juira/dashboard"
+          underline="none"
+          sx={{ color: "" }}
+        >
+          <MenuItem style={{ color: "var(--primaryColor)" }}>
+            <IconButton size="large" color="inherit">
+              <InsertChartIcon />
+            </IconButton>
+            <p>Dashboard</p>
+          </MenuItem>
+        </Link>
+      )}
     </Menu>
   );
 
@@ -325,65 +331,64 @@ export default function PrimarySearchAppBar() {
           <Box sx={{ flexGrow: 1 }} />
 
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
-
-          {(role=== "usuario")&&
-            <Link
-              component={RouterLink}
-              to="/juira/sell"
-              underline="none"
-              sx={{ color: "#ffffff" }}
-            >
-              <Tooltip title="Vender un producto" arrow>
-                <IconButton
-                  size="large"
-                  aria-label={`Vender un producto`}
-                  color="inherit"
-                >
-                  <AddBusinessIcon />
-                </IconButton>
-              </Tooltip>
-            </Link>
-            }
-              {(!role || role=== "usuario" )&&
-            <Link
-              component={RouterLink}
-              to="/juira/favorites"
-              underline="none"
-              sx={{ color: "#ffffff" }}
-            >
-              <Tooltip title="Favoritos" arrow>
-                <IconButton
-                  size="large"
-                  aria-label={`show ${itemsFavorites.length} items in shopping cart`}
-                  color="inherit"
-                >
-                  <Badge badgeContent={itemsFavorites.length} color="error">
-                    <FavoriteIcon />
-                  </Badge>
-                </IconButton>
-              </Tooltip>
-            </Link>
-          }
-           {(!role || role=== "usuario" )&&
-            <Link
-              component={RouterLink}
-              to="/juira/shoppingCart"
-              underline="none"
-              sx={{ color: "#ffffff" }}
-            >
-              <Tooltip title="Carrito de compras" arrow>
-                <IconButton
-                  size="large"
-                  aria-label={`show ${itemsInCart.length} items in shopping cart`}
-                  color="inherit"
-                >
-                  <Badge badgeContent={itemsInCart.length} color="error">
-                    <ShoppingCartIcon />
-                  </Badge>
-                </IconButton>
-              </Tooltip>
-            </Link>
-            }
+            {role === "usuario" && (
+              <Link
+                component={RouterLink}
+                to="/juira/sell"
+                underline="none"
+                sx={{ color: "#ffffff" }}
+              >
+                <Tooltip title="Vender un producto" arrow>
+                  <IconButton
+                    size="large"
+                    aria-label={`Vender un producto`}
+                    color="inherit"
+                  >
+                    <AddBusinessIcon />
+                  </IconButton>
+                </Tooltip>
+              </Link>
+            )}
+            {(!role || role === "usuario") && (
+              <Link
+                component={RouterLink}
+                to="/juira/favorites"
+                underline="none"
+                sx={{ color: "#ffffff" }}
+              >
+                <Tooltip title="Favoritos" arrow>
+                  <IconButton
+                    size="large"
+                    aria-label={`show ${itemsFavorites.length} items in shopping cart`}
+                    color="inherit"
+                  >
+                    <Badge badgeContent={itemsFavorites.length} color="error">
+                      <FavoriteIcon />
+                    </Badge>
+                  </IconButton>
+                </Tooltip>
+              </Link>
+            )}
+            {(!role || role === "usuario") && (
+              <Link
+                component={RouterLink}
+                to="/juira/shoppingCart"
+                underline="none"
+                sx={{ color: "#ffffff" }}
+              >
+                <Tooltip title="Carrito de compras" arrow>
+                  <IconButton
+                    size="large"
+                    aria-label={`show ${itemsInCart.length} items in shopping cart`}
+                    color="inherit"
+                  >
+                    <Badge badgeContent={itemsInCart.length} color="error">
+                      <ShoppingCartIcon />
+                    </Badge>
+                  </IconButton>
+                </Tooltip>
+              </Link>
+            )}
             <Link
               component={RouterLink}
               to="/juira/login"
@@ -401,38 +406,36 @@ export default function PrimarySearchAppBar() {
               </Tooltip>
             </Link>
 
-            {role&&
-            <Link
-              component={RouterLink}
-              to="/juira/dashboard"
-              underline="none"
-              sx={{ color: "#ffffff" }}
-            >
-              {/* <AccountCircle /> */}
-              <Tooltip title="Dashboard" arrow>
-                <IconButton size="large" color="inherit">
-                   <InsertChartIcon />
-                </IconButton>
-              </Tooltip>
-            </Link>
+            {role === "admin" && (
+              <Link
+                component={RouterLink}
+                to="/juira/dashboard"
+                underline="none"
+                sx={{ color: "#ffffff" }}
+              >
+                {/* <AccountCircle /> */}
+                <Tooltip title="Dashboard" arrow>
+                  <IconButton size="large" color="inherit">
+                    <InsertChartIcon />
+                  </IconButton>
+                </Tooltip>
+              </Link>
+            )}
 
-             }
-
-             {role=== "usuario"&&
-            <Link
-              component={RouterLink}
-              to="/juira/userDash"
-              underline="none"
-              sx={{ color: "#ffffff" }}
-            >
-              <Tooltip title="User Dashboard" arrow>
-                <IconButton size="large" color="inherit">
-                   <FolderSharedIcon />
-                </IconButton>
-              </Tooltip>
-            </Link>
-            }
-
+            {role === "usuario" && (
+              <Link
+                component={RouterLink}
+                to="/juira/userDash"
+                underline="none"
+                sx={{ color: "#ffffff" }}
+              >
+                <Tooltip title="User Dashboard" arrow>
+                  <IconButton size="large" color="inherit">
+                    <FolderSharedIcon />
+                  </IconButton>
+                </Tooltip>
+              </Link>
+            )}
           </Box>
 
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
