@@ -10,7 +10,7 @@ import {
   } from "@mui/material";
 import { styled } from '@mui/material/styles';
 import { getAuth, signOut } from "firebase/auth";
-import {logoOutAction, getUser} from '../../redux/actions/app.actions'
+import {logoOutAction, getUser, editUser} from '../../redux/actions/app.actions'
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
@@ -37,10 +37,13 @@ export default function PerfilUser() {
     const [dis,setDis]=useState(true)
 
 useEffect(()=>{
-  dispatch(getUser(id))
-})
+  console.log('montando componente')
+  dispatch(getUser())
+  
+},[])
 
-let u = useSelector((state) => state.appReducer.user)||
+
+let u = useSelector((state) => state.app.user)||
 {name: 'marian',
  image: 'https://res.cloudinary.com/duq1tcwjw/image/upload/v1667528158/DB_PF_USERS/WIN_20221004_19_35_55_Pro_bdshf1.jpg',
  emailAddress: "marisalez@juira.com",
@@ -49,25 +52,35 @@ let u = useSelector((state) => state.appReducer.user)||
  city: "La Falda",
  region: "Córdoba",
  phoneNumber : "5493513170851",
-
 };
 
 const [userData, setUserData]=useState(u)
+
 
     const handleLogOut=async()=>{
         await signOut(auth)
         .then(result=>console.log('has salido'))
         .catch(error=> console.log(`Error ${error.code}: ${error.message}`))
-
         dispatch(logoOutAction())
         history.push(`/juira/login`)
 
     }
-    const [expanded, setExpanded] = React.useState(false);
+   
+    const handleOnChange=(e)=>{
+          setUserData({
+            ...userData,
+            [e.target.name]: e.target.value,
+          });}
+
 
     const handleEdit = () => {
       setDis(!dis)
     };
+
+    const handleSubmit=()=>{
+      dispatch(editUser(u.id,userData))
+      handleEdit()
+    }
 
   return (
     <div>
@@ -75,7 +88,7 @@ const [userData, setUserData]=useState(u)
       <CardHeader
         avatar={
           <Avatar sx={{width:150, height:150}} aria-label="User">
-            <img src={u.image&&u.image}/>
+            <img src={userData.image || 'https://res.cloudinary.com/duq1tcwjw/image/upload/v1667600965/DB_PF_USERS/user_sin_imagen_htrvzg.png'}/>
           </Avatar>
         }
         action={
@@ -84,9 +97,15 @@ const [userData, setUserData]=useState(u)
           </IconButton>
         }
         title={
-          <TextField  inputProps={{style: {fontSize: 35}}}  sx={ {m:5}} disabled={dis} value={(userData.name).toUpperCase()} variant='standard'/>
+          <TextField  name='name'
+        onChange={handleOnChange}
+        inputProps={{style: {fontSize: 35}}} 
+        sx={ {m:5}} 
+        disabled={dis}
+        value={(userData.name|| '').toUpperCase()} 
+        variant='standard'/>
           }
-        subheader={<Rating sx={{ml: 5}} name="read-only" value={u.rating} readOnly />}
+        subheader={<Rating sx={{ml: 5}} name="read-only" precision={0.5} value={u.rating|| 0} readOnly />}
       />
 
 <Typography paragraph align='left' sx={{m:5, fontSize:25, textDecoration: 'underline' }}>
@@ -94,35 +113,62 @@ const [userData, setUserData]=useState(u)
         </Typography>
 <CardContent sx={{m:2, display:'flex', justifyContent: 'space-around', textAlign: 'center'}}>
         <Box>
+          <Box sx={{display:'flex'}}>
           <Typography paragraph sx={{mb:4, fontSize:20}}>
            Dirección: 
-           <TextField sx={{ml:2}} inputProps={{style: {fontSize: 20}}} disabled={dis} value={userData.emailAddress} variant='standard'/>
           </Typography>
-          <Typography paragraph sx={{fontSize: 20}}>
+          <TextField  name='emailAddress'
+          onChange={handleOnChange} 
+          sx={{ml:2}} 
+          inputProps={{style: {fontSize: 20}}}
+          disabled={dis} value={userData.emailAddress || ''}
+          variant='standard'/>
+          </Box>
+                  <Box  sx={{display:'flex'}}>
+         <Typography paragraph sx={{fontSize: 20}}>
            Teléfono:
-           <TextField sx={{ml:2}} inputProps={{style: {fontSize: 20}}}  disabled={dis} value={userData.phoneNumber} variant='standard'/>
-       
-          
           </Typography>
-
+          <TextField 
+          name='phoneNumber'
+          onChange={handleOnChange} 
+          sx={{ml:2}} inputProps={{style: {fontSize: 20}}}
+          disabled={dis} value={userData.phoneNumber || ''}
+          variant='standard'/>
+         </Box>
+         
         </Box>
+
         <Box>
+        <Box  sx={{display:'flex'}}>
         <Typography paragraph sx={{mb:4, fontSize:20}}>
            Ciudad:
-           <TextField sx={{ml:2}} inputProps={{style: {fontSize: 20}}} disabled={dis} value={userData.city} variant='standard'/>
-         
-          
           </Typography>
-          <Typography sx={{fontSize: 20}}>
+          <TextField
+          name='city'
+          onChange={handleOnChange} 
+          sx={{ml:2}} 
+          inputProps={{style: {fontSize: 20}}} 
+          disabled={dis} value={userData.city || ''} 
+          variant='standard'/>
+        </Box>
+        <Box  sx={{display:'flex'}}>
+        <Typography sx={{fontSize: 20}}>
           Region:
-          <TextField  sx={{ml:2}} inputProps={{style: {fontSize: 20}}} disabled={dis} value={userData.region} variant='standard'/>
-       
           </Typography>
+          <TextField 
+          name='region'
+          onChange={handleOnChange}  
+          sx={{ml:2}} 
+          inputProps={{style: {fontSize: 20}}} 
+          disabled={dis} value={userData.region || ''} 
+          variant='standard'/>
+        </Box>
+         
         </Box>
         </CardContent>
     <Box sx={{display: 'flex', justifyContent:'space-around', mt:5}}>
       <Button onClick={ handleLogOut}>Salir</Button>
-      {(dis===false)&&<Button> Save Changes</Button>}
+      {(dis===false)&&<Button onClick={handleSubmit}> Save Changes</Button>}
 
     </Box>
       

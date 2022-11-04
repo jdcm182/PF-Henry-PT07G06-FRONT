@@ -99,8 +99,8 @@ export const postLogin = async (data) => {
   }
 };
 
-export const getUser = (id) => async (dispatch) => {
-  const url = `${API_URL_BACKEND}${getUserData}${id}`;
+export const getUser = () => async (dispatch) => {
+  const url = `${API_URL_BACKEND}${getUserData}`;
   try {
     let { data } = await axios(url);
     return dispatch({
@@ -111,4 +111,19 @@ export const getUser = (id) => async (dispatch) => {
     console.log("error api", error);
   }
 };
+
+export const editUser = (id,data) => async (dispatch) => {
+  const url = `${API_URL_BACKEND}users/${id}`;
+  try {
+    await axios.put(url,data);
+    return dispatch({
+      type: USER_PROFILE,
+      payload: data,
+    });
+  } catch (error) {
+    console.log("error api", error);
+  }
+};
+
+
 
