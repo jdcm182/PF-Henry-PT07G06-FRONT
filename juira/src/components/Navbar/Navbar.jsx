@@ -314,7 +314,7 @@ export default function PrimarySearchAppBar() {
               <img className={style.img} src={image} alt="juria"></img>
             </Link>
           </Typography>
-
+          {role !== "admin"&&
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
@@ -327,7 +327,7 @@ export default function PrimarySearchAppBar() {
               autoFocus={true}
               onKeyDown={(e) => handleOnKeyDown(e)}
             />
-          </Search>
+          </Search>}
           <Box sx={{ flexGrow: 1 }} />
 
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
