@@ -1,4 +1,5 @@
 import Table from "@mui/material/Table";
+import toast from "react-hot-toast";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
@@ -13,7 +14,11 @@ import { pink } from "@mui/material/colors";
 import Button from "@mui/material/Button";
 import { IconButton } from "@mui/material";
 import PaidIcon from "@mui/icons-material/Paid";
-import { removeToCart, removeToCartApi } from "../../redux/actions/products.actions";
+import {
+  removeToCart,
+  removeToCartApi,
+  updateCartApi,
+} from "../../redux/actions/products.actions";
 import { useHistory } from "react-router-dom";
 import { API_URL_BACKEND } from "../../api/apiRoute";
 import axios from "axios";
@@ -33,37 +38,22 @@ export default function ShoppingCart() {
     if (redirect !== "") window.open(redirect, "_blank", "popup=true");
   }, [redirect]);
 
-
-
   let amount = 0;
   items && items.forEach((p) => (amount += Number(p.price)));
-  const cartId = 1;
+  
 
   const handlePayment = async () => {
     try {
-      await axios.delete(`${API_URL_BACKEND}cart/clearCart/${cartId}`);
-
-      const serverPut = items.map((element) =>
-        axios.put(
-          `${API_URL_BACKEND}cart/addProductToCart/${cartId}/${element.id}`
-        )
+      const { data } = await axios.post(
+        `${API_URL_BACKEND}shoppingOrders/byToken`
       );
-      Promise.all(serverPut)
-        .then((response) => {
-          console.log("response", response);
-          return response;
-        })
-        .then(() => axios.post(`${API_URL_BACKEND}shoppingOrders/${cartId}`))
-        .then((response) => {
-          console.log("response1", response);
-          return response;
-        })
-        .then((response) =>
-          axios.get(`${API_URL_BACKEND}payment?id=${response.data.id}`)
-        )
-        .then((response) => setRedirect(response.data.init_point))
-        .catch((error) => console.log("error del promiseall", error));
+      dispatch(updateCartApi())
+      const response = await axios.get(
+        `${API_URL_BACKEND}payment?id=${data.id}`
+      );
+      setRedirect(response.data.init_point);
     } catch (error) {
+      toast.error(error.response.data)
       console.log("error", error);
     }
   };
@@ -77,9 +67,18 @@ export default function ShoppingCart() {
   }
 
   return (
-    <Container sx={ {boxShadow: '0 0 15px 5px #cccccc55', padding: 5}}>
+    <Container sx={{ boxShadow: "0 0 15px 5px #cccccc55", padding: 5 }}>
       {/* <Typography variant="h4"> Carrito de compras </Typography> */}
-      <Typography sx={{ marginTop: '0', fontSize: '1.5rem', width:1, borderBottom: "solid var(--primaryColor)" /* 'solid green' */ }} color="var(--primaryColor)" gutterBottom>
+      <Typography
+        sx={{
+          marginTop: "0",
+          fontSize: "1.5rem",
+          width: 1,
+          borderBottom: "solid var(--primaryColor)" /* 'solid green' */,
+        }}
+        color="var(--primaryColor)"
+        gutterBottom
+      >
         CARRITO DE COMPRAS
       </Typography>
 
@@ -181,14 +180,27 @@ export default function ShoppingCart() {
               alignItems: "center",
             }}
           >
-            <Button
-              variant="contained"
-              endIcon={<PaidIcon />}
-              onClick={handlePayment}
-              color="secondary"
-            >
-              Pagar
-            </Button>
+            {role === "usuario" ? (
+              <Button
+                variant="contained"
+                endIcon={<PaidIcon />}
+                onClick={handlePayment}
+                color="secondary"
+              >
+                Pagar
+              </Button>
+            ) : (
+              <Button
+                variant="contained"
+                endIcon={<PaidIcon />}
+                onClick={() => {
+                  history.push("/juira/login");
+                }}
+                color="secondary"
+              >
+                Pagar
+              </Button>
+            )}
           </Container>
         </Container>
       )}
@@ -204,10 +216,14 @@ export default function ShoppingCart() {
           variant="contained"
           startIcon={<HomeRoundedIcon />}
           sx={
-            {/* backgroundColor: '#23c197', '&:hover': {backgroundColor: '#138f6e'} */}
+            {
+              /* backgroundColor: '#23c197', '&:hover': {backgroundColor: '#138f6e'} */
+            }
           }
-          onClick={()=>{history.push('/juira')}}
-          >
+          onClick={() => {
+            history.push("/juira");
+          }}
+        >
           Inicio
         </Button>
       </Container>
