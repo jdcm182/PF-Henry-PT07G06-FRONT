@@ -5,7 +5,7 @@ export const getProductsDetailsApi = '/product-detail/'
 export const getCategoriesNameApi = "categories/names"
 export const getCategoriesIdApi = "categories/"
 export const postUser= 'sessionLogin'
-
+export const getUserData= 'users/'
 
 
 export const API_URL_BACKEND = /*process.env.REACT_APP_API  ||*/ 'http://localhost:3001/'

@@ -10,47 +10,52 @@ import {
   } from "@mui/material";
 import { styled } from '@mui/material/styles';
 import { getAuth, signOut } from "firebase/auth";
-import {logoOutAction} from '../../redux/actions/app.actions'
-import { useDispatch } from 'react-redux';
+import {logoOutAction, getUser} from '../../redux/actions/app.actions'
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
-import { red } from '@mui/material/colors';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import AddAPhoto from "@mui/icons-material/AddAPhoto";
+import EditIcon from '@mui/icons-material/Edit';
+import { useEffect } from 'react';
+import Rating from '@mui/material/Rating';
 
-const ExpandMore = styled((props) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-  marginLeft: 'auto',
-  transition: theme.transitions.create('transform', {
-    duration: theme.transitions.duration.shortest,
-  }),
-}));
+
+
 
 
 export default function PerfilUser() {
     const history = useHistory();
     const auth = getAuth();
     const user = auth.currentUser;
-    const dispacth=useDispatch()
+    const dispatch=useDispatch()
+    const { id } = useParams();
+
+
+useEffect(()=>{
+  dispatch(getUser(id))
+})
+
+let u = /*useSelector((state) => state.appReducer.user)||*/
+{name: 'marian',
+ image: 'https://res.cloudinary.com/duq1tcwjw/image/upload/v1667528158/DB_PF_USERS/WIN_20221004_19_35_55_Pro_bdshf1.jpg',
+ emailAddress: "marisalez@juira.com",
+ rating:3,
+ homeAddress:"Sarmiento 603",
+ city: "La Falda",
+ region: "Córdoba",
+ phoneNumber : "5493513170851",
+
+};
 
     const handleLogOut=async()=>{
         await signOut(auth)
         .then(result=>console.log('has salido'))
         .catch(error=> console.log(`Error ${error.code}: ${error.message}`))
 
-        dispacth(logoOutAction())
+        dispatch(logoOutAction())
         history.push(`/juira/login`)
 
     }
@@ -62,70 +67,50 @@ export default function PerfilUser() {
 
   return (
     <div>
-         <Card sx={{ maxWidth: 0.9, ml:8, alignContent:'center', justifyContent: 'space-around'}}>
+         <Card sx={{ maxWidth: 1, my:3,mx:8, p:3, alignContent:'center', justifyContent: 'center'}}>
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-            {user.displayName[0]}
+          <Avatar sx={{width:150, height:150}} aria-label="User">
+            <img src={u.image&&u.image}/>
           </Avatar>
         }
         action={
           <IconButton aria-label="settings">
-            <MoreVertIcon />
+            <EditIcon />
           </IconButton>
         }
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2016"
+        title={<Typography sx={{fontSize: 45, ml:5}}>{(u.name).toUpperCase()}</Typography>}
+        subheader={<Rating sx={{ml: 5}} name="read-only" value={u.rating} readOnly />}
       />
 
-
-      <Button></Button>
-<IconButton>
-      <AddAPhoto></AddAPhoto>
-</IconButton>
-
-
-
-
-
-
-      <CardContent>
-        <Typography variant="body2" color="text.secondary">
-         Bienvenido {user.displayName}!
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-      
-        <ExpandMore
-          expand={expanded}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </ExpandMore>
-      </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Typography paragraph>
+<Typography paragraph align='left' sx={{m:5, fontSize:20, textDecoration: 'underline' }}>
           Mis Datos Personales:
-            {user?<div>{user.displayName} {user.email}</div>:""}
+        </Typography>
+<CardContent sx={{m:2, display:'flex', justifyContent: 'space-around', textAlign: 'center'}}>
+        <Box>
+          <Typography paragraph sx={{mb:4}}>
+           Dirección: {u.emailAddress&&u.emailAddress}
           </Typography>
           <Typography paragraph>
-           Dirección:
+           Teléfono:{u.phoneNumber&&u.phoneNumber}
           </Typography>
-          <Typography paragraph>
-           Teléfono:
-          </Typography>
-          <Typography paragraph>
-           
+
+        </Box>
+        <Box>
+        <Typography paragraph sx={{mb:4}}>
+           Ciudad:{u.city&&u.city} 
           </Typography>
           <Typography>
-         
+          Region:{u.region&&u.region} 
           </Typography>
+        </Box>
         </CardContent>
-      </Collapse>
+    <Box sx={{display: 'flex', justifyContent:'space-around', mt:5}}>
       <Button onClick={ handleLogOut}>Salir</Button>
+      <Button> Save Changes</Button>
+
+    </Box>
+      
     </Card>
      
     </div>

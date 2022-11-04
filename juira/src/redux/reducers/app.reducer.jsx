@@ -5,6 +5,7 @@ import {
   TURN_OFF_SPINNER,
   TURN_ON_SPINNER,
   UPDATE_FILTER_STATE,
+  USER_PROFILE
 } from "../actions/app.actions";
 
 const initialState = {
@@ -64,6 +65,11 @@ export function appReducer(state = initialState, action) {
           [action.payload.name]: action.payload.value,
         },
       };
+    }
+    case USER_PROFILE:{
+      return{...state,
+      user:action.payload
+      }
     }
     default:
       return state;
