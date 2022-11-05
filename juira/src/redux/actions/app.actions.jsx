@@ -36,6 +36,7 @@ export const loginAction = (usuario) => {
   return async (dispatch) => {
     axios.defaults.headers.common["Authorization"] = usuario.token;
     const { role, user } = await postLogin(usuario);
+
     if (role) {
       localStorage.setItem("token", usuario.token);
       localStorage.setItem("role", role);
