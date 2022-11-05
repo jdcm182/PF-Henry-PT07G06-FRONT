@@ -39,10 +39,16 @@ const useStyles = makeStyles({
     const classes = useStyles();
    
     const [users, setUsers] = useState([])
-    let resp = []
-    axios.get(`${API_URL_BACKEND}users`)
-    .then(response => resp = response.data)
-    .then(() => !users.length && setUsers(resp))
+    // let resp = []
+    // axios.get(`${API_URL_BACKEND}users`)
+    // .then(response => resp = response.data)
+    // .then(() => !users.length && setUsers(resp))
+    // .catch( error => console.log(error))
+
+    useEffect(() => {
+      axios.get(`${API_URL_BACKEND}users`)
+      .then((response) => setUsers(response.data))
+    },[])
 
 
     let totalUsers = users.length

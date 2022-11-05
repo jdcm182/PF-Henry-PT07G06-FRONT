@@ -38,10 +38,15 @@ export default function ShoppingOrders() {
 
     const [orders, setOrders] = useState([])
 
-    let resp = []
-    axios.get(`${API_URL_BACKEND}shoppingOrders`)
-    .then(response => resp = response.data)
-    .then(() => !orders.length && setOrders(resp))
+    useEffect(() => {
+      axios.get(`${API_URL_BACKEND}shoppingOrders`)
+      .then((response) => setOrders(response.data))
+    },[])
+
+    // let resp = []
+    // axios.get(`${API_URL_BACKEND}shoppingOrders`)
+    // .then(response => resp = response.data)
+    // .then(() => !orders.length && setOrders(resp))
 
     let totalAmount = 0
     let ordersQty = 0
