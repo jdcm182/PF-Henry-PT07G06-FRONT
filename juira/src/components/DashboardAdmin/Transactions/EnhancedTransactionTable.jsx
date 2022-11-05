@@ -169,11 +169,12 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-const handlePay = (event) => {
+const handlePay = (event,clicked,setClicked) => {
   let id = event.target.value
+  console.log(clicked)
   // setSelected([])
   let promise = axios.put(`${API_URL_BACKEND}transactions/${id}`, {state: 'closed'})
-  .then( res => res.data)
+  .then( res => setClicked(!clicked))
 
   toast.promise(promise, {
     loading: 'Cargando',
@@ -254,7 +255,7 @@ const handlePay = (event) => {
 // };
 
 export default function EnhancedTable( props ) {
-  const { transactions, setTransactions } = props
+  const { transactions, setTransactions, setClicked , clicked } = props
   const rows = props.transactions
   // console.log(rows)
   //const [products, setProducts] = React.useState(props.products);
@@ -390,7 +391,7 @@ export default function EnhancedTable( props ) {
                           }}
                         /> */}
                         {
-                          row.state === 'pending' ? <Button value={row.id} variant="contained" onClick={(e) => handlePay(e)}>Pagar</Button> : null
+                          row.state === 'pending' ? <Button value={row.id} variant="contained" onClick={(e) => handlePay(e, clicked, setClicked)}>Pagar</Button> : null
                         }
                       </TableCell>
                       <TableCell

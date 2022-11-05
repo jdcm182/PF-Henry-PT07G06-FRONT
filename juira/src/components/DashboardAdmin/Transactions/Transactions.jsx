@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import styles from './Transactions.module.css';
 import EnhancedTable from './EnhancedTransactionTable';
 import Container from '@mui/material/Container';
@@ -37,17 +37,16 @@ export default function ShoppingOrders() {
 
     const [transactions, setTransactions] = useState([])
 
-    let resp = []
-    let balance = 0
-    axios.get(`${API_URL_BACKEND}transactions`)
-    .then(response => resp = response.data)
-    .then(response => axios.get(`${API_URL_BACKEND}balance`))
-    .then (response => balance = response.data)
-    .then(() => !transactions.length && setTransactions(resp))
+    const [balance, setBalance] = useState({})
 
-    axios.get(`${API_URL_BACKEND}balance`)
-    .then(response => balance = response.data)
-    .then(() => !transactions.length && setTransactions(resp))
+    const [clicked, setClicked] = useState(false)
+
+    useEffect(() => {
+      axios.get(`${API_URL_BACKEND}transactions`)
+      .then((response) => setTransactions(response.data))
+      .then(() => axios.get(`${API_URL_BACKEND}balance`))
+      .then((response) => setBalance(response.data))
+    },[clicked])
 
     let totalAmount = 0
     let ordersQty = 0
@@ -70,7 +69,7 @@ export default function ShoppingOrders() {
 
                 <Container sx={{display:"Flex", flexDirection:"row", justifyContent:"space-evenly", flexWrap: "wrap"}}>
 
-                  <DashCard title="Balance disponible" value={`$ ${totalAmount.toLocaleString('de-DE')}`} info1={ordersQty} info2={`de ${ordersQty}`} />
+                  <DashCard title="Balance disponible" value={`$ ${balance.total?.toLocaleString('de-DE')}`} info1={ordersQty} info2={`de ${ordersQty}`} />
                   
                   {/* <DashCard title="Órdenes pendientes" value={`$ ${totalAmountPending.toLocaleString('de-DE')}`} info1={ordersPendingQty} info2={`de ${ordersQty}`} />
 
@@ -80,7 +79,7 @@ export default function ShoppingOrders() {
 
                 {/* <ProductsTable/> */}
 
-                <EnhancedTable transactions={transactions} setTransactions={setTransactions} className={classes.palette} />
+                <EnhancedTable transactions={transactions} setClicked={setClicked} clicked={clicked} setTransactions={setTransactions} className={classes.palette} />
                 
             </Container>
           
