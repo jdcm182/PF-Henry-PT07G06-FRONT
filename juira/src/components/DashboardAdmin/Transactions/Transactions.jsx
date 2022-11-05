@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import styles from './ShoppingOrders.module.css';
-import EnhancedTable from './EnhancedShoppingOrderTable';
+import styles from './Transactions.module.css';
+import EnhancedTable from './EnhancedTransactionTable';
 import Container from '@mui/material/Container';
 import { makeStyles } from '@mui/styles';
 import { useSelector, useDispatch } from 'react-redux';
@@ -8,7 +8,6 @@ import { createTheme } from '@mui/material/styles';
 import DashCard from './DashCard';
 import { API_URL_BACKEND } from '../../../api/apiRoute';
 import axios from 'axios';
-// const orders = require('./orders.json')
 
 
 const theme = createTheme();
@@ -36,12 +35,19 @@ const useStyles = makeStyles({
 export default function ShoppingOrders() {
     const classes = useStyles();
 
-    const [orders, setOrders] = useState([])
+    const [transactions, setTransactions] = useState([])
 
     let resp = []
-    axios.get(`${API_URL_BACKEND}shoppingOrders`)
+    let balance = 0
+    axios.get(`${API_URL_BACKEND}transactions`)
     .then(response => resp = response.data)
-    .then(() => !orders.length && setOrders(resp))
+    .then(response => axios.get(`${API_URL_BACKEND}balance`))
+    .then (response => balance = response.data)
+    .then(() => !transactions.length && setTransactions(resp))
+
+    axios.get(`${API_URL_BACKEND}balance`)
+    .then(response => balance = response.data)
+    .then(() => !transactions.length && setTransactions(resp))
 
     let totalAmount = 0
     let ordersQty = 0
@@ -50,9 +56,9 @@ export default function ShoppingOrders() {
     let totalAmountCompleted = 0
     let ordersCompletedQty = 0
 
-    orders.forEach( order => {totalAmount += order.total; ordersQty += 1} )
-    orders.forEach( order => {if (order.state === 'pending') totalAmountPending += order.total; ordersPendingQty += 1} )
-    orders.forEach( order => {if (order.state === 'approved') totalAmountCompleted += order.total; ordersCompletedQty += 1} )
+    // transactions.forEach( transactions => {totalAmount += transactions.total; transactionssQty += 1} )
+    // transactions.forEach( transactions => {if (transactions.state === 'pending') totalAmountPending += transactions.total; ordersPendingQty += 1} )
+    // transactions.forEach( transactions => {if (transactions.state === 'approved') totalAmountCompleted += transactions.total; ordersCompletedQty += 1} )
 
     
     return (
@@ -64,17 +70,17 @@ export default function ShoppingOrders() {
 
                 <Container sx={{display:"Flex", flexDirection:"row", justifyContent:"space-evenly", flexWrap: "wrap"}}>
 
-                  <DashCard title="Total órdenes" value={`$ ${totalAmount.toLocaleString('de-DE')}`} info1={ordersQty} info2={`de ${ordersQty}`} />
+                  <DashCard title="Balance disponible" value={`$ ${totalAmount.toLocaleString('de-DE')}`} info1={ordersQty} info2={`de ${ordersQty}`} />
                   
-                  <DashCard title="Órdenes pendientes" value={`$ ${totalAmountPending.toLocaleString('de-DE')}`} info1={ordersPendingQty} info2={`de ${ordersQty}`} />
+                  {/* <DashCard title="Órdenes pendientes" value={`$ ${totalAmountPending.toLocaleString('de-DE')}`} info1={ordersPendingQty} info2={`de ${ordersQty}`} />
 
-                  <DashCard title="Órdenes completadas" value={`$ ${totalAmountCompleted.toLocaleString('de-DE')}`} info1={ordersCompletedQty} info2={`de ${ordersQty}`} />
+                  <DashCard title="Órdenes completadas" value={`$ ${totalAmountCompleted.toLocaleString('de-DE')}`} info1={ordersCompletedQty} info2={`de ${ordersQty}`} /> */}
 
                 </Container>
 
                 {/* <ProductsTable/> */}
 
-                <EnhancedTable orders={orders} setOrders={setOrders} className={classes.palette} />
+                <EnhancedTable transactions={transactions} setTransactions={setTransactions} className={classes.palette} />
                 
             </Container>
           
