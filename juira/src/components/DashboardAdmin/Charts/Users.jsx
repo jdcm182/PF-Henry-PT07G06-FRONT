@@ -23,7 +23,6 @@ export default function UsersChart() {
     let activeUsers = 0
     let bannedUsers = 0
     let deletedUsers = 0
-    
     users.forEach( user => {
       if (user.status === 'active') activeUsers += 1
       else if (user.status === 'banned') bannedUsers += 1
