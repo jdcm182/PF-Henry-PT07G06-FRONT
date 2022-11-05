@@ -1,13 +1,13 @@
 import toast from "react-hot-toast";
 import axios from "axios";
-import { API_URL_BACKEND, postUser } from "../../api/apiRoute";
+import { API_URL_BACKEND, postUser,getUserData } from "../../api/apiRoute";
 export const TURN_ON_SPINNER = "TURN_ON_SPINNER";
 export const TURN_OFF_SPINNER = "TURN_OFF_SPINNER";
 export const UPDATE_FILTER_STATE = "UPDATE_FILTER_STATE";
 export const SIGN_IN = "SIGN_IN";
 export const SIGN_OUT = "SIGN_OUT";
 export const REFRESH_DATA = "REFRESH_DATA";
-
+export const USER_PROFILE= "USER_PROFILE"
 const signInSuccess = (token) => {
   return { type: SIGN_IN, payload: token };
 };
@@ -33,19 +33,44 @@ export const updateFilter = (payload) => (dispatch) => {
 
 export const loginAction = (usuario) => {
   return async (dispatch) => {
-    axios.defaults.headers.common["Authorization"] = usuario.token
-    const {role, user} = await postLogin(usuario);
-   
+    axios.defaults.headers.common["Authorization"] = usuario.token;
+    const { role, user } = await postLogin(usuario);
+
     if (role) {
       localStorage.setItem("token", usuario.token);
       localStorage.setItem("role", role);
       dispatch(signInSuccess({ token: usuario.token, role: role }));
-      toast.success("Bienvenido a la plataforma "+user.emailAddress)
-      
+      toast.success("Bienvenido a la plataforma " + user.emailAddress);
+      if (role === "usuario") {
+        try {
+          const cart = JSON.parse(localStorage.getItem("itemsInCart"));
+          const fav = JSON.parse(localStorage.getItem("itemsInFavorites"));
+          localStorage.removeItem("itemsInFavorites");
+          localStorage.removeItem("itemsInCart");
+
+          let serverPut = cart.map((element) =>
+            axios.put(
+              `${API_URL_BACKEND}cart/addProductToCart/byToken/${element.id}`
+            )
+          );
+          await Promise.all(serverPut).then((response) => {
+            return response;
+          });
+          serverPut = fav.map((element) =>
+            axios.put(
+              `${API_URL_BACKEND}favorites/addProductToFavList/byToken/${element.id}`
+            )
+          );
+          await Promise.all(serverPut).then((response) => {
+            return response;
+          });
+        } catch (error) {
+          console.log("error en inicio de sesion", error);
+        }
+      }
     }
   };
 };
-
 
 export const logoOutAction = () => {
   return (dispatch) => {
@@ -65,7 +90,7 @@ export function refreshData() {
 
 export const postLogin = async (data) => {
   const url = `${API_URL_BACKEND}${postUser}`;
-  console.log(url);
+
   try {
     let json = await axios.post(url, data);
     console.log(json.data);
@@ -74,3 +99,32 @@ export const postLogin = async (data) => {
     console.log("error api", error);
   }
 };
+
+export const getUser = () => async (dispatch) => {
+  const url = `${API_URL_BACKEND}${getUserData}`;
+  try {
+    let { data } = await axios(url);
+    return dispatch({
+      type: USER_PROFILE,
+      payload: data,
+    });
+  } catch (error) {
+    console.log("error api", error);
+  }
+};
+
+export const editUser = (id,data) => async (dispatch) => {
+  const url = `${API_URL_BACKEND}users/${id}`;
+  try {
+    await axios.put(url,data);
+    return dispatch({
+      type: USER_PROFILE,
+      payload: data,
+    });
+  } catch (error) {
+    console.log("error api", error);
+  }
+};
+
+
+
