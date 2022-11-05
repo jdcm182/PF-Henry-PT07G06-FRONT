@@ -428,7 +428,7 @@ export default function PrimarySearchAppBar() {
             {role === "usuario" && (
               <Link
                 component={RouterLink}
-                to="/juira/userDash"
+                to="/juira/dashboard"
                 underline="none"
                 sx={{ color: "#ffffff" }}
               >
