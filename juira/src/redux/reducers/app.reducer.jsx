@@ -8,7 +8,7 @@ import {
   UPDATE_FILTER_STATE,
   USER_PROFILE
 } from "../actions/app.actions";
-import axios from "axios";
+
 
 const initialState = {
   user: {},
