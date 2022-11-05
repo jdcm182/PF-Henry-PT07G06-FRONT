@@ -1,6 +1,7 @@
 import React from 'react';
 import Container from '@mui/material/Container';
 import UserDashTable from './UserDashTable';
+import UserPurchasesTable from './UserPurchasesTable';
 
 
 
@@ -16,7 +17,8 @@ export default function UserDashPurchases(props) {
             }} >
 
 
-            <UserDashTable title="Compras" list={props.list} />
+            {/* <UserDashTable title="Compras" list={props.list} /> */}
+            <UserPurchasesTable />
 
 
         </Container>
