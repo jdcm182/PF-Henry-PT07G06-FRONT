@@ -43,19 +43,23 @@ const useStyles = makeStyles({
 
   });
 
-  let resp = []
-  axios.get(`${API_URL_BACKEND}products`)
-  .then(response => resp = response.data)
+  // let resp = []
+  // axios.get(`${API_URL_BACKEND}products`)
+  // .then(response => resp = response.data)
 
  export default function Products() {
 
   const [products, setProducts] = React.useState([])
+  let resp = []
+  axios.get(`${API_URL_BACKEND}products`)
+    .then(response => resp = response.data)
+    .then(() => !products.length && setProducts(resp))
 
-  !products.length && setProducts(resp)
+  // !products.length && setProducts(resp)
   
     const classes = useStyles();
 
-    try {
+    // try {
 
       // Card 1
       let productsTotalQuantity = products.length;
@@ -83,7 +87,7 @@ const useStyles = makeStyles({
         <div className={styles.dashWrapper}>
           
             <Container className={classes.root} 
-            sx={{ width: "85%", height: "100%", /* backgroundColor:"#444", */
+            sx={{ width: "100%", height: "100%", /* backgroundColor:"#444", */
                 boxShadow: '0 8px 15px 5px #cccccc55', padding: '2rem', borderRadius: '.8rem' }} >
 
                 <Container sx={{display:"Flex", flexDirection:"row", justifyContent:"space-evenly", flexWrap: "wrap"}}>
@@ -104,10 +108,10 @@ const useStyles = makeStyles({
           
         </div>
       );
-  }
-  catch(e) {
-    return (null)
-  }
+  // }
+  // catch(e) {
+  //   return (null)
+  // }
 }
 
 {/* <ThemeProvider theme={themeOptions}> */}
