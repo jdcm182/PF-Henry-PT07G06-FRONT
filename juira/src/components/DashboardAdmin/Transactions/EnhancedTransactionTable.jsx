@@ -122,16 +122,7 @@ function EnhancedTableHead(props) {
     <TableHead>
       <TableRow>
         <TableCell padding="checkbox">
-          <Checkbox
-            /* color="primary" */
-            style={{ color: 'var(--primaryColor)' }}
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{
-              'aria-label': 'select all desserts',
-            }}
-          />
+      
         </TableCell>
         {headCells.map((headCell) => (
           <TableCell
@@ -182,92 +173,12 @@ const handlePay = (event,clicked,setClicked) => {
     error: 'Ocurrió un error',
   });
 }
-// function EnhancedTableToolbar(props) {
-//   const { numSelected, selected, orders, setSelected} = props;
-//   const [data, setData] = React.useState('')
-  
-//   React.useEffect(() => {
-//     // dispatch(getAllProducts());
-//     setData('')
-//   }, [selected])
 
-  
-//   return (
-//     <Toolbar
-//       sx={{
-//         pl: { sm: 2 },
-//         pr: { xs: 1, sm: 1 },
-//         ...(numSelected > 0 && {
-//           /* bgcolor: (theme) =>
-//             alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity), */
-//             bgcolor: () => //console.log('theme: ',theme)
-//             alpha('#23c197', 0.12 /* theme.palette.action.activatedOpacity */),
-//         }),
-//       }}
-//     >
-//       {numSelected > 0 ? (
-//         <Typography
-//           sx={{ flex: '1 1 100%' }}
-//           color="inherit"
-//           variant="subtitle1"
-//           component="div"
-//         >
-//           {numSelected} Orden(es) seleccionada(s)
-//         </Typography>
-//       ) : (
-//         <Typography
-//           sx={{ flex: '1 1 100%' }}
-//           variant="h6"
-//           id="tableTitle"
-//           component="div"
-//         >
-//           {title}
-//         </Typography>
-//       )}
-
-//       {numSelected > 0 ? (
-//         <Box sx={{width:'10rem'}}>
-//         <Tooltip title="Publicar">
-//           <IconButton onClick={() => handlePublish() }>
-//             <CheckCircleIcon /> {/* Published */}
-//           </IconButton>
-//         </Tooltip>
-
-//         <Tooltip title="Pausar">
-//           <IconButton onClick={() => handlePause() }>
-//             <PauseCircleFilledIcon /> {/* Paused */}
-//           </IconButton>
-//         </Tooltip>
-
-//         <Tooltip title="Eliminar" onClick={() => handleDelete() }>
-//           <IconButton>
-//             <DangerousIcon /> {/* Deleted */}
-//           </IconButton>
-//         </Tooltip>
-//         </Box>
-//       ) : ( "" )}
-//     </Toolbar>
-//   );
-// }
-
-// EnhancedTableToolbar.propTypes = {
-//   numSelected: PropTypes.number.isRequired,
-// };
 
 export default function EnhancedTable( props ) {
   const { transactions, setTransactions, setClicked , clicked } = props
   const rows = props.transactions
-  // console.log(rows)
-  //const [products, setProducts] = React.useState(props.products);
 
-  // let products = null;
-  // products = useSelector((state) => state.productsReducer);
-  // const dispatch = useDispatch();
-  // products.length===0 && dispatch(getAllProducts());
-
-  // products && rows.length===0 && products.forEach( p => rows.push(createData(p.name, p.id, p.status, p.price, p.ownerId) ) )
-  // let products = productsA.map( p => createData(p.name, p.id, p.status, p.price, p.ownerId))
-// console.log(products)
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('id');
   const [selected, setSelected] = React.useState([]);
@@ -333,7 +244,6 @@ export default function EnhancedTable( props ) {
     <Box sx={{ width: '100%', marginTop: '1rem' }}>
       <Toaster />
       <Paper sx={{ width: '100%', mb: 2 }}>
-        {/* <EnhancedTableToolbar numSelected={selected.length} selected={selected} transactions={transactions} setSelected={setSelected}/> */}
         <TableContainer>
           <Table
             sx={{ minWidth: 650 }}
