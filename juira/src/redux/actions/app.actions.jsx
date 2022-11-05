@@ -1,6 +1,8 @@
 import toast from "react-hot-toast";
 import axios from "axios";
+
 import { API_URL_BACKEND, postUser,getUserData } from "../../api/apiRoute";
+
 export const TURN_ON_SPINNER = "TURN_ON_SPINNER";
 export const TURN_OFF_SPINNER = "TURN_OFF_SPINNER";
 export const UPDATE_FILTER_STATE = "UPDATE_FILTER_STATE";
@@ -8,6 +10,10 @@ export const SIGN_IN = "SIGN_IN";
 export const SIGN_OUT = "SIGN_OUT";
 export const REFRESH_DATA = "REFRESH_DATA";
 export const USER_PROFILE= "USER_PROFILE"
+
+
+
+
 const signInSuccess = (token) => {
   return { type: SIGN_IN, payload: token };
 };
@@ -81,7 +87,7 @@ export const logoOutAction = () => {
     localStorage.setItem("token", "");
     localStorage.setItem("role", "");
     dispatch(logoOutSuccess());
-    toast.error("Eres un guest");
+    toast.success("Sesion Cerrada Exitosamente");
   };
 };
 

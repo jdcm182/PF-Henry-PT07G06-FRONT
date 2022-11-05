@@ -206,27 +206,6 @@ uid: "rz9pFLryLGhQljwpjTW5Siwl3Tp2"
               <Link to="/juira/register">Regístrate</Link>
             </Typography>
           </Paper>
-          <Button
-            onClick={() => {
-              dispatch(loginAction("user"));
-            }}
-          >
-            Usuario
-          </Button>
-          <Button
-            onClick={() => {
-              dispatch(loginAction(""));
-            }}
-          >
-            Guest
-          </Button>
-          <Button
-            onClick={() => {
-              dispatch(loginAction("admin"));
-            }}
-          >
-            Admin
-          </Button>
         </Grid>
       )}
    </div>
