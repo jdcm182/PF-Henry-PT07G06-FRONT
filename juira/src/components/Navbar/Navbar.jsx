@@ -89,7 +89,8 @@ export default function PrimarySearchAppBar() {
     }
     const favoritesLocal = localStorage.getItem("itemsInFavorites");
     let favorites = [];
-    if (favoritesLocal) favorites = JSON.parse(localStorage.getItem("itemsInFavorites"));
+    if (favoritesLocal)
+      favorites = JSON.parse(localStorage.getItem("itemsInFavorites"));
     if (favorites) {
       dispatch(updateFavorites(favorites));
     }
@@ -190,10 +191,10 @@ export default function PrimarySearchAppBar() {
           <MenuItem style={{ color: "var(--primaryColor)" }}>
             <IconButton
               size="large"
-              aria-label={`show ${itemsInCart.length} new notifications`}
+              /* aria-label={`show ${itemsInCart.length} new notifications`} */
               color="inherit"
             >
-              <Badge badgeContent={itemsInCart.length} color="error">
+              <Badge /* badgeContent={itemsInCart.length} */ color="error">
                 <AddBusinessIcon />
               </Badge>
             </IconButton>
@@ -211,10 +212,10 @@ export default function PrimarySearchAppBar() {
           <MenuItem style={{ color: "var(--primaryColor)" }}>
             <IconButton
               size="large"
-              aria-label={`show ${itemsInCart.length} new notifications`}
+              aria-label={`show ${itemsFavorites.length} new notifications`}
               color="inherit"
             >
-              <Badge badgeContent={itemsInCart.length} color="error">
+              <Badge badgeContent={itemsFavorites.length} color="error">
                 <FavoriteIcon />
               </Badge>
             </IconButton>
@@ -314,20 +315,21 @@ export default function PrimarySearchAppBar() {
               <img className={style.img} src={image} alt="juria"></img>
             </Link>
           </Typography>
-          {role !== "admin"&&
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Buscar un producto..."
-              inputProps={{ "aria-label": "search" }}
-              onChange={(e) => handleOnChange(e)}
-              value={input}
-              autoFocus={true}
-              onKeyDown={(e) => handleOnKeyDown(e)}
-            />
-          </Search>}
+          {role !== "admin" && (
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Buscar un producto..."
+                inputProps={{ "aria-label": "search" }}
+                onChange={(e) => handleOnChange(e)}
+                value={input}
+                autoFocus={true}
+                onKeyDown={(e) => handleOnKeyDown(e)}
+              />
+            </Search>
+          )}
           <Box sx={{ flexGrow: 1 }} />
 
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
@@ -396,7 +398,7 @@ export default function PrimarySearchAppBar() {
               sx={{ color: "#ffffff" }}
             >
               {/* <AccountCircle /> */}
-              <Tooltip title="Iniciar sesión o registrarse" arrow>
+              <Tooltip title="Perfil" arrow>
                 <IconButton size="large" color="inherit">
                   <AccountCircle />
                   {/* <Typography>

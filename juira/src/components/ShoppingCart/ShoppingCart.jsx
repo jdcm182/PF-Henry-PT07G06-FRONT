@@ -25,11 +25,13 @@ import axios from "axios";
 import { useState } from "react";
 import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
+import Loading from "../Loading/Loading";
 
 export default function ShoppingCart() {
   const dispatch = useDispatch();
   const role = useSelector((state) => state.app.token.role);
   const items = useSelector((state) => state.productsReducer.cart);
+  const loading = useSelector((state)=> state.app.isSpinner)
 
   const [redirect, setRedirect] = useState("");
   let history = useHistory();
@@ -47,11 +49,12 @@ export default function ShoppingCart() {
       const { data } = await axios.post(
         `${API_URL_BACKEND}shoppingOrders/byToken`
       );
-      dispatch(updateCartApi())
+      
       const response = await axios.get(
         `${API_URL_BACKEND}payment?id=${data.id}`
       );
       setRedirect(response.data.init_point);
+      dispatch(updateCartApi())
     } catch (error) {
       toast.error(error.response.data)
       console.log("error", error);
@@ -82,7 +85,7 @@ export default function ShoppingCart() {
         CARRITO DE COMPRAS
       </Typography>
 
-      {!items.length ? (
+      {loading !==0 && !items.length ? <Loading></Loading> : !items.length ? (
         <Container
           sx={{
             minHeight: 350,

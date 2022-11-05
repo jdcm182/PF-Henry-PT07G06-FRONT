@@ -45,7 +45,7 @@ export default function Login() {
 
   onAuthStateChanged(auth, async (user) => {
     if (user) {
-      console.log("el usuaio esta loguado");
+      console.log("el usuaio esta logueado");
       //  history.push(`/juira/home`);
 
       /* 
@@ -72,7 +72,7 @@ tenantId:null
 uid: "rz9pFLryLGhQljwpjTW5Siwl3Tp2"
             */
     } else {
-      console.log("el usuaio esta desloguado");
+      console.log("el usuaio esta deslogueado");
     }
   });
 

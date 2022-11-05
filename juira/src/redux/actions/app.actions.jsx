@@ -32,6 +32,7 @@ export const updateFilter = (payload) => (dispatch) => {
 };
 
 export const loginAction = (usuario) => {
+  
   return async (dispatch) => {
     axios.defaults.headers.common["Authorization"] = usuario.token;
     const { role, user } = await postLogin(usuario);
@@ -63,7 +64,9 @@ export const loginAction = (usuario) => {
           await Promise.all(serverPut).then((response) => {
             return response;
           });
+
         } catch (error) {
+
           console.log("error en inicio de sesion", error);
         }
       }

@@ -43,7 +43,6 @@ export default function Detail() {
 
   let p = useSelector((state) => state.productsReducer.productDetails);
 
-  console.log(p);
   function handleAddToCart(p) {
     role === "admin" ? dispatch(addToCartApi(p.id)) : dispatch(addToCart(p));
   }

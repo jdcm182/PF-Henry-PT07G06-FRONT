@@ -16,7 +16,7 @@ export default function Contact() {
 
     emailjs.sendForm('service_bwbqp56', 'template_fopi37i', form.current, 'pXB0Xww8WQPwt1hTj')
       .then((result) => {
-          console.log(result.text);
+    
           setInput(initialInput);
           setOpen(false)
       }, (error) => {
