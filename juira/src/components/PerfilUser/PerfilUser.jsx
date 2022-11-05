@@ -78,13 +78,21 @@ const previewFile=(file)=>{
 
 let handleImage=async(e)=>{
 
-  // console.log('entre a handle')
-  // delete axios.defaults.headers.common["Authorization"];
+ 
   const formData=new FormData()
   formData.append('file', selectedImage)
   formData.append("upload_preset",'DB_PF_USERS' )
-  await axios.post('https://api.cloudinary.com/v1_1/duq1tcwjw/image/upload', 
-  formData).then((response)=>{setUserData({...userData, image: response.data.secure_url})})
+  await fetch ('https://api.cloudinary.com/v1_1/duq1tcwjw/image/upload',{
+    method: 'POST',
+    body:formData,
+    headers:{
+      'Content-Type': 'application/json'
+    }
+  }
+  )
+  .then((response)=>(response.json()))
+  .then((response)=>{setUserData({...userData, image: response.data.secure_url})})
+
 }
  
 
@@ -113,7 +121,7 @@ let handleImage=async(e)=>{
     };
 
     const handleSubmit=()=>{
-      // axios.defaults.headers.common["Authorization"] = userToken;
+      
       dispatch(editUser(u.id,userData))
       handleEdit()
     }
