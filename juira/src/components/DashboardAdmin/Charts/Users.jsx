@@ -42,13 +42,14 @@ export default function UsersChart() {
         name: "Eliminados",
         value: deletedUsers,
         // pv: 3908,
-        fill: "#82ca9d",
+        fill: "#ffc658"
+        
       },
       {
         name: "Activos",
         value: activeUsers,
         // pv: 9800,
-        fill: "#ffc658"
+        fill: "#82ca9d",
       },
       // {
       //   name: "Total",
@@ -59,7 +60,7 @@ export default function UsersChart() {
     ];
     
 
-    const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+    const COLORS = ["#0088FE", "#FFBB28", "#00C49F", "#FF8042"];
   return (
     <PieChart width={800} height={400}>
     <Pie

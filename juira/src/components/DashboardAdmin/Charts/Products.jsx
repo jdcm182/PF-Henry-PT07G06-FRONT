@@ -31,7 +31,7 @@ export default function ProductsChart() {
         },
       ];
   return (
-    <BarChart width={500} height={300} data={data}>
+    <BarChart width={400} height={300} data={data}>
         <YAxis />
         <Tooltip/>
       <Bar dataKey="Activos" fill="#82ca9d" />
