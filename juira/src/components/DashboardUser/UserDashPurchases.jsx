@@ -1,50 +1,29 @@
 import React from 'react';
 import Container from '@mui/material/Container';
-import DashCard from './DashCard.jsx';
-import EnhancedTable from './EnhancedTable';
+//import UserDashTable from './UserDashTable';
+import UserPurchasesTable from './UserPurchasesTable';
 
 
 
-export default function UserDashSales() {
+export default function UserDashPurchases(props) {
 
-    // let products = useSelector((state) => state.productsReducer.allProducts);
-
-    // const dispatch = useDispatch();
-    // products.length === 0 && dispatch(getAllProducts());
-
-    // // Card 1
-    // let productsTotalQuantity = products.length;
-    // let totalAmount = "$ " + products.reduce((prev, curr) => prev + curr.price, 0).toLocaleString('de-DE');
-
-    // // Card 2 
-    // const publishedProducts = products.filter(p => p.status === "Publicado");
-    // let productsPublishedQuantity = publishedProducts.length;
-    // let totalAmountPublished = "$ " + publishedProducts.reduce((prev, curr) => prev + curr.price, 0).toLocaleString('de-DE');
-
-    // // Card 3
-    // const pausedProducts = products.filter(p => p.status === "En pausa");
-    // let productsPausedQuantity = pausedProducts.length;
-    // let totalAmountPaused = "$ " + pausedProducts.reduce((prev, curr) => prev + curr.price, 0).toLocaleString('de-DE');
-
-    //let totalAmountSold = 0;
-    //let productsSold = 0;
-    //let productsDeleted = 0;
-
-
+    const { clicked, setClicked } = props;
+    //console.log('UserDashPurchases > props: ', props)
 
     return (
-        <Container 
+        <Container component={'span'}
             sx={{
-                width: "85%", height: "100%", /* backgroundColor:"#444", */
+                width: "85%", height: "100%",
                 boxShadow: '0 8px 15px 5px #cccccc55', padding: '2rem', borderRadius: '.8rem'
             }} >
 
-            INSERTAR TABLA DE COMPRAS
 
-            {/* <ProductsTable/> */}
-            {/* <EnhancedTable items={products} className={classes.palette} /> */}
+            {/* <UserDashTable title="Compras" list={props.list} /> */}
+            {props.list?.length > 0
+                ? <UserPurchasesTable list={props.list} setClicked={setClicked} clicked={clicked} />
+                : "No hay ordenes para mostrar"}
+
 
         </Container>
     )
 }
-
