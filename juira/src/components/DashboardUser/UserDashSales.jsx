@@ -35,6 +35,7 @@ export default function UserDashSales(props) {
     //let productsDeleted = 0;
 
     //console.log('UserDashSales > props: ', props)
+    //console.log('list?.length', list?.length)
 
     return (
         <Container component={'span'}
@@ -44,10 +45,8 @@ export default function UserDashSales(props) {
             }} >
 
             {/* <UserDashTable title="Ventas" list={props.list} /> */}
-            {list?.length > 0
-                ? <UserSalesTable title="Ventas" list={list} setClicked={setClicked} clicked={clicked} />
-                : "No hay transferencias para mostrar."
-            }
+
+            {<UserSalesTable title="Ventas" list={list} setClicked={setClicked} clicked={clicked} />}
 
             {/* <ProductsTable/> */}
             {/* <EnhancedTable items={products} className={classes.palette} /> */}
