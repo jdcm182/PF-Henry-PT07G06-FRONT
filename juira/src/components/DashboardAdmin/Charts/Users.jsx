@@ -63,29 +63,30 @@ export default function UsersChart() {
     const COLORS = ["#0088FE", "#FFBB28", "#00C49F", "#FF8042"];
   return (
     <PieChart width={800} height={400}>
-    <Pie
-      data={data}
-      cx={220}
-      cy={150}
-      innerRadius={40}
-      outerRadius={90}
-      fill="#8884d8"
-      paddingAngle={5}
-      dataKey="value"
-    >
-      {data.map((entry, index) => (
-        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-      ))}
-    </Pie>
-    <Legend
-        iconSize={15}
-        width={120}
-        height={140}
-        layout="vertical"
-        verticalAlign="middle"
-        wrapperStyle={style}
-      />
-  </PieChart>
+      <Pie
+        data={data}
+        cx={220}
+        cy={150}
+        innerRadius={40}
+        outerRadius={90}
+        fill="#8884d8"
+        paddingAngle={5}
+        dataKey="value"
+        label
+      >
+        {data.map((entry, index) => (
+          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+        ))}
+      </Pie>
+      <Legend
+          iconSize={15}
+          width={120}
+          height={140}
+          layout="vertical"
+          verticalAlign="middle"
+          wrapperStyle={style}
+        />
+    </PieChart>
     // <RadialBarChart
     //   width={500}
     //   height={300}

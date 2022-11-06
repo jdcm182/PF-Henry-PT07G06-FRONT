@@ -1,5 +1,5 @@
 import React from "react";
-import { BarChart, Bar, Legend, YAxis, Tooltip } from "recharts";
+import { BarChart, Bar, Legend, YAxis, Tooltip, LabelList } from "recharts";
 import axios from "axios";
 import { API_URL_BACKEND } from "../../../api/apiRoute";
 
@@ -33,10 +33,16 @@ export default function ProductsChart() {
   return (
     <BarChart width={400} height={300} data={data}>
         <YAxis />
-        <Tooltip/>
-      <Bar dataKey="Activos" fill="#82ca9d" />
-      <Bar dataKey="Pausados" fill="#8884d8" />
-      <Bar dataKey="Eliminados" fill="#ffc658" />
+        {/* <Tooltip/> */}
+      <Bar dataKey="Activos" fill="#82ca9d">
+      <LabelList dataKey="Activos" position="top" />
+      </Bar>
+      <Bar dataKey="Pausados" fill="#8884d8">
+      <LabelList dataKey="Pausados" position="top" />
+      </Bar>
+      <Bar dataKey="Eliminados" fill="#ffc658">
+      <LabelList dataKey="Eliminados" position="top" />
+      </Bar>
       <Legend/>
     </BarChart>
   );
