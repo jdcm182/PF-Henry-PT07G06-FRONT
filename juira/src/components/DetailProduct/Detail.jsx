@@ -18,10 +18,13 @@ import {
   addToCart,
   removeDetail,
   addToCartApi,
+  removeToCartApi,
+  removeToCart,
 } from "../../redux/actions/products.actions";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import NotFound from "../NotFound/NotFound";
+import Q_A from "./Q_A";
 
 const Img = styled("img")({
   margin: "auto",
@@ -42,9 +45,16 @@ export default function Detail() {
   }, [dispatch, id]);
 
   let p = useSelector((state) => state.productsReducer.productDetails);
+  let cartState = useSelector((state) => state.productsReducer.cart);
 
   function handleAddToCart(p) {
-    role === "admin" ? dispatch(addToCartApi(p.id)) : dispatch(addToCart(p));
+    role === "usuario" ? dispatch(addToCartApi(p.id)) : dispatch(addToCart(p));
+  }
+
+  function handleRemoveToCart(p) {
+    role === "usuario"
+      ? dispatch(removeToCartApi(p.id))
+      : dispatch(removeToCart(p.id))
   }
 
   return !p || Object.keys(p).length === 0 ? (
@@ -143,26 +153,46 @@ export default function Detail() {
                 </Typography>
               </Grid>
               <Grid item>
-                <Button
-                  variant="contained"
-                  startIcon={<AddShoppingCartIcon />}
-                  size="large"
-                  onClick={() => {
-                    handleAddToCart(p);
-                  }}
-                  sx={{
-                    backgroundColor: "#23c197",
-                    "&:hover": { backgroundColor: "#138f6e" },
-                  }}
-                >
-                  <Typography sx={{ cursor: "pointer" }} variant="body2">
-                    Agregar al Carrito
-                  </Typography>
-                </Button>
+                {cartState.find((item) => item.id === parseInt(id)) ? (
+                  <Button
+                    variant="contained"
+                    startIcon={<AddShoppingCartIcon />}
+                    size="large"
+                    onClick={() => {
+                      handleRemoveToCart(p);
+                    }}
+                    sx={{
+                      backgroundColor: "#23c197",
+                      "&:hover": { backgroundColor: "#138f6e" },
+                    }}
+                  >
+                    <Typography sx={{ cursor: "pointer" }} variant="body2">
+                      Remover
+                    </Typography>
+                  </Button>
+                ) : (
+                  <Button
+                    variant="contained"
+                    startIcon={<AddShoppingCartIcon />}
+                    size="large"
+                    onClick={() => {
+                      handleAddToCart(p);
+                    }}
+                    sx={{
+                      backgroundColor: "#23c197",
+                      "&:hover": { backgroundColor: "#138f6e" },
+                    }}
+                  >
+                    <Typography sx={{ cursor: "pointer" }} variant="body2">
+                      Agregar al Carrito
+                    </Typography>
+                  </Button>
+                )}
               </Grid>
             </Grid>
           </Grid>
         </Grid>
+        <Q_A id={id}></Q_A>
       </Paper>
     </Container>
   );

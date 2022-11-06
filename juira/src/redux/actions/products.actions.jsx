@@ -36,68 +36,67 @@ export const REMOVE_FAV_API = "REMOVE_FAV_API";
 export const ADD_FAV_API = "ADD_FAV_API";
 
 export const updateDisplayedByQuery = (query) => async (dispatch) => {
-  dispatch(setSpinnerLoading(true))
+  dispatch(setSpinnerLoading(true));
   const url = `${API_URL_BACKEND}products/?name=${query}`;
   try {
     let res = await axios(url);
-    dispatch(setSpinnerLoading(false))
+    dispatch(setSpinnerLoading(false));
     return dispatch({
       type: PRODUCTS_TO_DISPLAY,
       payload: res.data,
     });
   } catch (error) {
-    dispatch(setSpinnerLoading(false))
+    dispatch(setSpinnerLoading(false));
     console.log("error api", error);
   }
 };
 
 export const updateDisplayed = () => async (dispatch) => {
-  dispatch(setSpinnerLoading(true))
+  dispatch(setSpinnerLoading(true));
   const url = `${API_URL_BACKEND}${getAllPublicatesProductsApi}`;
   try {
     await axios(url);
     let { data } = await axios(url);
-    dispatch(setSpinnerLoading(false))
+    dispatch(setSpinnerLoading(false));
 
     return dispatch({
       type: PRODUCTS_TO_DISPLAY,
       payload: data,
     });
   } catch (error) {
-    dispatch(setSpinnerLoading(false))
+    dispatch(setSpinnerLoading(false));
     console.log("error api", error);
   }
 };
 
 export const getAllProducts = () => async (dispatch) => {
-  dispatch(setSpinnerLoading(true))
+  dispatch(setSpinnerLoading(true));
   const url = `${API_URL_BACKEND}${getAllProductsApi}`;
   try {
     let data = await axios(url);
-    dispatch(setSpinnerLoading(false))
+    dispatch(setSpinnerLoading(false));
     return dispatch({
       type: ALL_PRODUCTS,
       payload: data.data, //data,
     });
   } catch (error) {
-    dispatch(setSpinnerLoading(false))
+    dispatch(setSpinnerLoading(false));
     console.log("error api", error);
   }
 };
 
 export const getProductDetails = (id) => async (dispatch) => {
-  dispatch(setSpinnerLoading(true))
+  dispatch(setSpinnerLoading(true));
   const url = `${API_URL_BACKEND}${getAllProductsApi}${id}`;
   try {
     let { data } = await axios(url);
-    dispatch(setSpinnerLoading(false))
+    dispatch(setSpinnerLoading(false));
     return dispatch({
       type: PRODUCT_DETAILS,
       payload: data,
     });
-    
   } catch (error) {
-    dispatch(setSpinnerLoading(false))
+    dispatch(setSpinnerLoading(false));
     console.log("error api", error);
   }
 };
@@ -110,31 +109,31 @@ export const addToCart = (payload) => (dispatch) => {
 };
 
 export const updateCartApi = () => async (dispatch) => {
-  dispatch(setSpinnerLoading(true))
+  dispatch(setSpinnerLoading(true));
   try {
     const { data } = await axios(`${API_URL_BACKEND}${cartApi}`);
-    dispatch(setSpinnerLoading(false))
+    dispatch(setSpinnerLoading(false));
     return dispatch({
       type: UPDATE_CART_API,
       payload: data.products,
     });
   } catch (error) {
-    dispatch(setSpinnerLoading(false))
+    dispatch(setSpinnerLoading(false));
     toast.error(error);
   }
 };
 
 export const updateFavApi = () => async (dispatch) => {
-  dispatch(setSpinnerLoading(true))
+  dispatch(setSpinnerLoading(true));
   try {
     const { data } = await axios(`${API_URL_BACKEND}${favApi}`);
-    dispatch(setSpinnerLoading(false))
+    dispatch(setSpinnerLoading(false));
     return dispatch({
       type: UPDATE_FAV_API,
       payload: data.products,
     });
   } catch (error) {
-    dispatch(setSpinnerLoading(false))
+    dispatch(setSpinnerLoading(false));
     toast.error(error);
   }
 };
@@ -259,7 +258,6 @@ export const publishProd = (data) => async () => {
 };
 
 export const sendShopOrder = (data) => async () => {
-  console.log("entre aca");
   const url = `${API_URL_BACKEND}shoppingOrders/mpresponse`;
   console.log("PUT al Back", url);
   try {

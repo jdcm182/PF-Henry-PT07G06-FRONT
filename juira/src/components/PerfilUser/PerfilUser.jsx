@@ -37,7 +37,7 @@ export default function PerfilUser() {
     const [dis,setDis]=useState(true)
 
 useEffect(()=>{
-  console.log('montando componente')
+  
   dispatch(getUser())
   
 },[])

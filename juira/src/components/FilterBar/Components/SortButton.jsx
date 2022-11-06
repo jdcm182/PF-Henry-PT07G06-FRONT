@@ -53,7 +53,7 @@ const SortButton = () => {
           )
         }
       >
-        {console.log("selectedIndex", selectedIndex)}
+      
         Ordenar
       </Button>
 

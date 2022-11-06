@@ -27,6 +27,8 @@ import { useSelector, useDispatch } from "react-redux";
 /* import { updateDisplayed } from '../../redux/actions/products.actions'; */
 import style from "./Navbar.module.css";
 import image from "../media/juira_white.png";
+import imageMobile from "../media/JuiraMobile.jpg";
+
 import { logoOutAction, updateFilter } from "../../redux/actions/app.actions";
 import {
   updateCart,
@@ -275,7 +277,6 @@ export default function PrimarySearchAppBar() {
           </MenuItem>
         </Link>
       )}
-
       {role && (
         <Link
           component={RouterLink}
@@ -358,7 +359,7 @@ export default function PrimarySearchAppBar() {
             variant="h6"
             noWrap
             component="div"
-            sx={{ display: { xs: "none", sm: "block" } }}
+            sx={{ display: { sm: "block" } }}
           >
             <Link
               component={RouterLink}
@@ -369,7 +370,16 @@ export default function PrimarySearchAppBar() {
                 dispatch(updateFilter({ name: "sort", value: "A-Z" }));
               }}
             >
-              <img className={style.img} src={image} alt="juria"></img>
+              <Box sx={{ display: { xs: "none", sm: "block" } }}>
+                <img className={style.img} src={image} alt="juria"></img>
+              </Box>
+              <Box sx={{ mr: 2, display: { xs: "block", sm: "none" } }}>
+                <img
+                  style={{ height: "35px", objectFit: "cover" }}
+                  src={imageMobile}
+                  alt="juria"
+                ></img>
+              </Box>
             </Link>
           </Typography>
           {role !== "admin" && (
