@@ -26,6 +26,7 @@ import PauseCircleFilledIcon from '@mui/icons-material/PauseCircleFilled';
 import DangerousIcon from '@mui/icons-material/Dangerous';
 import axios from 'axios';
 import { API_URL_BACKEND } from "../../../api/apiRoute";
+import ExportToExcel from '../ExporToExcel/ExportToExcel';
 
 
 const title = 'Transacciones'
@@ -178,6 +179,10 @@ const handlePay = (event,clicked,setClicked) => {
 export default function EnhancedTable( props ) {
   const { transactions, setTransactions, setClicked , clicked } = props
   const rows = props.transactions
+
+  const [data, setData] = React.useState(transactions)
+  const fileName = "Transactions"; 
+  console.log(transactions)
 
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('id');
@@ -347,10 +352,19 @@ export default function EnhancedTable( props ) {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Diseño compacto"
-      />
+      <Box
+        sx={
+          { 
+            minWidth: 650, display: 'flex', justifyContent: 'space-between',
+          }
+        }
+      >
+        <FormControlLabel
+          control={<Switch checked={dense} onChange={handleChangeDense} />}
+          label="Diseño compacto"
+          />
+        <ExportToExcel apiData={transactions} fileName={fileName}/>
+      </Box>
     </Box>
   );
 }

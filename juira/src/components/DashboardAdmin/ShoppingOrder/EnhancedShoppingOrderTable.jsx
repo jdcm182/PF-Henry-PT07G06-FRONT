@@ -31,7 +31,7 @@ import PauseCircleFilledIcon from '@mui/icons-material/PauseCircleFilled'; // se
 import DangerousIcon from '@mui/icons-material/Dangerous'; // set Deleted
 import axios from 'axios';
 import { API_URL_BACKEND } from "../../../api/apiRoute";
-// const orders = require('./orders.json')
+import ExportToExcel from '../ExporToExcel/ExportToExcel';
 
 const title = 'Órdenes de compra'
 
@@ -468,10 +468,19 @@ export default function EnhancedTable( props ) {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Diseño compacto"
-      />
+      <Box
+        sx={
+          { 
+            minWidth: 650, display: 'flex', justifyContent: 'space-between',
+          }
+        }
+      >
+        <FormControlLabel
+          control={<Switch checked={dense} onChange={handleChangeDense} />}
+          label="Diseño compacto"
+          />
+        <ExportToExcel apiData={orders} fileName='Ordenes de compra'/>
+      </Box>
     </Box>
   );
 }
