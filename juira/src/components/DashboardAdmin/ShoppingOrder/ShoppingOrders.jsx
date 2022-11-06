@@ -38,10 +38,15 @@ export default function ShoppingOrders() {
 
     const [orders, setOrders] = useState([])
 
-    let resp = []
-    axios.get(`${API_URL_BACKEND}shoppingOrders`)
-    .then(response => resp = response.data)
-    .then(() => !orders.length && setOrders(resp))
+    useEffect(() => {
+      axios.get(`${API_URL_BACKEND}shoppingOrders`)
+      .then((response) => setOrders(response.data))
+    },[])
+
+    // let resp = []
+    // axios.get(`${API_URL_BACKEND}shoppingOrders`)
+    // .then(response => resp = response.data)
+    // .then(() => !orders.length && setOrders(resp))
 
     let totalAmount = 0
     let ordersQty = 0
@@ -52,7 +57,7 @@ export default function ShoppingOrders() {
 
     orders.forEach( order => {totalAmount += order.total; ordersQty += 1} )
     orders.forEach( order => {if (order.state === 'pending') totalAmountPending += order.total; ordersPendingQty += 1} )
-    orders.forEach( order => {if (order.state === 'completed') totalAmountCompleted += order.total; ordersCompletedQty += 1} )
+    orders.forEach( order => {if (order.state === 'approved') totalAmountCompleted += order.total; ordersCompletedQty += 1} )
 
     
     return (

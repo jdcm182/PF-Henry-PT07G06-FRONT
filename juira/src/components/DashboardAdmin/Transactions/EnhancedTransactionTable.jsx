@@ -18,32 +18,17 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
-import DeleteIcon from '@mui/icons-material/Delete';
-import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import toast, { Toaster } from 'react-hot-toast';
-import { useSelector, useDispatch } from 'react-redux';
-//import { updateProdsTemp } from '../../redux/actions/products.actions.jsx';
-
-import CheckCircleIcon from '@mui/icons-material/CheckCircle'; // set Published
-import PauseCircleFilledIcon from '@mui/icons-material/PauseCircleFilled'; // set Paused
-import DangerousIcon from '@mui/icons-material/Dangerous'; // set Deleted
+import Button from '@mui/material/Button';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import PauseCircleFilledIcon from '@mui/icons-material/PauseCircleFilled';
+import DangerousIcon from '@mui/icons-material/Dangerous';
 import axios from 'axios';
 import { API_URL_BACKEND } from "../../../api/apiRoute";
 
-const title = 'Productos'
 
-function createData(name, pid, status, price, ownerId) {
-  return {
-    name,
-    pid,
-    status,
-    price,
-    ownerId,
-  };
-}
-
-// const rows = [];
+const title = 'Transacciones'
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -77,34 +62,52 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-    id: 'name',
+    id: 'id',
     numeric: false,
     disablePadding: true,
-    label: 'Nombre',
-  },
-  {
-    id: 'id',
-    numeric: true,
-    disablePadding: false,
-    label: 'Id Producto',
+    label: 'No. de Orden',
   },
   {
     id: 'status',
-    numeric: true,
+    numeric: false,
     disablePadding: false,
-    label: 'Estado',
+    label: 'Estado de la orden',
   },
   {
-    id: 'price',
-    numeric: true,
+    id: 'seller',
+    numeric: false,
     disablePadding: false,
-    label: 'Precio',
+    label: 'Id. Vendedor',
   },
   {
-    id: 'ownerId',
-    numeric: true,
+    id: 'amount',
+    numeric: false,
     disablePadding: false,
-    label: 'Id Propietario',
+    label: 'Monto',
+  },
+  {
+    id: 'date',
+    numeric: false,
+    disablePadding: false,
+    label: 'Fecha',
+  },
+  {
+    id: 'product',
+    numeric: false,
+    disablePadding: false,
+    label: 'Producto',
+  },
+  {
+    id: 'shoppingOrder',
+    numeric: false,
+    disablePadding: false,
+    label: 'Orden de compra',
+  },
+  {
+    id: 'buyer',
+    numeric: false,
+    disablePadding: false,
+    label: 'Comprador',
   },
 ];
 
@@ -119,21 +122,14 @@ function EnhancedTableHead(props) {
     <TableHead>
       <TableRow>
         <TableCell padding="checkbox">
-          {/* <Checkbox
-            style={{ color: 'var(--primaryColor)' }}
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{
-              'aria-label': 'select all desserts',
-            }}
-          /> */}
+      
         </TableCell>
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
-            align={headCell.numeric ? 'right' : 'left'}
-            padding={headCell.disablePadding ? 'none' : 'normal'}
+            width="16%"
+            align={headCell.numeric ? 'right' : 'center'}
+            // padding={headCell.disablePadding ? 'none' : 'normal'}
             sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel
@@ -164,118 +160,25 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-function EnhancedTableToolbar(props) {
-  const { numSelected, selected, setSelected, setProducts} = props;
+const handlePay = (event,clicked,setClicked) => {
+  let id = event.target.value
+  console.log(clicked)
+  // setSelected([])
+  let promise = axios.put(`${API_URL_BACKEND}transactions/${id}`, {state: 'closed'})
+  .then( res => setClicked(!clicked))
 
-  const handlePublish = async () => {
-    setSelected([])
-    let reqs = selected.map( p => axios.put(`${API_URL_BACKEND}products/${p}`, {status: 'Publicado'}))
-    let promise = Promise.all(reqs)
-    .then(() => axios.get(`${API_URL_BACKEND}products`))
-    .then((response) => setProducts(response.data))
-    .catch(error => error)
-    toast.promise(promise, {
-      loading: 'Cargando',
-      success: 'Actualizado con éxito',
-      error: 'Ocurrió un error',
-    });
-  }
-  
-  const handlePause = async () => {
-     setSelected([])
-    let reqs = selected.map( p => axios.put(`${API_URL_BACKEND}products/${p}`, {status: 'En pausa'}))
-    let promise = Promise.all(reqs)
-    .then(() => axios.get(`${API_URL_BACKEND}products`))
-    .then((response) => setProducts(response.data))
-    .catch(error => error)
-    toast.promise(promise, {
-      loading: 'Cargando',
-      success: 'Actualizado con éxito',
-      error: 'Ocurrió un error',
-    });
-  }
-  const handleDelete = async () => {
-    setSelected([])
-    let reqs = selected.map( p => axios.put(`${API_URL_BACKEND}products/${p}`, {status: 'Eliminado'}))
-    let promise = Promise.all(reqs)
-    .then(() => axios.get(`${API_URL_BACKEND}products`))
-    .then((response) => setProducts(response.data))
-    .catch(error => error)
-    toast.promise(promise, {
-      loading: 'Cargando',
-      success: 'Actualizado con éxito',
-      error: 'Ocurrió un error',
-    });
-  }
-  
-  const getProductsArrayFromIds = (/* selectedIdsGlobal, productsGlobal */) =>  {
-  }
-  
-  return (
-    <Toolbar
-      sx={{
-        pl: { sm: 2 },
-        pr: { xs: 1, sm: 1 },
-        ...(numSelected > 0 && {
-          /* bgcolor: (theme) =>
-            alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity), */
-            bgcolor: () => //console.log('theme: ',theme)
-            alpha('#23c197', 0.12 /* theme.palette.action.activatedOpacity */),
-        }),
-      }}
-    >
-      {numSelected > 0 ? (
-        <Typography
-          sx={{ flex: '1 1 100%' }}
-          color="inherit"
-          variant="subtitle1"
-          component="div"
-        >
-          {numSelected} Producto(s) seleccionado(s)
-        </Typography>
-      ) : (
-        <Typography
-          sx={{ flex: '1 1 100%' }}
-          variant="h6"
-          id="tableTitle"
-          component="div"
-        >
-          {title}
-        </Typography>
-      )}
-
-      {numSelected > 0 ? (
-        <Box sx={{width:'10rem'}}>
-        <Tooltip title="Publicar">
-          <IconButton onClick={() => handlePublish() }>
-            <CheckCircleIcon /> {/* Published */}
-          </IconButton>
-        </Tooltip>
-
-        <Tooltip title="Pausar">
-          <IconButton onClick={() => handlePause() }>
-            <PauseCircleFilledIcon /> {/* Paused */}
-          </IconButton>
-        </Tooltip>
-
-        <Tooltip title="Eliminar" onClick={() => handleDelete() }>
-          <IconButton>
-            <DangerousIcon /> {/* Deleted */}
-          </IconButton>
-        </Tooltip>
-        </Box>
-      ) : ( "" )}
-    </Toolbar>
-  );
+  toast.promise(promise, {
+    loading: 'Cargando',
+    success: 'Actualizado con éxito',
+    error: 'Ocurrió un error',
+  });
 }
 
-EnhancedTableToolbar.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-};
 
 export default function EnhancedTable( props ) {
-  const { setProducts } = props;
-  const rows = props.products
+  const { transactions, setTransactions, setClicked , clicked } = props
+  const rows = props.transactions
+
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('id');
   const [selected, setSelected] = React.useState([]);
@@ -290,11 +193,8 @@ export default function EnhancedTable( props ) {
   };
 
   const handleSelectAllClick = (event) => {
-    console.log(event)
     if (event.target.checked) {
       const newSelected = rows.map((n) => n.id);
-      // const aux = rows.filter((n) => n.status !== 'Vendido');
-      // const newSelected = aux.map((n) => n.id);
       setSelected(newSelected);
       return;
     }
@@ -338,16 +238,15 @@ export default function EnhancedTable( props ) {
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - transactions.length) : 0;
 
   return (
     <Box sx={{ width: '100%', marginTop: '1rem' }}>
       <Toaster />
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} selected={selected} setSelected={setSelected} setProducts={setProducts}/>
         <TableContainer>
           <Table
-            sx={{ minWidth: 750 }}
+            sx={{ minWidth: 650 }}
             aria-labelledby="tableTitle"
             size={dense ? 'small' : 'medium'}
           >
@@ -362,7 +261,7 @@ export default function EnhancedTable( props ) {
             <TableBody>
               {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
-              {stableSort(rows, getComparator(order, orderBy))
+              {stableSort(transactions, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.id);
@@ -385,36 +284,44 @@ export default function EnhancedTable( props ) {
                   return (
                     <TableRow
                     hover
-                    onClick={row.status === 'Vendido' ? null : (event) => handleClick(event, row.id)}
+                    onClick={(event) => handleClick(event, row.id)}
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
-                    key={row.name}
+                    key={row.id}
                     selected={isItemSelected}
                     
                     >
                       <TableCell padding="checkbox">
-                        <Checkbox 
-                          style={row.status === 'Vendido' ? {} : { color: 'var(--primaryColor)' }}
+                        {/* <Checkbox 
+                          style={{ color: 'var(--primaryColor)' }}
                           checked={isItemSelected}
                           inputProps={{
                             'aria-labelledby': labelId,
                           }}
-                          disabled={row.status === 'Vendido' ? true : false}
-                        />
+                        /> */}
+                        {
+                          row.state === 'received' ? <Button value={row.id} variant="contained" onClick={(e) => handlePay(e, clicked, setClicked)}>Pagar</Button> : null
+                        }
                       </TableCell>
                       <TableCell
                         component="th"
                         id={labelId}
                         scope="row"
-                        padding="none"
+                        align="center"
+                        // padding="none"
                       >
-                        {row.name}
+                        {row.id}
                       </TableCell>
-                      <TableCell align="right">{row.id}</TableCell>
-                      <TableCell align="right">{row.status}</TableCell>
-                      <TableCell align="right">{row.price.toLocaleString('de-DE')}</TableCell>
-                      <TableCell align="right">{row.ownerId}</TableCell>
+                      <TableCell align="center">{row.state}</TableCell>
+                      <TableCell align="center">{row.sellerId}</TableCell>
+                      <TableCell align="center">{row.total.toLocaleString('de-DE')}</TableCell>
+                      <TableCell align="center">{row.createdAt.slice(0, 10) + ' ' + row.createdAt.slice(11,16)}</TableCell>
+                      <TableCell align="center">{row.productId}</TableCell>
+                      <TableCell align="center">{row.shoppingOrderId}</TableCell>
+                      <TableCell align="center">{row.buyerId}</TableCell>
+                      {/* <TableCell align="right">{row.transactionList.map( e => `${e.productId}, `)}</TableCell> */}
+
                     </TableRow>
                   );
                 })}
@@ -433,7 +340,7 @@ export default function EnhancedTable( props ) {
         <TablePagination
           rowsPerPageOptions={[10, 20, 30]}
           component="div"
-          count={rows.length}
+          count={transactions.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

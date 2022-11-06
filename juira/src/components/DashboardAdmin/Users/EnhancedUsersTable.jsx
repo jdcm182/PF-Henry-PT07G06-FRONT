@@ -449,7 +449,7 @@ export default function EnhancedTable( props ) {
                       <TableCell align="center">{row.emailAddress}</TableCell>
                       <TableCell align="center">{row.phoneNumber}</TableCell>
                       <TableCell align="center">{row.status}</TableCell>
-                      <TableCell align="center">{row.isAdmin ? 'Admin' : 'Regular'}</TableCell>
+                      <TableCell align="center">{row.isAdmin ? 'Admin' : 'Usuario'}</TableCell>
                       <TableCell align="center">{row.id}</TableCell>
                       {/* <TableCell align="right">{row.transactionList.map( e => `${e.productId}, `)}</TableCell> */}
 
@@ -480,7 +480,7 @@ export default function EnhancedTable( props ) {
       </Paper>
       <FormControlLabel
         control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Densidad"
+        label="Diseño compacto"
       />
     </Box>
   );
