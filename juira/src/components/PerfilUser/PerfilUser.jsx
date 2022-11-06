@@ -58,12 +58,10 @@ let u = useSelector((state) => state.app.user)||
 const [userData, setUserData]=useState(u)
 
 
-const [selectedImage, setSelectedImage]=useState('')
 const [previewSource, setPreviewSource]= useState()
 
 let handleFileInputChange=(e)=>{
   const file=e.target.files[0]
-  setSelectedImage(file)
   previewFile(file)
   handleImage()
   
@@ -81,19 +79,15 @@ let handleImage=async(e)=>{
 
  
   const formData=new FormData()
-  formData.append('file', selectedImage)
+  formData.append('file', previewSource)
   formData.append("upload_preset",'DB_PF_USERS' )
-  await fetch ('https://api.cloudinary.com/v1_1/duq1tcwjw/image/upload',{
-    method: 'POST',
-    body:formData,
-    headers:{
-      'Content-Type': 'application/json'
-    }
-  }
-  )
-  .then((response)=>(response.json()))
-  .then((response)=>{setUserData({...userData, image: response.data.secure_url})})
-
+  delete axios.defaults.headers.common["Authorization"];
+  await axios.post('https://api.cloudinary.com/v1_1/duq1tcwjw/image/upload', 
+  formData).then((response)=>{
+    setUserData({...userData, image: response.data.secure_url})
+  })
+  .finally( axios.defaults.headers.common["Authorization"] = userToken)
+  
 }
  
 
