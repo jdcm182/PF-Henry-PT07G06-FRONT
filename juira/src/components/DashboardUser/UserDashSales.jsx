@@ -1,8 +1,8 @@
 import React from 'react';
 import Container from '@mui/material/Container';
-import UserDashTable from './UserDashTable';
+import UserSalesTable from './UserSalesTable';
 
-import EnhancedTable from './EnhancedTable';
+//import EnhancedTable from './EnhancedTable';
 
 // import DashCard from './DashCard.jsx';
 // import EnhancedTable from './EnhancedTable';
@@ -10,6 +10,7 @@ import EnhancedTable from './EnhancedTable';
 
 export default function UserDashSales(props) {
 
+    const { list, clicked, setClicked } = props;
     // let products = useSelector((state) => state.productsReducer.allProducts);
 
     // const dispatch = useDispatch();
@@ -42,7 +43,8 @@ export default function UserDashSales(props) {
                 boxShadow: '0 8px 15px 5px #cccccc55', padding: '2rem', borderRadius: '.8rem'
             }} >
 
-            <UserDashTable title="Ventas" list={props.list} />
+            {/* <UserDashTable title="Ventas" list={props.list} /> */}
+            <UserSalesTable title="Ventas" list={list} setClicked={setClicked} clicked={clicked} />
 
             {/* <ProductsTable/> */}
             {/* <EnhancedTable items={products} className={classes.palette} /> */}

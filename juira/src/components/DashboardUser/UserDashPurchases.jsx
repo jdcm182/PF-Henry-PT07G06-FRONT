@@ -1,12 +1,13 @@
 import React from 'react';
 import Container from '@mui/material/Container';
-import UserDashTable from './UserDashTable';
+//import UserDashTable from './UserDashTable';
 import UserPurchasesTable from './UserPurchasesTable';
 
 
 
 export default function UserDashPurchases(props) {
 
+    const { clicked, setClicked } = props;
     //console.log('UserDashPurchases > props: ', props)
 
     return (
@@ -19,7 +20,7 @@ export default function UserDashPurchases(props) {
 
             {/* <UserDashTable title="Compras" list={props.list} /> */}
             {props.list?.length > 0
-                ? <UserPurchasesTable list={props.list} />
+                ? <UserPurchasesTable list={props.list} setClicked={setClicked} clicked={clicked} />
                 : "No hay ordenes para mostrar"}
 
 

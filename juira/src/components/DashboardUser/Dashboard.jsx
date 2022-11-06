@@ -23,7 +23,11 @@ export default function Dashboard() {
 
   const [value, setValue] = React.useState(0);
 
+  const [clicked, setClicked] = React.useState(false);
+
+
   const [myShoppingOrders, setMyShoppingOrders] = React.useState([]);
+  const [mySales, setMySales] = React.useState([]);
   //const [myTransactions, setMyTransactions] = React.useState([]);
 
   /*   let res = [];
@@ -43,9 +47,15 @@ export default function Dashboard() {
     //console.log('User Dashboard > API_URL_BACKEND: ', API_URL_BACKEND) 
     //       https://pf-henry-pt07g06-back-production.up.railway.app/
   }
+  const fetchSales = async () => {
+    const response = await axios(`${API_URL_BACKEND}transactions/byToken`)
+    setMySales(response.data);
+    console.log('User Dashboard > fetchSales > response.data: ', response.data);
+  }
   useEffect(() => {
-    fetchOrders()
-  }, [])
+    fetchOrders();
+    fetchSales();
+  }, [clicked])
 
   //console.log('User Dashboard > myShoppingOrders', JSON.stringify(myShoppingOrders))
 
@@ -190,17 +200,17 @@ export default function Dashboard() {
   };
 
 
-  const myPurchases = [
-    { id: 1, Producto: 'Biblioteca', Precio: 11000, Estado: 'Usado', Contraparte: 'jdcm' },
-    { id: 2, Producto: 'Cafetera', Precio: 15000, Estado: 'Usado', Contraparte: 'jdcm' },
-    { id: 3, Producto: 'Cartuchera', Precio: 1400, Estado: 'Usado', Contraparte: 'jdcm' },
-    { id: 7, Producto: 'Lampara', Precio: 4000, Estado: 'Usado', Contraparte: 'jdcm' },
-  ]
-  const mySales = [
-    { id: 4, Producto: 'Balde', Precio: 2500, Estado: 'Usado', Contraparte: 'jdcm' },
-    { id: 5, Producto: 'Cemento', Precio: 1000, Estado: 'Usado', Contraparte: 'jdcm' },
-    { id: 6, Producto: 'Cartas', Precio: 3000, Estado: 'Usado', Contraparte: 'jdcm' },
-  ]
+  /*  const myPurchases = [
+     { id: 1, Producto: 'Biblioteca', Precio: 11000, Estado: 'Usado', Contraparte: 'jdcm' },
+     { id: 2, Producto: 'Cafetera', Precio: 15000, Estado: 'Usado', Contraparte: 'jdcm' },
+     { id: 3, Producto: 'Cartuchera', Precio: 1400, Estado: 'Usado', Contraparte: 'jdcm' },
+     { id: 7, Producto: 'Lampara', Precio: 4000, Estado: 'Usado', Contraparte: 'jdcm' },
+   ] */
+  /*   const mySales = [
+      { id: 4, Producto: 'Balde', Precio: 2500, Estado: 'Usado', Contraparte: 'jdcm' },
+      { id: 5, Producto: 'Cemento', Precio: 1000, Estado: 'Usado', Contraparte: 'jdcm' },
+      { id: 6, Producto: 'Cartas', Precio: 3000, Estado: 'Usado', Contraparte: 'jdcm' },
+    ] */
   //console.log(myPurchases, '\n', mySales)
 
 
@@ -208,7 +218,8 @@ export default function Dashboard() {
   const totalAmountPurchases = myShoppingOrders.reduce((prev, actual) => prev + actual.total, 0);
   const productsQuantityPurchases = myShoppingOrders.length;
 
-  const totalAmountSales = mySales.reduce((prev, actual) => prev + actual.Precio, 0);
+  const totalAmountSales = 0// mySales.transactions && mySales.transactions.asSeller.reduce((prev, actual) => prev + actual.total, 0);
+  console.log('mySales > ', mySales)
   const productsQuantitySales = mySales.length;
 
   const totalOperations = productsQuantityPurchases + productsQuantitySales;
@@ -323,11 +334,11 @@ export default function Dashboard() {
         <TabPanel value={value} index={0}>
           {/* Mis Compras */}
           {/* <UserDashPurchases list={myPurchases} /> */}
-          {<UserDashPurchases list={myShoppingOrders} />}
+          <UserDashPurchases list={myShoppingOrders} setClicked={setClicked} clicked={clicked} />
         </TabPanel>
         <TabPanel value={value} index={1}>
           {/* Mis Ventas */}
-          <UserDashSales list={mySales} />
+          <UserDashSales list={mySales} setClicked={setClicked} clicked={clicked} />
         </TabPanel>
       </Box>
 
