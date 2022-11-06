@@ -45,7 +45,7 @@ export default function Login() {
 
   onAuthStateChanged(auth, async (user) => {
     if (user) {
-      console.log("el usuaio esta loguado");
+      console.log("el usuario esta logueado");
       //  history.push(`/juira/home`);
 
       /* 
@@ -72,7 +72,7 @@ tenantId:null
 uid: "rz9pFLryLGhQljwpjTW5Siwl3Tp2"
             */
     } else {
-      console.log("el usuaio esta desloguado");
+      console.log("el usuario esta deslogueado");
     }
   });
 
@@ -206,27 +206,6 @@ uid: "rz9pFLryLGhQljwpjTW5Siwl3Tp2"
               <Link to="/juira/register">Regístrate</Link>
             </Typography>
           </Paper>
-          <Button
-            onClick={() => {
-              dispatch(loginAction("user"));
-            }}
-          >
-            Usuario
-          </Button>
-          <Button
-            onClick={() => {
-              dispatch(loginAction(""));
-            }}
-          >
-            Guest
-          </Button>
-          <Button
-            onClick={() => {
-              dispatch(loginAction("admin"));
-            }}
-          >
-            Admin
-          </Button>
         </Grid>
       )}
    </div>

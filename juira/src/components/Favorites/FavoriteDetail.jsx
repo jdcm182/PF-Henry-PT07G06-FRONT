@@ -28,6 +28,7 @@ export default function FavoriteDetail(props) {
   // id={p.id} price={p.price} name={p.name} image={p.image}
   const itemsAddedToCart = useSelector((state) => state.productsReducer.cart);
   const role = useSelector((state) => state.app.token.role);
+  const loading = useSelector((state)=> state.app.isSpinner);
 
   const handleCart = (p) => {
     productIsAddedToCart(p.id)
@@ -103,8 +104,7 @@ export default function FavoriteDetail(props) {
           )}
         </IconButton>
       </ListItem>
-
-      <Divider variant="inset" component="li" />
+      <Divider variant="inset"/>
     </Container>
   );
 }

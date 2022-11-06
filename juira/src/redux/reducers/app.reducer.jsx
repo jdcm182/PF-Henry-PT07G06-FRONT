@@ -1,3 +1,4 @@
+import axios from "axios";
 import {
   REFRESH_DATA,
   SIGN_IN,
@@ -7,11 +8,11 @@ import {
   UPDATE_FILTER_STATE,
   USER_PROFILE
 } from "../actions/app.actions";
-import axios from "axios";
+
 
 const initialState = {
   user: {},
-  isSpinner: false,
+  isSpinner: 0,
   filterState: { categories: "Todos", sort: "A-Z", condition: "Todos" },
   token: {
     token : "",
@@ -51,13 +52,13 @@ export function appReducer(state = initialState, action) {
     case TURN_ON_SPINNER: {
       return {
         ...state,
-        isSpinner: action.payload,
+        isSpinner: ++state.isSpinner,
       };
     }
     case TURN_OFF_SPINNER: {
       return {
         ...state,
-        isSpinner: action.payload,
+        isSpinner: --state.isSpinner,
       };
     }
     case UPDATE_FILTER_STATE: {

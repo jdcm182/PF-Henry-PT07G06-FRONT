@@ -30,6 +30,7 @@ import PauseCircleFilledIcon from '@mui/icons-material/PauseCircleFilled'; // se
 import DangerousIcon from '@mui/icons-material/Dangerous'; // set Deleted
 import axios from 'axios';
 import { API_URL_BACKEND } from "../../../api/apiRoute";
+import ExportToExcel from '../ExporToExcel/ExportToExcel';
 
 const title = 'Productos'
 
@@ -119,8 +120,7 @@ function EnhancedTableHead(props) {
     <TableHead>
       <TableRow>
         <TableCell padding="checkbox">
-          <Checkbox
-            /* color="primary" */
+          {/* <Checkbox
             style={{ color: 'var(--primaryColor)' }}
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
@@ -128,7 +128,7 @@ function EnhancedTableHead(props) {
             inputProps={{
               'aria-label': 'select all desserts',
             }}
-          />
+          /> */}
         </TableCell>
         {headCells.map((headCell) => (
           <TableCell
@@ -293,6 +293,8 @@ export default function EnhancedTable( props ) {
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
       const newSelected = rows.map((n) => n.id);
+      // const aux = rows.filter((n) => n.status !== 'Vendido');
+      // const newSelected = aux.map((n) => n.id);
       setSelected(newSelected);
       return;
     }
@@ -383,7 +385,7 @@ export default function EnhancedTable( props ) {
                   return (
                     <TableRow
                     hover
-                    onClick={(event) => handleClick(event, row.id)}
+                    onClick={row.status === 'Vendido' ? null : (event) => handleClick(event, row.id)}
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
@@ -393,13 +395,12 @@ export default function EnhancedTable( props ) {
                     >
                       <TableCell padding="checkbox">
                         <Checkbox 
-                          /* sx={{color: 'var(--primaryColor)'}} */
-                          style={{ color: 'var(--primaryColor)' }}
-                          /* color="primary" */
+                          style={row.status === 'Vendido' ? {} : { color: 'var(--primaryColor)' }}
                           checked={isItemSelected}
                           inputProps={{
                             'aria-labelledby': labelId,
                           }}
+                          disabled={row.status === 'Vendido' ? true : false}
                         />
                       </TableCell>
                       <TableCell
@@ -439,10 +440,19 @@ export default function EnhancedTable( props ) {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Densidad"
-      />
+      <Box
+        sx={
+          { 
+            minWidth: 650, display: 'flex', justifyContent: 'space-between',
+          }
+        }
+      >
+        <FormControlLabel
+          control={<Switch checked={dense} onChange={handleChangeDense} />}
+          label="Diseño compacto"
+          />
+        <ExportToExcel apiData={rows} fileName='Productos'/>
+      </Box>
     </Box>
   );
 }

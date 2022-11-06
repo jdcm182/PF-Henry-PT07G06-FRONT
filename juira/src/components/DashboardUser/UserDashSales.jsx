@@ -1,12 +1,16 @@
 import React from 'react';
 import Container from '@mui/material/Container';
-import DashCard from './DashCard.jsx';
-import EnhancedTable from './EnhancedTable';
+import UserSalesTable from './UserSalesTable';
+
+//import EnhancedTable from './EnhancedTable';
+
+// import DashCard from './DashCard.jsx';
+// import EnhancedTable from './EnhancedTable';
 
 
+export default function UserDashSales(props) {
 
-export default function UserDashSales() {
-
+    const { list, clicked, setClicked } = props;
     // let products = useSelector((state) => state.productsReducer.allProducts);
 
     // const dispatch = useDispatch();
@@ -30,16 +34,20 @@ export default function UserDashSales() {
     //let productsSold = 0;
     //let productsDeleted = 0;
 
-
+    //console.log('UserDashSales > props: ', props)
 
     return (
-        <Container 
+        <Container component={'span'}
             sx={{
                 width: "85%", height: "100%", /* backgroundColor:"#444", */
                 boxShadow: '0 8px 15px 5px #cccccc55', padding: '2rem', borderRadius: '.8rem'
             }} >
 
-            INSERTAR TABLA DE VENTAS
+            {/* <UserDashTable title="Ventas" list={props.list} /> */}
+            {list?.length > 0
+                ? <UserSalesTable title="Ventas" list={list} setClicked={setClicked} clicked={clicked} />
+                : "No hay transferencias para mostrar."
+            }
 
             {/* <ProductsTable/> */}
             {/* <EnhancedTable items={products} className={classes.palette} /> */}
@@ -47,4 +55,3 @@ export default function UserDashSales() {
         </Container>
     )
 }
-

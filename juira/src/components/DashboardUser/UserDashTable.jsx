@@ -20,21 +20,31 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
-import RemoveCircleRoundedIcon from '@mui/icons-material/RemoveCircleRounded';
 import { visuallyHidden } from '@mui/utils';
 import toast, { Toaster } from 'react-hot-toast';
 import { useSelector, useDispatch } from 'react-redux';
-import WorkspacePremiumRoundedIcon from '@mui/icons-material/WorkspacePremiumRounded';
+import { getAllProducts } from '../../redux/actions/products.actions.jsx';
+//import { updateProdsTemp } from '../../redux/actions/products.actions.jsx';
+
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'; // set Published
+import PauseCircleFilledIcon from '@mui/icons-material/PauseCircleFilled'; // set Paused
 import DangerousIcon from '@mui/icons-material/Dangerous'; // set Deleted
 import axios from 'axios';
-import { API_URL_BACKEND } from "../../../api/apiRoute";
-import ExportToExcel from '../ExporToExcel/ExportToExcel';
+import { API_URL_BACKEND } from "../../api/apiRoute";
 
+//const title = 'Productos'
 
-const title = 'Usuarios registrados'
+function createData(name, pid, status, price, ownerId) {
+  return {
+    name,
+    pid,
+    status,
+    price,
+    ownerId,
+  };
+}
 
-// let rows = [];
+let rows = [];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -68,59 +78,64 @@ function stableSort(array, comparator) {
 
 const headCells = [
   {
-    id: 'id',
+    id: 'Producto',
     numeric: false,
     disablePadding: true,
-    label: 'ID',
+    label: 'Producto',
   },
   {
-    id: 'name',
-    numeric: false,
-    disablePadding: true,
-    label: 'Nombre',
+    id: 'Precio',
+    numeric: true,
+    disablePadding: false,
+    label: 'Precio',
   },
   {
-    id: 'email',
-    numeric: false,
-    disablePadding: true,
-    label: 'Email',
-  },
-  {
-    id: 'phone',
-    numeric: false,
-    disablePadding: true,
-    label: 'Teléfono',
-  },
-  {
-    id: 'status',
-    numeric: false,
-    disablePadding: true,
+    id: 'Estado',
+    numeric: true,
+    disablePadding: false,
     label: 'Estado',
   },
   {
-    id: 'type',
-    numeric: false,
+    id: 'Contraparte',
+    numeric: true,
     disablePadding: true,
-    label: 'Tipo',
-  },,
-  {
-    id: 'date',
-    numeric: false,
-    disablePadding: true,
-    label: 'Fecha de registro',
+    label: 'Contraparte',
   },
   // {
-  //   id: 'products',
+  //   id: 'name',
   //   numeric: false,
+  //   disablePadding: true,
+  //   label: 'Nombre',
+  // },
+  // {
+  //   id: 'id',
+  //   numeric: true,
   //   disablePadding: false,
-  //   label: 'Productos',
+  //   label: 'Id Producto',
+  // },
+  // {
+  //   id: 'status',
+  //   numeric: true,
+  //   disablePadding: false,
+  //   label: 'Estado',
+  // },
+  // {
+  //   id: 'price',
+  //   numeric: true,
+  //   disablePadding: false,
+  //   label: 'Precio',
+  // },
+  // {
+  //   id: 'ownerId',
+  //   numeric: true,
+  //   disablePadding: false,
+  //   label: 'Id Propietario',
   // },
 ];
 
 function EnhancedTableHead(props) {
-
-  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
-
+  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
+    props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -129,8 +144,7 @@ function EnhancedTableHead(props) {
     <TableHead>
       <TableRow>
         <TableCell padding="checkbox">
-          <Checkbox
-            /* color="primary" */
+          {/* <Checkbox
             style={{ color: 'var(--primaryColor)' }}
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
@@ -138,14 +152,13 @@ function EnhancedTableHead(props) {
             inputProps={{
               'aria-label': 'select all desserts',
             }}
-          />
+          /> */}
         </TableCell>
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
-            width="16%"
-            align={headCell.numeric ? 'right' : 'center'}
-            // padding={headCell.disablePadding ? 'none' : 'normal'}
+            align={headCell.numeric ? 'right' : 'left'}
+            padding={headCell.disablePadding ? 'none' : 'normal'}
             sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel
@@ -162,6 +175,9 @@ function EnhancedTableHead(props) {
             </TableSortLabel>
           </TableCell>
         ))}
+        <TableCell>
+
+        </TableCell>
       </TableRow>
     </TableHead>
   );
@@ -177,42 +193,29 @@ EnhancedTableHead.propTypes = {
 };
 
 function EnhancedTableToolbar(props) {
-  const { numSelected, selected, users, setSelected, setUsers} = props;
+  const { numSelected, selected, products, setSelected } = props;
+  const [data, setData] = React.useState('')
+  const dispatch = useDispatch();
+  const allProducts = useSelector((state) => state.productsReducer.allProducts);
 
-  const handleActivate = () => {
+  React.useEffect(() => {
+    // dispatch(getAllProducts());
+    setData('')
+  }, [selected])
+
+  const handlePublish = async () => {
+    // try {
+    //   setSelected([])
+    //   // alert('Los productos seleccionados serán publicados.');
+    //   toast('Here is your toast.')
+    //   await selected.map( p => axios.put(`${API_URL_BACKEND}products/${p}`, { id: p, status: 'Publicado'}))
+    //   dispatch(getAllProducts());
+    // } catch (error) {
+    //   alert('Error');
+    // }
     setSelected([])
-    let reqs = selected.map( p => axios.put(`${API_URL_BACKEND}users/${p}`, {status: 'active'}))
-    let promise = Promise.all(reqs)
-    .then(() => axios.get(`${API_URL_BACKEND}users`))
-    .then((response) => setUsers(response.data))
-    .catch(error => error)
-    toast.promise(promise, {
-      loading: 'Cargando',
-      success: 'Actualizado con éxito',
-      error: 'Ocurrió un error',
-    });
-  }
-  
-  const handleBan = () => {
-    setSelected([])
-    let reqs = selected.map( p => axios.put(`${API_URL_BACKEND}users/${p}`, {status: 'banned'}))
-    let promise = Promise.all(reqs)
-    .then(() => axios.get(`${API_URL_BACKEND}users`))
-    .then((response) => setUsers(response.data))
-    .catch(error => error)
-    toast.promise(promise, {
-      loading: 'Cargando',
-      success: 'Actualizado con éxito',
-      error: 'Ocurrió un error',
-    });
-  }
-  const handleDelete = () => {
-    setSelected([])
-    let reqs = selected.map( p => axios.put(`${API_URL_BACKEND}users/${p}`, {status: 'deleted'}))
-    let promise = Promise.all(reqs)
-    .then(() => axios.get(`${API_URL_BACKEND}users`))
-    .then((response) => setUsers(response.data))
-    .catch(error => error)
+    let reqs = selected.map(p => axios.put(`${API_URL_BACKEND}products/${p}`, { id: p, status: 'Publicado' }))
+    let promise = Promise.all(reqs).then(res => dispatch(getAllProducts()))
     toast.promise(promise, {
       loading: 'Cargando',
       success: 'Actualizado con éxito',
@@ -220,23 +223,30 @@ function EnhancedTableToolbar(props) {
     });
   }
 
-  const handleTypeChange = () => {
+  const handlePause = async () => {
     setSelected([])
-    let reqs = selected.map( p => axios.put(`${API_URL_BACKEND}users/${p}`, {isAdmin: true}))
-    let promise = Promise.all(reqs)
-    .then(() => axios.get(`${API_URL_BACKEND}users`))
-    .then((response) => setUsers(response.data))
-    .catch(error => error)
+    let reqs = selected.map(p => axios.put(`${API_URL_BACKEND}products/${p}`, { id: p, status: 'En pausa' }))
+    let promise = Promise.all(reqs).then(res => dispatch(getAllProducts()))
     toast.promise(promise, {
       loading: 'Cargando',
       success: 'Actualizado con éxito',
       error: 'Ocurrió un error',
     });
   }
-  
-  const getProductsArrayFromIds = (/* selectedIdsGlobal, productsGlobal */) =>  {
+  const handleDelete = async () => {
+    setSelected([])
+    let reqs = selected.map(p => axios.put(`${API_URL_BACKEND}products/${p}`, { id: p, status: 'Eliminado' }))
+    let promise = Promise.all(reqs).then(res => dispatch(getAllProducts()))
+    toast.promise(promise, {
+      loading: 'Cargando',
+      success: 'Actualizado con éxito',
+      error: 'Ocurrió un error',
+    });
   }
-  
+
+  const getProductsArrayFromIds = (/* selectedIdsGlobal, productsGlobal */) => {
+  }
+
   return (
     <Toolbar
       sx={{
@@ -245,7 +255,7 @@ function EnhancedTableToolbar(props) {
         ...(numSelected > 0 && {
           /* bgcolor: (theme) =>
             alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity), */
-            bgcolor: () => //console.log('theme: ',theme)
+          bgcolor: () => //console.log('theme: ',theme)
             alpha('#23c197', 0.12 /* theme.palette.action.activatedOpacity */),
         }),
       }}
@@ -257,7 +267,7 @@ function EnhancedTableToolbar(props) {
           variant="subtitle1"
           component="div"
         >
-          {numSelected} Usuario(s) seleccionado(s)
+          {numSelected} Producto(s) seleccionado(s)
         </Typography>
       ) : (
         <Typography
@@ -266,37 +276,31 @@ function EnhancedTableToolbar(props) {
           id="tableTitle"
           component="div"
         >
-          {title}
+          {props.title}
         </Typography>
       )}
 
       {numSelected > 0 ? (
-        <Box sx={{width:'15rem'}}>
-        <Tooltip title="Activar">
-          <IconButton onClick={() => handleActivate() }>
-            <CheckCircleIcon /> {/* Published */}
-          </IconButton>
-        </Tooltip>
+        <Box sx={{ width: '10rem' }}>
+          <Tooltip title="Publicar">
+            <IconButton onClick={() => handlePublish()}>
+              <CheckCircleIcon /> {/* Published */}
+            </IconButton>
+          </Tooltip>
 
-        <Tooltip title="Banear">
-          <IconButton onClick={() => handleBan() }>
-            <RemoveCircleRoundedIcon /> {/* Paused */}
-          </IconButton>
-        </Tooltip>
+          <Tooltip title="Pausar">
+            <IconButton onClick={() => handlePause()}>
+              <PauseCircleFilledIcon /> {/* Paused */}
+            </IconButton>
+          </Tooltip>
 
-        <Tooltip title="Convertir en Administrador" onClick={() => handleTypeChange() }>
-          <IconButton>
-            <WorkspacePremiumRoundedIcon /> {/* Deleted */}
-          </IconButton>
-        </Tooltip>
-
-        <Tooltip title="Eliminar" onClick={() => handleDelete() }>
-          <IconButton>
-            <DangerousIcon color='error'/> {/* Deleted */}
-          </IconButton>
-        </Tooltip>
+          <Tooltip title="Eliminar" onClick={() => handleDelete()}>
+            <IconButton>
+              <DangerousIcon /> {/* Deleted */}
+            </IconButton>
+          </Tooltip>
         </Box>
-      ) : ( "" )}
+      ) : ("")}
     </Toolbar>
   );
 }
@@ -305,19 +309,25 @@ EnhancedTableToolbar.propTypes = {
   numSelected: PropTypes.number.isRequired,
 };
 
-export default function EnhancedTable( props ) {
-  const { users, setUsers } = props
+export default function UserDashTable(props) {
 
-  // products && rows.length===0 && products.forEach( p => rows.push(createData(p.name, p.id, p.status, p.price, p.ownerId) ) )
-  // let products = productsA.map( p => createData(p.name, p.id, p.status, p.price, p.ownerId))
-// console.log(products)
+  //const [products, setProducts] = React.useState(props.products);
+
+  //   let products = null;
+  //   products = useSelector((state) => state.productsReducer.allProducts);
+
+  //   const dispatch = useDispatch();
+  //   // products.length===0 && dispatch(getAllProducts());
+
+  //   // products && rows.length===0 && products.forEach( p => rows.push(createData(p.name, p.id, p.status, p.price, p.ownerId) ) )
+  //   // let products = productsA.map( p => createData(p.name, p.id, p.status, p.price, p.ownerId))
+  // // console.log(products)
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('id');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(30);
-  const [update, setUpdate] = React.useState([])
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -327,7 +337,7 @@ export default function EnhancedTable( props ) {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelected = users.map((n) => n.id);
+      const newSelected = rows.map((n) => n.name);
       setSelected(newSelected);
       return;
     }
@@ -371,16 +381,18 @@ export default function EnhancedTable( props ) {
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - users.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - props.list.length) : 0;
+
+  console.log('UserDashTable > ex EnhancedTable > props: ', props)
 
   return (
     <Box sx={{ width: '100%', marginTop: '1rem' }}>
       <Toaster />
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} selected={selected} users={users} setSelected={setSelected} setUsers={setUsers}/>
+        <EnhancedTableToolbar title={props.title} numSelected={selected.length} selected={selected} products={props.list} setSelected={setSelected} />
         <TableContainer>
           <Table
-            sx={{ minWidth: 650 }}
+            sx={{ minWidth: 750 }}
             aria-labelledby="tableTitle"
             size={dense ? 'small' : 'medium'}
           >
@@ -390,17 +402,17 @@ export default function EnhancedTable( props ) {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={users.length}
+              rowCount={rows.length}
             />
             <TableBody>
               {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
-              {stableSort(users, getComparator(order, orderBy))
+              {stableSort(props.list, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.id);
                   const labelId = `enhanced-table-checkbox-${index}`;
-                  
+
                   const styles = theme => ({
                     tableRow: {
                       "&$selected, &$selected:hover": {
@@ -414,46 +426,39 @@ export default function EnhancedTable( props ) {
                     },
                     selected: {}
                   });
-                  
+
                   return (
                     <TableRow
-                    hover
-                    onClick={(event) => handleClick(event, row.id)}
-                    role="checkbox"
-                    aria-checked={isItemSelected}
-                    tabIndex={-1}
-                    key={row.id}
-                    selected={isItemSelected}
-                    
+                      hover
+                      /* onClick={(event) => handleClick(event, row.id)}
+                      role="checkbox"
+                      aria-checked={isItemSelected}
+                      selected={isItemSelected} */
+                      tabIndex={-1}
+                      key={'usrDTR' + Math.random() /* row.name + row.id */}
+
                     >
                       <TableCell padding="checkbox">
-                        <Checkbox 
-                          /* sx={{color: 'var(--primaryColor)'}} */
+                        {/* <Checkbox
                           style={{ color: 'var(--primaryColor)' }}
-                          /* color="primary" */
                           checked={isItemSelected}
                           inputProps={{
                             'aria-labelledby': labelId,
                           }}
-                        />
+                        /> */}
                       </TableCell>
-                      <TableCell
+                      {/* <TableCell
                         component="th"
                         id={labelId}
                         scope="row"
-                        align="center"
-                        // padding="none"
+                        padding="none"
                       >
-                        {row.id}
-                      </TableCell>
-                      <TableCell align="center">{row.name}</TableCell>
-                      <TableCell align="center">{row.emailAddress}</TableCell>
-                      <TableCell align="center">{row.phoneNumber}</TableCell>
-                      <TableCell align="center">{row.status}</TableCell>
-                      <TableCell align="center">{row.isAdmin ? 'Admin' : 'Usuario'}</TableCell>
-                      <TableCell align="center">{row.id}</TableCell>
-                      {/* <TableCell align="right">{row.transactionList.map( e => `${e.productId}, `)}</TableCell> */}
-
+                        {row.name}
+                      </TableCell> */}
+                      <TableCell align="left">{row.Producto}</TableCell>
+                      <TableCell align="right">{row.Precio.toLocaleString('de-DE')}</TableCell>
+                      <TableCell align="right">{row.Estado}</TableCell>
+                      <TableCell align="right">{row.Contraparte}</TableCell>
                     </TableRow>
                   );
                 })}
@@ -472,26 +477,18 @@ export default function EnhancedTable( props ) {
         <TablePagination
           rowsPerPageOptions={[10, 20, 30]}
           component="div"
-          count={users.length}
+          count={props.list.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
+        //labelDisplayedRows="Filas"
         />
       </Paper>
-      <Box
-        sx={
-          { 
-            minWidth: 650, display: 'flex', justifyContent: 'space-between',
-          }
-        }
-      >
-        <FormControlLabel
-          control={<Switch checked={dense} onChange={handleChangeDense} />}
-          label="Diseño compacto"
-          />
-        <ExportToExcel apiData={users} fileName='Usuarios'/>
-      </Box>
+      <FormControlLabel
+        control={<Switch checked={dense} onChange={handleChangeDense} />}
+        label="Densidad"
+      />
     </Box>
   );
 }

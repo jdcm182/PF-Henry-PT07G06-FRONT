@@ -38,6 +38,7 @@ export default function PerfilUser() {
     const [dis,setDis]=useState(true)
 
 useEffect(()=>{
+
   dispatch(getUser())
   
 },[])

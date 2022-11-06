@@ -118,7 +118,7 @@ export default function SellForm() {
         [e.target.name]:e.target.value})
     }
 
-    console.log(data)
+   
       setError(
         validate({...data,
           [e.target.name]:e.target.value})

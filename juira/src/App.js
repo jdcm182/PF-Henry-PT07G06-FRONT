@@ -1,5 +1,6 @@
 //import logo from './logo.svg';
 import "./App.css";
+import axios from "axios";
 
 import { BrowserRouter, Switch, Route, useLocation } from "react-router-dom";
 import Landing from "./components/Landing/Landing.jsx";
@@ -16,7 +17,7 @@ import Register from "./components/Login/Register";
 import ScrollToTop from "./components/ScrollToTop";
 import Favorites from "./components/Favorites/Favorites";
 import OrdenDeCompra from "./components/OrdenDeCompra/OrdenDeCompra";
-import { refreshData } from "./redux/actions/app.actions";
+import { refreshData, setSpinnerLoading } from "./redux/actions/app.actions";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import GuestNavigator from "./Navigator/GuestNavigator";
@@ -48,13 +49,13 @@ function App() {
     }
   }, [reloadSesion, role]);
 
+  
+
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
         <BrowserRouter>
           <ScrollToTop />
-          {console.log("role1", role, !role)}
-
           {!role && <GuestNavigator />}
           {role === "usuario" && <UserNavigator />}
           {role === "admin" && <AdminNavigator />}

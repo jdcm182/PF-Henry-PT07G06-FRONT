@@ -15,6 +15,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import LogoutIcon from "@mui/icons-material/Logout";
 import AddBusinessIcon from "@mui/icons-material/AddBusiness";
 import InsertChartIcon from "@mui/icons-material/InsertChart";
 import DashboardIcon from "@mui/icons-material/Dashboard";
@@ -26,7 +27,9 @@ import { useSelector, useDispatch } from "react-redux";
 /* import { updateDisplayed } from '../../redux/actions/products.actions'; */
 import style from "./Navbar.module.css";
 import image from "../media/juira_white.png";
-import { updateFilter } from "../../redux/actions/app.actions";
+import imageMobile from "../media/JuiraMobile.jpg";
+
+import { logoOutAction, updateFilter } from "../../redux/actions/app.actions";
 import {
   updateCart,
   updateFavorites,
@@ -89,7 +92,8 @@ export default function PrimarySearchAppBar() {
     }
     const favoritesLocal = localStorage.getItem("itemsInFavorites");
     let favorites = [];
-    if (favoritesLocal) favorites = JSON.parse(localStorage.getItem("itemsInFavorites"));
+    if (favoritesLocal)
+      favorites = JSON.parse(localStorage.getItem("itemsInFavorites"));
     if (favorites) {
       dispatch(updateFavorites(favorites));
     }
@@ -146,7 +150,7 @@ export default function PrimarySearchAppBar() {
     <Menu
       anchorEl={anchorEl}
       anchorOrigin={{
-        vertical: "top",
+        vertical: "bottom",
         horizontal: "right",
       }}
       id={menuId}
@@ -158,8 +162,38 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <Link
+        component={RouterLink}
+        to="/juira/login"
+        underline="none"
+        sx={{ color: "" }}
+      >
+        <MenuItem
+          style={{ color: "var(--primaryColor)" }}
+          onClick={() => {
+            handleMenuClose();
+          }}
+        >
+          <IconButton size="large" color="inherit">
+            <AccountCircle />
+          </IconButton>
+          <p>Perfil</p>
+        </MenuItem>
+      </Link>
+
+      <MenuItem
+        style={{ color: "var(--primaryColor)" }}
+        onClick={() => {
+          dispatch(logoOutAction());
+          handleMenuClose();
+          history.push(`/juira`);
+        }}
+      >
+        <IconButton size="large" color="inherit">
+          <LogoutIcon />
+        </IconButton>
+        <p>Cerrar Sesion</p>
+      </MenuItem>
     </Menu>
   );
 
@@ -190,10 +224,10 @@ export default function PrimarySearchAppBar() {
           <MenuItem style={{ color: "var(--primaryColor)" }}>
             <IconButton
               size="large"
-              aria-label={`show ${itemsInCart.length} new notifications`}
+              /* aria-label={`show ${itemsInCart.length} new notifications`} */
               color="inherit"
             >
-              <Badge badgeContent={itemsInCart.length} color="error">
+              <Badge /* badgeContent={itemsInCart.length} */ color="error">
                 <AddBusinessIcon />
               </Badge>
             </IconButton>
@@ -211,10 +245,10 @@ export default function PrimarySearchAppBar() {
           <MenuItem style={{ color: "var(--primaryColor)" }}>
             <IconButton
               size="large"
-              aria-label={`show ${itemsInCart.length} new notifications`}
+              aria-label={`show ${itemsFavorites.length} new notifications`}
               color="inherit"
             >
-              <Badge badgeContent={itemsInCart.length} color="error">
+              <Badge badgeContent={itemsFavorites.length} color="error">
                 <FavoriteIcon />
               </Badge>
             </IconButton>
@@ -243,20 +277,6 @@ export default function PrimarySearchAppBar() {
           </MenuItem>
         </Link>
       )}
-
-      <Link
-        component={RouterLink}
-        to="/juira/login"
-        underline="none"
-        sx={{ color: "" }}
-      >
-        <MenuItem style={{ color: "var(--primaryColor)" }}>
-          <IconButton size="large" color="inherit">
-            <AccountCircle />
-          </IconButton>
-          <p>Iniciar Sesión / Registrarse</p>
-        </MenuItem>
-      </Link>
       {role && (
         <Link
           component={RouterLink}
@@ -272,6 +292,55 @@ export default function PrimarySearchAppBar() {
           </MenuItem>
         </Link>
       )}
+      {role ? (
+        <Link
+          component={RouterLink}
+          to="/juira/login"
+          underline="none"
+          sx={{ color: "" }}
+        >
+          <MenuItem
+            style={{ color: "var(--primaryColor)" }}
+            onClick={() => {
+              handleMenuClose();
+            }}
+          >
+            <IconButton size="large" color="inherit">
+              <AccountCircle />
+            </IconButton>
+            <p>Perfil</p>
+          </MenuItem>
+        </Link>
+      ) : (
+        <Link
+          component={RouterLink}
+          to="/juira/login"
+          underline="none"
+          sx={{ color: "#ffffff" }}
+        >
+          <MenuItem style={{ color: "var(--primaryColor)" }}>
+            <IconButton size="large" color="inherit">
+              <AccountCircle />
+            </IconButton>
+            <p>Iniciar Sesion</p>
+          </MenuItem>
+        </Link>
+      )}
+      {role && (
+        <MenuItem
+          style={{ color: "var(--primaryColor)" }}
+          onClick={() => {
+            dispatch(logoOutAction());
+            handleMenuClose();
+            history.push(`/juira`);
+          }}
+        >
+          <IconButton size="large" color="inherit">
+            <LogoutIcon />
+          </IconButton>
+          <p>Cerrar Sesion</p>
+        </MenuItem>
+      )}
     </Menu>
   );
 
@@ -286,21 +355,11 @@ export default function PrimarySearchAppBar() {
         style={{ backgroundColor: "var(--primaryColor)" }}
       >
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            sx={{ mr: 2 }}
-          >
-            {/* <MenuIcon /> */}
-          </IconButton>
-
           <Typography
             variant="h6"
             noWrap
             component="div"
-            sx={{ display: { xs: "none", sm: "block" } }}
+            sx={{ display: { sm: "block" } }}
           >
             <Link
               component={RouterLink}
@@ -311,23 +370,33 @@ export default function PrimarySearchAppBar() {
                 dispatch(updateFilter({ name: "sort", value: "A-Z" }));
               }}
             >
-              <img className={style.img} src={image} alt="juria"></img>
+              <Box sx={{ display: { xs: "none", sm: "block" } }}>
+                <img className={style.img} src={image} alt="juria"></img>
+              </Box>
+              <Box sx={{ mr: 2, display: { xs: "block", sm: "none" } }}>
+                <img
+                  style={{ height: "35px", objectFit: "cover" }}
+                  src={imageMobile}
+                  alt="juria"
+                ></img>
+              </Box>
             </Link>
           </Typography>
-          {role !== "admin"&&
-          <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Buscar un producto..."
-              inputProps={{ "aria-label": "search" }}
-              onChange={(e) => handleOnChange(e)}
-              value={input}
-              autoFocus={true}
-              onKeyDown={(e) => handleOnKeyDown(e)}
-            />
-          </Search>}
+          {role !== "admin" && (
+            <Search>
+              <SearchIconWrapper>
+                <SearchIcon />
+              </SearchIconWrapper>
+              <StyledInputBase
+                placeholder="Buscar un producto..."
+                inputProps={{ "aria-label": "search" }}
+                onChange={(e) => handleOnChange(e)}
+                value={input}
+                autoFocus={true}
+                onKeyDown={(e) => handleOnKeyDown(e)}
+              />
+            </Search>
+          )}
           <Box sx={{ flexGrow: 1 }} />
 
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
@@ -389,22 +458,6 @@ export default function PrimarySearchAppBar() {
                 </Tooltip>
               </Link>
             )}
-            <Link
-              component={RouterLink}
-              to="/juira/login"
-              underline="none"
-              sx={{ color: "#ffffff" }}
-            >
-              {/* <AccountCircle /> */}
-              <Tooltip title="Iniciar sesión o registrarse" arrow>
-                <IconButton size="large" color="inherit">
-                  <AccountCircle />
-                  {/* <Typography>
-                    Iniciar Sesion / Registrarse
-                  </Typography> */}
-                </IconButton>
-              </Tooltip>
-            </Link>
 
             {role === "admin" && (
               <Link
@@ -425,13 +478,37 @@ export default function PrimarySearchAppBar() {
             {role === "usuario" && (
               <Link
                 component={RouterLink}
-                to="/juira/userDash"
+                to="/juira/dashboard"
                 underline="none"
                 sx={{ color: "#ffffff" }}
               >
                 <Tooltip title="User Dashboard" arrow>
                   <IconButton size="large" color="inherit">
                     <FolderSharedIcon />
+                  </IconButton>
+                </Tooltip>
+              </Link>
+            )}
+            {role ? (
+              <Tooltip title="Perfil" arrow>
+                <IconButton
+                  size="large"
+                  color="inherit"
+                  onClick={handleProfileMenuOpen}
+                >
+                  <AccountCircle />
+                </IconButton>
+              </Tooltip>
+            ) : (
+              <Link
+                component={RouterLink}
+                to="/juira/login"
+                underline="none"
+                sx={{ color: "#ffffff" }}
+              >
+                <Tooltip title="Iniciar Sesion" arrow>
+                  <IconButton size="large" color="inherit">
+                    <AccountCircle />
                   </IconButton>
                 </Tooltip>
               </Link>

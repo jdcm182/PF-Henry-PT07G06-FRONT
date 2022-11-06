@@ -18,23 +18,18 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
-import DeleteIcon from '@mui/icons-material/Delete';
-import FilterListIcon from '@mui/icons-material/FilterList';
-import RemoveCircleRoundedIcon from '@mui/icons-material/RemoveCircleRounded';
 import { visuallyHidden } from '@mui/utils';
 import toast, { Toaster } from 'react-hot-toast';
-import { useSelector, useDispatch } from 'react-redux';
-import WorkspacePremiumRoundedIcon from '@mui/icons-material/WorkspacePremiumRounded';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle'; // set Published
-import DangerousIcon from '@mui/icons-material/Dangerous'; // set Deleted
+import Button from '@mui/material/Button';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import PauseCircleFilledIcon from '@mui/icons-material/PauseCircleFilled';
+import DangerousIcon from '@mui/icons-material/Dangerous';
 import axios from 'axios';
 import { API_URL_BACKEND } from "../../../api/apiRoute";
 import ExportToExcel from '../ExporToExcel/ExportToExcel';
 
 
-const title = 'Usuarios registrados'
-
-// let rows = [];
+const title = 'Transacciones'
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -71,56 +66,55 @@ const headCells = [
     id: 'id',
     numeric: false,
     disablePadding: true,
-    label: 'ID',
-  },
-  {
-    id: 'name',
-    numeric: false,
-    disablePadding: true,
-    label: 'Nombre',
-  },
-  {
-    id: 'email',
-    numeric: false,
-    disablePadding: true,
-    label: 'Email',
-  },
-  {
-    id: 'phone',
-    numeric: false,
-    disablePadding: true,
-    label: 'Teléfono',
+    label: 'No. de Orden',
   },
   {
     id: 'status',
     numeric: false,
-    disablePadding: true,
-    label: 'Estado',
+    disablePadding: false,
+    label: 'Estado de la orden',
   },
   {
-    id: 'type',
+    id: 'seller',
     numeric: false,
-    disablePadding: true,
-    label: 'Tipo',
-  },,
+    disablePadding: false,
+    label: 'Id. Vendedor',
+  },
+  {
+    id: 'amount',
+    numeric: false,
+    disablePadding: false,
+    label: 'Monto',
+  },
   {
     id: 'date',
     numeric: false,
-    disablePadding: true,
-    label: 'Fecha de registro',
+    disablePadding: false,
+    label: 'Fecha',
   },
-  // {
-  //   id: 'products',
-  //   numeric: false,
-  //   disablePadding: false,
-  //   label: 'Productos',
-  // },
+  {
+    id: 'product',
+    numeric: false,
+    disablePadding: false,
+    label: 'Producto',
+  },
+  {
+    id: 'shoppingOrder',
+    numeric: false,
+    disablePadding: false,
+    label: 'Orden de compra',
+  },
+  {
+    id: 'buyer',
+    numeric: false,
+    disablePadding: false,
+    label: 'Comprador',
+  },
 ];
 
 function EnhancedTableHead(props) {
-
-  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
-
+  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
+    props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -129,16 +123,7 @@ function EnhancedTableHead(props) {
     <TableHead>
       <TableRow>
         <TableCell padding="checkbox">
-          <Checkbox
-            /* color="primary" */
-            style={{ color: 'var(--primaryColor)' }}
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{
-              'aria-label': 'select all desserts',
-            }}
-          />
+      
         </TableCell>
         {headCells.map((headCell) => (
           <TableCell
@@ -176,148 +161,35 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-function EnhancedTableToolbar(props) {
-  const { numSelected, selected, users, setSelected, setUsers} = props;
+const handlePay = (event,clicked,setClicked) => {
+  let id = event.target.value
+  console.log(clicked)
+  // setSelected([])
+  let promise = axios.put(`${API_URL_BACKEND}transactions/${id}`, {state: 'closed'})
+  .then( res => setClicked(!clicked))
 
-  const handleActivate = () => {
-    setSelected([])
-    let reqs = selected.map( p => axios.put(`${API_URL_BACKEND}users/${p}`, {status: 'active'}))
-    let promise = Promise.all(reqs)
-    .then(() => axios.get(`${API_URL_BACKEND}users`))
-    .then((response) => setUsers(response.data))
-    .catch(error => error)
-    toast.promise(promise, {
-      loading: 'Cargando',
-      success: 'Actualizado con éxito',
-      error: 'Ocurrió un error',
-    });
-  }
-  
-  const handleBan = () => {
-    setSelected([])
-    let reqs = selected.map( p => axios.put(`${API_URL_BACKEND}users/${p}`, {status: 'banned'}))
-    let promise = Promise.all(reqs)
-    .then(() => axios.get(`${API_URL_BACKEND}users`))
-    .then((response) => setUsers(response.data))
-    .catch(error => error)
-    toast.promise(promise, {
-      loading: 'Cargando',
-      success: 'Actualizado con éxito',
-      error: 'Ocurrió un error',
-    });
-  }
-  const handleDelete = () => {
-    setSelected([])
-    let reqs = selected.map( p => axios.put(`${API_URL_BACKEND}users/${p}`, {status: 'deleted'}))
-    let promise = Promise.all(reqs)
-    .then(() => axios.get(`${API_URL_BACKEND}users`))
-    .then((response) => setUsers(response.data))
-    .catch(error => error)
-    toast.promise(promise, {
-      loading: 'Cargando',
-      success: 'Actualizado con éxito',
-      error: 'Ocurrió un error',
-    });
-  }
-
-  const handleTypeChange = () => {
-    setSelected([])
-    let reqs = selected.map( p => axios.put(`${API_URL_BACKEND}users/${p}`, {isAdmin: true}))
-    let promise = Promise.all(reqs)
-    .then(() => axios.get(`${API_URL_BACKEND}users`))
-    .then((response) => setUsers(response.data))
-    .catch(error => error)
-    toast.promise(promise, {
-      loading: 'Cargando',
-      success: 'Actualizado con éxito',
-      error: 'Ocurrió un error',
-    });
-  }
-  
-  const getProductsArrayFromIds = (/* selectedIdsGlobal, productsGlobal */) =>  {
-  }
-  
-  return (
-    <Toolbar
-      sx={{
-        pl: { sm: 2 },
-        pr: { xs: 1, sm: 1 },
-        ...(numSelected > 0 && {
-          /* bgcolor: (theme) =>
-            alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity), */
-            bgcolor: () => //console.log('theme: ',theme)
-            alpha('#23c197', 0.12 /* theme.palette.action.activatedOpacity */),
-        }),
-      }}
-    >
-      {numSelected > 0 ? (
-        <Typography
-          sx={{ flex: '1 1 100%' }}
-          color="inherit"
-          variant="subtitle1"
-          component="div"
-        >
-          {numSelected} Usuario(s) seleccionado(s)
-        </Typography>
-      ) : (
-        <Typography
-          sx={{ flex: '1 1 100%' }}
-          variant="h6"
-          id="tableTitle"
-          component="div"
-        >
-          {title}
-        </Typography>
-      )}
-
-      {numSelected > 0 ? (
-        <Box sx={{width:'15rem'}}>
-        <Tooltip title="Activar">
-          <IconButton onClick={() => handleActivate() }>
-            <CheckCircleIcon /> {/* Published */}
-          </IconButton>
-        </Tooltip>
-
-        <Tooltip title="Banear">
-          <IconButton onClick={() => handleBan() }>
-            <RemoveCircleRoundedIcon /> {/* Paused */}
-          </IconButton>
-        </Tooltip>
-
-        <Tooltip title="Convertir en Administrador" onClick={() => handleTypeChange() }>
-          <IconButton>
-            <WorkspacePremiumRoundedIcon /> {/* Deleted */}
-          </IconButton>
-        </Tooltip>
-
-        <Tooltip title="Eliminar" onClick={() => handleDelete() }>
-          <IconButton>
-            <DangerousIcon color='error'/> {/* Deleted */}
-          </IconButton>
-        </Tooltip>
-        </Box>
-      ) : ( "" )}
-    </Toolbar>
-  );
+  toast.promise(promise, {
+    loading: 'Cargando',
+    success: 'Actualizado con éxito',
+    error: 'Ocurrió un error',
+  });
 }
 
-EnhancedTableToolbar.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-};
 
 export default function EnhancedTable( props ) {
-  const { users, setUsers } = props
+  const { transactions, setTransactions, setClicked , clicked } = props
+  const rows = props.transactions
 
-  // products && rows.length===0 && products.forEach( p => rows.push(createData(p.name, p.id, p.status, p.price, p.ownerId) ) )
-  // let products = productsA.map( p => createData(p.name, p.id, p.status, p.price, p.ownerId))
-// console.log(products)
+  const [data, setData] = React.useState(transactions)
+  const fileName = "Transactions"; 
+  console.log(transactions)
+
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('id');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(30);
-  const [update, setUpdate] = React.useState([])
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -327,7 +199,7 @@ export default function EnhancedTable( props ) {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelected = users.map((n) => n.id);
+      const newSelected = rows.map((n) => n.id);
       setSelected(newSelected);
       return;
     }
@@ -371,13 +243,12 @@ export default function EnhancedTable( props ) {
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
-    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - users.length) : 0;
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - transactions.length) : 0;
 
   return (
     <Box sx={{ width: '100%', marginTop: '1rem' }}>
       <Toaster />
       <Paper sx={{ width: '100%', mb: 2 }}>
-        <EnhancedTableToolbar numSelected={selected.length} selected={selected} users={users} setSelected={setSelected} setUsers={setUsers}/>
         <TableContainer>
           <Table
             sx={{ minWidth: 650 }}
@@ -390,12 +261,12 @@ export default function EnhancedTable( props ) {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={users.length}
+              rowCount={rows.length}
             />
             <TableBody>
               {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
-              {stableSort(users, getComparator(order, orderBy))
+              {stableSort(transactions, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.id);
@@ -427,15 +298,16 @@ export default function EnhancedTable( props ) {
                     
                     >
                       <TableCell padding="checkbox">
-                        <Checkbox 
-                          /* sx={{color: 'var(--primaryColor)'}} */
+                        {/* <Checkbox 
                           style={{ color: 'var(--primaryColor)' }}
-                          /* color="primary" */
                           checked={isItemSelected}
                           inputProps={{
                             'aria-labelledby': labelId,
                           }}
-                        />
+                        /> */}
+                        {
+                          row.state === 'received' ? <Button value={row.id} variant="contained" onClick={(e) => handlePay(e, clicked, setClicked)}>Pagar</Button> : null
+                        }
                       </TableCell>
                       <TableCell
                         component="th"
@@ -446,12 +318,13 @@ export default function EnhancedTable( props ) {
                       >
                         {row.id}
                       </TableCell>
-                      <TableCell align="center">{row.name}</TableCell>
-                      <TableCell align="center">{row.emailAddress}</TableCell>
-                      <TableCell align="center">{row.phoneNumber}</TableCell>
-                      <TableCell align="center">{row.status}</TableCell>
-                      <TableCell align="center">{row.isAdmin ? 'Admin' : 'Usuario'}</TableCell>
-                      <TableCell align="center">{row.id}</TableCell>
+                      <TableCell align="center">{row.state}</TableCell>
+                      <TableCell align="center">{row.sellerId}</TableCell>
+                      <TableCell align="center">{row.total.toLocaleString('de-DE')}</TableCell>
+                      <TableCell align="center">{row.createdAt.slice(0, 10) + ' ' + row.createdAt.slice(11,16)}</TableCell>
+                      <TableCell align="center">{row.productId}</TableCell>
+                      <TableCell align="center">{row.shoppingOrderId}</TableCell>
+                      <TableCell align="center">{row.buyerId}</TableCell>
                       {/* <TableCell align="right">{row.transactionList.map( e => `${e.productId}, `)}</TableCell> */}
 
                     </TableRow>
@@ -472,7 +345,7 @@ export default function EnhancedTable( props ) {
         <TablePagination
           rowsPerPageOptions={[10, 20, 30]}
           component="div"
-          count={users.length}
+          count={transactions.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
@@ -490,7 +363,7 @@ export default function EnhancedTable( props ) {
           control={<Switch checked={dense} onChange={handleChangeDense} />}
           label="Diseño compacto"
           />
-        <ExportToExcel apiData={users} fileName='Usuarios'/>
+        <ExportToExcel apiData={transactions} fileName={fileName}/>
       </Box>
     </Box>
   );
