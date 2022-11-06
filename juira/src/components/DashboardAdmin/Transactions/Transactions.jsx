@@ -69,7 +69,7 @@ export default function ShoppingOrders() {
 
                 <Container sx={{display:"Flex", flexDirection:"row", justifyContent:"space-evenly", flexWrap: "wrap"}}>
 
-                  <DashCard title="Balance disponible" value={`$ ${balance.total?.toLocaleString('de-DE')}`} info1={ordersQty} info2={`de ${ordersQty}`} />
+                  <DashCard title="Balance disponible" value={`$ ${balance.total ? balance.total?.toLocaleString('de-DE') : 0}`} info1={ordersQty} info2={`de ${ordersQty}`} />
                   
                   {/* <DashCard title="Órdenes pendientes" value={`$ ${totalAmountPending.toLocaleString('de-DE')}`} info1={ordersPendingQty} info2={`de ${ordersQty}`} />
 
