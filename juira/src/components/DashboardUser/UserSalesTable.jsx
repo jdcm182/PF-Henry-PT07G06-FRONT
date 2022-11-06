@@ -182,6 +182,8 @@ export default function UserSalesTable(props) {
 
         return (
 
+            /* !rows || rows.length <= 0 ? "No hay transacciones para mostrar" : */
+
             <TableContainer component={Paper}>
                 <Table aria-label="collapsible table">
                     <TableHead>
@@ -206,8 +208,11 @@ export default function UserSalesTable(props) {
                                 <TableRow key={transactionRow.id}>
 
                                     <TableCell>
-                                        <Button value={transactionRow.id} variant="contained"
-                                            onClick={(e) => handleProductSent(e, setClicked, clicked)}>Ya envié el producto</Button>
+                                        {transactionRow && transactionRow.state && transactionRow.state === 'pending'
+                                            ? <Button value={transactionRow.id} variant="contained"
+                                                onClick={(e) => handleProductSent(e, setClicked, clicked)}>Ya envié el producto</Button>
+                                            : null
+                                        }
                                     </TableCell>
                                     <TableCell component="th" scope="row" >
                                         {transactionRow.id}

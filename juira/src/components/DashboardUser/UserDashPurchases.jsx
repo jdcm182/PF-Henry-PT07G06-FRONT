@@ -21,7 +21,7 @@ export default function UserDashPurchases(props) {
             {/* <UserDashTable title="Compras" list={props.list} /> */}
             {props.list?.length > 0
                 ? <UserPurchasesTable list={props.list} setClicked={setClicked} clicked={clicked} />
-                : "No hay ordenes para mostrar"}
+                : "No hay ordenes para mostrar."}
 
 
         </Container>

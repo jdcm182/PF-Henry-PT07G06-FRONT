@@ -93,8 +93,11 @@ function Row(props) {
                                         <TableRow key={transactionRow.id}>
 
                                             <TableCell>
-                                                <Button value={transactionRow.id} variant="contained"
-                                                    onClick={(e) => handleProductReceived(e, setClicked, clicked)}>Ya recibí el producto</Button>
+                                                {transactionRow && transactionRow.state && transactionRow.state === 'sent'
+                                                    ? <Button value={transactionRow.id} variant="contained"
+                                                        onClick={(e) => handleProductReceived(e, setClicked, clicked)}>Ya recibí el producto</Button>
+                                                    : null
+                                                }
                                             </TableCell>
                                             <TableCell component="th" scope="row" >
                                                 {transactionRow.id}

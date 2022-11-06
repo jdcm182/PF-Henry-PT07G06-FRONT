@@ -44,7 +44,10 @@ export default function UserDashSales(props) {
             }} >
 
             {/* <UserDashTable title="Ventas" list={props.list} /> */}
-            <UserSalesTable title="Ventas" list={list} setClicked={setClicked} clicked={clicked} />
+            {list?.length > 0
+                ? <UserSalesTable title="Ventas" list={list} setClicked={setClicked} clicked={clicked} />
+                : "No hay transferencias para mostrar."
+            }
 
             {/* <ProductsTable/> */}
             {/* <EnhancedTable items={products} className={classes.palette} /> */}
