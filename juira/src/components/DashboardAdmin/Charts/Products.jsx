@@ -24,7 +24,7 @@ export default function ProductsChart() {
 
     const data = [
         {
-          name: "Usuarios",
+          name: "Productos",
           Activos: activeProducts,
           Pausados: pausedProducts,
           Eliminados: deletedProducts,
