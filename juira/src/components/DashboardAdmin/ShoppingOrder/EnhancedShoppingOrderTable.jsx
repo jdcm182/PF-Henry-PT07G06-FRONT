@@ -31,7 +31,7 @@ import PauseCircleFilledIcon from '@mui/icons-material/PauseCircleFilled'; // se
 import DangerousIcon from '@mui/icons-material/Dangerous'; // set Deleted
 import axios from 'axios';
 import { API_URL_BACKEND } from "../../../api/apiRoute";
-// const orders = require('./orders.json')
+import ExportToExcel from '../ExporToExcel/ExportToExcel';
 
 const title = 'Órdenes de compra'
 
@@ -132,9 +132,8 @@ function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
-          <Checkbox
-            /* color="primary" */
+        {/* <TableCell padding="checkbox"> */}
+          {/* <Checkbox
             style={{ color: 'var(--primaryColor)' }}
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
@@ -142,8 +141,8 @@ function EnhancedTableHead(props) {
             inputProps={{
               'aria-label': 'select all desserts',
             }}
-          />
-        </TableCell>
+          /> */}
+        {/* </TableCell> */}
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
@@ -192,35 +191,14 @@ function EnhancedTableToolbar(props) {
   }, [selected])
 
   const handlePublish = async () => {
-    // setSelected([])
-    // let reqs = selected.map( p => axios.put(`${API_URL_BACKEND}products/${p}`, { id: p, status: 'Publicado'}))
-    // let promise = Promise.all(reqs).then(res => dispatch(getAllProducts()))
-    // toast.promise(promise, {
-    //   loading: 'Cargando',
-    //   success: 'Actualizado con éxito',
-    //   error: 'Ocurrió un error',
-    // });
+
   }
   
   const handlePause = async () => {
-    //  setSelected([])
-    // let reqs = selected.map( p => axios.put(`${API_URL_BACKEND}products/${p}`, { id: p, status: 'En pausa'}))
-    // let promise = Promise.all(reqs).then(res => dispatch(getAllProducts()))
-    // toast.promise(promise, {
-    //   loading: 'Cargando',
-    //   success: 'Actualizado con éxito',
-    //   error: 'Ocurrió un error',
-    // });
+
   }
   const handleDelete = async () => {
-    // setSelected([])
-    // let reqs = selected.map( p => axios.put(`${API_URL_BACKEND}products/${p}`, { id: p, status: 'Eliminado'}))
-    // let promise = Promise.all(reqs).then(res => dispatch(getAllProducts()))
-    // toast.promise(promise, {
-    //   loading: 'Cargando',
-    //   success: 'Actualizado con éxito',
-    //   error: 'Ocurrió un error',
-    // });
+
   }
   
   const getProductsArrayFromIds = (/* selectedIdsGlobal, productsGlobal */) =>  {
@@ -291,17 +269,7 @@ EnhancedTableToolbar.propTypes = {
 export default function EnhancedTable( props ) {
   const { orders, setOrders } = props
   const rows = props.orders
-  // console.log(rows)
-  //const [products, setProducts] = React.useState(props.products);
 
-  // let products = null;
-  // products = useSelector((state) => state.productsReducer);
-  // const dispatch = useDispatch();
-  // products.length===0 && dispatch(getAllProducts());
-
-  // products && rows.length===0 && products.forEach( p => rows.push(createData(p.name, p.id, p.status, p.price, p.ownerId) ) )
-  // let products = productsA.map( p => createData(p.name, p.id, p.status, p.price, p.ownerId))
-// console.log(products)
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('id');
   const [selected, setSelected] = React.useState([]);
@@ -408,7 +376,7 @@ export default function EnhancedTable( props ) {
                   return (
                     <TableRow
                     hover
-                    onClick={(event) => handleClick(event, row.id)}
+                    // onClick={(event) => handleClick(event, row.id)}
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
@@ -416,17 +384,15 @@ export default function EnhancedTable( props ) {
                     selected={isItemSelected}
                     
                     >
-                      <TableCell padding="checkbox">
+                      {/* <TableCell padding="checkbox">
                         <Checkbox 
-                          /* sx={{color: 'var(--primaryColor)'}} */
                           style={{ color: 'var(--primaryColor)' }}
-                          /* color="primary" */
                           checked={isItemSelected}
                           inputProps={{
                             'aria-labelledby': labelId,
                           }}
                         />
-                      </TableCell>
+                      </TableCell> */}
                       <TableCell
                         component="th"
                         id={labelId}
@@ -468,10 +434,19 @@ export default function EnhancedTable( props ) {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Diseño compacto"
-      />
+      <Box
+        sx={
+          { 
+            minWidth: 650, display: 'flex', justifyContent: 'space-between',
+          }
+        }
+      >
+        <FormControlLabel
+          control={<Switch checked={dense} onChange={handleChangeDense} />}
+          label="Diseño compacto"
+          />
+        <ExportToExcel apiData={orders} fileName='Ordenes de compra'/>
+      </Box>
     </Box>
   );
 }

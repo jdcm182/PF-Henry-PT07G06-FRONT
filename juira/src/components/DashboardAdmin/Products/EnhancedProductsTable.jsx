@@ -30,6 +30,7 @@ import PauseCircleFilledIcon from '@mui/icons-material/PauseCircleFilled'; // se
 import DangerousIcon from '@mui/icons-material/Dangerous'; // set Deleted
 import axios from 'axios';
 import { API_URL_BACKEND } from "../../../api/apiRoute";
+import ExportToExcel from '../ExporToExcel/ExportToExcel';
 
 const title = 'Productos'
 
@@ -290,7 +291,6 @@ export default function EnhancedTable( props ) {
   };
 
   const handleSelectAllClick = (event) => {
-    console.log(event)
     if (event.target.checked) {
       const newSelected = rows.map((n) => n.id);
       // const aux = rows.filter((n) => n.status !== 'Vendido');
@@ -440,10 +440,19 @@ export default function EnhancedTable( props ) {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Diseño compacto"
-      />
+      <Box
+        sx={
+          { 
+            minWidth: 650, display: 'flex', justifyContent: 'space-between',
+          }
+        }
+      >
+        <FormControlLabel
+          control={<Switch checked={dense} onChange={handleChangeDense} />}
+          label="Diseño compacto"
+          />
+        <ExportToExcel apiData={rows} fileName='Productos'/>
+      </Box>
     </Box>
   );
 }

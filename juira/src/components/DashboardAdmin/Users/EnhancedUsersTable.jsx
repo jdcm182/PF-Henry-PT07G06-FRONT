@@ -29,6 +29,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle'; // set Published
 import DangerousIcon from '@mui/icons-material/Dangerous'; // set Deleted
 import axios from 'axios';
 import { API_URL_BACKEND } from "../../../api/apiRoute";
+import ExportToExcel from '../ExporToExcel/ExportToExcel';
 
 
 const title = 'Usuarios registrados'
@@ -478,10 +479,19 @@ export default function EnhancedTable( props ) {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Diseño compacto"
-      />
+      <Box
+        sx={
+          { 
+            minWidth: 650, display: 'flex', justifyContent: 'space-between',
+          }
+        }
+      >
+        <FormControlLabel
+          control={<Switch checked={dense} onChange={handleChangeDense} />}
+          label="Diseño compacto"
+          />
+        <ExportToExcel apiData={users} fileName='Usuarios'/>
+      </Box>
     </Box>
   );
 }
