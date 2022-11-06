@@ -292,7 +292,9 @@ export default function EnhancedTable( props ) {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelected = rows.map((n) => n.id);
+      // const newSelected = rows.map((n) => n.id);
+      const aux = rows.filter((n) => n.status !== 'Vendido');
+      const newSelected = aux.map((n) => n.id);
       setSelected(newSelected);
       return;
     }
@@ -393,13 +395,13 @@ export default function EnhancedTable( props ) {
                     >
                       <TableCell padding="checkbox">
                         <Checkbox 
-                          /* sx={{color: 'var(--primaryColor)'}} */
-                          style={{ color: 'var(--primaryColor)' }}
-                          /* color="primary" */
+                          style={row.status === 'Vendido' ? {} : { color: 'var(--primaryColor)' }}
                           checked={isItemSelected}
                           inputProps={{
                             'aria-labelledby': labelId,
+                            'disabled': row.status === 'Vendido' ? true : false,
                           }}
+                          // disabled={true}
                         />
                       </TableCell>
                       <TableCell
