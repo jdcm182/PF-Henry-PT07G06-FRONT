@@ -119,8 +119,7 @@ function EnhancedTableHead(props) {
     <TableHead>
       <TableRow>
         <TableCell padding="checkbox">
-          <Checkbox
-            /* color="primary" */
+          {/* <Checkbox
             style={{ color: 'var(--primaryColor)' }}
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
@@ -128,7 +127,7 @@ function EnhancedTableHead(props) {
             inputProps={{
               'aria-label': 'select all desserts',
             }}
-          />
+          /> */}
         </TableCell>
         {headCells.map((headCell) => (
           <TableCell
@@ -291,10 +290,11 @@ export default function EnhancedTable( props ) {
   };
 
   const handleSelectAllClick = (event) => {
+    console.log(event)
     if (event.target.checked) {
-      // const newSelected = rows.map((n) => n.id);
-      const aux = rows.filter((n) => n.status !== 'Vendido');
-      const newSelected = aux.map((n) => n.id);
+      const newSelected = rows.map((n) => n.id);
+      // const aux = rows.filter((n) => n.status !== 'Vendido');
+      // const newSelected = aux.map((n) => n.id);
       setSelected(newSelected);
       return;
     }
@@ -385,7 +385,7 @@ export default function EnhancedTable( props ) {
                   return (
                     <TableRow
                     hover
-                    onClick={(event) => handleClick(event, row.id)}
+                    onClick={row.status === 'Vendido' ? null : (event) => handleClick(event, row.id)}
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
@@ -399,9 +399,8 @@ export default function EnhancedTable( props ) {
                           checked={isItemSelected}
                           inputProps={{
                             'aria-labelledby': labelId,
-                            'disabled': row.status === 'Vendido' ? true : false,
                           }}
-                          // disabled={true}
+                          disabled={row.status === 'Vendido' ? true : false}
                         />
                       </TableCell>
                       <TableCell
