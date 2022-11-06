@@ -22,8 +22,9 @@ import EditIcon from '@mui/icons-material/Edit';
 import { useEffect } from 'react';
 import Rating from '@mui/material/Rating';
 import { useState } from 'react';
-
-
+import Badge from '@mui/material/Badge';
+import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
+import axios from 'axios';
 
 
 
@@ -37,15 +38,15 @@ export default function PerfilUser() {
     const [dis,setDis]=useState(true)
 
 useEffect(()=>{
-  
+
   dispatch(getUser())
   
 },[])
 
-
+let userToken = useSelector((state) => state.app.token.token)
 let u = useSelector((state) => state.app.user)||
 {name: 'marian',
- image: 'https://res.cloudinary.com/duq1tcwjw/image/upload/v1667528158/DB_PF_USERS/WIN_20221004_19_35_55_Pro_bdshf1.jpg',
+ image: '',
  emailAddress: "marisalez@juira.com",
  rating:3,
  homeAddress:"Sarmiento 603",
@@ -55,6 +56,49 @@ let u = useSelector((state) => state.app.user)||
 };
 
 const [userData, setUserData]=useState(u)
+
+
+const [selectedImage, setSelectedImage]=useState('')
+const [previewSource, setPreviewSource]= useState()
+
+let handleFileInputChange=(e)=>{
+  const file=e.target.files[0]
+  setSelectedImage(file)
+  previewFile(file)
+  handleImage()
+  
+}
+
+const previewFile=(file)=>{
+  const reader= new FileReader()
+  reader.readAsDataURL(file)
+  reader.onloadend=()=>{
+    setPreviewSource(reader.result)
+  }
+}
+
+let handleImage=async(e)=>{
+
+ 
+  const formData=new FormData()
+  formData.append('file', selectedImage)
+  formData.append("upload_preset",'DB_PF_USERS' )
+  await fetch ('https://api.cloudinary.com/v1_1/duq1tcwjw/image/upload',{
+    method: 'POST',
+    body:formData,
+    headers:{
+      'Content-Type': 'application/json'
+    }
+  }
+  )
+  .then((response)=>(response.json()))
+  .then((response)=>{setUserData({...userData, image: response.data.secure_url})})
+
+}
+ 
+
+
+
 
 
     const handleLogOut=async()=>{
@@ -78,6 +122,7 @@ const [userData, setUserData]=useState(u)
     };
 
     const handleSubmit=()=>{
+      
       dispatch(editUser(u.id,userData))
       handleEdit()
     }
@@ -87,9 +132,20 @@ const [userData, setUserData]=useState(u)
          <Card sx={{ maxWidth: 1, my:3,mx:8, p:3, alignContent:'center', justifyContent: 'center'}}>
       <CardHeader
         avatar={
-          <Avatar sx={{width:150, height:150}} aria-label="User">
-            <img src={userData.image || 'https://res.cloudinary.com/duq1tcwjw/image/upload/v1667600965/DB_PF_USERS/user_sin_imagen_htrvzg.png'}/>
+          <Badge anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right',
+          }} badgeContent={<IconButton  disabled={dis} sx={{color:'var(--primaryColor)'}}/* color="success" */ aria-label="upload picture" component="label">
+          <input hidden accept="image/*" type="file" id="upload_widget" onChange={handleFileInputChange} />
+          <AddAPhotoIcon  />
+        </IconButton>
+            }>
+            <Avatar sx={{width:150, height:150}} aria-label="User">
+            <img src={previewSource || userData.image || 'https://res.cloudinary.com/duq1tcwjw/image/upload/v1667600965/DB_PF_USERS/user_sin_imagen_htrvzg.png'}/>
           </Avatar>
+
+          </Badge>
+          
         }
         action={
           <IconButton aria-label="settings" onClick={handleEdit}>
@@ -113,9 +169,20 @@ const [userData, setUserData]=useState(u)
         </Typography>
 <CardContent sx={{m:2, display:'flex', justifyContent: 'space-around', textAlign: 'center'}}>
         <Box>
-          <Box sx={{display:'flex'}}>
+        <Box sx={{display:'flex'}}>
           <Typography paragraph sx={{mb:4, fontSize:20}}>
            Dirección: 
+          </Typography>
+          <TextField  name='homeAddress'
+          onChange={handleOnChange} 
+          sx={{ml:2}} 
+          inputProps={{style: {fontSize: 20}}}
+          disabled={dis} value={userData.homeAddress || ''}
+          variant='standard'/>
+          </Box>
+          <Box sx={{display:'flex'}}>
+          <Typography paragraph sx={{mb:4, fontSize:20}}>
+           Correo electronico: 
           </Typography>
           <TextField  name='emailAddress'
           onChange={handleOnChange} 
