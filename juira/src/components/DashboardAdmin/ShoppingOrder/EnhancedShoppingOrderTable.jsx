@@ -470,7 +470,7 @@ export default function EnhancedTable( props ) {
       </Paper>
       <FormControlLabel
         control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Densidad"
+        label="Diseño compacto"
       />
     </Box>
   );
