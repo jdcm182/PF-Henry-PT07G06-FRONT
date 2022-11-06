@@ -12,6 +12,9 @@ import UserDashSales from './UserDashSales'
 import UserDashPurchases from './UserDashPurchases'
 import UserChart from './UserDashChart'
 
+import { API_URL_BACKEND } from '../../api/apiRoute.js';
+import axios from 'axios';
+
 
 
 
@@ -19,6 +22,168 @@ import UserChart from './UserDashChart'
 export default function Dashboard() {
 
   const [value, setValue] = React.useState(0);
+
+  const [myShoppingOrders, setMyShoppingOrders] = React.useState([]);
+  //const [myTransactions, setMyTransactions] = React.useState([]);
+
+  /*   let res = [];
+    axios.get(`${API_URL_BACKEND}shoppingOrders/byToken`)
+      .then(response => res = response.data)
+      .then(() => myShoppingOrders.length > 0 && setMyShoppingOrders(res))
+  
+    console.log('Dashboard Usuario > myShoppingOrders: ', myShoppingOrders)
+   */
+
+
+  const fetchOrders = async () => {
+    const response = await axios(`${API_URL_BACKEND}shoppingOrders/byToken`)
+    if (Array.isArray(response.data)) setMyShoppingOrders(response.data);
+    //const response = await axios(`http://localhost:3001/shoppingOrders/byToken`)
+    //console.log('User Dashboard > fetchOrders > response.data: ', response.data)
+    //console.log('User Dashboard > API_URL_BACKEND: ', API_URL_BACKEND) 
+    //       https://pf-henry-pt07g06-back-production.up.railway.app/
+  }
+  useEffect(() => {
+    fetchOrders()
+  }, [])
+
+  //console.log('User Dashboard > myShoppingOrders', JSON.stringify(myShoppingOrders))
+
+  const items = [
+    {
+      cartId: 9,
+      createdAt: "2022-11-05T22:24:41.082Z",
+      id: 1,
+      merchant_id: "6394909098",
+      paymentReceived: true,
+      payment_id: "51215480488",
+      preference_id: "1223144793-22cf1e14-68bc-41c8-ab19-45c0a3afb758",
+      state: "approved",
+      total: 8950,
+      transactionList: [
+        {
+          buyerId: 9,
+          createdAt: "2022-11-05T22:24:41.087Z",
+          id: 1,
+          productId: 37,
+          sellerId: 2,
+          shoppingOrderId: 1,
+          state: "pending",
+          total: 8600,
+          updatedAt: "2022-11-05T22:24:41.087Z",
+        },
+        {
+          buyerId: 9,
+          createdAt: "2022-11-05T22:24:41.087Z",
+          id: 2,
+          productId: 36,
+          sellerId: 5,
+          shoppingOrderId: 1,
+          state: "pending",
+          total: 350,
+          updatedAt: "2022-11-05T22:24:41.087Z",
+        }
+      ]
+    },
+    {
+      cartId: 9,
+      createdAt: "2022-11-05T22:26:00.251Z",
+      id: 2,
+      merchant_id: "6394926942",
+      paymentReceived: true,
+      payment_id: "51215527849",
+      preference_id: "1223144793-0651967d-3cfd-4069-a986-7d2edfe13778",
+      state: "approved",
+      total: 33000,
+      transactionList: [
+        {
+          buyerId: 9,
+          createdAt: "2022-11-05T22:26:00.255Z",
+          id: 3,
+          productId: 20,
+          sellerId: 2,
+          shoppingOrderId: 2,
+          state: "pending",
+          total: 33000,
+          updatedAt: "2022-11-05T22:26:00.255Z",
+        },
+        {
+
+        }
+      ],
+      updatedAt: "2022-11-05T22:26:27.484Z",
+    }
+  ];
+
+  const myShoppingOrders2 = [
+    {
+      "id": 1,
+      "state": "approved",
+      "total": 8950,
+      "paymentReceived": true,
+      "payment_id": "51215480488",
+      "preference_id": "1223144793-22cf1e14-68bc-41c8-ab19-45c0a3afb758",
+      "merchant_id": "6394909098",
+      "createdAt": "2022-11-05T22:24:41.082Z",
+      "updatedAt": "2022-11-05T22:24:58.351Z",
+      "cartId": 9,
+      "transactionList": [
+        {
+          "id": 1,
+          "state": "pending",
+          "sellerId": 2,
+          "total": 8600,
+          "createdAt": "2022-11-05T22:24:41.087Z",
+          "updatedAt": "2022-11-05T22:24:41.087Z",
+          "productId": 37,
+          "shoppingOrderId": 1,
+          "buyerId": 9
+        },
+        {
+          "id": 2,
+          "state": "pending",
+          "sellerId": 5,
+          "total": 350,
+          "createdAt": "2022-11-05T22:24:41.087Z",
+          "updatedAt": "2022-11-05T22:24:41.087Z",
+          "productId": 36,
+          "shoppingOrderId": 1,
+          "buyerId": 9
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "state": "approved",
+      "total": 33000,
+      "paymentReceived": true,
+      "payment_id": "51215527849",
+      "preference_id": "1223144793-0651967d-3cfd-4069-a986-7d2edfe13778",
+      "merchant_id": "6394926942",
+      "createdAt": "2022-11-05T22:26:00.251Z",
+      "updatedAt": "2022-11-05T22:26:27.484Z",
+      "cartId": 9,
+      "transactionList": [
+        {
+          "id": 3,
+          "state": "pending",
+          "sellerId": 2,
+          "total": 33000,
+          "createdAt": "2022-11-05T22:26:00.255Z",
+          "updatedAt": "2022-11-05T22:26:00.255Z",
+          "productId": 20,
+          "shoppingOrderId": 2,
+          "buyerId": 9
+        }
+      ]
+    }
+  ]
+
+
+
+
+
+
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -36,7 +201,7 @@ export default function Dashboard() {
     { id: 5, Producto: 'Cemento', Precio: 1000, Estado: 'Usado', Contraparte: 'jdcm' },
     { id: 6, Producto: 'Cartas', Precio: 3000, Estado: 'Usado', Contraparte: 'jdcm' },
   ]
-  console.log(myPurchases, '\n', mySales)
+  //console.log(myPurchases, '\n', mySales)
 
 
 
@@ -63,14 +228,13 @@ export default function Dashboard() {
   const textColorDash = '#FFFFFF'; // White
 
 
-
   /* const css = `
   #main {
-      width: 300px;
-      height:200px;
-      background-color: #333;
+    width: 300px;
+    height: 200px;
+    background - color: #333;
   }
-` 
+  ` 
 
    return (
       <div class="my-element">
@@ -104,8 +268,6 @@ export default function Dashboard() {
       ]
   }; */
 
-  // Display the chart using the configuration items and data just specified.
-  // myChart.setOption(option);
 
   return (
     <Container sx={{ boxShadow: '0 0 15px 5px #cccccc55', padding: 5, width: '100' }}>
@@ -160,7 +322,8 @@ export default function Dashboard() {
         </Box>
         <TabPanel value={value} index={0}>
           {/* Mis Compras */}
-          {<UserDashPurchases list={myPurchases} />}
+          {/* <UserDashPurchases list={myPurchases} /> */}
+          {<UserDashPurchases list={myShoppingOrders} />}
         </TabPanel>
         <TabPanel value={value} index={1}>
           {/* Mis Ventas */}
@@ -187,8 +350,8 @@ function TabPanel(props) {
     <div
       role="tabpanel"
       hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
+      id={`simple - tabpanel - ${index} `}
+      aria-labelledby={`simple - tab - ${index} `}
       {...other}
     >
       {value === index && (
@@ -208,8 +371,8 @@ TabPanel.propTypes = {
 
 function a11yProps(index) {
   return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    id: `simple - tab - ${index} `,
+    'aria-controls': `simple - tabpanel - ${index} `,
   };
 }
 

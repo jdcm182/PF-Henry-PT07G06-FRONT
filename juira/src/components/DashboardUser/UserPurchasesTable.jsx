@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 //import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -24,6 +24,11 @@ import Button from '@mui/material/Button';
         },
     },
 }); */
+const parseDate = (str) => {
+    //console.log(str);
+    //console.log(str.slice(0, 10))
+    return str.slice(0, 10).split('-').reverse().join('/');
+}
 
 function Row(props) {
     const { row } = props;
@@ -41,7 +46,7 @@ function Row(props) {
                 <TableCell component="th" scope="row" align="center">
                     {row.id}
                 </TableCell>
-                <TableCell align="right">{row.createdAt}</TableCell>
+                <TableCell align="right">{parseDate(row.createdAt)}</TableCell>
                 <TableCell align="center">{row.state}</TableCell>
                 <TableCell align="right">{row.total.toLocaleString('de-DE')}</TableCell>
                 <TableCell align="center">{row.paymentReceived ? 'Si' : 'No'}</TableCell>
@@ -59,7 +64,7 @@ function Row(props) {
                                     <TableRow>
 
                                         {/*Subtable > Transactions */}
-                                        <TableCell>No. de Transaccion</TableCell>
+                                        <TableCell>Nº{/* o. de Transaccion */}</TableCell>
                                         <TableCell>Estado</TableCell>
                                         <TableCell align="center">Id. Vendedor</TableCell>
                                         <TableCell align="right">Monto</TableCell>
@@ -71,7 +76,7 @@ function Row(props) {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {row.transactionList.map((transactionRow) => (
+                                    {row.transactionList?.map((transactionRow) => (
                                         <TableRow key={transactionRow.id}>
                                             <TableCell component="th" scope="row" >
                                                 {transactionRow.id}
@@ -82,11 +87,11 @@ function Row(props) {
                                                 {transactionRow.total.toLocaleString('de-DE')}
                                                 {/* Math.round(transactionRow.amount * row.price * 100) / 100 */}
                                             </TableCell>
-                                            <TableCell align="right">{transactionRow.createdAt}</TableCell>
+                                            <TableCell align="right">{parseDate(transactionRow.createdAt)}</TableCell>
                                             <TableCell align="center">{transactionRow.productId}</TableCell>
                                             <TableCell align="center">{transactionRow.shoppingOrderId}</TableCell>
                                             <TableCell align="center">{transactionRow.buyerId}</TableCell>
-                                            <TableCell> <Button value={row.id} variant="contained">Recibi el producto</Button> </TableCell>
+                                            <TableCell> <Button value={row.id} variant="contained">Ya recibí el producto</Button> </TableCell>
 
                                         </TableRow>
                                     ))}
@@ -106,19 +111,19 @@ Row.propTypes = {
         state: PropTypes.string.isRequired,
         total: PropTypes.number.isRequired,
         paymentReceived: PropTypes.bool.isRequired,
-        transactions: PropTypes.arrayOf(
+        /* transactions: PropTypes.arrayOf(
             PropTypes.shape({
                 amount: PropTypes.number.isRequired,
                 customerId: PropTypes.string.isRequired,
                 date: PropTypes.string.isRequired,
             }),
-        ).isRequired,
+        ).isRequired, */
         /* name: PropTypes.string.isRequired, */
     }).isRequired,
 };
 
 
-function createData(id, createdAt, state, total, paymentReceived, merchant_id) {
+function createData(id, createdAt, state, total, paymentReceived, merchant_id, transactionList) {
     return {
         id,
         createdAt,
@@ -126,20 +131,21 @@ function createData(id, createdAt, state, total, paymentReceived, merchant_id) {
         total,
         paymentReceived,
         merchant_id,
-        transactionList: [
+        transactionList: transactionList, /* || [
             { id: 100, state: 'pending', sellerId: 20, total: 1350, createdAt: '2022-05-18 11:35', productId: 11, shoppingOrderId: 22, buyerId: 7 },
             { id: 101, state: 'pending', sellerId: 21, total: 7100, createdAt: '2022-06-21 18:48', productId: 12, shoppingOrderId: 22, buyerId: 7 },
             { id: 102, state: 'pending', sellerId: 20, total: 5800, createdAt: '2022-08-05 23:55', productId: 13, shoppingOrderId: 22, buyerId: 7 },
-        ],
+        ], */
     };
 }
 
-const myShoppingOrders = [
-    { id: 1, createdAt: '2022-09-30 08:23', state: 'pending', total: 1000, paymentReceived: true, merchant_id: 9 },
-    { id: 2, createdAt: '2022-10-15 10:23', state: 'pending', total: 2500, paymentReceived: false, merchant_id: 9 },
-    { id: 3, createdAt: '2022-11-05 14:23', state: 'pending', total: 3600, paymentReceived: false, merchant_id: 9 },
+let myShoppingOrders = [];
+myShoppingOrders = [
+    { id: 1, createdAt: '2022-09-30 08:23', state: 'pending', total: 1000, paymentReceived: true, merchant_id: 9, transactionList: [] },
+    { id: 2, createdAt: '2022-10-15 10:23', state: 'pending', total: 2500, paymentReceived: false, merchant_id: 9, transactionList: [] },
+    { id: 3, createdAt: '2022-11-05 14:23', state: 'pending', total: 3600, paymentReceived: false, merchant_id: 9, transactionList: [] },
 ];
-const rows = myShoppingOrders.map(s => createData(s.id, s.createdAt, s.state, s.total, s.paymentReceived, s.merchant_id));
+let rows = myShoppingOrders.map(s => createData(s.id, s.createdAt, s.state, s.total, s.paymentReceived, s.merchant_id, s.transactionList));
 
 //const rows = [
 /* createData('Frozen yoghurt', 159, 6.0, 24, 4.0, 3.99),
@@ -151,33 +157,49 @@ createData('Gingerbread', 356, 16.0, 49, 3.9, 1.5), */
 //createData('Ice cream sandwich', 237, 9.0, 37, 4.3, 4.99),
 //];
 
-export default function UserPurchasesTable() {
+export default function UserPurchasesTable(props) {
+    //const [myShoppingOrders, setMyShoppingOrders] = useState(props.list);
+    try {
+        myShoppingOrders = props.list;
+        //console.log('myShoppingOrders: ', myShoppingOrders)
+        if (!myShoppingOrders) {
+            myShoppingOrders = [
+                { id: 1, createdAt: '2022-09-30 08:23', state: 'pending', total: 1000, paymentReceived: true, merchant_id: 9, transactionList: [] },
+                { id: 2, createdAt: '2022-10-15 10:23', state: 'pending', total: 2500, paymentReceived: false, merchant_id: 9, transactionList: [] },
+                { id: 3, createdAt: '2022-11-05 14:23', state: 'pending', total: 3600, paymentReceived: false, merchant_id: 9, transactionList: [] },
+            ];
+        }
+        console.log('myShoppingOrders: ', myShoppingOrders)
+        rows = myShoppingOrders.map(s => createData(s.id, s.createdAt, s.state, s.total, s.paymentReceived, s.merchant_id, s.transactionList));
 
-    return (
+        return (
 
-        <TableContainer component={Paper}>
-            <Table aria-label="collapsible table">
-                <TableHead>
-                    <TableRow>
+            <TableContainer component={Paper}>
+                <Table aria-label="collapsible table">
+                    <TableHead>
+                        <TableRow>
 
-                        <TableCell />
+                            <TableCell />
 
-                        <TableCell align="center">No. de Orden</TableCell>
-                        <TableCell align="center">Fecha</TableCell>
-                        <TableCell align="center">Estado de la orden</TableCell>
-                        <TableCell align="center">Monto</TableCell>
-                        <TableCell align="center">Pago recibido</TableCell>
-                        <TableCell align="center">Id. Comprador</TableCell>
+                            <TableCell align="center">Nº{/* o. de Orden */}</TableCell>
+                            <TableCell align="center">Fecha</TableCell>
+                            <TableCell align="center">Estado de la orden</TableCell>
+                            <TableCell align="center">Monto</TableCell>
+                            <TableCell align="center">Pago recibido</TableCell>
+                            <TableCell align="center">Id. Comprador</TableCell>
 
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {rows.map((row) => (
-                        <Row key={row.id} row={row} />
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {rows.map((row) => (
+                            <Row key={row.id} row={row} />
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
 
-    );
+        );
+    } catch (e) {
+        console.log(e);
+    }
 }

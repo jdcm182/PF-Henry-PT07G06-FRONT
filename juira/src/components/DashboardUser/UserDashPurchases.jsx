@@ -18,7 +18,7 @@ export default function UserDashPurchases(props) {
 
 
             {/* <UserDashTable title="Compras" list={props.list} /> */}
-            <UserPurchasesTable />
+            <UserPurchasesTable list={props.list} />
 
 
         </Container>
