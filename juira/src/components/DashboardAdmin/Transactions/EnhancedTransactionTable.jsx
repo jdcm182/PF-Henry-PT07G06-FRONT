@@ -301,7 +301,7 @@ export default function EnhancedTable( props ) {
                           }}
                         /> */}
                         {
-                          row.state === 'pending' ? <Button value={row.id} variant="contained" onClick={(e) => handlePay(e, clicked, setClicked)}>Pagar</Button> : null
+                          row.state === 'received' ? <Button value={row.id} variant="contained" onClick={(e) => handlePay(e, clicked, setClicked)}>Pagar</Button> : null
                         }
                       </TableCell>
                       <TableCell
