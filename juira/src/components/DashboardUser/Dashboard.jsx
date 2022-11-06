@@ -205,8 +205,8 @@ export default function Dashboard() {
 
 
 
-  const totalAmountPurchases = myPurchases.reduce((prev, actual) => prev + actual.Precio, 0);
-  const productsQuantityPurchases = myPurchases.length;
+  const totalAmountPurchases = myShoppingOrders.reduce((prev, actual) => prev + actual.total, 0);
+  const productsQuantityPurchases = myShoppingOrders.length;
 
   const totalAmountSales = mySales.reduce((prev, actual) => prev + actual.Precio, 0);
   const productsQuantitySales = mySales.length;
