@@ -16,6 +16,9 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import Button from '@mui/material/Button';
 //import Container from '@material-ui/core/Container';
+import axios from 'axios';
+import { API_URL_BACKEND } from '../../api/apiRoute.js';
+
 
 /* const useRowStyles = makeStyles({
     root: {
@@ -28,6 +31,11 @@ const parseDate = (str) => {
     //console.log(str);
     //console.log(str.slice(0, 10))
     return str.slice(0, 10).split('-').reverse().join('/');
+}
+
+
+const handleProductReceived = async (e) => {
+    const response = await axios.put(`${API_URL_BACKEND}transactions/${e.target.value}`, { state: "received" });
 }
 
 function Row(props) {
@@ -64,6 +72,7 @@ function Row(props) {
                                     <TableRow>
 
                                         {/*Subtable > Transactions */}
+                                        <TableCell></TableCell>
                                         <TableCell>Nº{/* o. de Transaccion */}</TableCell>
                                         <TableCell>Estado</TableCell>
                                         <TableCell align="center">Id. Vendedor</TableCell>
@@ -78,6 +87,11 @@ function Row(props) {
                                 <TableBody>
                                     {row.transactionList?.map((transactionRow) => (
                                         <TableRow key={transactionRow.id}>
+
+                                            <TableCell>
+                                                <Button value={row.id} variant="contained"
+                                                    onClick={(e) => handleProductReceived(e)}>Ya recibí el producto</Button>
+                                            </TableCell>
                                             <TableCell component="th" scope="row" >
                                                 {transactionRow.id}
                                             </TableCell>
@@ -91,7 +105,6 @@ function Row(props) {
                                             <TableCell align="center">{transactionRow.productId}</TableCell>
                                             <TableCell align="center">{transactionRow.shoppingOrderId}</TableCell>
                                             <TableCell align="center">{transactionRow.buyerId}</TableCell>
-                                            <TableCell> <Button value={row.id} variant="contained">Ya recibí el producto</Button> </TableCell>
 
                                         </TableRow>
                                     ))}

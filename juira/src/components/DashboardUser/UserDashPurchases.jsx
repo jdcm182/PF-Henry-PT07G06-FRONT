@@ -18,7 +18,9 @@ export default function UserDashPurchases(props) {
 
 
             {/* <UserDashTable title="Compras" list={props.list} /> */}
-            <UserPurchasesTable list={props.list} />
+            {props.list?.length > 0
+                ? <UserPurchasesTable list={props.list} />
+                : "No hay ordenes para mostrar"}
 
 
         </Container>
