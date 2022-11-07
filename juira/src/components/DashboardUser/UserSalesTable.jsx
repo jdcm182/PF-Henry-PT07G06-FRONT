@@ -134,7 +134,7 @@ Row.propTypes = {
 };
 
 
-function createData(id, state, sellerId, total, createdAt, productId, shoppingOrderId, buyerId) {
+function createData(id, state, sellerId, total, createdAt, productId, shoppingOrderId, buyerId, paymentReceived) {
     return {
         id,
         state,
@@ -144,17 +144,19 @@ function createData(id, state, sellerId, total, createdAt, productId, shoppingOr
         productId,
         shoppingOrderId,
         buyerId,
+        paymentReceived,
     };
 }
 
-let mySales = [];
+/* let mySales = [];
 mySales = [
     { id: 1, createdAt: '2022-09-30 08:23', state: 'pending', total: 1000, paymentReceived: true, merchant_id: 9, transactionList: [] },
     { id: 2, createdAt: '2022-10-15 10:23', state: 'pending', total: 2500, paymentReceived: false, merchant_id: 9, transactionList: [] },
     { id: 3, createdAt: '2022-11-05 14:23', state: 'pending', total: 3600, paymentReceived: false, merchant_id: 9, transactionList: [] },
 ];
-let rows = mySales.map(s => createData(s.id, s.createdAt, s.state, s.total, s.paymentReceived, s.merchant_id, s.transactionList));
-
+rows = mySales.map(s => createData(s.id, s.createdAt, s.state, s.total, s.paymentReceived, s.merchant_id, s.transactionList));
+*/
+let rows = [];
 
 
 export default function UserSalesTable(props) {
@@ -164,9 +166,6 @@ export default function UserSalesTable(props) {
         let mySales = props.list.transactions.asSeller;
         //let mySales = props.list.transactions.asBuyer;   // borrrarrrrr !! usar asSeller
 
-        console.log('mySales: ', mySales)
-
-        console.log('UserSalesTable > props: ', props)
         const { clicked, setClicked } = props;
         //console.log('mySales: ', mySales)
         /* if (!mySales) {
@@ -176,10 +175,10 @@ export default function UserSalesTable(props) {
                 { id: 3, createdAt: '2022-11-05 14:23', state: 'pending', total: 3600, paymentReceived: false, merchant_id: 9, transactionList: [] },
             ];
         } */
-        console.log('mySales: ', mySales)
         //rows = mySales.map(s => createData(s.id, s.createdAt, s.state, s.total, s.paymentReceived, s.merchant_id, s.transactionList));
-        rows = mySales.map(s => createData(s.id, s.state, s.sellerId, s.total, s.createdAt, s.productId, s.shoppingOrderId, s.buyerId));
+        rows = mySales.map(s => createData(s.id, s.state, s.sellerId, s.total, s.createdAt, s.productId, s.shoppingOrderId, s.buyerId, s.shoppingOrder.paymentReceived));
 
+        //console.log('💥 rows: ', rows)
         return (
 
             /* !rows || rows.length <= 0 ? "No hay transacciones para mostrar" : */
