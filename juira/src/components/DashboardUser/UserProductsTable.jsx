@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React/* , { useState } */ from 'react';
 import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box';
 import Collapse from '@material-ui/core/Collapse';
-import IconButton from '@material-ui/core/IconButton';
+//import IconButton from '@material-ui/core/IconButton';
+import Button from '@mui/material/Button';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -16,11 +17,13 @@ import Paper from '@material-ui/core/Paper';
 // import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 // import Button from '@mui/material/Button';
 //import Container from '@material-ui/core/Container';
-import Badge from '@mui/material/Badge';
+//import Badge from '@mui/material/Badge';
 import MailIcon from '@mui/icons-material/Mail';
-import axios from 'axios';
-import { API_URL_BACKEND } from '../../api/apiRoute.js';
+//import axios from 'axios';
+//import { API_URL_BACKEND } from '../../api/apiRoute.js';
 import UserDashViewQA from './UserDashViewQA';
+import SimpleBadge from './SimpleBadge';
+
 
 
 
@@ -157,6 +160,7 @@ let rows = []
 
 
 export default function UserProductsTable(props) {
+    //const { clicked, setClicked } = props;
 
     const [modal, setModal] = React.useState(false);
     const openModal = () => setModal(true);
@@ -174,6 +178,8 @@ export default function UserProductsTable(props) {
         // console.log('👾UserProductsTable > handleViewQA > 👾 productId: ', productId)
     }
 
+
+
     try {
 
         const { list } = props;
@@ -182,7 +188,6 @@ export default function UserProductsTable(props) {
         //console.log('myProducts: ', myProducts)
 
         //console.log('UserProductsTable > props: ', props)
-        const { clicked, setClicked } = props;
         //console.log('myProducts: ', myProducts)
         /* if (!myProducts) {
             myProducts = [
@@ -249,7 +254,7 @@ export default function UserProductsTable(props) {
                                         <TableCell>{productRow.name}</TableCell>
                                         <TableCell align="center">{productRow.status}</TableCell>
                                         <TableCell align="center">
-                                            <IconButton
+                                            <Button
                                                 /* size="large" */
                                                 aria-label={`Ver preguntas del producto`}
                                                 color="inherit"
@@ -257,10 +262,13 @@ export default function UserProductsTable(props) {
                                                 id={productRow.id} // ................... productId ...........................................................
                                                 onClick={(e) => handleViewQA(e, productRow.id, productRow.name)}
                                             >
-                                                <Badge badgeContent={productRow.productQAndA.length} color="primary" /* showZero */>
+                                                <SimpleBadge number={productRow.productQAndA.length}
+                                                    /* classes={{ badge: classes.customBadge }}
+                                                    className={classes.margin}
+                                                    badgeContent={productRow.productQAndA.length} */ /* color="primary" */ /* showZero */>
                                                     <MailIcon color="action" />
-                                                </Badge>
-                                            </ IconButton>
+                                                </SimpleBadge>
+                                            </Button>
                                         </TableCell>
                                         <TableCell align="right">
                                             {productRow.price.toLocaleString('de-DE')}

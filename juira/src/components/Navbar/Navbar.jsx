@@ -385,7 +385,7 @@ export default function PrimarySearchAppBar() {
           {role !== "admin" && (
             <Search>
               <SearchIconWrapper>
-                <SearchIcon sx={{ color: "white" }} />
+                <SearchIcon sx={{ color: "#ffffff" }} />
               </SearchIconWrapper>
               <StyledInputBase
                 placeholder="Buscar un producto..."
@@ -394,7 +394,7 @@ export default function PrimarySearchAppBar() {
                 value={input}
                 autoFocus={true}
                 onKeyDown={(e) => handleOnKeyDown(e)}
-                sx={{ color: "white" }}
+                sx={{ color: "#ffffff" }}
               />
             </Search>
           )}
@@ -496,6 +496,7 @@ export default function PrimarySearchAppBar() {
                   size="large"
                   color="inherit"
                   onClick={handleProfileMenuOpen}
+                  sx={{ color: "#ffffff" }}
                 >
                   <AccountCircle />
                 </IconButton>

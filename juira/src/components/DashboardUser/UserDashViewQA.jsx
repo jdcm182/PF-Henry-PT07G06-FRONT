@@ -12,8 +12,9 @@ const style = {
     transform: 'translate(-50%, -50%)',
     width: 'auto',
     bgcolor: 'background.paper',
-    border: '2px solid #000',
-    borderRadius: '1',
+    border: '0px solid #000',
+    borderColor: 'primary.main',
+    borderRadius: '1rem',
     boxShadow: 24,
     p: 4,
 };
