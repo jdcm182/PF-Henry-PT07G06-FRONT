@@ -6,7 +6,7 @@ import {
   TURN_OFF_SPINNER,
   TURN_ON_SPINNER,
   UPDATE_FILTER_STATE,
-  USER_PROFILE
+  USER_PROFILE,
 } from "../actions/app.actions";
 
 
@@ -35,6 +35,7 @@ export function appReducer(state = initialState, action) {
           token : "",
           role: "",
         },
+        user:{}
       };
     }
 
@@ -76,6 +77,7 @@ export function appReducer(state = initialState, action) {
       }
       
     }
+   
    
     default:
       return state;

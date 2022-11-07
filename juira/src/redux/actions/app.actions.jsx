@@ -14,6 +14,7 @@ export const USER_PROFILE= "USER_PROFILE"
 
 
 
+
 const signInSuccess = (token) => {
   return { type: SIGN_IN, payload: token };
 };
@@ -102,7 +103,6 @@ export const postLogin = async (data) => {
 
   try {
     let json = await axios.post(url, data);
-    console.log(json.data);
     return json.data;
   } catch (error) {
     console.log("error api", error);
@@ -134,6 +134,7 @@ export const editUser = (id,data) => async (dispatch) => {
     console.log("error api", error);
   }
 };
+
 
 
 

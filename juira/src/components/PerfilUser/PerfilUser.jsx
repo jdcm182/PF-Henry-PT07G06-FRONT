@@ -10,7 +10,7 @@ import {
   } from "@mui/material";
 import { styled } from '@mui/material/styles';
 import { getAuth, signOut } from "firebase/auth";
-import {logoOutAction, getUser, editUser} from '../../redux/actions/app.actions'
+import {logoOutAction, getUser, editUser } from '../../redux/actions/app.actions'
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
@@ -25,45 +25,41 @@ import { useState } from 'react';
 import Badge from '@mui/material/Badge';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import axios from 'axios';
+import Loading from '../Loading/Loading'
 
 
 
 export default function PerfilUser() {
+  let u = useSelector((state) => state.app.user)
+
+  useEffect(()=>{
+    console.log('entre a useeffect') 
+    setUserData(u)
+  },[u])
   
     const history = useHistory();
     const auth = getAuth();
-    const user = auth.currentUser;
     const dispatch=useDispatch()
    
     const [dis,setDis]=useState(true)
 
-useEffect(()=>{
 
-  dispatch(getUser())
-  
-},[])
 
 let userToken = useSelector((state) => state.app.token.token)
-let u = useSelector((state) => state.app.user)||
-{name: 'marian',
- image: '',
- emailAddress: "marisalez@juira.com",
- rating:3,
- homeAddress:"Sarmiento 603",
- city: "La Falda",
- region: "Córdoba",
- phoneNumber : "5493513170851",
-};
 
-const [userData, setUserData]=useState(u)
+
+
+
+ const [userData, setUserData]=useState(u)
 
 
 const [previewSource, setPreviewSource]= useState()
 
 let handleFileInputChange=(e)=>{
+  
   const file=e.target.files[0]
   previewFile(file)
-  handleImage()
+  handleImage(file)
   
 }
 
@@ -75,11 +71,11 @@ const previewFile=(file)=>{
   }
 }
 
-let handleImage=async(e)=>{
+let handleImage=async(file)=>{
 
  
   const formData=new FormData()
-  formData.append('file', previewSource)
+  formData.append('file', file)
   formData.append("upload_preset",'DB_PF_USERS' )
   delete axios.defaults.headers.common["Authorization"];
   await axios.post('https://api.cloudinary.com/v1_1/duq1tcwjw/image/upload', 
@@ -96,10 +92,20 @@ let handleImage=async(e)=>{
 
 
     const handleLogOut=async()=>{
+      dispatch(logoOutAction())
+      setUserData({name: '',
+      image: '',
+      emailAddress: "",
+      rating:0,
+      homeAddress:"",
+      city: "",
+      region: "",
+      phoneNumber : "",
+     })
         await signOut(auth)
         .then(result=>console.log('has salido'))
         .catch(error=> console.log(`Error ${error.code}: ${error.message}`))
-        dispatch(logoOutAction())
+       
         history.push(`/juira/login`)
 
     }
@@ -122,7 +128,8 @@ let handleImage=async(e)=>{
     }
 
   return (
-    <div>
+    ( u.emailAddress || userData.emailAddress )?
+      <div>
          <Card sx={{ maxWidth: 1, my:3,mx:8, p:3, alignContent:'center', justifyContent: 'center'}}>
       <CardHeader
         avatar={
@@ -171,7 +178,7 @@ let handleImage=async(e)=>{
           onChange={handleOnChange} 
           sx={{ml:2}} 
           inputProps={{style: {fontSize: 20}}}
-          disabled={dis} value={userData.homeAddress || ''}
+          disabled={dis} value={userData.homeAddress || u.homeAddress}
           variant='standard'/>
           </Box>
           <Box sx={{display:'flex'}}>
@@ -182,7 +189,7 @@ let handleImage=async(e)=>{
           onChange={handleOnChange} 
           sx={{ml:2}} 
           inputProps={{style: {fontSize: 20}}}
-          disabled={dis} value={userData.emailAddress || ''}
+          disabled={true} value={userData.emailAddress || u.emailAddress}
           variant='standard'/>
           </Box>
                   <Box  sx={{display:'flex'}}>
@@ -193,7 +200,7 @@ let handleImage=async(e)=>{
           name='phoneNumber'
           onChange={handleOnChange} 
           sx={{ml:2}} inputProps={{style: {fontSize: 20}}}
-          disabled={dis} value={userData.phoneNumber || ''}
+          disabled={dis} value={userData.phoneNumber || u.phoneNumber }
           variant='standard'/>
          </Box>
          
@@ -209,7 +216,7 @@ let handleImage=async(e)=>{
           onChange={handleOnChange} 
           sx={{ml:2}} 
           inputProps={{style: {fontSize: 20}}} 
-          disabled={dis} value={userData.city || ''} 
+          disabled={dis} value={userData.city || u.city} 
           variant='standard'/>
         </Box>
         <Box  sx={{display:'flex'}}>
@@ -221,7 +228,7 @@ let handleImage=async(e)=>{
           onChange={handleOnChange}  
           sx={{ml:2}} 
           inputProps={{style: {fontSize: 20}}} 
-          disabled={dis} value={userData.region || ''} 
+          disabled={dis} value={userData.region || u.region} 
           variant='standard'/>
         </Box>
          
@@ -235,6 +242,14 @@ let handleImage=async(e)=>{
       
     </Card>
      
+    </div> :
+    <div>
+    <Loading/>
     </div>
+    
+    
+    
+  
+    
   )
 }
