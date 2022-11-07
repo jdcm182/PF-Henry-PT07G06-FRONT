@@ -211,9 +211,10 @@ export default function UserSalesTable(props) {
                                     <TableCell>
                                         {transactionRow && transactionRow.state && transactionRow.state === 'pending'
                                             && transactionRow.paymentReceived
-                                            ? <Button value={transactionRow.id} variant="contained"
-                                                onClick={(e) => handleProductSent(e, setClicked, clicked)}>Ya envié el producto</Button>
+                                            ? <Button value={transactionRow.id} variant="contained" sx={{ color: "white", fontSize: ".8rem" }}
+                                                onClick={(e) => handleProductSent(e, setClicked, clicked)}>Producto Enviado</Button>
                                             : null
+
                                         }
                                     </TableCell>
                                     <TableCell component="th" scope="row" >

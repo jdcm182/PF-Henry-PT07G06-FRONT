@@ -50,9 +50,9 @@ function Row(props) {
         <React.Fragment>
             <TableRow /* className={classes.root} */>
                 <TableCell>
-                    <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
+                    <Button aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
                         {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-                    </IconButton>
+                    </Button>
                 </TableCell>
 
                 <TableCell component="th" scope="row" align="center">
@@ -94,8 +94,8 @@ function Row(props) {
 
                                             <TableCell>
                                                 {transactionRow && transactionRow.state && transactionRow.state === 'sent'
-                                                    ? <Button value={transactionRow.id} variant="contained"
-                                                        onClick={(e) => handleProductReceived(e, setClicked, clicked)}>Ya recibí el producto</Button>
+                                                    ? <Button value={transactionRow.id} variant="contained" sx={{ color: "white", fontSize: ".8rem" }}
+                                                        onClick={(e) => handleProductReceived(e, setClicked, clicked)}>Producto Recibido</Button>
                                                     : null
                                                 }
                                             </TableCell>
@@ -183,7 +183,7 @@ export default function UserPurchasesTable(props) {
     //console.log('UserPurchasesTable > props: ', props)
 
     try {
-        myShoppingOrders = props.list;
+        if (props.list && props.list.length > 0) myShoppingOrders = props.list;
         //console.log('myShoppingOrders: ', myShoppingOrders)
         if (!myShoppingOrders) {
             myShoppingOrders = [
