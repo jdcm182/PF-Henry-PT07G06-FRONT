@@ -28,7 +28,7 @@ import { useSelector, useDispatch } from "react-redux";
 import style from "./Navbar.module.css";
 import image from "../media/juira_white.png";
 import imageMobile from "../media/JuiraMobile.jpg";
-
+import Avatar from '@mui/material/Avatar';
 import { logoOutAction, updateFilter } from "../../redux/actions/app.actions";
 import {
   updateCart,
@@ -77,6 +77,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function PrimarySearchAppBar() {
+  let user = useSelector((state) => state.app.user)
   const itemsInCart = useSelector((state) => state.productsReducer.cart) || 0; //default 2 para probar que las notificaciones del carrito funcionan
   const itemsFavorites =
     useSelector((state) => state.productsReducer.favorites) || 0;
@@ -175,7 +176,12 @@ export default function PrimarySearchAppBar() {
           }}
         >
           <IconButton size="large" color="inherit">
+            {user.image?
+            <Avatar sx={{height:0.98,}} alt="U" src={user.image} />
+            :
             <AccountCircle />
+            }
+            
           </IconButton>
           <p>Perfil</p>
         </MenuItem>
@@ -306,7 +312,9 @@ export default function PrimarySearchAppBar() {
             }}
           >
             <IconButton size="large" color="inherit">
-              <AccountCircle />
+            {user.image?
+             <Avatar sx={{height:0.98}} alt="U" src={user.image} />:
+              <AccountCircle />}
             </IconButton>
             <p>Perfil</p>
           </MenuItem>
@@ -498,7 +506,9 @@ export default function PrimarySearchAppBar() {
                   onClick={handleProfileMenuOpen}
                   sx={{ color: "#ffffff" }}
                 >
-                  <AccountCircle />
+                  {user.image?
+             <Avatar sx={{height:0.95}} alt="U" src={user.image} />:
+                  <AccountCircle />}
                 </IconButton>
               </Tooltip>
             ) : (
