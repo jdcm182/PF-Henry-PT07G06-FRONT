@@ -46,6 +46,7 @@ export default function ShoppingOrders() {
       .then((response) => setTransactions(response.data))
       .then(() => axios.get(`${API_URL_BACKEND}balance`))
       .then((response) => setBalance(response.data))
+      .catch(error => console.log(error))
     },[clicked])
 
     let totalAmount = 0

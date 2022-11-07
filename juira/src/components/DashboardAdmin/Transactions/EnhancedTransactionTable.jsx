@@ -182,8 +182,7 @@ export default function EnhancedTable( props ) {
 
   const [data, setData] = React.useState(transactions)
   const fileName = "Transactions"; 
-  console.log(transactions)
-
+ 
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('id');
   const [selected, setSelected] = React.useState([]);

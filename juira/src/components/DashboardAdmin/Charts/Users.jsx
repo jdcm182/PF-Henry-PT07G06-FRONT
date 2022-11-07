@@ -19,6 +19,7 @@ export default function UsersChart() {
     axios.get(`${API_URL_BACKEND}users`)
     .then(response => resp = response.data)
     .then(() => !users.length && setUsers(resp))
+    .catch(error => console.log(error))
 
     let totalUsers = users.length
     let activeUsers = 0

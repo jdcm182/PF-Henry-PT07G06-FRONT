@@ -54,6 +54,7 @@ const useStyles = makeStyles({
   axios.get(`${API_URL_BACKEND}products`)
     .then(response => resp = response.data)
     .then(() => !products.length && setProducts(resp))
+    .catch(error => console.log(error))
 
   // !products.length && setProducts(resp)
   

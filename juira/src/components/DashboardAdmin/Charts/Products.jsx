@@ -10,6 +10,7 @@ export default function ProductsChart() {
     axios.get(`${API_URL_BACKEND}products`)
     .then(response => resp = response.data)
     .then(() => !products.length && setProducts(resp))
+    .catch(error => console.log(error))
 
     let totalProducts = products.length
     let activeProducts = 0

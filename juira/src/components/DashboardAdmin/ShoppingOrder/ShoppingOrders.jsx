@@ -41,6 +41,7 @@ export default function ShoppingOrders() {
     useEffect(() => {
       axios.get(`${API_URL_BACKEND}shoppingOrders`)
       .then((response) => setOrders(response.data))
+      .catch(error => console.log(error))
     },[])
 
     // let resp = []

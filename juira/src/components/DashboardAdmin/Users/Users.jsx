@@ -48,6 +48,7 @@ const useStyles = makeStyles({
     useEffect(() => {
       axios.get(`${API_URL_BACKEND}users`)
       .then((response) => setUsers(response.data))
+      .catch(error => console.log(error))
     },[])
 
 

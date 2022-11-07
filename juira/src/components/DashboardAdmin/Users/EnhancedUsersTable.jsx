@@ -185,7 +185,7 @@ function EnhancedTableToolbar(props) {
     let promise = Promise.all(reqs)
     .then(() => axios.get(`${API_URL_BACKEND}users`))
     .then((response) => setUsers(response.data))
-    .catch(error => error)
+    .catch(error => console.log(error))
     toast.promise(promise, {
       loading: 'Cargando',
       success: 'Actualizado con éxito',
@@ -199,7 +199,7 @@ function EnhancedTableToolbar(props) {
     let promise = Promise.all(reqs)
     .then(() => axios.get(`${API_URL_BACKEND}users`))
     .then((response) => setUsers(response.data))
-    .catch(error => error)
+    .catch(error => console.log(error))
     toast.promise(promise, {
       loading: 'Cargando',
       success: 'Actualizado con éxito',
@@ -212,7 +212,7 @@ function EnhancedTableToolbar(props) {
     let promise = Promise.all(reqs)
     .then(() => axios.get(`${API_URL_BACKEND}users`))
     .then((response) => setUsers(response.data))
-    .catch(error => error)
+    .catch(error => console.log(error))
     toast.promise(promise, {
       loading: 'Cargando',
       success: 'Actualizado con éxito',
@@ -226,7 +226,7 @@ function EnhancedTableToolbar(props) {
     let promise = Promise.all(reqs)
     .then(() => axios.get(`${API_URL_BACKEND}users`))
     .then((response) => setUsers(response.data))
-    .catch(error => error)
+    .catch(error => console.log(error))
     toast.promise(promise, {
       loading: 'Cargando',
       success: 'Actualizado con éxito',
