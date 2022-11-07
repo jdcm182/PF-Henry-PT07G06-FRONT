@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import {
@@ -8,7 +7,7 @@ import {
   TextField,
   Button,
   Typography,
-  Container
+  Container,
 } from "@mui/material";
 import LockIcon from "@mui/icons-material/Lock";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -25,6 +24,7 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { postLogin } from "../../redux/actions/app.actions";
 import PerfilUser from "../PerfilUser/PerfilUser";
 import { useHistory } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -78,18 +78,22 @@ uid: "rz9pFLryLGhQljwpjTW5Siwl3Tp2"
 
   const login = async () => {
     if (userLog.email !== "" && userLog.password !== "") {
-      const signIn = await signInWithEmailAndPassword(
-        auth,
-        userLog.email,
-        userLog.password
-      )
-        .then((res) => {
+      try {
+        const signIn = await signInWithEmailAndPassword(
+          auth,
+          userLog.email,
+          userLog.password
+        ).then((res) => {
           return res.user.accessToken;
-        })
-        .catch((error) => console.log(`Error ${error.code}: ${error.message}`));
-      console.log("se inicio sesion con email");
-      dispatch(loginAction({ token: signIn }));
-      history.push(`/juira/login`);
+        });
+
+        console.log("se inicio sesion con email");
+        dispatch(loginAction({ token: signIn }));
+        history.push(`/juira/login`);
+      } catch (error) {
+        toast.error("Contraseña o Email incorrectos");
+        console.log(`Error ${error.code}: ${error.message}`);
+      }
     }
   };
 
@@ -198,7 +202,6 @@ uid: "rz9pFLryLGhQljwpjTW5Siwl3Tp2"
                 </Link>
                 </Typography> */}
 
-
             <Button onClick={handleGoogleSignIn}>Login con Google</Button>
             <Typography>
               {" "}
@@ -208,9 +211,6 @@ uid: "rz9pFLryLGhQljwpjTW5Siwl3Tp2"
           </Paper>
         </Grid>
       )}
-   </div>
+    </div>
   );
-
-
-
 }
