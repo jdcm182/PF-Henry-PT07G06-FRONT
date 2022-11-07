@@ -13,13 +13,13 @@ import {
 import LockIcon from "@mui/icons-material/Lock";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import { loginAction } from "../../redux/actions/app.actions";
+import { loginAction, getUser } from "../../redux/actions/app.actions";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAuth,
   signInWithEmailAndPassword,
   onAuthStateChanged,
-  signOut,
+  signOut, 
 } from "firebase/auth";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { postLogin } from "../../redux/actions/app.actions";
@@ -88,7 +88,9 @@ uid: "rz9pFLryLGhQljwpjTW5Siwl3Tp2"
         })
         .catch((error) => console.log(`Error ${error.code}: ${error.message}`));
       console.log("se inicio sesion con email");
-      dispatch(loginAction({ token: signIn }));
+      await dispatch(loginAction({ token: signIn }));
+      await dispatch(getUser()) 
+  
       history.push(`/juira/login`);
     }
   };
@@ -113,6 +115,7 @@ uid: "rz9pFLryLGhQljwpjTW5Siwl3Tp2"
     console.log("se inicio sesion con google");
 
     await dispatch(loginAction({ token: tokenGoogle }));
+    await dispatch(getUser()) 
     history.push(`/juira/login`);
   };
 
