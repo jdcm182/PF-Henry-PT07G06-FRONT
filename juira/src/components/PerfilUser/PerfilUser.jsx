@@ -33,6 +33,7 @@ export default function PerfilUser() {
   let u = useSelector((state) => state.app.user)
 
   useEffect(()=>{
+    dispatch(getUser());
     setUserData(u)
   },[u])
   
