@@ -67,6 +67,7 @@ export default function Dashboard() {
   }, [clicked])
 
   //console.log('User Dashboard > myShoppingOrders', JSON.stringify(myShoppingOrders))
+  //console.log('User Dashboard > myProducts', JSON.stringify(myProducts))
 
   const items = [
     {
