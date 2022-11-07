@@ -68,6 +68,19 @@ function Row(props) {
           console.log("error", error);
         }
       };
+    
+    const handleCancel = async (id) => {
+        try {
+        const response = await axios.put(`${API_URL_BACKEND}shoppingOrders/${id}`, {state: 'cancelled'});
+        response.data.transactionList.forEach(el => 
+            axios.put(`${API_URL_BACKEND}transactions/${el.id}`, {state: 'cancelled'})
+            );
+        setClicked(!clicked)    
+        } catch (error) {
+            toast.error(error.response.data)
+            console.log("error", error);
+        }
+    };  
 
     return (
         <React.Fragment>
@@ -87,6 +100,8 @@ function Row(props) {
                 <TableCell align="center">{row.paymentReceived ? 'Si' : 'No'}</TableCell>
                 <TableCell align="center">{row.merchant_id}</TableCell>
                 {(row.state==='pending') && <TableCell align="center"><Button onClick={()=>handlePayment(row.id)}>Completar Pago</Button></TableCell>}
+                {(row.state==='pending') && <TableCell align="center"><Button onClick={()=>handleCancel(row.id)}>Cancelar Orden</Button></TableCell>}
+                
             </TableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={7}>
