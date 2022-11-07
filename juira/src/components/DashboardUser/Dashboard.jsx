@@ -9,6 +9,7 @@ import Tab from '@mui/material/Tab';
 
 import UserDashCard from './UserDashCard.jsx';
 import UserDashSales from './UserDashSales'
+import UserDashProducts from './UserDashProducts'
 import UserDashPurchases from './UserDashPurchases'
 import UserChart from './UserDashChart'
 
@@ -28,6 +29,7 @@ export default function Dashboard() {
 
   const [myShoppingOrders, setMyShoppingOrders] = React.useState([]);
   const [mySales, setMySales] = React.useState([]);
+  const [myProducts, setMyProducts] = React.useState([]);
   //const [myTransactions, setMyTransactions] = React.useState([]);
 
   /*   let res = [];
@@ -52,9 +54,16 @@ export default function Dashboard() {
     setMySales(response.data);
     console.log('User Dashboard > fetchSales > response.data: ', response.data);
   }
+  const fetchProducts = async () => {
+    const response = await axios(`${API_URL_BACKEND}products/byToken`)
+    setMyProducts(response.data);
+    console.log('User Dashboard > fetchProducts > response.data: ', JSON.stringify(response.data));
+  }
+
   useEffect(() => {
     fetchOrders();
     fetchSales();
+    fetchProducts();
   }, [clicked])
 
   //console.log('User Dashboard > myShoppingOrders', JSON.stringify(myShoppingOrders))
@@ -216,11 +225,18 @@ export default function Dashboard() {
 
 
   const totalAmountPurchases = myShoppingOrders.reduce((prev, actual) => prev + actual.total, 0);
-  const productsQuantityPurchases = myShoppingOrders.length;
+  let productsQuantityPurchases = 0;
+  if (myShoppingOrders && myShoppingOrders.length > 0)
+    productsQuantityPurchases = myShoppingOrders.length;
 
-  const totalAmountSales = 0// mySales.transactions && mySales.transactions.asSeller.reduce((prev, actual) => prev + actual.total, 0);
+  let totalAmountSales = 0;
+  if (mySales && mySales.transactions && mySales.transactions.asSeller && mySales.transactions.asSeller.length)
+    totalAmountSales = mySales.transactions.asSeller.reduce((prev, actual) => actual.total ? prev + actual.total : 0, 0);
+
+  let productsQuantitySales = 0;
+  if (mySales && mySales.length > 0)
+    productsQuantitySales = mySales.length;
   console.log('mySales > ', mySales)
-  const productsQuantitySales = mySales.length;
 
   const totalOperations = productsQuantityPurchases + productsQuantitySales;
 
@@ -231,10 +247,12 @@ export default function Dashboard() {
   ];
 
   //const colorPurchases = 'rgb(255,105,162)' //'255,105,162'; // PinkishRed //"#69c3ff"
-  const colorPurchases = getComputedStyle(document.documentElement).getPropertyValue('--colorDashPurchases');
+  //const colorPurchases = getComputedStyle(document.documentElement).getPropertyValue('--colorDashPurchases');
+  const colorPurchases = 'rgb(255, 105, 115)';//getComputedStyle(document.documentElement).getPropertyValue('--colorDashPurchases');
 
   //const colorSales = 'rgb(105,195,255)' //'105,195,255'; // LightBlue //
-  const colorSales = getComputedStyle(document.documentElement).getPropertyValue('--colorDashSales');
+  //const colorSales = getComputedStyle(document.documentElement).getPropertyValue('--colorDashSales');
+  const colorSales = 'rgb(105, 195, 255)'; //getComputedStyle(document.documentElement).getPropertyValue('--colorDashSales');
 
   const textColorDash = '#FFFFFF'; // White
 
@@ -329,6 +347,7 @@ export default function Dashboard() {
             onChange={handleChange} aria-label="basic tabs example">
             <Tab label="Mis Compras" {...a11yProps(0)} sx={{ color: 'var(--primaryColor)' }} />
             <Tab label="Mis Ventas" {...a11yProps(1)} sx={{ color: 'var(--primaryColor)' }} />
+            <Tab label="Mis Productos" {...a11yProps(2)} sx={{ color: 'var(--primaryColor)' }} />
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
@@ -339,6 +358,10 @@ export default function Dashboard() {
         <TabPanel value={value} index={1}>
           {/* Mis Ventas */}
           <UserDashSales list={mySales} setClicked={setClicked} clicked={clicked} />
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+          {/* Mis Productos */}
+          <UserDashProducts list={myProducts} setClicked={setClicked} clicked={clicked} />
         </TabPanel>
       </Box>
 
