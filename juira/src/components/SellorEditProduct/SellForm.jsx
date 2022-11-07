@@ -72,6 +72,7 @@ export default function SellForm() {
 
   const [selectedImage, setSelectedImage]=useState('')
   const [previewSource, setPreviewSource]= useState()
+  let userToken = useSelector((state) => state.app.token.token)
 
   let handleFileInputChange=(e)=>{
     const file=e.target.files[0]
@@ -92,8 +93,11 @@ export default function SellForm() {
     const formData=new FormData()
     formData.append('file', selectedImage)
     formData.append("upload_preset",'DB_PF_JUIRA' )
+    delete axios.defaults.headers.common["Authorization"];
     await axios.post('https://api.cloudinary.com/v1_1/duq1tcwjw/image/upload', 
-    formData).then((response)=>{setData({...data, image: response.data.secure_url})})
+    formData).then((response)=>{setData({...data, image: response.data.secure_url})
+    })
+    .finally( axios.defaults.headers.common["Authorization"] = userToken)
 
   }
    
@@ -118,7 +122,7 @@ export default function SellForm() {
         [e.target.name]:e.target.value})
     }
 
-   
+    console.log(data)
       setError(
         validate({...data,
           [e.target.name]:e.target.value})

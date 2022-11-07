@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from "react-redux";
+import { updateCartApi} from "../../redux/actions/products.actions";
+  import toast from "react-hot-toast";
 import PropTypes from 'prop-types';
 //import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -46,6 +49,39 @@ function Row(props) {
     const [open, setOpen] = React.useState(false);
     console.log('UserPurchasesTable > Row > props: ', props)
     //const classes = useRowStyles();
+
+    const dispatch = useDispatch();
+    const [redirect, setRedirect] = useState("");
+    useEffect(() => {
+        if (redirect !== "") window.open(redirect, "_blank", "popup=true");
+      }, [redirect]);
+
+    const handlePayment = async (id) => {
+        try {
+          const response = await axios.get(
+            `${API_URL_BACKEND}payment?id=${id}`
+          );
+          setRedirect(response.data.init_point);
+          dispatch(updateCartApi())
+        } catch (error) {
+          toast.error(error.response.data)
+          console.log("error", error);
+        }
+      };
+    
+    const handleCancel = async (id) => {
+        try {
+        const response = await axios.put(`${API_URL_BACKEND}shoppingOrders/${id}`, {state: 'cancelled'});
+        response.data.transactionList.forEach(el => 
+            axios.put(`${API_URL_BACKEND}transactions/${el.id}`, {state: 'cancelled'})
+            );
+        setClicked(!clicked)    
+        } catch (error) {
+            toast.error(error.response.data)
+            console.log("error", error);
+        }
+    };  
+
     return (
         <React.Fragment>
             <TableRow /* className={classes.root} */>
@@ -63,6 +99,9 @@ function Row(props) {
                 <TableCell align="right">{row.total.toLocaleString('de-DE')}</TableCell>
                 <TableCell align="center">{row.paymentReceived ? 'Si' : 'No'}</TableCell>
                 <TableCell align="center">{row.merchant_id}</TableCell>
+                {(row.state==='pending') && <TableCell align="center"><Button onClick={()=>handlePayment(row.id)}>Completar Pago</Button></TableCell>}
+                {(row.state==='pending') && <TableCell align="center"><Button onClick={()=>handleCancel(row.id)}>Cancelar Orden</Button></TableCell>}
+                
             </TableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={7}>
@@ -93,8 +132,11 @@ function Row(props) {
                                         <TableRow key={transactionRow.id}>
 
                                             <TableCell>
-                                                <Button value={transactionRow.id} variant="contained"
-                                                    onClick={(e) => handleProductReceived(e, setClicked, clicked)}>Ya recibí el producto</Button>
+                                                {transactionRow && transactionRow.state && transactionRow.state === 'sent'
+                                                    ? <Button value={transactionRow.id} variant="contained"
+                                                        onClick={(e) => handleProductReceived(e, setClicked, clicked)}>Ya recibí el producto</Button>
+                                                    : null
+                                                }
                                             </TableCell>
                                             <TableCell component="th" scope="row" >
                                                 {transactionRow.id}

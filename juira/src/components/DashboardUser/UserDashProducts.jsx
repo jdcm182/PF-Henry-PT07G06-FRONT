@@ -1,6 +1,6 @@
 import React from 'react';
 import Container from '@mui/material/Container';
-import UserSalesTable from './UserSalesTable';
+import UserProductsTable from './UserProductsTable';
 
 //import EnhancedTable from './EnhancedTable';
 
@@ -8,7 +8,7 @@ import UserSalesTable from './UserSalesTable';
 // import EnhancedTable from './EnhancedTable';
 
 
-export default function UserDashSales(props) {
+export default function UserDashProducts(props) {
 
     const { list, clicked, setClicked } = props;
     // let products = useSelector((state) => state.productsReducer.allProducts);
@@ -46,7 +46,10 @@ export default function UserDashSales(props) {
 
             {/* <UserDashTable title="Ventas" list={props.list} /> */}
 
-            {<UserSalesTable title="Ventas" list={list} setClicked={setClicked} clicked={clicked} />}
+            {list?.length > 0
+                ? <UserProductsTable title="Productos" list={list} setClicked={setClicked} clicked={clicked} />
+                : "No hay productos propios publicados para mostrar."
+            }
 
             {/* <ProductsTable/> */}
             {/* <EnhancedTable items={products} className={classes.palette} /> */}

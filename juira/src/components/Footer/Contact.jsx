@@ -7,6 +7,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import emailjs from '@emailjs/browser'
+import toast from 'react-hot-toast';
 
 export default function Contact() {
   const form = React.useRef();  
@@ -19,8 +20,11 @@ export default function Contact() {
     
           setInput(initialInput);
           setOpen(false)
+          toast.success('Tu mensaje ha sido enviado con exito')
       }, (error) => {
           console.log(error.text);
+          setOpen(false)
+          toast.error('Intenta nuevamente')
       });
   };
 

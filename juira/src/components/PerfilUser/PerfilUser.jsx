@@ -10,7 +10,7 @@ import {
   } from "@mui/material";
 import { styled } from '@mui/material/styles';
 import { getAuth, signOut } from "firebase/auth";
-import {logoOutAction, getUser, editUser} from '../../redux/actions/app.actions'
+import {logoOutAction, getUser, editUser } from '../../redux/actions/app.actions'
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
@@ -22,46 +22,90 @@ import EditIcon from '@mui/icons-material/Edit';
 import { useEffect } from 'react';
 import Rating from '@mui/material/Rating';
 import { useState } from 'react';
-
-
+import Badge from '@mui/material/Badge';
+import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
+import axios from 'axios';
+import Loading from '../Loading/Loading'
 
 
 
 export default function PerfilUser() {
+  let u = useSelector((state) => state.app.user)
+
+  useEffect(()=>{
+    console.log('entre a useeffect') 
+    setUserData(u)
+  },[u])
   
     const history = useHistory();
     const auth = getAuth();
-    const user = auth.currentUser;
     const dispatch=useDispatch()
    
     const [dis,setDis]=useState(true)
 
-useEffect(()=>{
+
+
+let userToken = useSelector((state) => state.app.token.token)
+
+
+
+
+ const [userData, setUserData]=useState(u)
+
+
+const [previewSource, setPreviewSource]= useState()
+
+let handleFileInputChange=(e)=>{
   
-  dispatch(getUser())
+  const file=e.target.files[0]
+  previewFile(file)
+  handleImage(file)
   
-},[])
+}
+
+const previewFile=(file)=>{
+  const reader= new FileReader()
+  reader.readAsDataURL(file)
+  reader.onloadend=()=>{
+    setPreviewSource(reader.result)
+  }
+}
+
+let handleImage=async(file)=>{
+
+ 
+  const formData=new FormData()
+  formData.append('file', file)
+  formData.append("upload_preset",'DB_PF_USERS' )
+  delete axios.defaults.headers.common["Authorization"];
+  await axios.post('https://api.cloudinary.com/v1_1/duq1tcwjw/image/upload', 
+  formData).then((response)=>{
+    setUserData({...userData, image: response.data.secure_url})
+  })
+  .finally( axios.defaults.headers.common["Authorization"] = userToken)
+  
+}
+ 
 
 
-let u = useSelector((state) => state.app.user)||
-{name: 'marian',
- image: 'https://res.cloudinary.com/duq1tcwjw/image/upload/v1667528158/DB_PF_USERS/WIN_20221004_19_35_55_Pro_bdshf1.jpg',
- emailAddress: "marisalez@juira.com",
- rating:3,
- homeAddress:"Sarmiento 603",
- city: "La Falda",
- region: "Córdoba",
- phoneNumber : "5493513170851",
-};
 
-const [userData, setUserData]=useState(u)
 
 
     const handleLogOut=async()=>{
+      dispatch(logoOutAction())
+      setUserData({name: '',
+      image: '',
+      emailAddress: "",
+      rating:0,
+      homeAddress:"",
+      city: "",
+      region: "",
+      phoneNumber : "",
+     })
         await signOut(auth)
         .then(result=>console.log('has salido'))
         .catch(error=> console.log(`Error ${error.code}: ${error.message}`))
-        dispatch(logoOutAction())
+       
         history.push(`/juira/login`)
 
     }
@@ -78,18 +122,31 @@ const [userData, setUserData]=useState(u)
     };
 
     const handleSubmit=()=>{
+      
       dispatch(editUser(u.id,userData))
       handleEdit()
     }
 
   return (
-    <div>
+    ( u.emailAddress || userData.emailAddress )?
+      <div>
          <Card sx={{ maxWidth: 1, my:3,mx:8, p:3, alignContent:'center', justifyContent: 'center'}}>
       <CardHeader
         avatar={
-          <Avatar sx={{width:150, height:150}} aria-label="User">
-            <img src={userData.image || 'https://res.cloudinary.com/duq1tcwjw/image/upload/v1667600965/DB_PF_USERS/user_sin_imagen_htrvzg.png'}/>
+          <Badge anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right',
+          }} badgeContent={<IconButton  disabled={dis} sx={{color:'var(--primaryColor)'}}/* color="success" */ aria-label="upload picture" component="label">
+          <input hidden accept="image/*" type="file" id="upload_widget" onChange={handleFileInputChange} />
+          <AddAPhotoIcon  />
+        </IconButton>
+            }>
+            <Avatar sx={{width:150, height:150}} aria-label="User">
+            <img src={previewSource || userData.image || 'https://res.cloudinary.com/duq1tcwjw/image/upload/v1667600965/DB_PF_USERS/user_sin_imagen_htrvzg.png'}/>
           </Avatar>
+
+          </Badge>
+          
         }
         action={
           <IconButton aria-label="settings" onClick={handleEdit}>
@@ -113,15 +170,26 @@ const [userData, setUserData]=useState(u)
         </Typography>
 <CardContent sx={{m:2, display:'flex', justifyContent: 'space-around', textAlign: 'center'}}>
         <Box>
-          <Box sx={{display:'flex'}}>
+        <Box sx={{display:'flex'}}>
           <Typography paragraph sx={{mb:4, fontSize:20}}>
            Dirección: 
+          </Typography>
+          <TextField  name='homeAddress'
+          onChange={handleOnChange} 
+          sx={{ml:2}} 
+          inputProps={{style: {fontSize: 20}}}
+          disabled={dis} value={userData.homeAddress || u.homeAddress}
+          variant='standard'/>
+          </Box>
+          <Box sx={{display:'flex'}}>
+          <Typography paragraph sx={{mb:4, fontSize:20}}>
+           Correo electronico: 
           </Typography>
           <TextField  name='emailAddress'
           onChange={handleOnChange} 
           sx={{ml:2}} 
           inputProps={{style: {fontSize: 20}}}
-          disabled={dis} value={userData.emailAddress || ''}
+          disabled={true} value={userData.emailAddress || u.emailAddress}
           variant='standard'/>
           </Box>
                   <Box  sx={{display:'flex'}}>
@@ -132,7 +200,7 @@ const [userData, setUserData]=useState(u)
           name='phoneNumber'
           onChange={handleOnChange} 
           sx={{ml:2}} inputProps={{style: {fontSize: 20}}}
-          disabled={dis} value={userData.phoneNumber || ''}
+          disabled={dis} value={userData.phoneNumber || u.phoneNumber }
           variant='standard'/>
          </Box>
          
@@ -148,7 +216,7 @@ const [userData, setUserData]=useState(u)
           onChange={handleOnChange} 
           sx={{ml:2}} 
           inputProps={{style: {fontSize: 20}}} 
-          disabled={dis} value={userData.city || ''} 
+          disabled={dis} value={userData.city || u.city} 
           variant='standard'/>
         </Box>
         <Box  sx={{display:'flex'}}>
@@ -160,7 +228,7 @@ const [userData, setUserData]=useState(u)
           onChange={handleOnChange}  
           sx={{ml:2}} 
           inputProps={{style: {fontSize: 20}}} 
-          disabled={dis} value={userData.region || ''} 
+          disabled={dis} value={userData.region || u.region} 
           variant='standard'/>
         </Box>
          
@@ -174,6 +242,14 @@ const [userData, setUserData]=useState(u)
       
     </Card>
      
+    </div> :
+    <div>
+    <Loading/>
     </div>
+    
+    
+    
+  
+    
   )
 }
