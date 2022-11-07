@@ -177,7 +177,7 @@ export default function PrimarySearchAppBar() {
         >
           <IconButton size="large" color="inherit">
             {user.image?
-            <Avatar sx={{height:0.98,}} alt="U" src={user.image} />
+            <Avatar  alt="U" src={user.image} />
             :
             <AccountCircle />
             }
@@ -313,7 +313,7 @@ export default function PrimarySearchAppBar() {
           >
             <IconButton size="large" color="inherit">
             {user.image?
-             <Avatar sx={{height:0.98}} alt="U" src={user.image} />:
+             <Avatar  alt="U" src={user.image} />:
               <AccountCircle />}
             </IconButton>
             <p>Perfil</p>
@@ -507,7 +507,7 @@ export default function PrimarySearchAppBar() {
                   sx={{ color: "#ffffff" }}
                 >
                   {user.image?
-             <Avatar sx={{height:0.95}} alt="U" src={user.image} />:
+             <Avatar  alt="U" src={user.image} />:
                   <AccountCircle />}
                 </IconButton>
               </Tooltip>
