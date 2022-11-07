@@ -43,20 +43,28 @@ function Row(props) {
     return (
         <React.Fragment>
             <TableRow /* className={classes.root} */>
-                <TableCell>
+                {/* <TableCell>
                     <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
                         {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                     </IconButton>
-                </TableCell>
+                </TableCell> */}
 
-                <TableCell component="th" scope="row" align="center">
+                {/* <TableCell component="th" scope="row" align="center">
                     {row.id}
-                </TableCell>
-                <TableCell align="right">{parseDate(row.createdAt)}</TableCell>
+                </TableCell> */}
+
+                {/* <TableCell align="right">{parseDate(row.createdAt)}</TableCell>
                 <TableCell align="center">{row.state}</TableCell>
                 <TableCell align="right">{row.total.toLocaleString('de-DE')}</TableCell>
                 <TableCell align="center">{row.paymentReceived ? 'Si' : 'No'}</TableCell>
-                <TableCell align="center">{row.merchant_id}</TableCell>
+                <TableCell align="center">{row.merchant_id}</TableCell> */}
+
+                <TableCell align="center">{row.id}</TableCell>
+                <TableCell align="left">{row.name}</TableCell>
+                <TableCell align="right">{row.status}</TableCell>
+                <TableCell align="right">{row.price.toLocaleString('de-DE')}</TableCell>
+                <TableCell align="center">{row.ownerId}</TableCell>
+
             </TableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={7}>
@@ -70,15 +78,11 @@ function Row(props) {
                                     <TableRow>
 
                                         {/*Subtable > Transactions */}
-                                        <TableCell></TableCell>
-                                        <TableCell>Nº{/* o. de Transaccion */}</TableCell>
-                                        <TableCell>Estado</TableCell>
-                                        <TableCell align="center">Id. Vendedor</TableCell>
-                                        <TableCell align="right">Monto</TableCell>
-                                        <TableCell align="center">Fecha</TableCell>
-                                        <TableCell align="right">Producto</TableCell>
-                                        <TableCell align="center">Orden de compra</TableCell>
-                                        <TableCell align="center">Comprador</TableCell>
+                                        <TableCell align="center">Id</TableCell>
+                                        <TableCell align="left">Nombre</TableCell>
+                                        <TableCell align="right">Estado</TableCell>
+                                        <TableCell align="right">Precio</TableCell>
+                                        <TableCell align="center">Owner Id</TableCell>
 
                                     </TableRow>
                                 </TableHead>
@@ -86,23 +90,23 @@ function Row(props) {
                                     {row.transactionList?.map((transactionRow) => (
                                         <TableRow key={transactionRow.id}>
 
-                                            <TableCell>
+                                            {/* <TableCell>
                                                 <Button value={transactionRow.id} variant="contained"
                                                     onClick={(e) => handleProductSent(e, setClicked, clicked)}>Ya envié el producto</Button>
-                                            </TableCell>
+                                            </TableCell> */}
                                             <TableCell component="th" scope="row" >
                                                 {transactionRow.id}
                                             </TableCell>
-                                            <TableCell>{transactionRow.state}</TableCell>
-                                            <TableCell align="center">{transactionRow.sellerId}</TableCell>
+                                            <TableCell>{transactionRow.name}</TableCell>
+                                            <TableCell>{transactionRow.status}</TableCell>
                                             <TableCell align="right">
-                                                {transactionRow.total.toLocaleString('de-DE')}
-                                                {/* Math.round(transactionRow.amount * row.price * 100) / 100 */}
+                                                {transactionRow.price.toLocaleString('de-DE')}
                                             </TableCell>
+                                            <TableCell align="center">{transactionRow.ownerId}</TableCell>
+                                            {/* <TableCell align="center">{transactionRow.sellerId}</TableCell>
                                             <TableCell align="right">{parseDate(transactionRow.createdAt)}</TableCell>
                                             <TableCell align="center">{transactionRow.productId}</TableCell>
-                                            <TableCell align="center">{transactionRow.shoppingOrderId}</TableCell>
-                                            <TableCell align="center">{transactionRow.buyerId}</TableCell>
+                                            <TableCell align="center">{transactionRow.shoppingOrderId}</TableCell> */}
 
                                         </TableRow>
                                     ))}
@@ -118,67 +122,59 @@ function Row(props) {
 Row.propTypes = {
     row: PropTypes.shape({
 
-        createdAt: PropTypes.string.isRequired,
-        state: PropTypes.string.isRequired,
-        total: PropTypes.number.isRequired,
-        paymentReceived: PropTypes.bool.isRequired,
-        /* transactions: PropTypes.arrayOf(
-            PropTypes.shape({
-                amount: PropTypes.number.isRequired,
-                customerId: PropTypes.string.isRequired,
-                date: PropTypes.string.isRequired,
-            }),
-        ).isRequired, */
-        /* name: PropTypes.string.isRequired, */
+        id: PropTypes.number.isRequired,
+        name: PropTypes.string.isRequired,
+        status: PropTypes.string.isRequired,
+        price: PropTypes.number.isRequired,
+        ownerId: PropTypes.number.isRequired,
     }).isRequired,
 };
 
 
-function createData(id, state, sellerId, total, createdAt, productId, shoppingOrderId, buyerId) {
+function createData(id, name, status, price, ownerId) {
     return {
         id,
-        state,
-        sellerId,
-        total,
-        createdAt,
-        productId,
-        shoppingOrderId,
-        buyerId,
+        name,
+        status,
+        price,
+        ownerId,
     };
 }
 
-let mySales = [];
-mySales = [
+let myProducts = [];
+/* myProducts = [
     { id: 1, createdAt: '2022-09-30 08:23', state: 'pending', total: 1000, paymentReceived: true, merchant_id: 9, transactionList: [] },
     { id: 2, createdAt: '2022-10-15 10:23', state: 'pending', total: 2500, paymentReceived: false, merchant_id: 9, transactionList: [] },
     { id: 3, createdAt: '2022-11-05 14:23', state: 'pending', total: 3600, paymentReceived: false, merchant_id: 9, transactionList: [] },
-];
-let rows = mySales.map(s => createData(s.id, s.createdAt, s.state, s.total, s.paymentReceived, s.merchant_id, s.transactionList));
+]; */
+let rows = []
+//rows = myProducts.map(s => createData(s.id, s.createdAt, s.state, s.total, s.paymentReceived, s.merchant_id, s.transactionList));
 
 
 
-export default function UserSalesTable(props) {
+export default function UserProductsTable(props) {
 
     try {
 
-        let mySales = props.list.transactions.asSeller;
-        //let mySales = props.list.transactions.asBuyer;   // borrrarrrrr !! usar asSeller
+        const { list } = props;
+        myProducts = list;
 
-        console.log('mySales: ', mySales)
+        console.log('myProducts: ', myProducts)
 
-        console.log('UserSalesTable > props: ', props)
+        console.log('UserProductsTable > props: ', props)
         const { clicked, setClicked } = props;
-        //console.log('mySales: ', mySales)
-        /* if (!mySales) {
-            mySales = [
+        //console.log('myProducts: ', myProducts)
+        /* if (!myProducts) {
+            myProducts = [
                 { id: 1, createdAt: '2022-09-30 08:23', state: 'pending', total: 1000, paymentReceived: true, merchant_id: 9, transactionList: [] },
                 { id: 2, createdAt: '2022-10-15 10:23', state: 'pending', total: 2500, paymentReceived: false, merchant_id: 9, transactionList: [] },
                 { id: 3, createdAt: '2022-11-05 14:23', state: 'pending', total: 3600, paymentReceived: false, merchant_id: 9, transactionList: [] },
             ];
         } */
-        console.log('mySales: ', mySales)
-        //rows = mySales.map(s => createData(s.id, s.createdAt, s.state, s.total, s.paymentReceived, s.merchant_id, s.transactionList));
-        rows = mySales.map(s => createData(s.id, s.state, s.sellerId, s.total, s.createdAt, s.productId, s.shoppingOrderId, s.buyerId));
+        console.log('myProducts: ', myProducts)
+        //rows = myProducts.map(s => createData(s.id, s.createdAt, s.state, s.total, s.paymentReceived, s.merchant_id, s.transactionList));
+        rows = myProducts.map(s => createData(s.id, s.name, s.status, s.price, s.ownerId));
+        console.log(rows)
 
         return (
 
@@ -189,16 +185,11 @@ export default function UserSalesTable(props) {
                     <TableHead>
                         <TableRow>
 
-                            <TableCell></TableCell>
-                            <TableCell>Nº{/* o. de Transaccion */}</TableCell>
-                            <TableCell>Estado</TableCell>
-                            <TableCell align="center">Id. Vendedor</TableCell>
-                            <TableCell align="right">Monto</TableCell>
-                            <TableCell align="center">Fecha</TableCell>
-                            <TableCell align="right">Producto</TableCell>
-                            <TableCell align="center">Orden de compra</TableCell>
-                            <TableCell align="center">Comprador</TableCell>
-                            <TableCell align="center">Pago recibido</TableCell>
+                            <TableCell align="center">Id</TableCell>
+                            <TableCell align="left">Nombre</TableCell>
+                            <TableCell align="center">Estado</TableCell>
+                            <TableCell align="right">Precio</TableCell>
+                            <TableCell align="center">Owner Id</TableCell>
 
                         </TableRow>
                     </TableHead>
@@ -208,29 +199,37 @@ export default function UserSalesTable(props) {
                             rows.map((transactionRow) => (
                                 <TableRow key={transactionRow.id}>
 
-                                    <TableCell>
+                                    {/* <TableCell>
                                         {transactionRow && transactionRow.state && transactionRow.state === 'pending'
                                             && transactionRow.paymentReceived
                                             ? <Button value={transactionRow.id} variant="contained"
                                                 onClick={(e) => handleProductSent(e, setClicked, clicked)}>Ya envié el producto</Button>
                                             : null
                                         }
-                                    </TableCell>
-                                    <TableCell component="th" scope="row" >
+                                    </TableCell> */}
+                                    {/* <TableCell component="th" scope="row" >
                                         {transactionRow.id}
                                     </TableCell>
                                     <TableCell>{transactionRow.state}</TableCell>
                                     <TableCell align="center">{transactionRow.sellerId}</TableCell>
                                     <TableCell align="right">
                                         {transactionRow.total.toLocaleString('de-DE')}
-                                        {/* Math.round(transactionRow.amount * row.price * 100) / 100 */}
                                     </TableCell>
                                     <TableCell align="right">{parseDate(transactionRow.createdAt)}</TableCell>
                                     <TableCell align="center">{transactionRow.productId}</TableCell>
                                     <TableCell align="center">{transactionRow.shoppingOrderId}</TableCell>
                                     <TableCell align="center">{transactionRow.buyerId}</TableCell>
-                                    <TableCell align="center">{transactionRow.paymentReceived ? 'Si' : 'No'}</TableCell>
+                                    <TableCell align="center">{transactionRow.paymentReceived ? 'Si' : 'No'}</TableCell> */}
 
+                                    <TableCell align="center" component="th" scope="row" >
+                                        {transactionRow.id}
+                                    </TableCell>
+                                    <TableCell>{transactionRow.name}</TableCell>
+                                    <TableCell align="center">{transactionRow.status}</TableCell>
+                                    <TableCell align="right">
+                                        {transactionRow.price.toLocaleString('de-DE')}
+                                    </TableCell>
+                                    <TableCell align="center">{transactionRow.ownerId}</TableCell>
                                 </TableRow>
                             ))}
 
