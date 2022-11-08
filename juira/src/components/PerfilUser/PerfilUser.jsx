@@ -34,8 +34,9 @@ export default function PerfilUser() {
 
   useEffect(()=>{
     console.log('entre a useeffect') 
+    dispatch(getUser());
     setUserData(u)
-  },[u])
+  },[])
   
     const history = useHistory();
     const auth = getAuth();
@@ -141,7 +142,7 @@ let handleImage=async(file)=>{
           <AddAPhotoIcon  />
         </IconButton>
             }>
-            <Avatar sx={{width:150, height:150}} aria-label="User" src={previewSource || userData.image || 'https://res.cloudinary.com/duq1tcwjw/image/upload/v1667600965/DB_PF_USERS/user_sin_imagen_htrvzg.png'}/>
+            <Avatar sx={{width:150, height:150}} aria-label="User" src={previewSource || u.image ||userData.image || 'https://res.cloudinary.com/duq1tcwjw/image/upload/v1667600965/DB_PF_USERS/user_sin_imagen_htrvzg.png'}/>
           
           </Badge>
           
