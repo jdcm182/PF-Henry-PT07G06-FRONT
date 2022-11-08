@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { useHistory } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { logoOutAction } from "../../redux/actions/app.actions";
 import PropTypes from 'prop-types';
 //import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -161,6 +164,9 @@ let rows = [];
 
 export default function UserSalesTable(props) {
 
+    const dispatch = useDispatch();
+    const history = useHistory();
+
     try {
 
         let mySales = props.list.transactions.asSeller;
@@ -240,6 +246,19 @@ export default function UserSalesTable(props) {
 
         );
     } catch (e) {
-        console.log(e);
+        console.log(e)
+        if (e.message.contains('Firebase ID token has expired')) {
+            console.log('💥Firebase ID token has expired💥')
+            console.log('💥Firebase ID token has expired💥')
+            console.log('💥Firebase ID token has expired💥')
+            console.log('💥Firebase ID token has expired💥')
+            console.log('💥Firebase ID token has expired💥')
+            console.log('💥Firebase ID token has expired💥')
+            console.log('💥Firebase ID token has expired💥')
+
+            dispatch(logoOutAction());
+
+            history.push(`/juira/login`);
+        }
     }
 }

@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react';
+import { useHistory } from "react-router-dom";
+import { useDispatch } from 'react-redux';
 import Container from '@mui/material/Container';
 import Typography from "@mui/material/Typography";
 
@@ -16,11 +18,12 @@ import UserChart from './UserDashChart'
 import { API_URL_BACKEND } from '../../api/apiRoute.js';
 import axios from 'axios';
 
-
+import { logoOutAction } from "../../redux/actions/app.actions";
 
 
 
 export default function Dashboard() {
+
 
   const [value, setValue] = React.useState(0);
 
@@ -30,6 +33,10 @@ export default function Dashboard() {
   const [myShoppingOrders, setMyShoppingOrders] = React.useState([]);
   const [mySales, setMySales] = React.useState([]);
   const [myProducts, setMyProducts] = React.useState([]);
+
+
+
+
   //const [myTransactions, setMyTransactions] = React.useState([]);
 
   /*   let res = [];
@@ -40,24 +47,59 @@ export default function Dashboard() {
     console.log('Dashboard Usuario > myShoppingOrders: ', myShoppingOrders)
    */
 
+  let history = useHistory();
+  const dispatch = useDispatch();
+
+  const handleCatch = (e) => {
+    //console.log('e: ', JSON.stringify(e))
+    if (JSON.stringify(e).includes('Firebase ID token has expired')) {
+      console.log('💥Firebase ID token has expired💥')
+      console.log('💥Firebase ID token has expired💥')
+      console.log('💥Firebase ID token has expired💥')
+      console.log('💥Firebase ID token has expired💥')
+      console.log('💥Firebase ID token has expired💥')
+      console.log('💥Firebase ID token has expired💥')
+      console.log('💥Firebase ID token has expired💥')
+      dispatch(logoOutAction());
+      history.push(`/juira/login`);
+    }
+  }
 
   const fetchOrders = async () => {
-    const response = await axios(`${API_URL_BACKEND}shoppingOrders/byToken`)
-    if (Array.isArray(response.data)) setMyShoppingOrders(response.data);
-    //const response = await axios(`http://localhost:3001/shoppingOrders/byToken`)
-    //console.log('User Dashboard > fetchOrders > response.data: ', response.data)
-    //console.log('User Dashboard > API_URL_BACKEND: ', API_URL_BACKEND) 
-    //       https://pf-henry-pt07g06-back-production.up.railway.app/
+    try {
+      const response = await axios(`${API_URL_BACKEND}shoppingOrders/byToken`)
+      //console.log('fetchOrders > response.data: ', response.data)
+      handleCatch(response.data);
+      if (Array.isArray(response.data)) setMyShoppingOrders(response.data);
+      //const response = await axios(`http://localhost:3001/shoppingOrders/byToken`)
+      //console.log('User Dashboard > fetchOrders > response.data: ', response.data)
+      //console.log('User Dashboard > API_URL_BACKEND: ', API_URL_BACKEND) 
+      //       https://pf-henry-pt07g06-back-production.up.railway.app/
+    } catch (e) {
+      handleCatch(e);
+    }
   }
   const fetchSales = async () => {
-    const response = await axios(`${API_URL_BACKEND}transactions/byToken`)
-    setMySales(response.data);
-    console.log('User Dashboard > fetchSales > response.data: ', response.data);
+    try {
+      const response = await axios(`${API_URL_BACKEND}transactions/byToken`)
+      //console.log('fetchSales > response.data: ', response.data)
+      handleCatch(response.data);
+      setMySales(response.data);
+      //console.log('User Dashboard > fetchSales > response.data: ', response.data);
+    } catch (e) {
+      handleCatch(e);
+    }
   }
   const fetchProducts = async () => {
-    const response = await axios(`${API_URL_BACKEND}products/byToken`)
-    setMyProducts(response.data);
-    console.log('User Dashboard > fetchProducts > response.data: ', JSON.stringify(response.data));
+    try {
+      const response = await axios(`${API_URL_BACKEND}products/byToken`)
+      //console.log('fetchProducts > response.data: ', response.data)
+      handleCatch(response.data);
+      setMyProducts(response.data);
+      //console.log('User Dashboard > fetchProducts > response.data: ', JSON.stringify(response.data));
+    } catch (e) {
+      handleCatch(e);
+    }
   }
 
   useEffect(() => {
@@ -223,96 +265,98 @@ export default function Dashboard() {
     ] */
   //console.log(myPurchases, '\n', mySales)
 
+  try {
 
 
-  const totalAmountPurchases = myShoppingOrders.reduce((prev, actual) => prev + actual.total, 0);
-  let productsQuantityPurchases = 0;
-  if (myShoppingOrders && myShoppingOrders.length > 0)
-    productsQuantityPurchases = myShoppingOrders.length;
 
-  let totalAmountSales = 0;
-  if (mySales && mySales.transactions && mySales.transactions.asSeller && mySales.transactions.asSeller.length)
-    totalAmountSales = mySales.transactions.asSeller.reduce((prev, actual) => actual.total ? prev + actual.total : 0, 0);
+    const totalAmountPurchases = myShoppingOrders.reduce((prev, actual) => prev + actual.total, 0);
+    let productsQuantityPurchases = 0;
+    if (myShoppingOrders && myShoppingOrders.length > 0)
+      productsQuantityPurchases = myShoppingOrders.length;
 
-  let productsQuantitySales = 0;
-  if (mySales && mySales.length > 0)
-    productsQuantitySales = mySales.length;
-  console.log('mySales > ', mySales)
+    let totalAmountSales = 0;
+    if (mySales && mySales.transactions && mySales.transactions.asSeller && mySales.transactions.asSeller.length)
+      totalAmountSales = mySales.transactions.asSeller.reduce((prev, actual) => actual.total ? prev + actual.total : 0, 0);
 
-  const totalOperations = productsQuantityPurchases + productsQuantitySales;
+    let productsQuantitySales = 0;
+    if (mySales && mySales.length > 0)
+      productsQuantitySales = mySales.length;
+    //console.log('mySales > ', mySales)
 
-
-  const chartData = [
-    { name: 'Compras', value: totalAmountPurchases },
-    { name: 'Ventas', value: totalAmountSales },
-  ];
-
-  //const colorPurchases = 'rgb(255,105,162)' //'255,105,162'; // PinkishRed //"#69c3ff"
-  //const colorPurchases = getComputedStyle(document.documentElement).getPropertyValue('--colorDashPurchases');
-  const colorPurchases = 'rgb(255, 105, 115)';//getComputedStyle(document.documentElement).getPropertyValue('--colorDashPurchases');
-
-  //const colorSales = 'rgb(105,195,255)' //'105,195,255'; // LightBlue //
-  //const colorSales = getComputedStyle(document.documentElement).getPropertyValue('--colorDashSales');
-  const colorSales = 'rgb(105, 195, 255)'; //getComputedStyle(document.documentElement).getPropertyValue('--colorDashSales');
-
-  const textColorDash = '#FFFFFF'; // White
+    const totalOperations = productsQuantityPurchases + productsQuantitySales;
 
 
-  /* const css = `
-  #main {
-    width: 300px;
-    height: 200px;
-    background - color: #333;
-  }
-  ` 
+    const chartData = [
+      { name: 'Compras', value: totalAmountPurchases },
+      { name: 'Ventas', value: totalAmountSales },
+    ];
 
-   return (
-      <div class="my-element">
-          <style>{css}</style>
-          some content
-      </div>
-  ) 
+    //const colorPurchases = 'rgb(255,105,162)' //'255,105,162'; // PinkishRed //"#69c3ff"
+    //const colorPurchases = getComputedStyle(document.documentElement).getPropertyValue('--colorDashPurchases');
+    const colorPurchases = 'rgb(255, 105, 115)';//getComputedStyle(document.documentElement).getPropertyValue('--colorDashPurchases');
 
-  // Initialize the echarts instance based on the prepared dom
-  var myChart = echarts.init(document.getElementById('main'));
- 
-  // Specify the configuration items and data for the chart
-  var option = {
-      title: {
-          text: 'ECharts Getting Started Example'
-      },
-      tooltip: {},
-      legend: {
-          data: ['sales']
-      },
-      xAxis: {
-          data: ['Shirts', 'Cardigans', 'Chiffons', 'Pants', 'Heels', 'Socks']
-      },
-      yAxis: {},
-      series: [
-          {
-              name: 'sales',
-              type: 'bar',
-              data: [5, 20, 36, 10, 10, 20]
-          }
-      ]
-  }; */
+    //const colorSales = 'rgb(105,195,255)' //'105,195,255'; // LightBlue //
+    //const colorSales = getComputedStyle(document.documentElement).getPropertyValue('--colorDashSales');
+    const colorSales = 'rgb(105, 195, 255)'; //getComputedStyle(document.documentElement).getPropertyValue('--colorDashSales');
+
+    const textColorDash = '#FFFFFF'; // White
 
 
-  return (
-    <Container sx={{ boxShadow: '0 0 15px 5px #cccccc55', padding: 5, width: '100' }}>
+    /* const css = `
+    #main {
+      width: 300px;
+      height: 200px;
+      background - color: #333;
+    }
+    ` 
+  
+     return (
+        <div class="my-element">
+            <style>{css}</style>
+            some content
+        </div>
+    ) 
+  
+    // Initialize the echarts instance based on the prepared dom
+    var myChart = echarts.init(document.getElementById('main'));
+   
+    // Specify the configuration items and data for the chart
+    var option = {
+        title: {
+            text: 'ECharts Getting Started Example'
+        },
+        tooltip: {},
+        legend: {
+            data: ['sales']
+        },
+        xAxis: {
+            data: ['Shirts', 'Cardigans', 'Chiffons', 'Pants', 'Heels', 'Socks']
+        },
+        yAxis: {},
+        series: [
+            {
+                name: 'sales',
+                type: 'bar',
+                data: [5, 20, 36, 10, 10, 20]
+            }
+        ]
+    }; */
 
-      <Typography sx={{ marginTop: '0', fontSize: '1.5rem', width: 1, borderBottom: "solid var(--primaryColor)" }} color="var(--primaryColor)" gutterBottom>
-        DASHBOARD DE USUARIO
-      </Typography>
+
+    return (
+      <Container sx={{ boxShadow: '0 0 15px 5px #cccccc55', padding: 5, width: '100' }}>
+
+        <Typography sx={{ marginTop: '0', fontSize: '1.5rem', width: 1, borderBottom: "solid var(--primaryColor)" }} color="var(--primaryColor)" gutterBottom>
+          DASHBOARD DE USUARIO
+        </Typography>
 
 
-      <Container sx={{ display: "Flex", flexDirection: "row", justifyContent: "space-evenly", flexWrap: "wrap" }}>
+        <Container sx={{ display: "Flex", flexDirection: "row", justifyContent: "space-evenly", flexWrap: "wrap" }}>
 
-        <UserDashCard title="Mis Compras" value={totalAmountPurchases} info1={productsQuantityPurchases}
-          info2={`de ${totalOperations} operaciones`} bkColor={colorPurchases} textColor={textColorDash} />
+          <UserDashCard title="Mis Compras" value={totalAmountPurchases} info1={productsQuantityPurchases}
+            info2={`de ${totalOperations} operaciones`} bkColor={colorPurchases} textColor={textColorDash} />
 
-        {/* <PieChart
+          {/* <PieChart
                   data={[
                     { title: 'One', value: 10, color: '#E38627' },
                     { title: 'Two', value: 15, color: '#C13C37' },
@@ -321,56 +365,69 @@ export default function Dashboard() {
                   viewBoxSize={['100','100']}
                 */}
 
-        {/* <script src="echarts.js"></script>
+          {/* <script src="echarts.js"></script>
                 <div id="main">
                     <style>{css}</style>
                 </div> */}
 
-        {/* <Chart /> */}
-        {/* <ChartDemo /> */}
+          {/* <Chart /> */}
+          {/* <ChartDemo /> */}
 
 
-        {/* <PieChart /> */}
-        <UserChart data={chartData} colors={[colorPurchases, colorSales]} />
+          {/* <PieChart /> */}
+          <UserChart data={chartData} colors={[colorPurchases, colorSales]} />
 
-        <UserDashCard title="Mis Ventas" value={totalAmountSales} info1={productsQuantitySales}
-          info2={`de ${totalOperations} operaciones`} bkColor={colorSales} textColor={textColorDash} />
-        {/* "rgb(255,105,162)",//"#69c3ff",//bkColor, */}
+          <UserDashCard title="Mis Ventas" value={totalAmountSales} info1={productsQuantitySales}
+            info2={`de ${totalOperations} operaciones`} bkColor={colorSales} textColor={textColorDash} />
+          {/* "rgb(255,105,162)",//"#69c3ff",//bkColor, */}
+
+        </Container>
+
+
+        <Box sx={{ width: '100%' }}>
+          <Box sx={{ borderBottom: 1, borderColor: 'var(--primaryColor)' }}>
+            <Tabs value={value}
+              textColor="primary"
+              indicatorColor="primary"//"#23c197"
+              onChange={handleChange} aria-label="basic tabs example">
+              <Tab label="Mis Compras" {...a11yProps(0)} sx={{ color: 'var(--primaryColor)' }} />
+              <Tab label="Mis Ventas" {...a11yProps(1)} sx={{ color: 'var(--primaryColor)' }} />
+              <Tab label="Mis Productos" {...a11yProps(2)} sx={{ color: 'var(--primaryColor)' }} />
+            </Tabs>
+          </Box>
+          <TabPanel value={value} index={0}>
+            {/* Mis Compras */}
+            {/* <UserDashPurchases list={myPurchases} /> */}
+            <UserDashPurchases list={myShoppingOrders} setClicked={setClicked} clicked={clicked} />
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            {/* Mis Ventas */}
+            <UserDashSales list={mySales} setClicked={setClicked} clicked={clicked} />
+          </TabPanel>
+          <TabPanel value={value} index={2}>
+            {/* Mis Productos */}
+            <UserDashProducts list={myProducts} setClicked={setClicked} clicked={clicked} />
+          </TabPanel>
+        </Box>
 
       </Container>
-
-
-      <Box sx={{ width: '100%' }}>
-        <Box sx={{ borderBottom: 1, borderColor: 'var(--primaryColor)' }}>
-          <Tabs value={value}
-            textColor="primary"
-            indicatorColor="primary"//"#23c197"
-            onChange={handleChange} aria-label="basic tabs example">
-            <Tab label="Mis Compras" {...a11yProps(0)} sx={{ color: 'var(--primaryColor)' }} />
-            <Tab label="Mis Ventas" {...a11yProps(1)} sx={{ color: 'var(--primaryColor)' }} />
-            <Tab label="Mis Productos" {...a11yProps(2)} sx={{ color: 'var(--primaryColor)' }} />
-          </Tabs>
-        </Box>
-        <TabPanel value={value} index={0}>
-          {/* Mis Compras */}
-          {/* <UserDashPurchases list={myPurchases} /> */}
-          <UserDashPurchases list={myShoppingOrders} setClicked={setClicked} clicked={clicked} />
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          {/* Mis Ventas */}
-          <UserDashSales list={mySales} setClicked={setClicked} clicked={clicked} />
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-          {/* Mis Productos */}
-          <UserDashProducts list={myProducts} setClicked={setClicked} clicked={clicked} />
-        </TabPanel>
-      </Box>
-
-    </Container>
-  );
+    );
+  } catch (e) {
+    handleCatch(e);
+  }
 }
 
 
+
+/* export const logoOutAction = () => {
+  return (dispatch) => {
+    delete axios.defaults.headers.common["Authorization"];
+    localStorage.setItem("token", "");
+    localStorage.setItem("role", "");
+    // dispatch(logoOutSuccess());
+    // toast.success("Sesion Cerrada Exitosamente");
+  };
+}; */
 
 
 
@@ -411,33 +468,32 @@ function a11yProps(index) {
   };
 }
 
-export function BasicTabs() {
-  /* 
-  const [value, setValue] = React.useState(0);
+/*export function BasicTabs() {
+
+const [value, setValue] = React.useState(0);
  
-  const handleChange = (event, newValue) => {
-      setValue(newValue);
-  };
+const handleChange = (event, newValue) => {
+  setValue(newValue);
+};
  
-  return (
-      <Box sx={{ width: '100%' }}>
-          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-              <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                  <Tab label="Item One" {...a11yProps(0)} />
-                  <Tab label="Item Two" {...a11yProps(1)} />
-                  <Tab label="Item Three" {...a11yProps(2)} />
-              </Tabs>
-          </Box>
-          <TabPanel value={value} index={0}>
-              Item One
-          </TabPanel>
-          <TabPanel value={value} index={1}>
-              Item Two
-          </TabPanel>
-          <TabPanel value={value} index={2}>
-              Item Three
-          </TabPanel>
+return (
+  <Box sx={{ width: '100%' }}>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+              <Tab label="Item One" {...a11yProps(0)} />
+              <Tab label="Item Two" {...a11yProps(1)} />
+              <Tab label="Item Three" {...a11yProps(2)} />
+          </Tabs>
       </Box>
-  ); 
-  */
-}
+      <TabPanel value={value} index={0}>
+          Item One
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+          Item Two
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+          Item Three
+      </TabPanel>
+  </Box>
+); 
+*/
