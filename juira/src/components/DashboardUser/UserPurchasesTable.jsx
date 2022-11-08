@@ -21,7 +21,6 @@ import Button from '@mui/material/Button';
 //import Container from '@material-ui/core/Container';
 import axios from 'axios';
 import { API_URL_BACKEND } from '../../api/apiRoute.js';
-import Rate from './Rate'
 import RateProduct from './RateProduct';
 
 
@@ -44,6 +43,7 @@ const handleProductReceived = async (e, setClicked, clicked) => {
     const response = await axios.put(`${API_URL_BACKEND}transactions/${e.target.value}`, { state: "received" });
     console.log('💣 handleProductReceived > response: ', response)
     setClicked(!clicked);
+    toast.success('No te olvides de calificar tu producto')
 }
 
 function Row(props) {
@@ -149,7 +149,8 @@ function Row(props) {
                                                         onClick={(e) => handleProductReceived(e, setClicked, clicked)}>Producto Recibido</Button>
                                                     : null
                                                 }
-                                            {(transactionRow.product.productReviewed === null && transactionRow.state === 'received') && <RateProduct productId={transactionRow.productId}/>}    
+                                            {(transactionRow.product.productReviewed === null && transactionRow.state === 'received') && 
+                                            <RateProduct productId={transactionRow.productId} clicked={clicked} setClicked = {setClicked}/>}    
                                             </TableCell>
                                             <TableCell component="th" scope="row" >
                                                 {transactionRow.id}

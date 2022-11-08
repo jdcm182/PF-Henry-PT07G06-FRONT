@@ -52,7 +52,7 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default function RateProduct({productId}) {
+export default function RateProduct({productId, clicked, setClicked}) {
   const [open, setOpen] = React.useState(false);
 
   const [value, setValue] = React.useState(2);
@@ -68,6 +68,7 @@ export default function RateProduct({productId}) {
         const rate = await axios.post(`${API_URL_BACKEND}reviews`, {stars: value , productReviewed: productId})
         toast.success("Gracias por calificar tu producto")
         setOpen(false);
+        setClicked(!clicked)
     } catch (error) {
         toast.error(error.message)
     }
