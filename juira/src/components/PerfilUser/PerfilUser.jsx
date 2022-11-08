@@ -31,16 +31,18 @@ import Loading from '../Loading/Loading'
 
 export default function PerfilUser() {
   let u = useSelector((state) => state.app.user)
+  const dispatch=useDispatch()
+  const history = useHistory();
+  const auth = getAuth();
 
   useEffect(()=>{
     console.log('entre a useeffect') 
     dispatch(getUser());
     setUserData(u)
-  },[])
+  },[dispatch])
   
-    const history = useHistory();
-    const auth = getAuth();
-    const dispatch=useDispatch()
+  
+  
    
     const [dis,setDis]=useState(true)
 
@@ -122,10 +124,11 @@ let handleImage=async(file)=>{
       setDis(!dis)
     };
 
-    const handleSubmit=()=>{
-      
-      dispatch(editUser(u.id,userData))
+    const handleSubmit=async()=>{
+      await dispatch(editUser(u.id,userData))
       handleEdit()
+      
+      history.push(`/juira/login`)
     }
 
   return (
@@ -227,7 +230,7 @@ let handleImage=async(file)=>{
           onChange={handleOnChange}  
           sx={{ml:2}} 
           inputProps={{style: {fontSize: 20}}} 
-          disabled={dis} value={userData.region || u.region} 
+          disabled={dis} value={userData.region|| ''} 
           variant='standard'/>
         </Box>
          
