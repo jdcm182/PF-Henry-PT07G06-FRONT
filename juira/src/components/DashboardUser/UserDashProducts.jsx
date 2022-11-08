@@ -1,6 +1,7 @@
 import React from 'react';
 import Container from '@mui/material/Container';
 import UserProductsTable from './UserProductsTable';
+import EnhancedProductsTable from './EnhancedProductsTable';
 
 //import EnhancedTable from './EnhancedTable';
 
@@ -47,7 +48,8 @@ export default function UserDashProducts(props) {
             {/* <UserDashTable title="Ventas" list={props.list} /> */}
 
             {list?.length > 0
-                ? <UserProductsTable title="Productos" list={list} setClicked={setClicked} clicked={clicked} />
+                ?
+                < EnhancedProductsTable title="Productos" list={list} setClicked={setClicked} clicked={clicked} />
                 : "No hay productos propios publicados para mostrar."
             }
 
@@ -57,3 +59,5 @@ export default function UserDashProducts(props) {
         </Container>
     )
 }
+
+/* <UserProductsTable title="Productos" list={list} setClicked={setClicked} clicked={clicked} /> */
