@@ -21,6 +21,8 @@ import Button from '@mui/material/Button';
 //import Container from '@material-ui/core/Container';
 import axios from 'axios';
 import { API_URL_BACKEND } from '../../api/apiRoute.js';
+import Rate from './Rate'
+import RateProduct from './RateProduct';
 
 
 /* const useRowStyles = makeStyles({
@@ -99,8 +101,8 @@ function Row(props) {
                 <TableCell align="right">{row.total.toLocaleString('de-DE')}</TableCell>
                 <TableCell align="center">{row.paymentReceived ? 'Si' : 'No'}</TableCell>
                 <TableCell align="center">{row.merchant_id}</TableCell>
-                {(row.state==='pending') && <TableCell align="center"><Button onClick={()=>handlePayment(row.id)}>Completar Pago</Button></TableCell>}
-                {(row.state==='pending') && <TableCell align="center"><Button onClick={()=>handleCancel(row.id)}>Cancelar Orden</Button></TableCell>}
+                {(row.state==='pending') && <TableCell align="center"><Button  variant="contained" onClick={()=>handlePayment(row.id)}>Completar Pago</Button></TableCell>}
+                {(row.state==='pending') && <TableCell align="center"><Button variant="contained" onClick={()=>handleCancel(row.id)}>Cancelar Orden</Button></TableCell>}
                 
             </TableRow>
             <TableRow>
@@ -137,6 +139,7 @@ function Row(props) {
                                                         onClick={(e) => handleProductReceived(e, setClicked, clicked)}>Producto Recibido</Button>
                                                     : null
                                                 }
+                                            <RateProduct productId={transactionRow.productId}/>    
                                             </TableCell>
                                             <TableCell component="th" scope="row" >
                                                 {transactionRow.id}
