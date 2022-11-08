@@ -52,7 +52,7 @@ BootstrapDialogTitle.propTypes = {
   onClose: PropTypes.func.isRequired,
 };
 
-export default function RateProduct({productId}) {
+export default function RateProduct({productId, clicked, setClicked}) {
   const [open, setOpen] = React.useState(false);
 
   const [value, setValue] = React.useState(2);
@@ -67,16 +67,16 @@ export default function RateProduct({productId}) {
     try{
         const rate = await axios.post(`${API_URL_BACKEND}reviews`, {stars: value , productReviewed: productId})
         toast.success("Gracias por calificar tu producto")
-        console.log(rate)
+        setOpen(false);
+        setClicked(!clicked)
     } catch (error) {
         toast.error(error.message)
-        console.log(error)
     }
   };
 
   return (
     <div>
-      <Button variant="contained" onClick={handleClickOpen}>
+      <Button variant="contained" sx={{ color: "white", fontSize: ".8rem" }} onClick={handleClickOpen}>
         Puntúa el producto
       </Button>
       <BootstrapDialog
