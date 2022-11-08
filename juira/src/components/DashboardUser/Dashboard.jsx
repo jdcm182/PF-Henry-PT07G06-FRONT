@@ -84,7 +84,7 @@ export default function Dashboard() {
       const response = await axios(`${API_URL_BACKEND}transactions/byToken`)
       //console.log('fetchSales > response.data: ', response.data)
       handleCatch(response.data);
-      setMySales(response.data);
+      setMySales(response.data);     
       //console.log('User Dashboard > fetchSales > response.data: ', response.data);
     } catch (e) {
       handleCatch(e);
@@ -96,6 +96,7 @@ export default function Dashboard() {
       //console.log('fetchProducts > response.data: ', response.data)
       handleCatch(response.data);
       setMyProducts(response.data);
+      console.log({response: response.data})
       //console.log('User Dashboard > fetchProducts > response.data: ', JSON.stringify(response.data));
     } catch (e) {
       handleCatch(e);
