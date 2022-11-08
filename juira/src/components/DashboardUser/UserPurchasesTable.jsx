@@ -149,7 +149,7 @@ function Row(props) {
                                                         onClick={(e) => handleProductReceived(e, setClicked, clicked)}>Producto Recibido</Button>
                                                     : null
                                                 }
-                                            {(transactionRow.product.productReviewed === null && transactionRow.state === 'sent') && <RateProduct productId={transactionRow.productId}/>}    
+                                            {(transactionRow.product.productReviewed === null && transactionRow.state === 'received') && <RateProduct productId={transactionRow.productId}/>}    
                                             </TableCell>
                                             <TableCell component="th" scope="row" >
                                                 {transactionRow.id}
