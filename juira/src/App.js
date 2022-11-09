@@ -23,7 +23,7 @@ import { useDispatch, useSelector } from "react-redux";
 import GuestNavigator from "./Navigator/GuestNavigator";
 import UserNavigator from "./Navigator/UserNavigator";
 import AdminNavigator from "./Navigator/AdminNavigator";
-import toast, { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from "react-hot-toast";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles"; //'@material-ui/core';
 import { updateCartApi, updateFavApi } from "./redux/actions/products.actions";
