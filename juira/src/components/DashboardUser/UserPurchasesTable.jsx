@@ -74,8 +74,8 @@ function Row(props) {
     const handleCancel = async (id) => {
         try {
         const response = await axios.put(`${API_URL_BACKEND}shoppingOrders/${id}`, {state: 'cancelled'});
-        response.data.transactionList.forEach(el => 
-            axios.put(`${API_URL_BACKEND}transactions/${el.id}`, {state: 'cancelled'})
+        response.data.transactionList.forEach(async el => 
+            await axios.put(`${API_URL_BACKEND}transactions/${el.id}`, {state: 'cancelled'})
             );
         setClicked(!clicked)    
         } catch (error) {

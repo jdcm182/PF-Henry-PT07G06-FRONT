@@ -70,7 +70,7 @@ export default function Dashboard() {
       const response = await axios(`${API_URL_BACKEND}shoppingOrders/byToken`)
       //console.log('fetchOrders > response.data: ', response.data)
       handleCatch(response.data);
-      if (Array.isArray(response.data)) setMyShoppingOrders(response.data);
+      if (Array.isArray(response.data)) setMyShoppingOrders(response.data.sort((a,b) => a.id - b.id));
       //const response = await axios(`http://localhost:3001/shoppingOrders/byToken`)
       //console.log('User Dashboard > fetchOrders > response.data: ', response.data)
       //console.log('User Dashboard > API_URL_BACKEND: ', API_URL_BACKEND) 
