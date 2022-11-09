@@ -97,7 +97,7 @@ export default function PrimarySearchAppBar() {
     if (favorites) {
       dispatch(updateFavorites(favorites));
     }
-  }, []);
+  }, [role]);
 
   const products = useSelector((state) => state.allProducts);
 
