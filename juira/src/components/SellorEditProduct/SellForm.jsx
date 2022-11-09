@@ -357,7 +357,7 @@ export default function SellForm() {
                 >
                   <Typography
                     sx={{ fontSize: 14, width: 1 }}
-                    color="text.secondary"
+                    color= "var(--primaryColor)"
                   >
                     Subir Imagen
                   </Typography>
