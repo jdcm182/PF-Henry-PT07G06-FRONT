@@ -80,7 +80,7 @@ export function productsReducer(state = initialState, action) {
         favorites: action.payload,
       };
     case ADD_CART:
-      const aux = state.cart.find((product) => product.id === action.payload.id)
+      const aux = state.cart?.find((product) => product.id === action.payload.id)
         ? state.cart
         : state.cart.concat(action.payload);
       localStorage.setItem("itemsInCart", JSON.stringify(aux));
@@ -102,7 +102,7 @@ export function productsReducer(state = initialState, action) {
       };
 
     case ADD_FAVORITES:
-      const aux4 = state.favorites.find(
+      const aux4 = state.favorites?.find(
         (product) => product.id === action.payload.id
       )
         ? state.favorites

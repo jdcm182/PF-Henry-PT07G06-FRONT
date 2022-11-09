@@ -32,10 +32,10 @@ export default function Card(props) {
   const role = useSelector((state) => state.app.token.role);
 
   const productIsAddedToCart = (id) => {
-    return itemsAddedToCart.find((item) => item.id === id) ? true : false;
+    return itemsAddedToCart?.find((item) => item.id === id) ? true : false;
   };
   const productIsAddedToFavorites = (id) => {
-    return itemsAddedToFavorites.find((item) => item.id === id) ? true : false;
+    return itemsAddedToFavorites?.find((item) => item.id === id) ? true : false;
   };
 
   const handleCart = async (p) => {

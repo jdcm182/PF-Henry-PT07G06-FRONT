@@ -85,8 +85,8 @@ function Q_A({ id }) {
   return (
     <Box
       sx={{
-        width: 500,
-        m: 4,
+        width: 1,
+        mt: 4,
         /* overflow: "auto", */
         /* border: 0.5, */
         borderRadius: 5,

@@ -41,7 +41,7 @@ export default function FavoriteDetail(props) {
   };
 
   const productIsAddedToCart = (id) => {
-    return itemsAddedToCart.find((item) => item.id === id) ? true : false;
+    return itemsAddedToCart?.find((item) => item.id === id) ? true : false;
   };
 
   const dispatch = useDispatch();
