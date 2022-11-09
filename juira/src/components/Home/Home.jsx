@@ -17,7 +17,7 @@ import { useLocation } from "react-router-dom";
 import { updateFilter } from "../../redux/actions/app.actions";
 import { Button, Typography } from "@mui/material";
 import { Container } from "@mui/system";
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 
 const _ = require("lodash");
 
@@ -114,23 +114,7 @@ export default function Home(/* { prods, getAll } */) {
           <Sidebar />
         </div> */}
         <div className={styles.cardsGridContainer}>
-          {(stateFilterAndSort.length>0)?
-          <CardsGrid products={stateFilterAndSort} />:
-          <Container sx={{display: 'flex', flexDirection: 'column' ,alignContent: 'center' , justifyContent:'center'}}>
-            <Typography sx={{m:2, textAlign: 'center'}}>
-            No se encontraron productos segun su busqueda
-          </Typography>
-          <Button  variant="contained"
-          sx={
-            {backgroundColor: '#23c197', '&:hover': {backgroundColor: '#138f6e'}, mb:3, width:0.2, alignSelf:'center'}
-          }
-          onClick={()=>{ dispatch(updateFilter({ name: "categories", value: "Todos" }))}}>Volver</Button>
-
-          </Container>
-         
-        
-        }
-          
+          <CardsGrid products={stateFilterAndSort} />
         </div>
       </div>
     </section>
