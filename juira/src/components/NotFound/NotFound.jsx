@@ -18,7 +18,7 @@ export default function NotFound() {
           sx={
             {backgroundColor: '#23c197', '&:hover': {backgroundColor: '#138f6e'}, mb:3}
           }
-          onClick={()=>{history.push('/juira')}}>Volver</Button>
+          onClick={()=>{history.go('/juira')}}>Volver</Button>
         </Paper>
 
     </Box>
