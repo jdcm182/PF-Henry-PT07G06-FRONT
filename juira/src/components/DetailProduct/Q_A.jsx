@@ -100,7 +100,7 @@ function Q_A({ id }) {
       <List sx={{ width: "100%", bgcolor: "background.paper" }}>
         {questions.length === 0 ? (
           <Typography sx={{ fontSize: 15, fontWeight: "medium" }} mb={2}>
-            No hay preguntas aún, sé el primero!
+            No hay preguntas aún{false ? ", sé el primero" : null}!
           </Typography>
         ) : (
           questions?.map((ele, index) => {
@@ -160,6 +160,7 @@ function Q_A({ id }) {
             value={questionSubmit}
             onChange={handleChange}
             helperText={error ? "Entre 5 y 256 caracteres" : ""}
+            autofocus
           />
           <Box
             sx={{
