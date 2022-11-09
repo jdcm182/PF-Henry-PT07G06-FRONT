@@ -3,6 +3,7 @@ import axios from "axios";
 
 import { API_URL_BACKEND, postUser, getUserData } from "../../api/apiRoute";
 import { getAuth, signOut } from "firebase/auth";
+import { updateCartApi, updateFavApi } from "./products.actions";
 
 export const TURN_ON_SPINNER = "TURN_ON_SPINNER";
 export const TURN_OFF_SPINNER = "TURN_OFF_SPINNER";
@@ -69,6 +70,8 @@ export const loginAction = (usuario) => {
           await Promise.all(serverPut).then((response) => {
             return response;
           });
+          dispatch(updateCartApi())
+          dispatch(updateFavApi())
         } catch (error) {
           console.log("error en inicio de sesion", error);
         }
