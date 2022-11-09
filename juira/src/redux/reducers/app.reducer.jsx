@@ -6,11 +6,13 @@ import {
   TURN_OFF_SPINNER,
   TURN_ON_SPINNER,
   UPDATE_FILTER_STATE,
+  USER_PROFILE,
 } from "../actions/app.actions";
+
 
 const initialState = {
   user: {},
-  isSpinner: false,
+  isSpinner: 0,
   filterState: { categories: "Todos", sort: "A-Z", condition: "Todos" },
   token: {
     token : "",
@@ -33,12 +35,14 @@ export function appReducer(state = initialState, action) {
           token : "",
           role: "",
         },
+        user:{}
       };
     }
 
     case REFRESH_DATA:
       const localStorageToken = localStorage.getItem("token");
       const localStorageRole = localStorage.getItem("role");
+
       if (!localStorageToken && !localStorageRole) return state;
       axios.defaults.headers.common["Authorization"] = localStorageToken
       return {
@@ -49,13 +53,13 @@ export function appReducer(state = initialState, action) {
     case TURN_ON_SPINNER: {
       return {
         ...state,
-        isSpinner: action.payload,
+        isSpinner: ++state.isSpinner,
       };
     }
     case TURN_OFF_SPINNER: {
       return {
         ...state,
-        isSpinner: action.payload,
+        isSpinner: --state.isSpinner,
       };
     }
     case UPDATE_FILTER_STATE: {
@@ -67,7 +71,16 @@ export function appReducer(state = initialState, action) {
         },
       };
     }
+    case USER_PROFILE:{
+      return{...state,
+      user:action.payload
+      }
+      
+    }
+   
+   
     default:
       return state;
   }
+ 
 }

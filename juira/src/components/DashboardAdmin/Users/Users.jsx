@@ -34,26 +34,23 @@ const useStyles = makeStyles({
 
   });
   
-  // console.log(resp)
   
   export default function Users() {
     const classes = useStyles();
-    // let products = useSelector((state) => state.productsReducer.allProducts);
+   
     const [users, setUsers] = useState([])
-    let resp = []
-    axios.get(`${API_URL_BACKEND}users`)
-    .then(response => resp = response.data)
-    .then(() => !users.length && setUsers(resp))
-    // .catch(error => console.log(error))
-    // let users = []
-    // users = resp
-    
-    
+    // let resp = []
     // axios.get(`${API_URL_BACKEND}users`)
-    // .then(response => users = response.data)
+    // .then(response => resp = response.data)
+    // .then(() => !users.length && setUsers(resp))
+    // .catch( error => console.log(error))
 
-    // !users.length && setUsers(resp)
-    // console.log('dentr',resp)
+    useEffect(() => {
+      axios.get(`${API_URL_BACKEND}users`)
+      .then((response) => setUsers(response.data))
+      .catch(error => console.log(error))
+    },[])
+
 
     let totalUsers = users.length
     let activeUsers = 0
@@ -65,7 +62,7 @@ const useStyles = makeStyles({
         <div className={styles.dashWrapper}>
           
             <Container className={classes.root} 
-            sx={{ width: "85%", height: "100%", /* backgroundColor:"#444", */
+            sx={{ width: "100%", height: "100%", /* backgroundColor:"#444", */
                 boxShadow: '0 8px 15px 5px #cccccc55', padding: '2rem', borderRadius: '.8rem' }} >
 
                 <Container sx={{display:"Flex", flexDirection:"row", justifyContent:"space-evenly", flexWrap: "wrap"}}>

@@ -29,6 +29,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle'; // set Published
 import DangerousIcon from '@mui/icons-material/Dangerous'; // set Deleted
 import axios from 'axios';
 import { API_URL_BACKEND } from "../../../api/apiRoute";
+import ExportToExcel from '../ExporToExcel/ExportToExcel';
 
 
 const title = 'Usuarios registrados'
@@ -184,7 +185,7 @@ function EnhancedTableToolbar(props) {
     let promise = Promise.all(reqs)
     .then(() => axios.get(`${API_URL_BACKEND}users`))
     .then((response) => setUsers(response.data))
-    .catch(error => error)
+    .catch(error => console.log(error))
     toast.promise(promise, {
       loading: 'Cargando',
       success: 'Actualizado con éxito',
@@ -198,7 +199,7 @@ function EnhancedTableToolbar(props) {
     let promise = Promise.all(reqs)
     .then(() => axios.get(`${API_URL_BACKEND}users`))
     .then((response) => setUsers(response.data))
-    .catch(error => error)
+    .catch(error => console.log(error))
     toast.promise(promise, {
       loading: 'Cargando',
       success: 'Actualizado con éxito',
@@ -211,7 +212,7 @@ function EnhancedTableToolbar(props) {
     let promise = Promise.all(reqs)
     .then(() => axios.get(`${API_URL_BACKEND}users`))
     .then((response) => setUsers(response.data))
-    .catch(error => error)
+    .catch(error => console.log(error))
     toast.promise(promise, {
       loading: 'Cargando',
       success: 'Actualizado con éxito',
@@ -225,7 +226,7 @@ function EnhancedTableToolbar(props) {
     let promise = Promise.all(reqs)
     .then(() => axios.get(`${API_URL_BACKEND}users`))
     .then((response) => setUsers(response.data))
-    .catch(error => error)
+    .catch(error => console.log(error))
     toast.promise(promise, {
       loading: 'Cargando',
       success: 'Actualizado con éxito',
@@ -449,7 +450,7 @@ export default function EnhancedTable( props ) {
                       <TableCell align="center">{row.emailAddress}</TableCell>
                       <TableCell align="center">{row.phoneNumber}</TableCell>
                       <TableCell align="center">{row.status}</TableCell>
-                      <TableCell align="center">{row.isAdmin ? 'Admin' : 'Regular'}</TableCell>
+                      <TableCell align="center">{row.isAdmin ? 'Admin' : 'Usuario'}</TableCell>
                       <TableCell align="center">{row.id}</TableCell>
                       {/* <TableCell align="right">{row.transactionList.map( e => `${e.productId}, `)}</TableCell> */}
 
@@ -478,10 +479,19 @@ export default function EnhancedTable( props ) {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Densidad"
-      />
+      <Box
+        sx={
+          { 
+            minWidth: 650, display: 'flex', justifyContent: 'space-between',
+          }
+        }
+      >
+        <FormControlLabel
+          control={<Switch checked={dense} onChange={handleChangeDense} />}
+          label="Diseño compacto"
+          />
+        <ExportToExcel apiData={users} fileName='Usuarios'/>
+      </Box>
     </Box>
   );
 }

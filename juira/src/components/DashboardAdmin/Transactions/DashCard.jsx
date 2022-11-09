@@ -34,9 +34,7 @@ export default function DashCard(props) {
       }));
     
   return (
-    <ThemeProvider theme={theme}>
-      
-                  
+    <ThemeProvider theme={theme}>               
       <Box
         sx={{
           /* bgcolor: 'background.paper', */

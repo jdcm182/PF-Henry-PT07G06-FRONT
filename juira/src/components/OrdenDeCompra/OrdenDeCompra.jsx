@@ -26,7 +26,7 @@ export default function OrdenDeCompra() {
   const datosOrder = { status, payment_id, merchant_order_id, preference_id };
 
   React.useEffect(() => {
-    console.log('entre en use effect')
+   
     dispatch(updateCart([]));
     /* Object.keys(datosOrder).length !== 0 &&  */dispatch(sendShopOrder(datosOrder));
   }, [datosOrder]);
