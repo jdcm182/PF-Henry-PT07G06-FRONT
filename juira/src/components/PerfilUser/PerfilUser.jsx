@@ -164,7 +164,12 @@ let handleImage=async(file)=>{
         value={(userData.name|| '').toUpperCase()} 
         variant='standard'/>
           }
-        subheader={<Rating sx={{ml: 5}} name="read-only" precision={0.5} value={u.rating|| 0} readOnly />}
+        subheader={
+        <div style={{display: "flex", flexDirection: "column"}}>
+        <Rating sx={{ml: 5}} name="read-only" precision={0.5} value={u.rating|| 0} readOnly />
+        <label style={{marginLeft: "40px", color: "#c8c8ca"}}>{u.userReviewed?.length ? `En base a ${u.userReviewed.length} reviews` : "No hay reviews aún"}</label>
+        </div>
+        }
       />
 
 <Typography paragraph align='left' sx={{m:5, fontSize:25, textDecoration: 'underline' }}>
