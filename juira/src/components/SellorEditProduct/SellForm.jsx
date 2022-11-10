@@ -352,12 +352,12 @@ export default function SellForm() {
                   onClick={handleImage}
                   variant="contained"
                   component="label"
-                  color="success"
+                  color= "var(--primaryColor)"
                   disabled={!previewSource}
                 >
                   <Typography
                     sx={{ fontSize: 14, width: 1 }}
-                    color= "var(--primaryColor)"
+                    color= "black"
                   >
                     Subir Imagen
                   </Typography>
@@ -391,13 +391,14 @@ export default function SellForm() {
 
         <Button
           variant="contained"
-          color="success"
-          sx={{ mt: 5 }}
+          color= "var(--primaryColor)"
+          sx={{ mt: 5,color: "#23c197" }}
           onClick={handleOnSubmit}
           disabled={Object.values(error).length > 0 || data.name.length === 0}
+          
         >
           <Typography
-            sx={{ fontSize: 20, width: 1, color: "var(--primaryColor)" }}
+            sx={{ fontSize: 20, width: 1, color: 'black'}}
             color="black"
             gutterBottom
           >
