@@ -399,7 +399,6 @@ export default function SellForm() {
         >
           <Typography
             sx={{ fontSize: 20, width: 1, color: 'black'}}
-            color="black"
             gutterBottom
           >
             SACAR PA' JUIRA
