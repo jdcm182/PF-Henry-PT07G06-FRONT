@@ -41,23 +41,12 @@ export default function PerfilUser() {
   },[dispatch])
 
   useEffect(()=>{
-    console.log('entre a useeffect') 
     setUserData(u)
   },[u])
   
-   
-    const [dis,setDis]=useState(true)
-
-
-
+const [dis,setDis]=useState(true)
 let userToken = useSelector((state) => state.app.token.token)
-
-
-
-
- const [userData, setUserData]=useState(u)
-
-
+const [userData, setUserData]=useState(u)
 const [previewSource, setPreviewSource]= useState()
 
 let handleFileInputChange=(e)=>{
@@ -91,10 +80,6 @@ let handleImage=async(file)=>{
   
 }
  
-
-
-
-
 
     const handleLogOut=async()=>{
       dispatch(logoOutAction())
