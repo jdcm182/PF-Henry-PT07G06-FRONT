@@ -15,9 +15,8 @@ import {
 import FilterBar from "../FilterBar/FilterBar";
 import { useLocation } from "react-router-dom";
 import { updateFilter } from "../../redux/actions/app.actions";
-import { Button, Typography } from "@mui/material";
-import { Container } from "@mui/system";
-import { useHistory } from 'react-router-dom';
+import { Typography } from "@mui/material";
+import DocumentTitle from "react-document-title";
 
 const _ = require("lodash");
 
@@ -28,7 +27,8 @@ function useQuery() {
 }
 
 export default function Home(/* { prods, getAll } */) {
-  const history = useHistory();
+
+
   let query = useQuery();
   const productsState = useSelector(
     (state) => state.productsReducer.allProducts
@@ -96,6 +96,7 @@ export default function Home(/* { prods, getAll } */) {
 
   return (
     <section className={styles.homeContainer}>
+      <DocumentTitle title="JUIRA'S"></DocumentTitle>
       <div className={styles.heroWrapper}>
         <Hero />
       </div>
@@ -114,23 +115,7 @@ export default function Home(/* { prods, getAll } */) {
           <Sidebar />
         </div> */}
         <div className={styles.cardsGridContainer}>
-          {(stateFilterAndSort.length>0)?
-          <CardsGrid products={stateFilterAndSort} />:
-          <Container sx={{display: 'flex', flexDirection: 'column' ,alignContent: 'center' , justifyContent:'center'}}>
-            <Typography sx={{m:2, textAlign: 'center'}}>
-            No se encontraron productos segun su busqueda
-          </Typography>
-          <Button  variant="contained"
-          sx={
-            {backgroundColor: '#23c197', '&:hover': {backgroundColor: '#138f6e'}, mb:3, width:0.2, alignSelf:'center'}
-          }
-          onClick={()=>{ dispatch(updateFilter({ name: "categories", value: "Todos" }))}}>Volver</Button>
-
-          </Container>
-         
-        
-        }
-          
+          <CardsGrid products={stateFilterAndSort} />
         </div>
       </div>
     </section>
