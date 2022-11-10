@@ -34,7 +34,7 @@ function Q_A({ id }) {
       const { data } = await axios(
         `${API_URL_BACKEND}Q&A?productQAndAId=${id}`
       );
-     
+
       setQuestions(data);
     } catch (error) {
       console.log("errorQ&A", error);
@@ -43,7 +43,7 @@ function Q_A({ id }) {
       if (role) {
         const { data } = await axios(`${API_URL_BACKEND}users/unique`);
         setUserProducts(data.productsOwner);
-        
+
       }
     } catch (error) {
       console.log("errorUnique", error);
@@ -110,7 +110,7 @@ function Q_A({ id }) {
                   <ListItemText
                     primary={ele.question}
                     secondary={
-                      (!ele.answer && userProducts.some((ele) => ele.id === parseInt(id)))? (
+                      (!ele.answer && userProducts.some((ele) => ele.id === parseInt(id))) ? (
                         <Button
                           onClick={() => {
                             setQuestionId(ele.id);
@@ -160,7 +160,7 @@ function Q_A({ id }) {
             value={questionSubmit}
             onChange={handleChange}
             helperText={error ? "Entre 5 y 256 caracteres" : ""}
-            autofocus
+            autoFocus
           />
           <Box
             sx={{
@@ -214,6 +214,7 @@ function Q_A({ id }) {
             value={questionSubmit}
             onChange={handleChange}
             helperText={error ? "Entre 5 y 256 caracteres" : ""}
+            autoFocus
           />
           <Box
             sx={{
