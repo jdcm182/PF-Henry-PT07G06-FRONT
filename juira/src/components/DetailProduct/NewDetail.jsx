@@ -298,7 +298,7 @@ export default function NewDetail() {
                                     </Typography>
                                     {/* JSON.stringify(sellerInfo) */}
 
-                                    <Typography fontWeight="bold">{sellerInfo.name}</Typography>
+                                    <Typography fontWeight="bold">{sellerInfo.name?.toUpperCase()}</Typography>
                                     {sellerInfo.rating
                                         ? <DetailRating rating={sellerInfo.rating} />
                                         : <DetailRating rating={0} />
