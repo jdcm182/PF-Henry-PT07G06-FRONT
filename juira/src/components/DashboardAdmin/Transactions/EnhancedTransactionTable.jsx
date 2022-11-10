@@ -66,7 +66,7 @@ const headCells = [
     id: 'id',
     numeric: false,
     disablePadding: true,
-    label: 'No. de Orden',
+    label: 'No. de Transacción',
   },
   {
     id: 'status',
@@ -167,6 +167,7 @@ const handlePay = (event,clicked,setClicked) => {
   // setSelected([])
   let promise = axios.put(`${API_URL_BACKEND}transactions/${id}`, {state: 'closed'})
   .then( res => setClicked(!clicked))
+  .catch(error => console.log(error))
 
   toast.promise(promise, {
     loading: 'Cargando',

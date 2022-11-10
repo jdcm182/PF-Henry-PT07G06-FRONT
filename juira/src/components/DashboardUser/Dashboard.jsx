@@ -407,7 +407,7 @@ export default function Dashboard() {
           </TabPanel>
           <TabPanel value={value} index={2}>
             {/* Mis Productos */}
-            <UserDashProducts list={myProducts} setClicked={setClicked} clicked={clicked} />
+            <UserDashProducts list={myProducts} setClicked={setClicked} clicked={clicked} fetchProducts={fetchProducts} />
           </TabPanel>
         </Box>
 

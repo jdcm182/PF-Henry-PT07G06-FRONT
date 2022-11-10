@@ -30,11 +30,13 @@ import DangerousIcon from '@mui/icons-material/Dangerous'; // set Deleted
 import axios from 'axios';
 import { API_URL_BACKEND } from "../../../api/apiRoute";
 import ExportToExcel from '../ExporToExcel/ExportToExcel';
-
+import { styled } from '@mui/material/styles';
 
 const title = 'Usuarios registrados'
 
-// let rows = [];
+// const StyledTableRow = styled(TableRow)({
+
+// })
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -374,7 +376,7 @@ export default function EnhancedTable( props ) {
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - users.length) : 0;
 
   return (
-    <Box sx={{ width: '100%', marginTop: '1rem' }}>
+    <Box sx={{ width: '100%', marginTop: '1rem' }} >
       <Toaster />
       <Paper sx={{ width: '100%', mb: 2 }}>
         <EnhancedTableToolbar numSelected={selected.length} selected={selected} users={users} setSelected={setSelected} setUsers={setUsers}/>
@@ -392,7 +394,7 @@ export default function EnhancedTable( props ) {
               onRequestSort={handleRequestSort}
               rowCount={users.length}
             />
-            <TableBody>
+            <TableBody >
               {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
               {stableSort(users, getComparator(order, orderBy))
@@ -417,14 +419,19 @@ export default function EnhancedTable( props ) {
                   
                   return (
                     <TableRow
-                    hover
+                    // hover
                     onClick={(event) => handleClick(event, row.id)}
                     role="checkbox"
                     aria-checked={isItemSelected}
                     tabIndex={-1}
                     key={row.id}
                     selected={isItemSelected}
-                    
+                    // color = {row.status === 'banned' ? color = 'error' : null}
+                    // color='success'
+                    sx={{
+                      // color: 'success.main',
+                      background: row.status === 'banned' ? '#FFCA99' : row.status === 'deleted' ? 'rgb(211, 211, 211)' : null
+                    }}
                     >
                       <TableCell padding="checkbox">
                         <Checkbox 

@@ -287,9 +287,9 @@ EnhancedTableToolbar.propTypes = {
 };
 
 export default function EnhancedProductsTable(props) {
-  const { title, list, setProducts } = props;
-  //const rows = list
-  const [rows, setRows] = React.useState(list);
+  const { title, list, setProducts, fetchProducts } = props;
+  // const [rows, setRows] = React.useState(list);
+  let rows = list
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('id');
   const [selected, setSelected] = React.useState([]);
@@ -371,10 +371,13 @@ export default function EnhancedProductsTable(props) {
     // console.log('👾UserProductsTable > handleViewQA > 👾 productId: ', productId)
   }
 
-
+  React.useEffect(()=>{
+    !modal && fetchProducts() 
+  }, [modal])
 
   return (
     <div>
+      
       {modal && <UserDashViewQA openModal={openModal} closeModal={closeModal} product={clickedProduct} />}
       <Box sx={{ width: '100%', marginTop: '1rem' }}>
         <Toaster />
@@ -420,22 +423,29 @@ export default function EnhancedProductsTable(props) {
                     return (
                       <TableRow
                         hover
-                        onClick={row.status === 'Vendido' ? null : (event) => handleClick(event, row.id)}
+                        onClick={
+                          row.status === "Vendido"
+                            ? null
+                            : (event) => handleClick(event, row.id)
+                        }
                         role="checkbox"
                         aria-checked={isItemSelected}
                         tabIndex={-1}
                         key={row.name}
                         selected={isItemSelected}
-
                       >
                         <TableCell padding="checkbox">
                           <Checkbox
-                            style={row.status === 'Vendido' ? {} : { color: 'var(--primaryColor)' }}
+                            style={
+                              row.status === "Vendido"
+                                ? {}
+                                : { color: "var(--primaryColor)" }
+                            }
                             checked={isItemSelected}
                             inputProps={{
-                              'aria-labelledby': labelId,
+                              "aria-labelledby": labelId,
                             }}
-                            disabled={row.status === 'Vendido' ? true : false}
+                            disabled={row.status === "Vendido" ? true : false}
                           />
                         </TableCell>
                         <TableCell align="center">{row.id}</TableCell>
@@ -456,17 +466,28 @@ export default function EnhancedProductsTable(props) {
                             value={row.id} // ................... productId ...........................................................
                             id={row.id} // ................... productId ...........................................................
                             onClick={(e) => handleViewQA(e, row.id, row.name)}
-                            sx={{ zIndex: '100' }}
+                            sx={{ zIndex: "100" }}
                           >
-                            <SimpleBadge number={row.productQAndA.length}
-                                                    /* classes={{ badge: classes.customBadge }}
+                            <SimpleBadge
+                              number={row.productQAndA.reduce(
+                                (unanswered, ele) => {
+                                  return !ele.answer
+                                    ? ++unanswered
+                                    : unanswered;
+                                },
+                                0
+                              )} /* color="primary" */ /* showZero */
+                              /* classes={{ badge: classes.customBadge }}
                                                     className={classes.margin}
-                                                    badgeContent={row.productQAndA.length} */ /* color="primary" */ /* showZero */>
+                                                    badgeContent={row.productQAndA.length} */
+                            >
                               <MailIcon color="action" />
                             </SimpleBadge>
                           </Button>
                         </TableCell>
-                        <TableCell align="center">{row.price.toLocaleString('de-DE')}</TableCell>
+                        <TableCell align="center">
+                          {row.price.toLocaleString("de-DE")}
+                        </TableCell>
                         <TableCell align="center">{row.ownerId}</TableCell>
                       </TableRow>
                     );

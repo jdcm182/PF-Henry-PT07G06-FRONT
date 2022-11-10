@@ -24,7 +24,7 @@ import { visuallyHidden } from '@mui/utils';
 import toast, { Toaster } from 'react-hot-toast';
 import { useSelector, useDispatch } from 'react-redux';
 //import { updateProdsTemp } from '../../redux/actions/products.actions.jsx';
-
+import ProductDetails from './ProductDetails';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle'; // set Published
 import PauseCircleFilledIcon from '@mui/icons-material/PauseCircleFilled'; // set Paused
 import DangerousIcon from '@mui/icons-material/Dangerous'; // set Deleted
@@ -106,6 +106,12 @@ const headCells = [
     numeric: true,
     disablePadding: false,
     label: 'Id Propietario',
+  },
+  {
+    id: 'details',
+    numeric: true,
+    disablePadding: false,
+    label: '',
   },
 ];
 
@@ -415,6 +421,9 @@ export default function EnhancedTable( props ) {
                       <TableCell align="right">{row.status}</TableCell>
                       <TableCell align="right">{row.price.toLocaleString('de-DE')}</TableCell>
                       <TableCell align="right">{row.ownerId}</TableCell>
+                      <TableCell align="right">
+                        <ProductDetails name={row.name} status={row.status} description={row.description} image={row.image} categories={row.categories}/>
+                      </TableCell>
                     </TableRow>
                   );
                 })}
