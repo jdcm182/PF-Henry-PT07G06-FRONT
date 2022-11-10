@@ -27,7 +27,6 @@ function GuestNavigator() {
         {pathname !== "/" && <NavBar/>}
         <ScrollToTop />
         <Switch>
-        {console.log("role", role,!role)}
           <Route exact path={"/"} component={Landing} />
           <Route exact path={"/juira"} component={Home} />
           <Route exact path={"/juira/shoppingCart"} component={ShoppingCart} />

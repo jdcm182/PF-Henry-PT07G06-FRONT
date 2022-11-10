@@ -365,10 +365,6 @@ export default function EnhancedProductsTable(props) {
     const product = { id: productId, name: productName }
     setClickedProduct(product); // <-- product id
     openModal();
-    // console.log('👾UserProductsTable > handleViewQA > CLICK! 👾> e: ', e)
-    // console.log('👾UserProductsTable > handleViewQA > 👾 e.target.value: ', e.target.value)
-    // console.log('👾UserProductsTable > handleViewQA > 👾 e.target.id: ', e.target.id)
-    // console.log('👾UserProductsTable > handleViewQA > 👾 productId: ', productId)
   }
 
   React.useEffect(()=>{

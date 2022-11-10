@@ -51,15 +51,7 @@ export default function Dashboard() {
   const dispatch = useDispatch();
 
   const handleCatch = (e) => {
-    //console.log('e: ', JSON.stringify(e))
     if (JSON.stringify(e).includes('Firebase ID token has expired')) {
-      console.log('💥Firebase ID token has expired💥')
-      console.log('💥Firebase ID token has expired💥')
-      console.log('💥Firebase ID token has expired💥')
-      console.log('💥Firebase ID token has expired💥')
-      console.log('💥Firebase ID token has expired💥')
-      console.log('💥Firebase ID token has expired💥')
-      console.log('💥Firebase ID token has expired💥')
       dispatch(logoOutAction());
       history.push(`/juira/login`);
     }
@@ -68,13 +60,9 @@ export default function Dashboard() {
   const fetchOrders = async () => {
     try {
       const response = await axios(`${API_URL_BACKEND}shoppingOrders/byToken`)
-      //console.log('fetchOrders > response.data: ', response.data)
+    
       handleCatch(response.data);
       if (Array.isArray(response.data)) setMyShoppingOrders(response.data.sort((a,b) => a.id - b.id));
-      //const response = await axios(`http://localhost:3001/shoppingOrders/byToken`)
-      //console.log('User Dashboard > fetchOrders > response.data: ', response.data)
-      //console.log('User Dashboard > API_URL_BACKEND: ', API_URL_BACKEND) 
-      //       https://pf-henry-pt07g06-back-production.up.railway.app/
     } catch (e) {
       handleCatch(e);
     }
@@ -82,10 +70,8 @@ export default function Dashboard() {
   const fetchSales = async () => {
     try {
       const response = await axios(`${API_URL_BACKEND}transactions/byToken`)
-      //console.log('fetchSales > response.data: ', response.data)
       handleCatch(response.data);
       setMySales(response.data);     
-      //console.log('User Dashboard > fetchSales > response.data: ', response.data);
     } catch (e) {
       handleCatch(e);
     }
@@ -93,11 +79,8 @@ export default function Dashboard() {
   const fetchProducts = async () => {
     try {
       const response = await axios(`${API_URL_BACKEND}products/byToken`)
-      //console.log('fetchProducts > response.data: ', response.data)
       handleCatch(response.data);
       setMyProducts(response.data);
-      console.log({response: response.data})
-      //console.log('User Dashboard > fetchProducts > response.data: ', JSON.stringify(response.data));
     } catch (e) {
       handleCatch(e);
     }
@@ -109,8 +92,6 @@ export default function Dashboard() {
     fetchProducts();
   }, [clicked])
 
-  //console.log('User Dashboard > myShoppingOrders', JSON.stringify(myShoppingOrders))
-  //console.log('User Dashboard > myProducts', JSON.stringify(myProducts))
 
   const items = [
     {
@@ -251,20 +232,6 @@ export default function Dashboard() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
-
-  /*  const myPurchases = [
-     { id: 1, Producto: 'Biblioteca', Precio: 11000, Estado: 'Usado', Contraparte: 'jdcm' },
-     { id: 2, Producto: 'Cafetera', Precio: 15000, Estado: 'Usado', Contraparte: 'jdcm' },
-     { id: 3, Producto: 'Cartuchera', Precio: 1400, Estado: 'Usado', Contraparte: 'jdcm' },
-     { id: 7, Producto: 'Lampara', Precio: 4000, Estado: 'Usado', Contraparte: 'jdcm' },
-   ] */
-  /*   const mySales = [
-      { id: 4, Producto: 'Balde', Precio: 2500, Estado: 'Usado', Contraparte: 'jdcm' },
-      { id: 5, Producto: 'Cemento', Precio: 1000, Estado: 'Usado', Contraparte: 'jdcm' },
-      { id: 6, Producto: 'Cartas', Precio: 3000, Estado: 'Usado', Contraparte: 'jdcm' },
-    ] */
-  //console.log(myPurchases, '\n', mySales)
 
   try {
 

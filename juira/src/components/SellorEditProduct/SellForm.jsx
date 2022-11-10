@@ -117,7 +117,6 @@ export default function SellForm() {
       setData({ ...data, [e.target.name]: e.target.value });
     }
 
-    console.log(data);
     setError(validate({ ...data, [e.target.name]: e.target.value }));
   };
 
