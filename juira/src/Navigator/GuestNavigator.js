@@ -26,7 +26,6 @@ function GuestNavigator() {
       <BrowserRouter>
         {pathname !== "/" && <NavBar/>}
         <ScrollToTop />
-        <div>GUEST NAVIGATOR</div>
         <Switch>
         {console.log("role", role,!role)}
           <Route exact path={"/"} component={Landing} />

@@ -34,7 +34,6 @@ function AdminNavigator() {
       <BrowserRouter>
         {pathname !== "/" && <NavBar />}
         <ScrollToTop />
-        <div>ADMIN NAVIGATOR</div>
         <Switch>
           <Route exact path={"/"} component={Landing} />
           <Route exact path={"/juira"} component={DashboardAdmin} />

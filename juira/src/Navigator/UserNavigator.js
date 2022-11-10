@@ -34,7 +34,6 @@ function UserNavigator() {
       <BrowserRouter>
         {pathname !== "/" && <NavBar />}
         <ScrollToTop />
-        <div>USER NAVIGATOR</div>
         <Switch>
           <Route exact path={"/"} component={Landing} />
           <Route exact path={"/juira"} component={Home} />
