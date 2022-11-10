@@ -1,13 +1,16 @@
 import React from 'react';
-import {Link} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 import { Grid,Paper, Avatar, TextField, Button, Typography } from '@mui/material';
 // import LockIcon from '@mui/icons-material/Lock';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import {getAuth, createUserWithEmailAndPassword} from 'firebase/auth'
+import toast from 'react-hot-toast';
 
 export default  function Register() {
+
+    const history = useHistory()
 
     const auth = getAuth();
     const [user, setUser]=React.useState({
@@ -33,6 +36,8 @@ export default  function Register() {
           .then((res)=>{
             const currentUser=res.user
             console.log(currentUser)
+            toast.success('Usuario registrado, inicia sesión')
+            history.push(`/juira/login`)
           })
           .catch((error) => {
             const errorCode = error.code;
