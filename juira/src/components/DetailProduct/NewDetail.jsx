@@ -154,6 +154,7 @@ export default function NewDetail() {
                         </Typography> */}
 
                     {product?.status === "En pausa" ? <Chip icon={<ErrorIcon />} color="warning" label="PRODUCTO PAUSADO" > Producto Pausado</Chip> : null}
+                    {product?.status === "No Disponible" ? <Chip icon={<ErrorIcon />} color="error" label="PRODUCTO NO DISPONIBLE" > Producto No Disponible</Chip> : null}
 
                     <Grid container direction="row" spacing={2} sx={{
                         position: "relative",
@@ -250,7 +251,7 @@ export default function NewDetail() {
                                         onClick={() => {
                                             handleAddToCart(product);
                                         }}
-                                        disabled={product?.status === "En pausa"}
+                                        disabled={product?.status === "En pausa" || product?.status === "No Disponible"}
                                         sx={{
                                             backgroundColor: "#23c197",
                                             "&:hover": { backgroundColor: "#138f6e" },
