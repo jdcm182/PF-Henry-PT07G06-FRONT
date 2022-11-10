@@ -15,6 +15,7 @@ import PeopleAltRoundedIcon from '@mui/icons-material/PeopleAltRounded';
 import ShoppingBagRoundedIcon from '@mui/icons-material/ShoppingBagRounded';
 import PaidRoundedIcon from '@mui/icons-material/PaidRounded';
 import ChartsGrid from './Charts/ChartsGrid';
+import DocumentTitle from "react-document-title";
 
 
 
@@ -60,6 +61,7 @@ export default function DashboardAdmin() {
 
   return (
     <Container sx={{ boxShadow: '0 0 15px 5px #cccccc55', padding: 5, width: '100' }}>
+      <DocumentTitle title="TABLERO-ADMIN"></DocumentTitle>
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
