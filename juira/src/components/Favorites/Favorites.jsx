@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import { useHistory } from "react-router-dom";
 import Loading from "../Loading/Loading";
+import DocumentTitle from "react-document-title";
 
 export default function Favorites() {
   const items = useSelector((state) => state.productsReducer.favorites);
@@ -17,6 +18,7 @@ export default function Favorites() {
     <Container
       sx={{ boxShadow: "0 0 15px 5px #cccccc55", padding: 5, width: "100" }}
     >
+      <DocumentTitle title="FAVORITOS"></DocumentTitle>
       {/* <Typography variant="h4"> Favoritos </Typography> */}
       <Typography
         sx={{
