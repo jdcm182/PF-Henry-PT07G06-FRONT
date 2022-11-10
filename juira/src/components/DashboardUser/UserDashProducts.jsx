@@ -11,7 +11,7 @@ import EnhancedProductsTable from './EnhancedProductsTable';
 
 export default function UserDashProducts(props) {
 
-    const { list, clicked, setClicked } = props;
+    const { list, clicked, setClicked, fetchProducts } = props;
     // let products = useSelector((state) => state.productsReducer.allProducts);
 
     // const dispatch = useDispatch();
@@ -49,7 +49,7 @@ export default function UserDashProducts(props) {
 
             {list?.length > 0
                 ?
-                < EnhancedProductsTable title="Productos" list={list} setClicked={setClicked} clicked={clicked} />
+                < EnhancedProductsTable title="Productos" list={list} setClicked={setClicked} clicked={clicked} fetchProducts={fetchProducts} />
                 : "No hay productos propios publicados para mostrar."
             }
 
