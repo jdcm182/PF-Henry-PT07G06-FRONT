@@ -36,7 +36,7 @@ export default function Footer() {
                             </Link>
                         </Box>}
                         {(role!=='admin') && <Box>
-                            <Link to={(role)? "/juira/userDash" : "/juira/login"} style={{color: 'white'}}>
+                            <Link to={(role)? "/juira/dashboard" : "/juira/login"} style={{color: 'white'}}>
                                 Administrar mi cuenta
                             </Link>
                         </Box>}

@@ -9,15 +9,14 @@ import {
   USER_PROFILE,
 } from "../actions/app.actions";
 
-
 const initialState = {
   user: {},
   isSpinner: 0,
   filterState: { categories: "Todos", sort: "A-Z", condition: "Todos" },
   token: {
-    token : "",
+    token: "",
     role: "",
-  }
+  },
 };
 
 export function appReducer(state = initialState, action) {
@@ -32,10 +31,10 @@ export function appReducer(state = initialState, action) {
       return {
         ...state,
         token: {
-          token : "",
+          token: "",
           role: "",
         },
-        user:{}
+        user: {},
       };
     }
 
@@ -44,7 +43,7 @@ export function appReducer(state = initialState, action) {
       const localStorageRole = localStorage.getItem("role");
 
       if (!localStorageToken && !localStorageRole) return state;
-      axios.defaults.headers.common["Authorization"] = localStorageToken
+      axios.defaults.headers.common["Authorization"] = localStorageToken;
       return {
         ...state,
         token: { token: localStorageToken, role: localStorageRole },
@@ -71,16 +70,11 @@ export function appReducer(state = initialState, action) {
         },
       };
     }
-    case USER_PROFILE:{
-      return{...state,
-      user:action.payload
-      }
-      
+    case USER_PROFILE: {
+      return { ...state, user: { ...state.user, ...action.payload } };
     }
-   
-   
+
     default:
       return state;
   }
- 
 }
