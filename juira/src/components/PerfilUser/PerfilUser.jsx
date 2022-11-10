@@ -38,10 +38,12 @@ export default function PerfilUser() {
   useEffect(()=>{
 
     dispatch(getUser());
-    setUserData(u)
   },[dispatch])
-  
-  
+
+  useEffect(()=>{
+    console.log('entre a useeffect') 
+    setUserData(u)
+  },[u])
   
    
     const [dis,setDis]=useState(true)
@@ -160,7 +162,7 @@ let handleImage=async(file)=>{
         inputProps={{style: {fontSize: 35}}} 
         sx={ {m:5}} 
         disabled={dis}
-        value={(userData.name|| '')} 
+        value={(userData.name )?.toUpperCase()} 
         variant='standard'/>
           }
         subheader={
@@ -184,7 +186,7 @@ let handleImage=async(file)=>{
           onChange={handleOnChange} 
           sx={{ml:2}} 
           inputProps={{style: {fontSize: 20}}}
-          disabled={dis} value={userData.homeAddress || u.homeAddress}
+          disabled={dis} value={userData.homeAddress}
           variant='standard'/>
           </Box>
           <Box sx={{display:'flex'}}>
@@ -206,7 +208,7 @@ let handleImage=async(file)=>{
           name='phoneNumber'
           onChange={handleOnChange} 
           sx={{ml:2}} inputProps={{style: {fontSize: 20}}}
-          disabled={dis} value={userData.phoneNumber || u.phoneNumber }
+          disabled={dis} value={userData.phoneNumber}
           variant='standard'/>
          </Box>
          
@@ -222,7 +224,7 @@ let handleImage=async(file)=>{
           onChange={handleOnChange} 
           sx={{ml:2}} 
           inputProps={{style: {fontSize: 20}}} 
-          disabled={dis} value={userData.city || u.city} 
+          disabled={dis} value={userData.city} 
           variant='standard'/>
         </Box>
         <Box  sx={{display:'flex'}}>
@@ -234,7 +236,7 @@ let handleImage=async(file)=>{
           onChange={handleOnChange}  
           sx={{ml:2}} 
           inputProps={{style: {fontSize: 20}}} 
-          disabled={dis} value={userData.region|| ''} 
+          disabled={dis} value={userData.region} 
           variant='standard'/>
         </Box>
          

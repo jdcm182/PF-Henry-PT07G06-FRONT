@@ -186,6 +186,7 @@ function Q_A({ id }) {
                   value={questionSubmit}
                   onChange={handleChange}
                   helperText={error ? "Entre 5 y 256 caracteres" : ""}
+                  autoFocus
                 />
                 <Box
                   sx={{

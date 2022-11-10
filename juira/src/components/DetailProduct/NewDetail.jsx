@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import Spinner from '../Loading/Spinner' //Loading' //Spinner';
+import Spinner from '../Loading/Spinner';
 import NotFound from "../NotFound/NotFound";
 import Q_A from "./Q_A";
 import {
     getProductDetails,
     addToCart,
-    removeDetail,
     addToCartApi,
     removeToCartApi,
     removeToCart,
+    removeDetail,
     removeToFavApi,
     removeToFavorites,
     addToFavApi,
@@ -23,16 +23,19 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { API_URL_BACKEND } from "../../api/apiRoute";
 import axios from 'axios';
-//import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import ErrorIcon from '@mui/icons-material/Error';
 import ImageView from './ImageView';
+import Avatar from '@mui/material/Avatar';
+import DetailRating from './DetailRating';
+
 //console.log(API_URL_BACKEND)
 
 
 const Img = styled("img")({
     margin: "auto",
     display: "block",
-    height: 500,
+    height: 'auto',
+    width: '30rem',
     border: 0,
 });
 
@@ -44,106 +47,61 @@ export default function NewDetail() {
     const role = useSelector((state) => state.app.token.role);
 
     const [isLoading, setIsLoading] = useState(true);
-    //const isLoading = useSelector((state) => state.app.isSpinner);
     const [sellerInfo, setSellerInfo] = useState();
 
 
     let product = useSelector((state) => state.productsReducer.productDetails);
     let cartState = useSelector((state) => state.productsReducer.cart);
 
-
     const dispatch = useDispatch();
 
 
+    const getSeller = async (ownerId) => {
+        const resp = await axios.get(`${API_URL_BACKEND}users/${ownerId}`)
+        return resp.data
+    }
 
-    /* const getProduct = (id) => {
-        return axios.get(`${API_URL_BACKEND}products/${id}`).then(res => res.data)
-    } */
-    /* const getSeller = () => {
-        return axios.get(`${API_URL_BACKEND}users/${id}`).then(res => res.data)
-    } */
+
+
+
+
+
+
+
+
+
+
+    async function asyncGetProduct() {
+
+        const fetchedProduct = await dispatch(getProductDetails(id))
+
+        const fetchedSeller = await getSeller(fetchedProduct.payload.ownerId)
+        await setSellerInfo(fetchedSeller)
+
+    }
+    async function asyncLoader() {
+        await asyncGetProduct()
+
+        await setIsLoading(false)
+    }
+
 
 
     useEffect(() => {
+
         setIsLoading(true)
 
-        /* const [productInfo, sellerInfo] = */ Promise.all([
-            //getProduct(),
-            //getSeller(),
-            //axios.get(`${API_URL_BACKEND}products/${id}`),
-            //axios.get(`${API_URL_BACKEND}users/${id}`),
-            dispatch(getProductDetails(id))
-        ]).then(() => {
-            //console.log('☠ setProduct??? productInfo: '/* , productInfo */)
-            //console.log('☠ setSellerInfo  sellerInfo: '/* , sellerInfo */)
-        }).catch(error => {
-            new Error(error);
-        }).finally(() => {
-            setIsLoading(false)
-        })
+        asyncLoader()
+
 
         return () => {
             dispatch(removeDetail());
         };
+
         // eslint-disable-next-line
     }, [id]);
 
-    //console.log(id)
-    //console.log(product)
 
-
-    /* useEffect(() => {
-        dispatch(getProductDetails(id))
-
-        return () => {
-            dispatch(removeDetail());
-        };
-    }, [dispatch, id]); */
-
-
-
-    /*     const getUserInfo = async (id) => {
-            return { name: 'Pepito', image: '', rating: 3.5 }
-        }
-        const getProducts = async (dispatch) => {
-            //dispatch(getProductDetails(id))
-            const url = `${API_URL_BACKEND}${getAllProductsApi}${id}`;
-        } */
-    /*    ACCION:  export const getProductDetails = (id) => async (dispatch) => {
-            dispatch(setSpinnerLoading(true));
-            const url = `${API_URL_BACKEND}${getAllProductsApi}${id}`;
-            try {
-              let { data } = await axios(url);
-              
-              return dispatch({
-                type: PRODUCT_DETAILS,
-                payload: data,
-              });
-            } catch (error) {
-              console.log("error api", error);
-            }
-          }; */
-    /*   useEffect(() => {
-          setIsLoading(true);
-  
-          const [products, seller] = Promise.all([
-              getProducts(id),
-              //getProductDetails(id),
-              //getProducts(dispatch),
-              //getUserInfo(id)
-          ]).then(() => {
-              //setSellerInfo(seller)
-              console.log('🦓 useEffect NewDetail > products: ', JSON.stringify(products), '\n 🐬seller: ', seller)
-          }).catch(error => {
-              new Error(error);
-          }).finally(() => {
-              setIsLoading(false)
-          })
-  
-          return () => {
-              dispatch(removeDetail());
-          };
-      }, [dispatch, id]) */
 
 
 
@@ -185,6 +143,15 @@ export default function NewDetail() {
         openModal();
     }
 
+
+    let sellerInitials = '';
+    if (sellerInfo && sellerInfo.name) {
+        let initials = sellerInfo.name.replace(/[^A-Z]/g, '');
+        initials.length > 0
+            ? sellerInitials = initials
+            : sellerInitials = sellerInfo.name[0];
+    }
+
     return (
         <div style={{ minHeight: 450, display: 'flex', justifyContent: 'center' }}>
             {isLoading
@@ -198,6 +165,7 @@ export default function NewDetail() {
                         </Typography> */}
 
                     {product?.status === "En pausa" ? <Chip icon={<ErrorIcon />} color="warning" label="PRODUCTO PAUSADO" > Producto Pausado</Chip> : null}
+                    {product?.status === "No Disponible" ? <Chip icon={<ErrorIcon />} color="error" label="PRODUCTO NO DISPONIBLE" > Producto No Disponible</Chip> : null}
 
                     <Grid container direction="row" spacing={2} sx={{
                         position: "relative",
@@ -294,7 +262,7 @@ export default function NewDetail() {
                                         onClick={() => {
                                             handleAddToCart(product);
                                         }}
-                                        disabled={product?.status === "En pausa"}
+                                        disabled={product?.status === "En pausa" || product?.status === "No Disponible"}
                                         sx={{
                                             backgroundColor: "#23c197",
                                             "&:hover": { backgroundColor: "#138f6e" },
@@ -309,19 +277,40 @@ export default function NewDetail() {
                             </div>
 
 
-                            <Box
-                                sx={{
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    p: 4,
-                                    mt: 4,
-                                    //m: 1,
-                                    borderRadius: 3,
-                                    // boxShadow: 3, 
-                                    border: '1px solid #ddd',
-                                }}>
-                                Informacion del Vendedor
-                            </Box>
+                            {sellerInfo
+                                ?
+                                <Box
+                                    sx={{
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        p: 2,
+                                        mt: 4,
+                                        //m: 1,
+                                        borderRadius: 3,
+                                        // boxShadow: 3, 
+                                        border: '1px solid #ddd',
+                                    }}>
+                                    <Typography
+                                        component="div"
+                                        sx={{ color: 'lightGray' }}
+                                        fontSize=".9rem"
+                                    > Informacion del Vendedor
+                                    </Typography>
+                                    {/* JSON.stringify(sellerInfo) */}
+
+                                    <Typography fontWeight="bold">{sellerInfo.name?.toUpperCase()}</Typography>
+                                    {sellerInfo.rating
+                                        ? <DetailRating rating={sellerInfo.rating} />
+                                        : <DetailRating rating={0} />
+                                    }
+
+                                    {sellerInfo.image
+                                        ? <Avatar alt={sellerInfo.name} src={sellerInfo.image}></Avatar>
+                                        : <Avatar>{sellerInitials}</Avatar>}
+
+                                </Box>
+                                : null
+                            }
 
 
                             {/* Favorites btn */}
