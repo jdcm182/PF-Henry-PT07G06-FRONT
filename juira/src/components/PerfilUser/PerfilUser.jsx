@@ -161,7 +161,7 @@ let handleImage=async(file)=>{
         inputProps={{style: {fontSize: 35}}} 
         sx={ {m:5}} 
         disabled={dis}
-        value={(userData.name|| '').toUpperCase()} 
+        value={(userData.name|| u.name)?.toUpperCase()} 
         variant='standard'/>
           }
         subheader={
@@ -235,7 +235,7 @@ let handleImage=async(file)=>{
           onChange={handleOnChange}  
           sx={{ml:2}} 
           inputProps={{style: {fontSize: 20}}} 
-          disabled={dis} value={userData.region|| ''} 
+          disabled={dis} value={userData.region|| u.region} 
           variant='standard'/>
         </Box>
          
