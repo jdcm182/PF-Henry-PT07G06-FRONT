@@ -6,11 +6,11 @@ import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import ButtonBase from "@mui/material/ButtonBase";
 import Button from "@mui/material/Button";
-import Loading from "../Loading/Loading";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import AttachMoneyRoundedIcon from "@mui/icons-material/AttachMoneyRounded";
 import DescriptionRoundedIcon from "@mui/icons-material/DescriptionRounded";
 import MilitaryTechRoundedIcon from "@mui/icons-material/MilitaryTechRounded";
+import DocumentTitle from "react-document-title";
 
 import { useSelector } from "react-redux";
 import {
@@ -61,15 +61,16 @@ export default function Detail() {
     <NotFound />
   ) : (
     <Container
-      sx={{
-        backgroundImage: `url(https://res.cloudinary.com/duq1tcwjw/image/upload/v1666132260/PF-JUIRA/patthern_oplhdn.jpg)`,
-        backgroundSize: "cover",
-        mt: 2,
-        width: 1,
-        height: 1,
-        p: 5,
-      }}
+    sx={{
+      backgroundImage: `url(https://res.cloudinary.com/duq1tcwjw/image/upload/v1666132260/PF-JUIRA/patthern_oplhdn.jpg)`,
+      backgroundSize: "cover",
+      mt: 2,
+      width: 1,
+      height: 1,
+      p: 5,
+    }}
     >
+      <DocumentTitle title="PRODUCTO"></DocumentTitle>
       <Paper
         sx={{
           p: 2,
