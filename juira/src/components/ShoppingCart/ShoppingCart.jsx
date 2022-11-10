@@ -26,6 +26,7 @@ import { useState } from "react";
 import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import Loading from "../Loading/Loading";
+import DocumentTitle from "react-document-title";
 
 export default function ShoppingCart() {
   const dispatch = useDispatch();
@@ -71,6 +72,7 @@ export default function ShoppingCart() {
 
   return (
     <Container sx={{ boxShadow: "0 0 15px 5px #cccccc55", padding: 5 }}>
+      <DocumentTitle title="CARRITO JUIRA"></DocumentTitle>
       {/* <Typography variant="h4"> Carrito de compras </Typography> */}
       <Typography
         sx={{
