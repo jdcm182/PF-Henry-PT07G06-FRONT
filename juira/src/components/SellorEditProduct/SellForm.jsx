@@ -20,7 +20,7 @@ import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 // import { themeOptions } from '../../ThemeColors.js'
 // import { ThemeProvider } from '@mui/material/styles';
 // import { makeStyles, withTheme } from '@mui/styles';
-
+import DocumentTitle from "react-document-title";
 
 function validate(data) {
   let errores={}
@@ -163,6 +163,8 @@ export default function SellForm() {
     <Container sx={{background: 'var(--UiLightColor)'/* 'linear-gradient( 90deg, white, #b6deb8 10%, #b6deb8 90%, white )' */, 
         display:'flex', flexDirection: 'column', width: 1, my:0,
         boxShadow: '0 0 15px 5px #cccccc55', padding: 5}}>
+
+          <DocumentTitle title="VENTA"></DocumentTitle>
 
       <Typography sx={{ /* marginTop: '30px', */ fontSize: '1.5rem', width:1, borderBottom: "solid var(--primaryColor)" /* 'solid green' */ }} color="var(--primaryColor)" gutterBottom>
         FORMULARIO DE VENTA
