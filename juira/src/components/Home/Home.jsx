@@ -96,7 +96,7 @@ export default function Home(/* { prods, getAll } */) {
 
   return (
     <section className={styles.homeContainer}>
-      <DocumentTitle title="JUIRA'S"></DocumentTitle>
+      <DocumentTitle title="Juira"></DocumentTitle>
       <div className={styles.heroWrapper}>
         <Hero />
       </div>

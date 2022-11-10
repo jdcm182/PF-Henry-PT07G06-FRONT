@@ -61,33 +61,33 @@ export default function DashboardAdmin() {
 
   return (
     <Container sx={{ boxShadow: '0 0 15px 5px #cccccc55', padding: 5, width: '100' }}>
-      <DocumentTitle title="TABLERO-ADMIN"></DocumentTitle>
-    <Box sx={{ width: '100%' }}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="Resumen" {...a11yProps(0)} icon={<FeedRoundedIcon/>} iconPosition='start'/>
-          <Tab label="Productos" {...a11yProps(1)} icon={<CategoryRoundedIcon/>} iconPosition='start'/>
-          <Tab label="Usuarios" {...a11yProps(2)} icon={<PeopleAltRoundedIcon/>} iconPosition='start'/>
-          <Tab label="Ódernes de compra" {...a11yProps(3)} icon={<ShoppingBagRoundedIcon/>} iconPosition='start'/>
-          <Tab label="Transacciones" {...a11yProps(4)} icon={<PaidRoundedIcon/>} iconPosition='start'/>
-        </Tabs>
+      <DocumentTitle title="Dashboard Administrador | Juira"></DocumentTitle>
+      <Box sx={{ width: '100%' }}>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+            <Tab label="Resumen" {...a11yProps(0)} icon={<FeedRoundedIcon />} iconPosition='start' />
+            <Tab label="Productos" {...a11yProps(1)} icon={<CategoryRoundedIcon />} iconPosition='start' />
+            <Tab label="Usuarios" {...a11yProps(2)} icon={<PeopleAltRoundedIcon />} iconPosition='start' />
+            <Tab label="Ódernes de compra" {...a11yProps(3)} icon={<ShoppingBagRoundedIcon />} iconPosition='start' />
+            <Tab label="Transacciones" {...a11yProps(4)} icon={<PaidRoundedIcon />} iconPosition='start' />
+          </Tabs>
+        </Box>
+        <TabPanel value={value} index={0}>
+          <ChartsGrid />
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <Products />
+        </TabPanel>
+        <TabPanel value={value} index={2}>
+          <Users />
+        </TabPanel>
+        <TabPanel value={value} index={3}>
+          <ShoppinOrders />
+        </TabPanel>
+        <TabPanel value={value} index={4}>
+          <Transactions />
+        </TabPanel>
       </Box>
-      <TabPanel value={value} index={0}>
-        <ChartsGrid/>
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <Products/>
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        <Users/>
-      </TabPanel>
-      <TabPanel value={value} index={3}>
-        <ShoppinOrders/>
-      </TabPanel>
-      <TabPanel value={value} index={4}>
-        <Transactions/>
-      </TabPanel>
-    </Box>
     </Container>
   );
 

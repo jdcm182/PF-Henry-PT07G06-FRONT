@@ -32,7 +32,7 @@ export default function ShoppingCart() {
   const dispatch = useDispatch();
   const role = useSelector((state) => state.app.token.role);
   const items = useSelector((state) => state.productsReducer.cart);
-  const loading = useSelector((state)=> state.app.isSpinner)
+  const loading = useSelector((state) => state.app.isSpinner)
 
   const [redirect, setRedirect] = useState("");
   let history = useHistory();
@@ -43,14 +43,14 @@ export default function ShoppingCart() {
 
   let amount = 0;
   items && items.forEach((p) => (amount += Number(p.price)));
-  
+
 
   const handlePayment = async () => {
     try {
       const { data } = await axios.post(
         `${API_URL_BACKEND}shoppingOrders/byToken`
       );
-      
+
       const response = await axios.get(
         `${API_URL_BACKEND}payment?id=${data.id}`
       );
@@ -72,7 +72,7 @@ export default function ShoppingCart() {
 
   return (
     <Container sx={{ boxShadow: "0 0 15px 5px #cccccc55", padding: 5 }}>
-      <DocumentTitle title="CARRITO JUIRA"></DocumentTitle>
+      <DocumentTitle title="Carrito de compras | Juira"></DocumentTitle>
       {/* <Typography variant="h4"> Carrito de compras </Typography> */}
       <Typography
         sx={{
@@ -87,7 +87,7 @@ export default function ShoppingCart() {
         CARRITO DE COMPRAS
       </Typography>
 
-      {loading !==0 && !items.length ? <Loading></Loading> : !items.length ? (
+      {loading !== 0 && !items.length ? <Loading></Loading> : !items.length ? (
         <Container
           sx={{
             minHeight: 350,

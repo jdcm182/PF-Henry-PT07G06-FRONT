@@ -301,7 +301,7 @@ export default function Dashboard() {
 
   return (
     <Container sx={{ boxShadow: '0 0 15px 5px #cccccc55', padding: 5, width: '100' }}>
-      <DocumentTitle title="TABLERO JUIRA"></DocumentTitle>
+      <DocumentTitle title="Dashboard Usuario | Juira"></DocumentTitle>
       <Typography sx={{ marginTop: '0', fontSize: '1.5rem', width: 1, borderBottom: "solid var(--primaryColor)" }} color="var(--primaryColor)" gutterBottom>
         DASHBOARD DE USUARIO
       </Typography>

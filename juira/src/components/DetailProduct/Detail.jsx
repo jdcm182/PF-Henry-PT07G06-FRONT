@@ -61,16 +61,16 @@ export default function Detail() {
     <NotFound />
   ) : (
     <Container
-    sx={{
-      backgroundImage: `url(https://res.cloudinary.com/duq1tcwjw/image/upload/v1666132260/PF-JUIRA/patthern_oplhdn.jpg)`,
-      backgroundSize: "cover",
-      mt: 2,
-      width: 1,
-      height: 1,
-      p: 5,
-    }}
+      sx={{
+        backgroundImage: `url(https://res.cloudinary.com/duq1tcwjw/image/upload/v1666132260/PF-JUIRA/patthern_oplhdn.jpg)`,
+        backgroundSize: "cover",
+        mt: 2,
+        width: 1,
+        height: 1,
+        p: 5,
+      }}
     >
-      <DocumentTitle title="PRODUCTO"></DocumentTitle>
+      <DocumentTitle title={`${p.name} | Juira`}></DocumentTitle>
       <Paper
         sx={{
           p: 2,

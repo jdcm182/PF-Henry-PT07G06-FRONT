@@ -18,7 +18,7 @@ export default function Favorites() {
     <Container
       sx={{ boxShadow: "0 0 15px 5px #cccccc55", padding: 5, width: "100" }}
     >
-      <DocumentTitle title="FAVORITOS"></DocumentTitle>
+      <DocumentTitle title="Mis Favoritos | Juira"></DocumentTitle>
       {/* <Typography variant="h4"> Favoritos </Typography> */}
       <Typography
         sx={{
@@ -33,7 +33,7 @@ export default function Favorites() {
         FAVORITOS
       </Typography>
 
-      {loading !== 0 && !items.length? (
+      {loading !== 0 && !items.length ? (
         <Loading></Loading>
       ) : !items.length ? (
         <Container

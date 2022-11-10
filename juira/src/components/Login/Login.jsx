@@ -138,7 +138,7 @@ uid: "rz9pFLryLGhQljwpjTW5Siwl3Tp2"
   };
   return (
     <div>
-      <DocumentTitle title="LOGUEO"></DocumentTitle>
+      <DocumentTitle title="Login | Juira"></DocumentTitle>
       {role && (
         <div>
           <PerfilUser />
