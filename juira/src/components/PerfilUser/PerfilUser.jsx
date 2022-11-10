@@ -36,7 +36,7 @@ export default function PerfilUser() {
   const auth = getAuth();
 
   useEffect(()=>{
-    console.log('entre a useeffect') 
+
     dispatch(getUser());
     setUserData(u)
   },[dispatch])
@@ -106,7 +106,6 @@ let handleImage=async(file)=>{
       phoneNumber : "",
      })
         await signOut(auth)
-        .then(result=>console.log('has salido'))
         .catch(error=> console.log(`Error ${error.code}: ${error.message}`))
        
         history.push(`/juira/login`)
@@ -161,7 +160,7 @@ let handleImage=async(file)=>{
         inputProps={{style: {fontSize: 35}}} 
         sx={ {m:5}} 
         disabled={dis}
-        value={(userData.name|| '').toUpperCase()} 
+        value={(userData.name|| '')} 
         variant='standard'/>
           }
         subheader={

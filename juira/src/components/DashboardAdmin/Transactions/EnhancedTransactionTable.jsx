@@ -163,7 +163,6 @@ EnhancedTableHead.propTypes = {
 
 const handlePay = (event,clicked,setClicked) => {
   let id = event.target.value
-  console.log(clicked)
   // setSelected([])
   let promise = axios.put(`${API_URL_BACKEND}transactions/${id}`, {state: 'closed'})
   .then( res => setClicked(!clicked))

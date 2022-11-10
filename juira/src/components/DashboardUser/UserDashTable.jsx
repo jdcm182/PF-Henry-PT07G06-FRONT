@@ -383,7 +383,6 @@ export default function UserDashTable(props) {
   const emptyRows =
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - props.list.length) : 0;
 
-  console.log('UserDashTable > ex EnhancedTable > props: ', props)
 
   return (
     <Box sx={{ width: '100%', marginTop: '1rem' }}>

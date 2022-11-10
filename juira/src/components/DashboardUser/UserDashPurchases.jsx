@@ -8,7 +8,7 @@ import UserPurchasesTable from './UserPurchasesTable';
 export default function UserDashPurchases(props) {
 
     const { clicked, setClicked } = props;
-    //console.log('UserDashPurchases > props: ', props)
+  
 
     return (
         <Container component={'span'}
@@ -17,8 +17,6 @@ export default function UserDashPurchases(props) {
                 boxShadow: '0 8px 15px 5px #cccccc55', padding: '2rem', borderRadius: '.8rem'
             }} >
 
-
-            {/* <UserDashTable title="Compras" list={props.list} /> */}
             {props.list?.length > 0
                 ? <UserPurchasesTable list={props.list} setClicked={setClicked} clicked={clicked} />
                 : "No hay ordenes para mostrar."}

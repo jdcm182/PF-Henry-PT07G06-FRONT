@@ -44,8 +44,6 @@ const handleProductSent = async (e, setClicked, clicked) => {
 function Row(props) {
     const { row/* , clicked, setClicked */ } = props;
     const [open, setOpen] = React.useState(false);
-    console.log('UserPurchasesTable > Row > props: ', props)
-    //const classes = useRowStyles();
     return (
         <React.Fragment>
             <TableRow /* className={classes.root} */>
@@ -172,10 +170,7 @@ export default function UserProductsTable(props) {
         const product = { id: productId, name: productName }
         setClickedProduct(product); // <-- product id
         openModal();
-        // console.log('👾UserProductsTable > handleViewQA > CLICK! 👾> e: ', e)
-        // console.log('👾UserProductsTable > handleViewQA > 👾 e.target.value: ', e.target.value)
-        // console.log('👾UserProductsTable > handleViewQA > 👾 e.target.id: ', e.target.id)
-        // console.log('👾UserProductsTable > handleViewQA > 👾 productId: ', productId)
+        
     }
 
 

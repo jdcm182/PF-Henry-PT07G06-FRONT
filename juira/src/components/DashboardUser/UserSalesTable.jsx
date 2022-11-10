@@ -25,24 +25,21 @@ import { API_URL_BACKEND } from '../../api/apiRoute.js';
 
 
 const parseDate = (str) => {
-    //console.log(str);
-    //console.log(str.slice(0, 10))
+    
     return str.slice(0, 10).split('-').reverse().join('/');
 }
 
 
 const handleProductSent = async (e, setClicked, clicked) => {
-    console.log('handleProductSent > setClicked: ', setClicked)
+
     const response = await axios.put(`${API_URL_BACKEND}transactions/${e.target.value}`, { state: "sent" });
-    console.log('💣 handleProductReceived > response: ', response)
     setClicked(!clicked);
 }
 
 function Row(props) {
     const { row, clicked, setClicked } = props;
     const [open, setOpen] = React.useState(false);
-    console.log('UserPurchasesTable > Row > props: ', props)
-    //const classes = useRowStyles();
+   
     return (
         <React.Fragment>
             <TableRow /* className={classes.root} */>
@@ -246,15 +243,9 @@ export default function UserSalesTable(props) {
 
         );
     } catch (e) {
-        console.log(e)
+     
         if (e.message.contains('Firebase ID token has expired')) {
-            console.log('💥Firebase ID token has expired💥')
-            console.log('💥Firebase ID token has expired💥')
-            console.log('💥Firebase ID token has expired💥')
-            console.log('💥Firebase ID token has expired💥')
-            console.log('💥Firebase ID token has expired💥')
-            console.log('💥Firebase ID token has expired💥')
-            console.log('💥Firebase ID token has expired💥')
+       
 
             dispatch(logoOutAction());
 

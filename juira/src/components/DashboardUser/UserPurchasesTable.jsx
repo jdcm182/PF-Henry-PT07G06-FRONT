@@ -24,24 +24,15 @@ import { API_URL_BACKEND } from '../../api/apiRoute.js';
 import RateProduct from './RateProduct';
 
 
-/* const useRowStyles = makeStyles({
-    root: {
-        '& > *': {
-            borderBottom: 'unset',
-        },
-    },
-}); */
 const parseDate = (str) => {
-    //console.log(str);
-    //console.log(str.slice(0, 10))
+    
     return str.slice(0, 10).split('-').reverse().join('/');
 }
 
 
 const handleProductReceived = async (e, setClicked, clicked) => {
-    console.log('handleProductReceived > setClicked: ', setClicked)
+
     const response = await axios.put(`${API_URL_BACKEND}transactions/${e.target.value}`, { state: "received" });
-    console.log('💣 handleProductReceived > response: ', response)
     setClicked(!clicked);
     toast.success('No te olvides de calificar tu producto')
 }
@@ -50,7 +41,7 @@ function Row(props) {
     const { row, clicked, setClicked } = props;
     const [open, setOpen] = React.useState(false);
     console.log('UserPurchasesTable > Row > props: ', props)
-    //const classes = useRowStyles();
+ 
 
     const dispatch = useDispatch();
     const [redirect, setRedirect] = useState("");
@@ -234,11 +225,11 @@ createData('Gingerbread', 356, 16.0, 49, 3.9, 1.5), */
 export default function UserPurchasesTable(props) {
     //const [myShoppingOrders, setMyShoppingOrders] = useState(props.list);
     const { clicked, setClicked } = props;
-    //console.log('UserPurchasesTable > props: ', props)
+
 
     try {
         if (props.list && props.list.length > 0) myShoppingOrders = props.list;
-        //console.log('myShoppingOrders: ', myShoppingOrders)
+    
         if (!myShoppingOrders) {
             myShoppingOrders = [
                 { id: 1, createdAt: '2022-09-30 08:23', state: 'pending', total: 1000, paymentReceived: true, merchant_id: 9, transactionList: [] },
@@ -246,7 +237,7 @@ export default function UserPurchasesTable(props) {
                 { id: 3, createdAt: '2022-11-05 14:23', state: 'pending', total: 3600, paymentReceived: false, merchant_id: 9, transactionList: [] },
             ];
         }
-        console.log('myShoppingOrders: ', myShoppingOrders)
+      
         rows = myShoppingOrders.map(s => createData(s.id, s.createdAt, s.state, s.total, s.paymentReceived, s.merchant_id, s.transactionList));
 
         return (
