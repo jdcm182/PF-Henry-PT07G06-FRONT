@@ -352,7 +352,8 @@ export default function SellForm() {
                   onClick={handleImage}
                   variant="contained"
                   component="label"
-                  color= "var(--primaryColor)"
+                  sx={{ backgroundColor: "#23c197",
+                  "&:hover": { backgroundColor: "#138f6e" },}}
                   disabled={!previewSource}
                 >
                   <Typography
@@ -391,8 +392,8 @@ export default function SellForm() {
 
         <Button
           variant="contained"
-          color= "var(--primaryColor)"
-          sx={{ mt: 5,color: "#23c197" }}
+          sx={{ mt: 5, backgroundColor: "#23c197",
+          "&:hover": { backgroundColor: "#138f6e" }, }}
           onClick={handleOnSubmit}
           disabled={Object.values(error).length > 0 || data.name.length === 0}
           

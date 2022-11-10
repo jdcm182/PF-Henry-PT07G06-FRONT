@@ -67,7 +67,7 @@ function App() {
       // Any status codes that falls outside the range of 2xx cause this function to trigger
       // Do something with response error
       console.log("error interceptor",error)
-      if(error.response.data.includes("Firebase ID token has expired")){
+      if(error.response.data?.includes("Firebase ID token has expired")){
         dispatch(logoOutAction())
         history.go(0)
         history.push(`/juira/login`)
