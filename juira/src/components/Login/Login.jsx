@@ -25,6 +25,7 @@ import { postLogin } from "../../redux/actions/app.actions";
 import PerfilUser from "../PerfilUser/PerfilUser";
 import { useHistory } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
+import DocumentTitle from "react-document-title";
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -137,6 +138,7 @@ uid: "rz9pFLryLGhQljwpjTW5Siwl3Tp2"
   };
   return (
     <div>
+      <DocumentTitle title="LOGUEO"></DocumentTitle>
       {role && (
         <div>
           <PerfilUser />

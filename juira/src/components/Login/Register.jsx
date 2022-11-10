@@ -6,6 +6,7 @@ import LockOpenIcon from '@mui/icons-material/LockOpen';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import {getAuth, createUserWithEmailAndPassword} from 'firebase/auth'
+import DocumentTitle from "react-document-title";
 
 export default  function Register() {
 
@@ -52,6 +53,8 @@ export default  function Register() {
     const txtstyle = { margin: '10px 0', fontFamily: 'nunito', color: 'var(--primaryColor)'}
     return(
         <Grid>
+            <DocumentTitle title="REGISTRO"></DocumentTitle>
+            
             <Paper elevation={10} style={paperStyle} >
                 <Grid align='center' style={{marginBottom:'20px'}}>
                      <Avatar style={avatarStyle}><LockOpenIcon/></Avatar>
