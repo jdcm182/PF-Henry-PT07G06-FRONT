@@ -10,6 +10,7 @@ import {
     addToCartApi,
     removeToCartApi,
     removeToCart,
+    removeDetail,
     removeToFavApi,
     removeToFavorites,
     addToFavApi,
@@ -52,7 +53,6 @@ export default function NewDetail() {
     let product = useSelector((state) => state.productsReducer.productDetails);
     let cartState = useSelector((state) => state.productsReducer.cart);
 
-
     const dispatch = useDispatch();
 
 
@@ -63,18 +63,26 @@ export default function NewDetail() {
 
 
 
-    async function asyncGetSeller(ownerId) {
-        const fetchedSeller = await getSeller(ownerId)
-        setSellerInfo(fetchedSeller)
-        return fetchedSeller;
-    }
+
+
+
+
+
+
+
+
     async function asyncGetProduct() {
+
         const fetchedProduct = await dispatch(getProductDetails(id))
-        const fetchSell = await asyncGetSeller(fetchedProduct.payload.ownerId)
-        return fetchedProduct;
+
+        const fetchedSeller = await getSeller(fetchedProduct.payload.ownerId)
+        await setSellerInfo(fetchedSeller)
+
     }
     async function asyncLoader() {
-        const resProduct = await asyncGetProduct()
+        await asyncGetProduct()
+
+        await setIsLoading(false)
     }
 
 
@@ -85,7 +93,10 @@ export default function NewDetail() {
 
         asyncLoader()
 
-        setIsLoading(false)
+
+        return () => {
+            dispatch(removeDetail());
+        };
 
         // eslint-disable-next-line
     }, [id]);
